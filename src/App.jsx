@@ -21,6 +21,7 @@
 */
 
 import { useState, useEffect, useRef, useCallback } from "react";
+import NVC from "./NVC.jsx";
 import {
   AreaChart, Area, BarChart, Bar, XAxis, YAxis, Tooltip,
   ResponsiveContainer, CartesianGrid, Cell, PieChart, Pie,
@@ -355,14 +356,14 @@ function DarkToggle({ dark, toggle }) {
 //  WEBSITE
 // ═══════════════════════════════════════════════════════════════════════════════
 
-function Website({ onDash, dark }) {
+function Website({ onDash, onNVC, dark }) {
   useReveal();
   const bg = dark ? "#0A1C12" : "#FAFAF5";
   const txt = dark ? T.cream : T.greenD;
 
   return (
     <div style={{ fontFamily: "'DM Sans',sans-serif", background: bg, color: txt, overflowX: "hidden" }}>
-      <SiteNav onDash={onDash} dark={dark} />
+      <SiteNav onDash={onDash} onNVC={onNVC} dark={dark} />
       <Hero onDash={onDash} dark={dark} />
       <Marquee />
       <KINDStrip dark={dark} />
@@ -379,7 +380,7 @@ function Website({ onDash, dark }) {
 }
 
 // ─── NAV ──────────────────────────────────────────────────────────────────────
-function SiteNav({ onDash, dark }) {
+function SiteNav({ onDash, onNVC, dark }) {
   const [sc, setSc] = useState(false);
   const [mob, setMob] = useState(false);
   useEffect(() => {
@@ -410,6 +411,9 @@ function SiteNav({ onDash, dark }) {
             {["About", "Programs", "Impact", "Give"].map(l => (
               <a key={l} href={l === "Give" ? "https://bit.ly/KINgiv" : `#${l.toLowerCase()}`} target={l === "Give" ? "_blank" : undefined} style={{ fontSize: "0.76rem", fontWeight: 500, letterSpacing: "0.04em", textTransform: "uppercase", color: linkC, transition: "color .2s" }} onMouseEnter={e => e.currentTarget.style.color = T.goldL} onMouseLeave={e => e.currentTarget.style.color = linkC}>{l}</a>
             ))}
+            <button onClick={onNVC} style={{ fontSize: "0.76rem", fontWeight: 500, letterSpacing: "0.04em", textTransform: "uppercase", color: linkC, transition: "color .2s" }} onMouseEnter={e => e.currentTarget.style.color = T.goldL} onMouseLeave={e => e.currentTarget.style.color = linkC}>
+              National Builders
+            </button>
             <button onClick={onDash} style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "0.76rem", fontWeight: 600, letterSpacing: "0.04em", textTransform: "uppercase", color: sc ? (dark ? T.goldL : T.green) : T.goldL, cursor: "pointer", transition: "color .2s", padding: 0 }}>
               <LayoutDashboard size={13} strokeWidth={1.5} /> Dashboard
             </button>
@@ -1553,16 +1557,16 @@ function DFView({ ctx }) {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export default function App() {
-  const [mode, setMode] = useState("website"); // "website" | "dashboard"
+  const [mode, setMode] = useState("website"); // "website" | "dashboard" | "nvc"
   const [dark, setDark] = useState(false);
   const toggleDark = useCallback(() => setDark(d => !d), []);
 
   return (
     <>
-      {mode === "website"
-        ? <Website onDash={() => setMode("dashboard")} dark={dark} />
-        : <Dashboard onBack={() => setMode("website")} dark={dark} toggleDark={toggleDark} />
-      }
+      {mode === "website" && <Website onDash={() => setMode("dashboard")} onNVC={() => setMode("nvc")} dark={dark} />}
+      {mode === "dashboard" && <Dashboard onBack={() => setMode("website")} dark={dark} toggleDark={toggleDark} />}
+      {mode === "nvc" && <NVC onBack={() => setMode("website")} />}
+
       <DarkToggle dark={dark} toggle={toggleDark} />
       <CookieBanner dark={dark} />
     </>
