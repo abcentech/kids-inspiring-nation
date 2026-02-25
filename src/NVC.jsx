@@ -1,150 +1,198 @@
-import React, { useState } from 'react';
-import { ChevronRight, Target, Users, Award, BookOpen, MessageCircle, Send, Home } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import {
+    Home, ChevronRight, Target, Users, Award, BookOpen,
+    MessageCircle, Send, Star, Trophy, Zap, Globe,
+    CheckCircle2, Activity, Play, Download
+} from 'lucide-react';
+
+// ─── DESIGN TOKENS (Shared with KIN Main) ───────────────────────────────────
+const T = {
+    green: "#16613E", greenD: "#0D3D26", greenM: "#2C4A35",
+    gold: "#C4882C", goldL: "#E8B954", goldD: "#9A6620",
+    coral: "#D94F30", cream: "#FDF7EC", warmBg: "#F5EFE3",
+    ok: "#34C759", warn: "#FF9F0A", err: "#FF3B30", info: "#0071E3",
+    txtD: "#0A1C12",
+    brd: "rgba(22,97,62,.09)",
+};
+
+// ─── COMPONENTS ─────────────────────────────────────────────────────────────
+const GoDs = ({ style = {} }) => (
+    <span style={{ fontFamily: "'Playfair Display',serif", fontStyle: "italic", ...style }}>
+        <span style={{ fontWeight: 900 }}>g</span>
+        <span style={{ fontWeight: 900, color: "inherit" }}>oDs</span>
+    </span>
+);
 
 export default function NVC({ onBack }) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [registrationSubmitted, setRegistrationSubmitted] = useState(false);
     const [userId, setUserId] = useState('');
+    const [scrolled, setScrolled] = useState(false);
+
+    useEffect(() => {
+        const h = () => setScrolled(window.scrollY > 50);
+        window.addEventListener("scroll", h);
+        return () => window.removeEventListener("scroll", h);
+    }, []);
+
+    useEffect(() => {
+        // Reveal animation trigger
+        const els = document.querySelectorAll(".reveal");
+        const obs = new IntersectionObserver(
+            es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("rev"); obs.unobserve(e.target); } }),
+            { threshold: .1 }
+        );
+        els.forEach(el => obs.observe(el));
+        return () => obs.disconnect();
+    }, []);
 
     const handleRegister = (e) => {
         e.preventDefault();
-        const id = 'NB2025-' + (Math.floor(Math.random() * 10000) + 1000);
-        setUserId(id);
+        setUserId('NB2025-' + (Math.floor(Math.random() * 8999) + 1000));
         setRegistrationSubmitted(true);
     };
 
+    const navBg = scrolled ? "rgba(253,247,236,.92)" : "transparent";
+    const navBdr = scrolled ? `1px solid ${T.brd}` : "1px solid transparent";
+    const navTxt = scrolled ? T.greenD : T.cream;
+
     return (
-        <div className="bg-gray-50 font-sans text-gray-900">
+        <div style={{ fontFamily: "'DM Sans',sans-serif", background: "#FAFAF5", color: T.greenM, overflowX: "hidden" }}>
+
             {/* Navigation */}
-            <nav className="fixed top-0 w-full bg-green-800 text-white shadow-lg z-50">
-                <div className="max-w-7xl mx-auto px-4">
-                    <div className="flex justify-between items-center h-16">
-                        <div className="flex items-center space-x-2">
-                            <span className="text-2xl">🎯</span>
-                            <span className="font-bold text-xl">National Builders Corp 🇳🇬</span>
-                        </div>
+            <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000, padding: ".75rem 0", transition: "all .35s", background: navBg, backdropFilter: scrolled ? "blur(18px)" : "none", borderBottom: navBdr }}>
+                <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 2rem", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
+                        <div style={{ width: 32, height: 32, background: T.green, borderRadius: 8, display: "grid", placeItems: "center", color: T.goldL, fontWeight: 900, fontFamily: "'Playfair Display',serif" }}>g</div>
+                        <div style={{ fontWeight: 700, fontSize: "0.9rem", color: navTxt, fontFamily: "'Plus Jakarta Sans',sans-serif", letterSpacing: "-0.01em" }}>National Builders Corp 🇳🇬</div>
+                    </div>
 
-                        {/* Desktop Menu */}
-                        <div className="hidden md:flex items-center space-x-6">
-                            <a href="#home" className="hover:text-yellow-400 transition-colors">Home</a>
-                            <a href="#about" className="hover:text-yellow-400 transition-colors">About</a>
-                            <a href="#how-it-works" className="hover:text-yellow-400 transition-colors">How It Works</a>
-                            <a href="#prizes" className="hover:text-yellow-400 transition-colors">Prizes</a>
-                            <a href="#values" className="hover:text-yellow-400 transition-colors">Values</a>
-                            <a href="#resources" className="hover:text-yellow-400 transition-colors">Resources</a>
-                            <a href="#register" className="hover:text-yellow-400 transition-colors font-bold">Register</a>
-                            <button onClick={onBack} className="flex items-center gap-1 bg-white/10 px-3 py-1 rounded hover:bg-white/20 transition-colors text-sm">
-                                <Home size={14} /> KIN Home
-                            </button>
-                        </div>
-
-                        {/* Mobile Menu Button */}
-                        <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden p-2">
-                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                            </svg>
+                    <div className="hidden md:flex items-center gap-6">
+                        {['About', 'Process', 'Prizes', 'Values'].map(item => (
+                            <a key={item} href={`#${item.toLowerCase()}`} style={{ fontSize: "0.75rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.05em", color: navTxt, transition: "color .2s" }} onMouseEnter={e => e.currentTarget.style.color = T.gold}>{item}</a>
+                        ))}
+                        <button onClick={onBack} style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", color: T.goldL, cursor: "pointer" }}>
+                            <Home size={14} /> KIN Home
                         </button>
+                        <a href="#register" style={{ padding: ".5rem 1.4rem", borderRadius: 999, background: T.gold, color: "#fff", fontWeight: 600, fontSize: "0.75rem", transition: "filter .2s" }}>Join Challenge</a>
                     </div>
 
-                    {/* Mobile Menu */}
-                    <div className={`${mobileMenuOpen ? 'block' : 'hidden'} md:hidden pb-4 transition-all`}>
-                        <a href="#home" onClick={() => setMobileMenuOpen(false)} className="block py-2 hover:text-yellow-400">Home</a>
-                        <a href="#about" onClick={() => setMobileMenuOpen(false)} className="block py-2 hover:text-yellow-400">About</a>
-                        <a href="#how-it-works" onClick={() => setMobileMenuOpen(false)} className="block py-2 hover:text-yellow-400">How It Works</a>
-                        <a href="#prizes" onClick={() => setMobileMenuOpen(false)} className="block py-2 hover:text-yellow-400">Prizes</a>
-                        <a href="#values" onClick={() => setMobileMenuOpen(false)} className="block py-2 hover:text-yellow-400">Values</a>
-                        <a href="#resources" onClick={() => setMobileMenuOpen(false)} className="block py-2 hover:text-yellow-400">Resources</a>
-                        <a href="#register" onClick={() => setMobileMenuOpen(false)} className="block py-2 hover:text-yellow-400 font-bold">Register</a>
-                        <button onClick={onBack} className="block w-full text-left py-2 hover:text-yellow-400">Back to KIN</button>
-                    </div>
+                    <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden" style={{ color: navTxt }}>
+                        <Activity size={24} />
+                    </button>
                 </div>
             </nav>
 
             {/* Hero Section */}
-            <section id="home" className="bg-gradient-to-br from-green-800 to-green-600 text-white py-20 px-4 mt-16">
-                <div className="max-w-6xl mx-auto text-center">
-                    <h1 className="text-5xl md:text-6xl font-bold mb-4 animate-fade-in">
-                        Build the Nigeria You Want to See
-                    </h1>
-                    <p className="text-xl md:text-2xl mb-6">
-                        Join 1,000 young Nigerians solving real community problems
-                    </p>
-                    <div className="bg-yellow-400 text-green-800 inline-block px-8 py-4 rounded-lg text-2xl font-bold mb-8 animate-pulse">
-                        7-10 Finalists Will Share ₦3,000,000!
-                    </div>
-                    <div className="flex flex-col md:flex-row gap-4 justify-center">
-                        <a href="#register" className="bg-yellow-400 text-green-800 px-8 py-4 rounded-full text-xl font-bold hover:bg-yellow-300 transition-all transform hover:scale-105">
-                            REGISTER NOW - It's FREE!
-                        </a>
-                        <a href="#how-it-works" className="bg-transparent border-2 border-white px-8 py-4 rounded-full text-xl font-bold hover:bg-white hover:text-green-800 transition-all">
-                            Learn More
-                        </a>
+            <section id="home" style={{ minHeight: "100svh", background: T.greenD, position: "relative", display: "flex", alignItems: "center", overflow: "hidden", padding: "6rem 0" }}>
+                <div style={{ position: "absolute", inset: 0, background: `radial-gradient(ellipse 70% 60% at 80% 40%,${T.green}50 0%,transparent 70%), linear-gradient(135deg,#060E08 0%,#0D3D26 60%,#16613E 100%)` }} />
+                <div style={{ position: "absolute", left: "-5vw", bottom: "5vh", fontSize: "20vw", fontWeight: 900, color: "transparent", WebkitTextStroke: "1px rgba(196,136,44,.05)", fontFamily: "'Playfair Display',serif", fontStyle: "italic", userSelect: "none" }}>NBC</div>
+
+                <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 2rem", position: "relative", zIndex: 2, width: "100%" }}>
+                    <div style={{ maxWidth: "54rem" }}>
+                        <div className="reveal d1" style={{ fontSize: "0.75rem", fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", color: T.goldL, marginBottom: "1.5rem", display: "flex", alignItems: "center", gap: "1rem" }}>
+                            <span style={{ width: 40, height: 1.5, background: T.gold }} /> 2025 National Builders Challenge
+                        </div>
+                        <h1 className="reveal d2" style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(2.5rem, 8vw, 5.2rem)", fontWeight: 900, color: T.cream, lineHeight: 0.95, letterSpacing: "-0.03em", marginBottom: "2rem" }}>
+                            Build the <em style={{ fontStyle: "italic", color: T.goldL }}>Nigeria</em><br />
+                            You Want to <GoDs style={{ color: T.goldL }} />
+                        </h1>
+                        <p className="reveal d3" style={{ fontSize: "clamp(1rem, 2vw, 1.25rem)", color: "rgba(253,247,236,.7)", lineHeight: 1.6, marginBottom: "2.5rem", maxWidth: "45ch" }}>
+                            Join 1,000 young <GoDs style={{ color: T.gold }} /> solving real community problems through universal values and resourcefulness. No money needed — just heart.
+                        </p>
+
+                        <div className="reveal d4" style={{ display: "flex", flexWrap: "wrap", gap: "1rem", alignItems: "center" }}>
+                            <a href="#register" style={{ padding: "1.1rem 2.8rem", borderRadius: 999, background: T.gold, color: "#fff", fontWeight: 700, fontSize: "1.1rem", boxShadow: `0 12px 32px ${T.gold}40` }}>Register Now — Free</a>
+                            <div style={{ background: "rgba(253,247,236,.06)", padding: "0.9rem 1.8rem", borderRadius: 999, border: "1px solid rgba(253,247,236,.15)", display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                                <Trophy size={20} color={T.goldL} />
+                                <span style={{ color: T.cream, fontWeight: 700, fontSize: "1.1rem" }}>₦3,000,000 Grand Prize</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            {/* Stats Bar */}
-            <div className="bg-white shadow-lg py-8 px-4">
-                <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
-                    <div className="text-center">
-                        <div className="text-4xl font-bold text-green-800">1,000</div>
-                        <div className="text-gray-600">Target Participants</div>
-                    </div>
-                    <div className="text-center">
-                        <div className="text-4xl font-bold text-green-800">₦3M</div>
-                        <div className="text-gray-600">Total Prizes</div>
-                    </div>
-                    <div className="text-center">
-                        <div className="text-4xl font-bold text-green-800">7-10</div>
-                        <div className="text-gray-600">Finalists</div>
-                    </div>
-                    <div className="text-center">
-                        <div className="text-4xl font-bold text-green-800">Dec 17</div>
-                        <div className="text-gray-600">Grand Finale</div>
+            {/* Stats Section */}
+            <section style={{ background: "#fff", borderBottom: `1px solid ${T.brd}`, padding: "4rem 0" }}>
+                <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 2rem" }}>
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: "2.5rem" }}>
+                        {[
+                            { n: "1,000", l: "Participants", i: <Users /> },
+                            { n: "₦3,000,000", l: "Total Prizes", i: <Award /> },
+                            { n: "7-10", l: "Elite Finalists", i: <Target /> },
+                            { n: "Dec 17", l: "Grand Finale", i: <Zap /> },
+                        ].map(s => (
+                            <div key={s.l} className="reveal" style={{ textAlign: "center" }}>
+                                <div style={{ color: T.gold, display: "flex", justifyContent: "center", marginBottom: "0.75rem" }}>{s.i}</div>
+                                <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "2.2rem", fontWeight: 900, color: T.greenD, lineHeight: 1 }}>{s.n}</div>
+                                <div style={{ fontSize: "0.75rem", color: T.p2, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.05em", marginTop: "0.3rem" }}>{s.l}</div>
+                            </div>
+                        ))}
                     </div>
                 </div>
-            </div>
+            </section>
 
             {/* About Section */}
-            <section id="about" className="max-w-6xl mx-auto px-4 py-16">
-                <h2 className="text-4xl font-bold text-green-800 text-center mb-8">
-                    What is National Builders Corp?
-                </h2>
-                <p className="text-xl text-center mb-8">
-                    NBC is a 10-month challenge where Nigerian youth (ages 7-17) solve REAL problems in their
-                    communities using universal values and resourcefulness. We don't give you money during the
-                    challenge - we give you training, mentorship, and the chance to win BIG at the Grand Finale!
-                </p>
-                <div className="bg-green-50 border-l-4 border-green-800 p-6 my-8">
-                    <p className="text-2xl font-bold text-green-800 text-center italic">
-                        "You don't need money to be a nation-builder. You need values, creativity, and hustle."
-                    </p>
+            <section id="about" style={{ padding: "clamp(4rem, 10vw, 8rem) 0", background: T.warmBg }}>
+                <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 2rem" }}>
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 26rem), 1fr))", gap: "4rem", alignItems: "center" }}>
+                        <div>
+                            <div className="reveal" style={{ fontSize: "0.75rem", fontWeight: 600, color: T.gold, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "1rem" }}>The Vision</div>
+                            <h2 className="reveal d1" style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(2rem, 5vw, 3.2rem)", fontWeight: 900, color: T.greenD, lineHeight: 1.1, marginBottom: "1.5rem" }}>
+                                National Builders Corp: Raising <em style={{ fontStyle: "italic", color: T.gold }}>Legacy</em>
+                            </h2>
+                            <p className="reveal d2" style={{ fontSize: "1.1rem", lineHeight: 1.7, marginBottom: "1.5rem" }}>
+                                NBC is a 10-month challenge for youth (ages 7-17) to solve REAL problems. We don't fund you — we train you to be resourceful.
+                            </p>
+                            <div className="reveal d3" style={{ background: T.green, borderRadius: 20, padding: "2rem", color: T.cream, position: "relative", overflow: "hidden" }}>
+                                <div style={{ position: "absolute", top: -10, right: -10, opacity: 0.1 }}><GoDs style={{ fontSize: "6rem" }} /></div>
+                                <p style={{ fontSize: "1.25rem", fontStyle: "italic", fontWeight: 500, lineHeight: 1.5, position: "relative", zIndex: 2 }}>
+                                    "You don't need money to build a nation. You need values, creativity, and persistent hustle."
+                                </p>
+                            </div>
+                        </div>
+                        <div className="reveal d2" style={{ background: T.greenD, borderRadius: 32, padding: "3rem", position: "relative", overflow: "hidden", minHeight: "26rem", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
+                            <div style={{ position: "absolute", inset: 0, background: `radial-gradient(circle at 10% 10%, ${T.gold}15 0%, transparent 50%)` }} />
+                            <div style={{ position: "relative", zIndex: 2 }}>
+                                <span style={{ display: "inline-block", background: T.gold, color: "#fff", padding: "0.4rem 1rem", borderRadius: 999, fontSize: "0.75rem", fontWeight: 700, marginBottom: "1rem" }}>EST. 2025</span>
+                                <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: "2.4rem", color: T.cream, fontWeight: 900, lineHeight: 1.1, marginBottom: "1rem" }}>Creating a New Standard for Nigerian Youth.</h3>
+                                <div style={{ display: "flex", gap: "1rem" }}>
+                                    <div style={{ width: 40, height: 2, background: T.gold, marginTop: "0.8rem" }} />
+                                    <p style={{ color: "rgba(253,247,236,.6)", fontSize: "0.95rem" }}>Character-first problem solving at scale.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
-            {/* How It Works */}
-            <section id="how-it-works" className="bg-gray-50 py-16 px-4">
-                <div className="max-w-6xl mx-auto">
-                    <h2 className="text-4xl font-bold text-green-800 text-center mb-4">How It Works</h2>
-                    <p className="text-center text-xl text-gray-600 mb-12">6 Simple Steps from Registration to Grand Finale</p>
+            {/* Process Section */}
+            <section id="process" style={{ padding: "clamp(4rem, 10vw, 8rem) 0", background: "#fff" }}>
+                <div style={{ maxWidth: "60rem", margin: "0 auto", padding: "0 2rem" }}>
+                    <div className="reveal" style={{ textAlign: "center", marginBottom: "4rem" }}>
+                        <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "3rem", fontWeight: 900, color: T.greenD }}>The 6-Step Journey</h2>
+                        <p style={{ color: T.p2, fontSize: "1.1rem", marginTop: "1rem" }}>From registration to the Grand Finale stage in Abuja.</p>
+                    </div>
 
-                    <div className="space-y-8">
+                    <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
                         {[
-                            { step: 1, title: 'REGISTER (March)', desc: 'Fill our super-simple form on your phone (10 minutes). No essays, no documents needed. Just your name, age, and project idea.' },
-                            { step: 2, title: 'LEARN VALUES (April)', desc: 'Download free Values Workbook. Learn the 8 habits of National Builders. Study at your own pace. Join WhatsApp group for support.' },
-                            { step: 3, title: 'START YOUR PROJECT (May)', desc: "Don't wait for money - use what you have! Borrow, build, ask for donations. Get creative with limited resources. This is the test!" },
-                            { step: 4, title: 'WORK & DOCUMENT (June-October)', desc: 'Spend 5 months solving your problem. Take photos and videos. Count your impact. Check in monthly via WhatsApp.' },
-                            { step: 5, title: 'SUBMIT YOUR STORY (October 31)', desc: 'Write simple report (15 pages max). Submit photos. Record 2-minute video. Judges review all submissions.' },
-                            { step: 6, title: 'GRAND FINALE (December 17)', desc: 'Judges shortlist 7-10 FINALISTS. Come to Abuja (free travel). Present on stage. ₦3 MILLION awarded!' }
-                        ].map((item) => (
-                            <div key={item.step} className="bg-white rounded-lg shadow-lg p-6 flex gap-6 hover:shadow-xl transition-shadow">
-                                <div className="flex-shrink-0">
-                                    <div className="w-16 h-16 bg-green-800 text-white rounded-full flex items-center justify-center text-2xl font-bold">{item.step}</div>
+                            { t: "Register", d: "Fill the 10-minute form. No essays, no fees.", s: "March" },
+                            { t: "Learn Values", d: "Download the Values Workbook and learn the 8 habits.", s: "April" },
+                            { t: "Start Project", d: "Use what you have. Borrow, build, and innovate.", s: "May" },
+                            { t: "Work & Record", d: "Solve the problem and document with photos/video.", s: "Jun - Oct" },
+                            { t: "Submit Story", d: "Report your impact. 15 pages max + 2min video.", s: "Oct 31" },
+                            { t: "Grand Finale", d: "Pitch live in Abuja. Win your share of ₦3M.", s: "Dec 17" },
+                        ].map((item, idx) => (
+                            <div key={item.t} className="reveal" style={{ background: "#FAFAF5", borderRadius: 20, padding: "1.5rem 2rem", border: `1px solid ${T.brd}`, display: "flex", gap: "2rem", alignItems: "center" }}>
+                                <div style={{ width: 48, height: 48, borderRadius: "50%", background: T.green, color: T.goldL, display: "grid", placeItems: "center", fontWeight: 900, flexShrink: 0 }}>{idx + 1}</div>
+                                <div style={{ flex: 1 }}>
+                                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.25rem" }}>
+                                        <h4 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.4rem", fontWeight: 800, color: T.greenD }}>{item.t}</h4>
+                                        <span style={{ fontSize: "0.75rem", fontWeight: 700, color: T.gold, background: `${T.gold}15`, padding: "0.2rem 0.6rem", borderRadius: 4 }}>{item.s}</span>
+                                    </div>
+                                    <p style={{ color: T.p2, fontSize: "0.95rem" }}>{item.d}</p>
                                 </div>
-                                <div className="flex-1">
-                                    <h3 className="text-2xl font-bold text-green-800 mb-2">{item.title}</h3>
-                                    <p className="text-gray-700">{item.desc}</p>
-                                </div>
+                                <ChevronRight size={20} color={T.brd} />
                             </div>
                         ))}
                     </div>
@@ -152,162 +200,106 @@ export default function NVC({ onBack }) {
             </section>
 
             {/* Prizes Section */}
-            <section id="prizes" className="max-w-6xl mx-auto px-4 py-16">
-                <h2 className="text-4xl font-bold text-green-800 text-center mb-4">The Prizes</h2>
-                <p className="text-center text-xl text-gray-600 mb-12">
-                    All ₦3,000,000 awarded at Grand Finale to 7-10 exceptional projects
-                </p>
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div className="bg-gradient-to-br from-yellow-400 to-yellow-300 rounded-lg shadow-lg p-6 text-center transform scale-105">
-                        <div className="text-6xl mb-4">🥇</div>
-                        <div className="text-3xl font-bold mb-2 text-green-800">₦1,000,000</div>
-                        <div className="text-xl font-bold mb-4 text-green-900">GRAND CHAMPION</div>
-                        <p className="text-green-900">Best project overall + Trophy + Media tour + Face of NBC 2026</p>
+            <section id="prizes" style={{ padding: "clamp(4rem, 10vw, 8rem) 0", background: T.greenD, position: "relative", overflow: "hidden" }}>
+                <div style={{ position: "absolute", inset: 0, opacity: 0.05, background: 'url("https://www.transparenttextures.com/patterns/carbon-fibre.png")' }} />
+                <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 2rem", position: "relative", zIndex: 2 }}>
+                    <div className="reveal" style={{ textAlign: "center", marginBottom: "4rem" }}>
+                        <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "3rem", fontWeight: 900, color: T.goldL }}>The Rewards of Excellence</h2>
+                        <p style={{ color: "rgba(253,247,236,.6)", fontSize: "1.1rem", marginTop: "1rem" }}>₦3,000,000 total across 7-10 exceptional <GoDs style={{ color: T.goldL }} />.</p>
                     </div>
 
-                    <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-                        <div className="text-6xl mb-4">🥈</div>
-                        <div className="text-3xl font-bold mb-2 text-green-800">₦600,000</div>
-                        <div className="text-xl font-bold mb-4 text-gray-700">1ST RUNNER-UP</div>
-                        <p className="text-gray-600">Second place + Trophy + Certificate</p>
-                    </div>
-
-                    <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-                        <div className="text-6xl mb-4">🥉</div>
-                        <div className="text-3xl font-bold mb-2 text-green-800">₦400,000</div>
-                        <div className="text-xl font-bold mb-4 text-gray-700">2ND RUNNER-UP</div>
-                        <p className="text-gray-600">Third place + Trophy + Certificate</p>
-                    </div>
-
-                    <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-                        <div className="text-6xl mb-4">🏆</div>
-                        <div className="text-3xl font-bold mb-2 text-green-800">₦200,000</div>
-                        <div className="text-xl font-bold mb-4 text-gray-700">SPECIAL AWARDS</div>
-                        <p className="text-gray-600">4-7 more finalists receive ₦200K each: Values Exemplar, Greatest Impact, Most Innovative, People's Choice, and more!</p>
-                    </div>
-                </div>
-            </section>
-
-            {/* Values Section */}
-            <section id="values" className="bg-gray-50 py-16 px-4">
-                <div className="max-w-6xl mx-auto">
-                    <h2 className="text-4xl font-bold text-green-800 text-center mb-4">
-                        The 8 National Builder Values
-                    </h2>
-                    <p className="text-center text-xl text-gray-600 mb-12">
-                        These universal values will guide your project and your life
-                    </p>
-                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "1.5rem" }}>
                         {[
-                            { icon: '✅', title: 'Integrity & Truth', quote: '"I go do am well, no shortcut"', desc: 'Always tell the truth. Do what\'s right even when no one is watching.' },
-                            { icon: '💪', title: 'Discipline & Diligence', quote: '"I no dey give up"', desc: 'Work hard consistently. Show up every day. Finish what you start.' },
-                            { icon: '🧠', title: 'Wisdom & Discernment', quote: '"I sabi think am well"', desc: 'Think carefully before acting. Seek advice. Learn from mistakes.' },
-                            { icon: '❤️', title: 'Service & Compassion', quote: '"My brother\'s problem na my problem"', desc: 'Care about others. Help without expecting anything back.' },
-                            { icon: '⚖️', title: 'Justice & Righteousness', quote: '"E must fair for everybody"', desc: 'Stand for what\'s right. Treat everyone equally. Defend the vulnerable.' },
-                            { icon: '🔥', title: 'Perseverance & Resilience', quote: '"Wahala no fit stop me"', desc: 'Bounce back from failure. Keep going when it\'s hard.' },
-                            { icon: '🙏', title: 'Humility & Learning', quote: '"I fit learn from anybody"', desc: 'Stay teachable. Admit mistakes. Work well with others.' },
-                            { icon: '⭐', title: 'Excellence & Craftsmanship', quote: '"If I wan do am, make I do am correct"', desc: 'Quality work. Attention to detail. Always improving.' }
-                        ].map((v) => (
-                            <div key={v.title} className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-all hover:-translate-y-2 cursor-pointer">
-                                <div className="text-5xl text-center mb-4">{v.icon}</div>
-                                <h3 className="text-xl font-bold text-green-800 text-center mb-2">{v.title}</h3>
-                                <p className="text-center text-gray-600 italic text-sm mb-4">{v.quote}</p>
-                                <p className="text-gray-700 text-sm text-center">{v.desc}</p>
+                            { n: "₦1,000,000", t: "Grand Champion", d: "Trophy + Media Tour + Face of NBC 2026", c: T.gold, g: true },
+                            { n: "₦600,000", t: "1st Runner Up", d: "Trophy + Certificate + Mentorship", c: "rgba(253,247,236,.1)" },
+                            { n: "₦400,000", t: "2nd Runner Up", d: "Trophy + Certificate", c: "rgba(253,247,236,.1)" },
+                            { n: "₦200,000", t: "Special Awards", d: "4-7 Finalists. Values & Innovation awards.", c: "rgba(253,247,236,.1)" },
+                        ].map(p => (
+                            <div key={p.t} className="reveal" style={{ background: p.g ? T.gold : p.c, borderRadius: 24, padding: "2.5rem 2rem", textAlign: "center", border: p.g ? "none" : "1px solid rgba(253,247,236,.15)", backdropFilter: "blur(10px)" }}>
+                                <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>{p.t === "Grand Champion" ? "🥇" : p.t.includes("Runner") ? "🥈" : "🏆"}</div>
+                                <h3 style={{ fontFamily: "'Plus Jakarta Sans',sans-serif", fontSize: "2rem", fontWeight: 800, color: p.g ? T.greenD : T.goldL, marginBottom: "0.25rem" }}>{p.n}</h3>
+                                <div style={{ fontSize: "0.85rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: p.g ? T.green : T.cream, marginBottom: "1rem" }}>{p.t}</div>
+                                <p style={{ color: p.g ? T.greenD : "rgba(253,247,236,.7)", fontSize: "0.85rem", lineHeight: 1.5 }}>{p.d}</p>
                             </div>
                         ))}
                     </div>
                 </div>
             </section>
 
-            {/* Resources Section */}
-            <section id="resources" class="max-w-6xl mx-auto px-4 py-16">
-                <h2 className="text-4xl font-bold text-green-800 text-center mb-4">Free Resources</h2>
-                <p className="text-center text-xl text-gray-600 mb-12">Everything you need to succeed - download for free!</p>
+            {/* Values Grid */}
+            <section id="values" style={{ padding: "clamp(4rem, 10vw, 8rem) 0", background: "#FAFAF5" }}>
+                <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 2rem" }}>
+                    <div className="reveal" style={{ marginBottom: "4rem" }}>
+                        <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "2.8rem", fontWeight: 900, color: T.greenD }}>The 8 Core Values</h2>
+                        <p style={{ color: T.p2, fontSize: "1.1rem", borderLeft: `3px solid ${T.gold}`, paddingLeft: "1.2rem", marginTop: "0.5rem" }}>The internal compass of every effective National Builder.</p>
+                    </div>
 
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {[
-                        { title: 'Values Training Workbook', desc: '40-page guide teaching all 8 values with reflection questions, examples, and exercises.', meta: '40 pages' },
-                        { title: 'Project Planning Guide', desc: '20-page simple planning tool to help you design and organize your project.', meta: '20 pages' },
-                        { title: 'Monthly Progress Tracker', desc: '10-page form for quick monthly check-ins to track your impact.', meta: '10 pages' },
-                        { title: 'Final Impact Report Template', desc: '15-page fill-in-the-blank template for your October 31 submission.', meta: '15 pages' },
-                        { title: 'Mentor Guide', desc: '25-page handbook for adults supporting youth. How to guide without taking over.', meta: '25 pages' },
-                        { title: 'Video Tutorial', desc: 'Learn how to use your phone to document your project professionally.', meta: 'Video' }
-                    ].map((r) => (
-                        <div key={r.title} className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
-                            <h3 className="text-xl font-bold text-green-800 mb-3">📖 {r.title}</h3>
-                            <p className="text-gray-700 mb-4">{r.desc}</p>
-                            <div className="flex justify-between items-center">
-                                <span className="text-sm text-gray-500">{r.meta}</span>
-                                <button className="bg-green-800 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors">Download</button>
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1rem" }}>
+                        {[
+                            { i: "✅", t: "Integrity", q: "I go do am well", d: "Truth in word and excellence in work." },
+                            { i: "💪", t: "Discipline", q: "I no dey give up", d: "Showing up every day until the job is done." },
+                            { i: "🧠", t: "Wisdom", q: "I sabi think am well", d: "Careful thought before action." },
+                            { i: "❤️", t: "Service", q: "My brother's problem na my problem", d: "Solving for others, not just self." },
+                            { i: "⚖️", t: "Justice", q: "E must fair for everybody", d: "Defending the vulnerable." },
+                            { i: "🔥", t: "Resilience", q: "Wahala no fit stop me", d: "Bouncing back from every setback." },
+                            { i: "🙏", t: "Humility", q: "I fit learn from anybody", d: "Staying teachable at every level." },
+                            { i: "⭐", t: "Excellence", q: "If I wan do am, correct", d: "Quality that leaves a lasting mark." }
+                        ].map(v => (
+                            <div key={v.t} className="reveal" style={{ background: "#fff", padding: "2rem", borderRadius: 24, border: `1px solid ${T.brd}`, transition: "transform .3s ease", cursor: "default" }}>
+                                <div style={{ fontSize: "2.5rem", marginBottom: "1rem" }}>{v.i}</div>
+                                <h4 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.5rem", fontWeight: 800, color: T.greenD, marginBottom: "0.25rem" }}>{v.t}</h4>
+                                <p style={{ fontSize: "0.75rem", fontStyle: "italic", color: T.gold, fontWeight: 600, marginBottom: "1rem" }}>{v.q}</p>
+                                <p style={{ fontSize: "0.9rem", color: T.p2, lineHeight: 1.5 }}>{v.d}</p>
                             </div>
-                        </div>
-                    ))}
-                </div>
-
-                <div className="text-center mt-12">
-                    <button className="bg-yellow-400 text-green-800 px-8 py-4 rounded-full text-xl font-bold hover:bg-yellow-300 transition-all">
-                        DOWNLOAD ALL RESOURCES (ZIP)
-                    </button>
+                        ))}
+                    </div>
                 </div>
             </section>
 
-            {/* Registration Section */}
-            <section id="register" className="bg-gray-50 py-16 px-4">
-                <div className="max-w-3xl mx-auto">
-                    <h2 className="text-4xl font-bold text-green-800 text-center mb-4">Register Now - It's FREE!</h2>
-                    <p className="text-center text-xl text-gray-600 mb-8">
-                        Simple 3-step form. Works on any phone. Takes only 10 minutes.
-                    </p>
+            {/* Registration Form */}
+            <section id="register" style={{ padding: "clamp(4rem, 10vw, 8rem) 0", background: T.cream }}>
+                <div style={{ maxWidth: "40rem", margin: "0 auto", padding: "0 2rem" }}>
+                    <div className="reveal" style={{ textAlign: "center", marginBottom: "3rem" }}>
+                        <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "2.8rem", fontWeight: 900, color: T.greenD }}>Start Your Legacy</h2>
+                        <p style={{ color: T.p2, marginTop: "0.5rem" }}>Join the 2025 cohort of National Builders.</p>
+                    </div>
 
-                    <div className="bg-white rounded-lg shadow-2xl p-8">
+                    <div style={{ background: "#fff", borderRadius: 32, padding: "3rem", boxShadow: "0 20px 60px rgba(22,97,62,.08)", border: `1px solid ${T.brd}` }}>
                         {!registrationSubmitted ? (
-                            <form onSubmit={handleRegister} className="space-y-6">
-                                <h3 className="text-2xl font-bold text-green-800 text-center mb-6">STEP 1: Basic Info</h3>
+                            <form onSubmit={handleRegister} style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
                                 <div>
-                                    <label className="block text-gray-700 font-bold mb-2">Full Name *</label>
-                                    <input type="text" required className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-green-600 focus:outline-none" placeholder="Enter your full name" />
+                                    <label style={{ display: "block", fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em", color: T.p3, marginBottom: "0.5rem" }}>Full Name</label>
+                                    <input required style={{ width: "100%", padding: "1rem", borderRadius: 12, border: `1px solid ${T.brd}`, background: "#FAFAF5", outline: "none", fontSize: "1rem" }} placeholder="Olufemi Adeyemi" />
                                 </div>
-                                <div>
-                                    <label className="block text-gray-700 font-bold mb-2">Age * (7-17 years)</label>
-                                    <input type="number" required min="7" max="17" className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-green-600 focus:outline-none" placeholder="Your age" />
-                                </div>
-                                <div>
-                                    <label className="block text-gray-700 font-bold mb-2">Phone Number *</label>
-                                    <input type="tel" required className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-green-600 focus:outline-none" placeholder="08012345678" />
-                                </div>
-                                <div>
-                                    <label className="block text-gray-700 font-bold mb-2">State *</label>
-                                    <select required className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-green-600 focus:outline-none">
-                                        <option value="">Select your state</option>
-                                        <option value="lagos">Lagos</option>
-                                        <option value="abuja">FCT Abuja</option>
-                                        <option value="kano">Kano</option>
-                                        {/* Simplified list for brevity */}
-                                    </select>
+                                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+                                    <div>
+                                        <label style={{ display: "block", fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em", color: T.p3, marginBottom: "0.5rem" }}>Age (7-17)</label>
+                                        <input type="number" min="7" max="17" required style={{ width: "100%", padding: "1rem", borderRadius: 12, border: `1px solid ${T.brd}`, background: "#FAFAF5", outline: "none" }} placeholder="12" />
+                                    </div>
+                                    <div>
+                                        <label style={{ display: "block", fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em", color: T.p3, marginBottom: "0.5rem" }}>State</label>
+                                        <input required style={{ width: "100%", padding: "1rem", borderRadius: 12, border: `1px solid ${T.brd}`, background: "#FAFAF5", outline: "none" }} placeholder="Lagos" />
+                                    </div>
                                 </div>
                                 <div>
-                                    <label className="block text-gray-700 font-bold mb-2">Problem Statement *</label>
-                                    <textarea required rows="4" className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-green-600 focus:outline-none" placeholder="Describe the problem..."></textarea>
+                                    <label style={{ display: "block", fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em", color: T.p3, marginBottom: "0.5rem" }}>Phone Number</label>
+                                    <input required type="tel" style={{ width: "100%", padding: "1rem", borderRadius: 12, border: `1px solid ${T.brd}`, background: "#FAFAF5", outline: "none" }} placeholder="080 000 0000" />
                                 </div>
-                                <div className="bg-gray-100 p-4 rounded-lg">
-                                    <label className="flex items-start">
-                                        <input type="checkbox" required className="mr-3 mt-1" />
-                                        <span className="text-sm">I agree to work on my project, learn the 8 values, and report honestly.</span>
-                                    </label>
+                                <div>
+                                    <label style={{ display: "block", fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em", color: T.p3, marginBottom: "0.5rem" }}>Problem You Want to Solve</label>
+                                    <textarea rows="4" required style={{ width: "100%", padding: "1rem", borderRadius: 12, border: `1px solid ${T.brd}`, background: "#FAFAF5", outline: "none", fontFamily: "inherit" }} placeholder="e.g. Clean water in my street, recycling plastics..." />
                                 </div>
-                                <button type="submit" className="w-full bg-yellow-400 text-green-800 px-6 py-4 rounded-lg font-bold hover:bg-yellow-300 transition-colors text-xl">
-                                    SUBMIT REGISTRATION ✓
+                                <button type="submit" style={{ padding: "1.2rem", borderRadius: 16, background: T.gold, color: "#fff", fontWeight: 700, fontSize: "1.1rem", boxShadow: `0 8px 24px ${T.gold}30`, marginTop: "1rem" }}>
+                                    Submit Registration
                                 </button>
                             </form>
                         ) : (
-                            <div className="text-center py-8">
-                                <div className="text-6xl mb-4">🎉</div>
-                                <h3 className="text-3xl font-bold text-green-800 mb-4">Welcome, National Builder!</h3>
-                                <p className="text-xl mb-4">Your registration is complete!</p>
-                                <div className="bg-gray-100 p-4 rounded-lg mb-6">
-                                    <p className="font-bold">Your ID: <span className="text-green-800">{userId}</span></p>
-                                </div>
-                                <p className="text-lg">Check your phone for next steps!</p>
+                            <div style={{ textAlign: "center", padding: "2rem 0" }}>
+                                <div style={{ fontSize: "4rem", marginBottom: "1rem" }}>🎯</div>
+                                <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: "2rem", fontWeight: 900, color: T.greenD, marginBottom: "0.5rem" }}>You're In!</h3>
+                                <p style={{ color: T.p2, marginBottom: "1.5rem" }}>Registry Successful. Your Builder ID is:</p>
+                                <div style={{ background: T.greenD, color: T.goldL, padding: "1rem", borderRadius: 12, fontSize: "1.5rem", fontWeight: 800, fontFamily: "'DM Mono',monospace", letterSpacing: "0.1em", display: "inline-block" }}>{userId}</div>
+                                <p style={{ color: T.p3, fontSize: "0.85rem", marginTop: "1.5rem" }}>Check your phone for the next steps.</p>
                             </div>
                         )}
                     </div>
@@ -315,30 +307,29 @@ export default function NVC({ onBack }) {
             </section>
 
             {/* Footer */}
-            <footer className="bg-green-800 text-white py-12 px-4">
-                <div className="max-w-6xl mx-auto">
-                    <div className="grid md:grid-cols-3 gap-8 mb-8">
-                        <div>
-                            <h3 className="text-2xl font-bold mb-4">National Builders Corp</h3>
-                            <p>Building a New Nigeria Over 7 Decades</p>
-                        </div>
-                        <div>
-                            <h4 className="font-bold mb-4">Quick Links</h4>
-                            <div className="space-y-2">
-                                <a href="#about" className="block hover:text-yellow-400">About</a>
-                                <a href="#register" className="block hover:text-yellow-400">Register</a>
-                            </div>
-                        </div>
-                        <div>
-                            <h4 className="font-bold mb-4">Contact Us</h4>
-                            <p>Email: info@nationalbuilders.ng</p>
+            <footer style={{ background: T.greenD, padding: "5rem 0", borderTop: `1px solid ${T.gold}30` }}>
+                <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 2rem", textAlign: "center" }}>
+                    <div style={{ display: "flex", justifyContent: "center", gap: "1rem", marginBottom: "2rem" }}>
+                        <div style={{ width: 40, height: 40, background: T.green, borderRadius: 10, display: "grid", placeItems: "center", color: T.goldL, fontWeight: 900, fontFamily: "'Playfair Display',serif" }}>g</div>
+                        <div style={{ textAlign: "left" }}>
+                            <div style={{ color: T.cream, fontWeight: 700, fontSize: "1rem" }}>National Builders Corp</div>
+                            <div style={{ color: T.goldL, fontSize: "0.7rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em" }}>Raising <GoDs /></div>
                         </div>
                     </div>
-                    <div className="border-t border-green-700 pt-8 text-center">
-                        <p>&copy; 2025 National Builders Corp. All Rights Reserved.</p>
-                    </div>
+                    <div style={{ height: "1px", background: "rgba(253,247,236,.1)", maxWidth: "20rem", margin: "0 auto 2rem" }} />
+                    <p style={{ color: "rgba(253,247,236,.4)", fontSize: "0.85rem" }}>&copy; 2025 goDs Global KidsInspiring. IT No. 6980735</p>
                 </div>
             </footer>
+
+            {/* Reveal Effects CSS */}
+            <style>{`
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .rev { opacity: 1; transform: translateY(0); }
+        .d1 { transition-delay: 100ms; }
+        .d2 { transition-delay: 200ms; }
+        .d3 { transition-delay: 300ms; }
+        .d4 { transition-delay: 400ms; }
+      `}</style>
         </div>
     );
 }
