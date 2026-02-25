@@ -21,6 +21,7 @@
 */
 
 import { useState, useEffect, useRef, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import NVC from "./NVC.jsx";
 import {
   AreaChart, Area, BarChart, Bar, XAxis, YAxis, Tooltip,
@@ -446,42 +447,39 @@ function Hero({ onDash, dark }) {
   return (
     <section style={{ minHeight: "100svh", background: T.greenD, position: "relative", display: "flex", alignItems: "center", overflow: "hidden", paddingTop: "5rem" }}>
       {/* Ambient bg */}
-      <div style={{ position: "absolute", inset: 0, pointerEvents: "none", background: `radial-gradient(ellipse 80% 65% at 12% 50%,${T.green}60 0%,transparent 58%),radial-gradient(ellipse 55% 75% at 88% 10%,${T.gold}22 0%,transparent 52%),linear-gradient(140deg,#060E08 0%,#0D3D26 55%,#16613E 100%)` }} />
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 2 }} style={{ position: "absolute", inset: 0, pointerEvents: "none", background: `radial-gradient(ellipse 80% 65% at 12% 50%,${T.green}60 0%,transparent 58%),radial-gradient(ellipse 55% 75% at 88% 10%,${T.gold}22 0%,transparent 52%),linear-gradient(140deg,#060E08 0%,#0D3D26 55%,#16613E 100%)` }} />
       {/* Ghost goDs watermark */}
-      <div aria-hidden style={{ position: "absolute", right: "-0.08em", top: "50%", fontSize: "clamp(14rem,40vw,58rem)", lineHeight: 1, color: "transparent", WebkitTextStroke: "1px rgba(196,136,44,.06)", userSelect: "none", pointerEvents: "none", fontFamily: "'Playfair Display',serif", fontStyle: "italic", fontWeight: 900, animation: "floatStar 9s ease-in-out infinite" }}>
+      <motion.div initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1.5, delay: 0.5 }} aria-hidden style={{ position: "absolute", right: "-0.08em", top: "50%", fontSize: "clamp(14rem,40vw,58rem)", lineHeight: 1, color: "transparent", WebkitTextStroke: "1px rgba(196,136,44,.06)", userSelect: "none", pointerEvents: "none", fontFamily: "'Playfair Display',serif", fontStyle: "italic", fontWeight: 900, animation: "floatStar 9s ease-in-out infinite" }}>
         goDs
-      </div>
+      </motion.div>
 
       <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 clamp(1.25rem,5vw,3rem)", position: "relative", zIndex: 2, width: "100%" }}>
-        <div style={{ maxWidth: "56rem" }}>
+        <motion.div initial="initial" animate="animate" variants={{ animate: { transition: { staggerChildren: 0.12 } } }} style={{ maxWidth: "56rem" }}>
           {/* Eyebrow */}
-          <div style={{ display: "inline-flex", alignItems: "center", gap: "0.75rem", fontSize: "0.76rem", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase", color: T.goldL, marginBottom: "1.75rem", opacity: 0, animation: "fadeUp .8s .3s ease-out forwards" }}>
+          <motion.div variants={{ initial: { opacity: 0, y: 15 }, animate: { opacity: 1, y: 0 } }} style={{ display: "inline-flex", alignItems: "center", gap: "0.75rem", fontSize: "0.76rem", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase", color: T.goldL, marginBottom: "1.75rem" }}>
             <span style={{ width: "2rem", height: "1.5px", background: T.gold, display: "block" }} />
             goDs Global KidsInspiring · Est. 2025 · IT No. 6980735
-          </div>
+          </motion.div>
           {/* Main headline */}
-          <h1 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(2.8rem,8vw,5.8rem)", fontWeight: 900, color: T.cream, letterSpacing: "-0.03em", lineHeight: .96, marginBottom: "1.5rem", opacity: 0, animation: "fadeUp .9s .5s ease-out forwards" }}>
+          <motion.h1 variants={{ initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 } }} style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(2.8rem,8vw,5.8rem)", fontWeight: 900, color: T.cream, letterSpacing: "-0.03em", lineHeight: .96, marginBottom: "1.5rem" }}>
             Raising <em style={{ fontStyle: "italic", color: T.goldL }}>goDs</em><br />
             <span style={{ fontWeight: 700, fontSize: "0.72em", color: "rgba(253,247,236,.85)" }}>Geniuses with divine purpose —</span><br />
             building <em style={{ fontStyle: "italic", color: T.goldL }}>Nations</em>
-          </h1>
-          <p style={{ fontSize: "clamp(1rem,2.4vw,1.2rem)", color: "rgba(253,247,236,.72)", lineHeight: 1.68, marginBottom: "2rem", maxWidth: "48ch", opacity: 0, animation: "fadeUp .9s .7s ease-out forwards" }}>
+          </motion.h1>
+          <motion.p variants={{ initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 } }} style={{ fontSize: "clamp(1rem,2.4vw,1.2rem)", color: "rgba(253,247,236,.72)", lineHeight: 1.68, marginBottom: "2rem", maxWidth: "48ch" }}>
             In 2025, <strong style={{ color: T.goldL, fontWeight: 600 }}>639 goDs</strong> generated <strong style={{ color: T.goldL, fontWeight: 600 }}>19,695 attendance entries</strong> across 8 programmes — 365 events, every single day of the year.
-          </p>
+          </motion.p>
           {/* CTAs */}
-          <div className="hero-btns" style={{ display: "flex", gap: ".75rem", alignItems: "center", flexWrap: "wrap", opacity: 0, animation: "fadeUp .9s .9s ease-out forwards" }}>
-            <a href="#join" className="gold-btn" style={{ display: "inline-flex", alignItems: "center", gap: ".5rem", padding: ".9em 2.4em", borderRadius: 999, background: T.gold, color: "#fff", fontWeight: 700, fontSize: "1rem", fontFamily: "'Plus Jakarta Sans',sans-serif" }}>
+          <motion.div variants={{ initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 } }} className="hero-btns" style={{ display: "flex", gap: ".75rem", alignItems: "center", flexWrap: "wrap" }}>
+            <motion.a whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }} href="#join" className="gold-btn" style={{ display: "inline-flex", alignItems: "center", gap: ".5rem", padding: ".9em 2.4em", borderRadius: 999, background: T.gold, color: "#fff", fontWeight: 700, fontSize: "1rem", fontFamily: "'Plus Jakarta Sans',sans-serif" }}>
               Join a Programme
-            </a>
-            <button onClick={onDash} className="ghost-btn" style={{ display: "inline-flex", alignItems: "center", gap: ".5rem", padding: ".9em 2.4em", borderRadius: 999, background: "rgba(253,247,236,.07)", color: T.cream, fontWeight: 500, fontSize: "1rem", border: "1.5px solid rgba(253,247,236,.2)", cursor: "pointer" }}>
+            </motion.a>
+            <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }} onClick={onDash} className="ghost-btn" style={{ display: "inline-flex", alignItems: "center", gap: ".5rem", padding: ".9em 2.4em", borderRadius: 999, background: "rgba(253,247,236,.07)", color: T.cream, fontWeight: 500, fontSize: "1rem", border: "1.5px solid rgba(253,247,236,.2)", cursor: "pointer" }}>
               <Activity size={16} strokeWidth={1.5} /> 2025 Live Data
-            </button>
-            <a href="https://linktr.ee/KidsInspiringNation" target="_blank" rel="noopener" style={{ display: "inline-flex", alignItems: "center", gap: ".5rem", padding: ".9em 1.5em", borderRadius: 999, background: "rgba(253,247,236,.05)", color: "rgba(253,247,236,.6)", fontWeight: 500, fontSize: ".9rem", border: "1px solid rgba(253,247,236,.12)" }}>
-              <ExternalLink size={14} strokeWidth={1.5} /> Linktree
-            </a>
-          </div>
+            </motion.button>
+          </motion.div>
           {/* Schedule strip */}
-          <div style={{ display: "flex", gap: "1.5rem", marginTop: "3.5rem", paddingTop: "2rem", borderTop: "1px solid rgba(196,136,44,.18)", flexWrap: "wrap", opacity: 0, animation: "fadeUp .9s 1.1s ease-out forwards" }}>
+          <motion.div variants={{ initial: { opacity: 0 }, animate: { opacity: 1 } }} transition={{ delay: 0.8 }} style={{ display: "flex", gap: "1.5rem", marginTop: "3.5rem", paddingTop: "2rem", borderTop: "1px solid rgba(196,136,44,.18)", flexWrap: "wrap" }}>
             {[
               { icon: "📖", time: "8pm WAT", label: "KIND · Daily", color: T.kindC },
               { icon: "✨", time: "Sun 11am", label: "gDX · Weekly", color: T.gdxC },
@@ -496,8 +494,8 @@ function Hero({ onDash, dark }) {
                 </div>
               </div>
             ))}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );
@@ -1563,9 +1561,23 @@ export default function App() {
 
   return (
     <>
-      {mode === "website" && <Website onDash={() => setMode("dashboard")} onNVC={() => setMode("nvc")} dark={dark} />}
-      {mode === "dashboard" && <Dashboard onBack={() => setMode("website")} dark={dark} toggleDark={toggleDark} />}
-      {mode === "nvc" && <NVC onBack={() => setMode("website")} />}
+      <AnimatePresence mode="wait">
+        {mode === "website" && (
+          <motion.div key="web" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            <Website onDash={() => setMode("dashboard")} onNVC={() => setMode("nvc")} dark={dark} />
+          </motion.div>
+        )}
+        {mode === "dashboard" && (
+          <motion.div key="dash" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} style={{ height: "100vh" }}>
+            <Dashboard onBack={() => setMode("website")} dark={dark} toggleDark={toggleDark} />
+          </motion.div>
+        )}
+        {mode === "nvc" && (
+          <motion.div key="nvc" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            <NVC onBack={() => setMode("website")} dark={dark} />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <DarkToggle dark={dark} toggle={toggleDark} />
       <CookieBanner dark={dark} />
