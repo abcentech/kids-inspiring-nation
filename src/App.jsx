@@ -185,10 +185,10 @@ const PROGRAMS = [
     full: "FACE — Feed A Community Every week",
     pillar: "Service", icon: "🍽️", fill: T.faceC,
     entries: null, sessions: 52, unique: null, pct: null,
-    meals: 3000,
+    meals: 1952,
     schedule: "Sundays · 3pm WAT",
-    tagline: "Over 3,000 meals served in 2025",
-    desc: "Every Sunday at 3pm, KidsInspiring Nation feeds every child in the community. In 2025, FACE served over 3,000 meals — demonstrating that the mission of raising goDs includes meeting their most practical needs.",
+    tagline: "1,952 meals served in 2025",
+    desc: "Every Sunday at 3pm, KidsInspiring Nation feeds every child in the community. In 2025, FACE served 1,952 meals — demonstrating that the mission of raising goDs includes meeting their most practical needs.",
     bg: `linear-gradient(135deg,${T.coral},#A83920)`,
   },
   {
@@ -467,7 +467,7 @@ function Hero({ onDash, dark }) {
             building <em style={{ fontStyle: "italic", color: T.goldL }}>Nations</em>
           </motion.h1>
           <motion.p variants={{ initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 } }} style={{ fontSize: "clamp(1rem,2.4vw,1.2rem)", color: "rgba(253,247,236,.72)", lineHeight: 1.68, marginBottom: "2rem", maxWidth: "48ch" }}>
-            In 2025, <strong style={{ color: T.goldL, fontWeight: 600 }}>639 goDs</strong> generated <strong style={{ color: T.goldL, fontWeight: 600 }}>19,695 attendance entries</strong> across 8 programmes — 365 events, every single day of the year.
+            In 2025, <strong style={{ color: T.goldL, fontWeight: 600 }}>639 goDs</strong> generated <strong style={{ color: T.goldL, fontWeight: 600 }}>19,695 attendance entries</strong> across 14 programmes — 365 events, every single day of the year.
           </motion.p>
           {/* CTAs */}
           <motion.div variants={{ initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 } }} className="hero-btns" style={{ display: "flex", gap: ".75rem", alignItems: "center", flexWrap: "wrap" }}>
@@ -561,7 +561,7 @@ function AboutSection({ dark }) {
               KidsInspiring Nation exists to raise <strong><GoDs style={{ color: T.gold }} /></strong> — Geniuses with divine purpose — who will build the Nations they were born to lead. We call every child we work with a <strong style={{ color: T.green }}>goD</strong>.
             </p>
             <p className="reveal d2" style={{ fontSize: "1rem", color: txt, lineHeight: 1.72, maxWidth: "58ch", marginBottom: "1.75rem" }}>
-              Registered as <strong>goDs Global KidsInspiring</strong> (IT No. 6980735), we are a Nigerian NGO running 8 concurrent programmes. In 2025, we ran a programme activity every single day of the year.
+              Registered as <strong>goDs Global KidsInspiring</strong> (IT No. 6980735), we are a Nigerian NGO running 14 concurrent programmes. In 2025, we ran a programme activity every single day of the year.
             </p>
             {/* Quick stats */}
             <div className="reveal d3" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: ".75rem", marginBottom: "1.75rem" }}>
@@ -593,7 +593,7 @@ function AboutSection({ dark }) {
                 <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(2.8rem,7vw,4.2rem)", fontWeight: 900, color: T.goldL, letterSpacing: "-0.04em", lineHeight: 1 }}>19,695</div>
                 <div style={{ color: "rgba(253,247,236,.8)", fontSize: ".85rem", fontWeight: 500, letterSpacing: ".04em", marginTop: ".25rem" }}>Attendance entries · 2025</div>
                 <div style={{ marginTop: "1rem", display: "flex", gap: "1.5rem", flexWrap: "wrap" }}>
-                  {[{ v: "639", l: "goDs" }, { v: "8", l: "Programmes" }, { v: "365", l: "Events" }, { v: "3,000+", l: "Meals served" }].map(s => (
+                  {[{ v: "639", l: "goDs" }, { v: "14", l: "Programmes" }, { v: "365", l: "Events" }, { v: "1,952", l: "Meals served" }].map(s => (
                     <div key={s.l}>
                       <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.3rem", fontWeight: 900, color: T.goldL, lineHeight: 1 }}>{s.v}</div>
                       <div style={{ fontSize: ".68rem", color: "rgba(253,247,236,.5)", fontWeight: 500, letterSpacing: ".04em" }}>{s.l}</div>
@@ -618,7 +618,7 @@ function ProgramsSection({ dark }) {
       <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 clamp(1.25rem,5vw,3rem)" }}>
         <div className="reveal" style={{ marginBottom: "clamp(2rem,5vw,3rem)" }}>
           <div style={{ fontSize: ".76rem", fontWeight: 500, letterSpacing: ".1em", textTransform: "uppercase", color: T.gold, marginBottom: ".75rem", display: "flex", alignItems: "center", gap: ".75rem" }}>
-            8 Active Programmes<span style={{ display: "block", width: "3rem", height: "1.5px", background: T.gold }} />
+            14 Active Programmes<span style={{ display: "block", width: "3rem", height: "1.5px", background: T.gold }} />
           </div>
           <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(2rem,5vw,3.2rem)", fontWeight: 900, letterSpacing: "-0.025em", lineHeight: 1.08, color: dark ? T.cream : T.greenD, maxWidth: "22ch" }}>
             Built for <GoDs style={{ color: T.gold }} />, Proven by the Data
@@ -753,10 +753,10 @@ function ImpactSection({ onDash, dark }) {
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,11rem),1fr))", gap: "1rem", marginBottom: "3rem" }}>
           {[
             { n: "19,695", l: "Total\nAttendance Entries", d: "d1" }, { n: "639", l: "Unique\ngoDs", d: "d2" },
-            { n: "365", l: "Events Held\nin 2025", d: "d3" }, { n: "8", l: "Active\nProgrammes", d: "d4" },
+            { n: "365", l: "Events Held\nin 2025", d: "d3" }, { n: "14", l: "Active\nProgrammes", d: "d4" },
             { n: "13,350", l: "KIND Entries\n(Flagship)", d: "d1" }, { n: "301", l: "Peak Day\nJan 25", d: "d2" },
             { n: "+58%", l: "KIND Growth\nQ1 YoY", d: "d3" }, { n: "+200%", l: "DF3 Growth\nvs 2024", d: "d4" },
-            { n: "3,000+", l: "Meals Served\nby FACE", d: "d1" }, { n: "9", l: "Daniel Fast\nSessions", d: "d2" },
+            { n: "1,952", l: "Meals Served\nby FACE", d: "d1" }, { n: "9", l: "Daniel Fast\nSessions", d: "d2" },
           ].map(s => (
             <div key={s.l} className={`reveal ${s.d}`} style={{ textAlign: "center", padding: "1.25rem .75rem", borderRadius: 18, background: "rgba(253,247,236,.04)", border: "1px solid rgba(196,136,44,.1)", transition: "background .2s" }}
               onMouseEnter={e => e.currentTarget.style.background = "rgba(253,247,236,.08)"}
@@ -796,7 +796,7 @@ function FACESection({ dark }) {
               Every Sunday at 3pm, KidsInspiring Nation shows up to feed every child in the community. This is not a charity event — it is an act of love, a declaration that raising <GoDs style={{ color: T.coral }} /> includes meeting their most practical needs.
             </p>
             <div className="reveal d3" style={{ display: "flex", gap: "1.5rem", flexWrap: "wrap", marginBottom: "2rem" }}>
-              {[{ n: "3,000+", l: "Meals in 2025" }, { n: "52", l: "Sundays served" }, { n: "3pm", l: "Every Sunday" }].map(s => (
+              {[{ n: "1,952", l: "Meals in 2025" }, { n: "52", l: "Sundays served" }, { n: "3pm", l: "Every Sunday" }].map(s => (
                 <div key={s.l} style={{ textAlign: "center" }}>
                   <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "2rem", fontWeight: 900, color: T.coral, letterSpacing: "-0.04em", lineHeight: 1 }}>{s.n}</div>
                   <div style={{ fontSize: ".72rem", color: dark ? T.d2 : T.p2, fontWeight: 500, marginTop: ".2rem" }}>{s.l}</div>

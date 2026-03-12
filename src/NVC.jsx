@@ -92,23 +92,42 @@ export default function NVC({ onBack, dark }) {
                             <span style={{ width: 45, height: 2, background: T.gold }} /> 🇳🇬 National Builders Challenge
                         </motion.div>
                         <motion.h1 variants={fadeIn} style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(3rem, 9vw, 6rem)", fontWeight: 900, color: T.cream, lineHeight: 0.9, letterSpacing: "-0.04em", marginBottom: "2rem" }}>
-                            The Power to <br />
-                            <em style={{ fontStyle: "italic", color: T.goldL }}>Transform</em> Nigeria.
+                            Build the Nigeria <br />
+                            You Want To <em style={{ fontStyle: "italic", color: T.goldL }}>See</em>.
                         </motion.h1>
                         <motion.p variants={fadeIn} style={{ fontSize: "clamp(1.1rem, 2.5vw, 1.4rem)", color: "rgba(253,247,236,.75)", lineHeight: 1.6, marginBottom: "3rem", maxWidth: "42ch" }}>
-                            Character-led nation building for young <GoDs style={{ color: T.goldL }} />. Build solutions that last, using universal values.
+                            A 10-month masterclass in resourcefulness. Join 1,000 young visionaries solving real community problems through character and grit.
                         </motion.p>
 
                         <motion.div variants={fadeIn} style={{ display: "flex", flexWrap: "wrap", gap: "1.25rem", alignItems: "center" }}>
                             <motion.a whileHover={{ scale: 1.05, filter: "brightness(1.1)" }} whileTap={{ scale: 0.98 }} href="#register" style={{ padding: "1.2rem 3.2rem", borderRadius: 999, background: T.gold, color: "#fff", fontWeight: 800, fontSize: "1.15rem", boxShadow: `0 15px 40px ${T.gold}50` }}>Start Your Legacy</motion.a>
                             <div style={{ background: "rgba(253,247,236,.06)", padding: "1rem 2rem", borderRadius: 999, border: "1px solid rgba(253,247,236,.2)", backdropFilter: "blur(10px)", display: "flex", alignItems: "center", gap: "0.75rem" }}>
                                 <div style={{ width: 10, height: 10, background: T.ok, borderRadius: "50%", animation: "pulse 2s infinite" }} />
-                                <span style={{ color: T.cream, fontWeight: 700 }}>2025 Cohort Open</span>
+                                <span style={{ color: T.cream, fontWeight: 700 }}>2026 Cohort Open</span>
                             </div>
                         </motion.div>
                     </motion.div>
                 </div>
             </section>
+
+            {/* Age Divisions Strip */}
+            <div style={{ background: T.gold, borderBottom: `1px solid ${T.goldL}40`, padding: "0.85rem 0" }}>
+                <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 2rem", display: "flex", alignItems: "center", justifyContent: "center", flexWrap: "wrap", gap: "2rem" }}>
+                    {[
+                        { label: "Junior Builders", sub: "Ages 7–10", icon: "🟢" },
+                        { label: "Intermediate", sub: "Ages 11–13", icon: "🔵" },
+                        { label: "Senior Builders", sub: "Ages 14–17", icon: "🟡" },
+                    ].map(d => (
+                        <div key={d.label} style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
+                            <span style={{ fontSize: "1.2rem" }}>{d.icon}</span>
+                            <div>
+                                <div style={{ fontSize: "0.85rem", fontWeight: 800, color: "#fff", textTransform: "uppercase", letterSpacing: "0.05em" }}>{d.label}</div>
+                                <div style={{ fontSize: "0.75rem", fontWeight: 600, color: "rgba(255,255,255,0.8)" }}>{d.sub}</div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
 
             {/* Live Activity Strip */}
             <div style={{ background: dark ? T.srfD : T.green, borderBottom: `1px solid ${T.gold}20`, padding: "0.85rem 0" }}>
@@ -123,45 +142,70 @@ export default function NVC({ onBack, dark }) {
                 </div>
             </div>
 
-            {/* Process Section */}
-            <section id="process" style={{ padding: "8rem 0", background: s.bg }}>
+            {/* Mission Section */}
+            <section id="about" style={{ padding: "8rem 0", background: s.bg }}>
                 <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 2rem" }}>
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "5rem", alignItems: "start" }}>
                         <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-                            <div style={{ fontSize: "0.8rem", fontWeight: 800, color: T.gold, letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "1rem" }}>The Roadmap</div>
-                            <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "3.5rem", fontWeight: 900, color: s.txt, lineHeight: 1.1, marginBottom: "2rem" }}>How to Become a National Builder.</h2>
-                            <div style={{ display: "flex", gap: "1.5rem", flexWrap: "wrap" }}>
-                                <div style={{ flex: 1, minWidth: "160px" }}>
-                                    <div style={{ fontSize: "2.5rem", fontWeight: 900, color: T.gold, opacity: 0.3, marginBottom: "-0.5rem" }}>01</div>
-                                    <h4 style={{ fontWeight: 800, color: s.txt }}>Character First</h4>
-                                    <p style={{ fontSize: "0.85rem", color: s.sub }}>We start with values, not funding.</p>
+                            <div style={{ fontSize: "0.8rem", fontWeight: 800, color: T.gold, letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "1rem" }}>The Mission</div>
+                            <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "3rem", fontWeight: 900, color: s.txt, lineHeight: 1.1, marginBottom: "2rem" }}>Discipline, Service, and Radical Character.</h2>
+                            <p style={{ fontSize: "1.1rem", color: s.sub, lineHeight: 1.6, marginBottom: "2.5rem" }}>
+                                We believe money is secondary to character. The National Builders Corp is a meritocracy where youth (7-17) learn to build a nation from the ground up by solving local problems using only creativity and hustle.
+                            </p>
+                            
+                            <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+                                <div style={{ display: "flex", gap: "1rem", alignItems: "flex-start" }}>
+                                    <div style={{ fontSize: "1.5rem" }}>🎯</div>
+                                    <div>
+                                        <h4 style={{ fontWeight: 800, color: s.txt, fontSize: "1.1rem" }}>Discipline First</h4>
+                                        <p style={{ fontSize: "0.9rem", color: s.sub }}>No handouts. We teach the hustle required to lead.</p>
+                                    </div>
                                 </div>
-                                <div style={{ flex: 1, minWidth: "160px" }}>
-                                    <div style={{ fontSize: "2.5rem", fontWeight: 900, color: T.gold, opacity: 0.3, marginBottom: "-0.5rem" }}>02</div>
-                                    <h4 style={{ fontWeight: 800, color: s.txt }}>Real Impact</h4>
-                                    <p style={{ fontSize: "0.85rem", color: s.sub }}>Solve a real problem in your street.</p>
+                                <div style={{ display: "flex", gap: "1rem", alignItems: "flex-start" }}>
+                                    <div style={{ fontSize: "1.5rem" }}>🤝</div>
+                                    <div>
+                                        <h4 style={{ fontWeight: 800, color: s.txt, fontSize: "1.1rem" }}>Radical Service</h4>
+                                        <p style={{ fontSize: "0.9rem", color: s.sub }}>Lead by solving your neighbor's problems.</p>
+                                    </div>
                                 </div>
                             </div>
                         </motion.div>
 
-                        <motion.div className="ds" initial="initial" whileInView="animate" variants={stagger} viewport={{ once: true }} style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
-                            {[
-                                { t: "The Registry", d: "A simple 10-minute mobile commitment.", s: "March" },
-                                { t: "Deep Training", d: "Character workbook & community support.", s: "April" },
-                                { t: "Execution", d: "Building your solution with local resources.", s: "May - Oct" },
-                                { t: "Presentation", d: "Live Finale & ₦3 Million prize pool.", s: "Dec" },
-                            ].map((item, idx) => (
-                                <motion.div key={item.t} variants={fadeIn} whileHover={{ x: 10 }} style={{ background: s.surf, padding: "1.5rem 2rem", borderRadius: 24, border: `1px solid ${s.brd}`, boxShadow: "0 10px 30px rgba(0,0,0,.02)", display: "flex", gap: "1.5rem", alignItems: "center" }}>
-                                    <div style={{ width: 44, height: 44, borderRadius: 14, background: T.green, color: T.goldL, display: "grid", placeItems: "center", fontWeight: 900 }}>{idx + 1}</div>
-                                    <div style={{ flex: 1 }}>
-                                        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.2rem" }}>
-                                            <h5 style={{ fontSize: "1.1rem", fontWeight: 800, color: s.txt }}>{item.t}</h5>
-                                            <span style={{ fontSize: "0.7rem", fontWeight: 700, color: T.gold, textTransform: "uppercase" }}>{item.s}</span>
-                                        </div>
-                                        <p style={{ fontSize: "0.85rem", color: s.sub }}>{item.d}</p>
-                                    </div>
-                                </motion.div>
-                            ))}
+                        <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} style={{ background: T.green, color: "white", padding: "4rem 3rem", borderRadius: 32, textAlign: "center", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                            <h3 style={{ color: T.goldL, fontSize: "4rem", fontWeight: 900, marginBottom: "0.5rem", fontFamily: "'Plus Jakarta Sans',sans-serif", lineHeight: 1 }}>1,000</h3>
+                            <p style={{ textTransform: "uppercase", letterSpacing: "0.2em", fontSize: "0.8rem", fontWeight: 700, opacity: 0.9 }}>Strategic Builders</p>
+                            <div style={{ height: "1px", background: "rgba(255,255,255,0.15)", margin: "2.5rem 0" }} />
+                            <blockquote style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.8rem", fontWeight: 700, fontStyle: "italic", lineHeight: 1.3, color: T.cream }}>
+                                "Character is the highest form of national capital."
+                            </blockquote>
+                        </motion.div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Evidence of Impact */}
+            <section id="impact" style={{ padding: "8rem 0", background: dark ? "#000" : "#fff" }}>
+                <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 2rem" }}>
+                    <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ textAlign: "center", marginBottom: "4rem" }}>
+                        <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "3rem", fontWeight: 900, color: s.txt, marginBottom: "1rem" }}>Evidence of Impact</h2>
+                        <p style={{ color: s.sub, fontSize: "1.1rem", maxWidth: "60ch", margin: "0 auto" }}>Data-driven growth from previous National Values Challenges.</p>
+                    </motion.div>
+
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))", gap: "3rem" }}>
+                        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ background: s.surf, padding: "2rem", borderRadius: 24, border: `1px solid ${s.brd}`, boxShadow: "0 10px 40px rgba(0,0,0,.03)" }}>
+                            <div style={{ borderRadius: 12, overflow: "hidden", marginBottom: "1.5rem", background: "#f5f5f5" }}>
+                                <img src="/kids-inspiring-nation/psalm119/images/Psalm 119 National Values Challenge_ Maximum of Score Across the CBT.png" alt="Max Mastery CBT" style={{ width: "100%", display: "block" }} />
+                            </div>
+                            <h4 style={{ fontSize: "1.3rem", fontWeight: 800, color: s.txt, marginBottom: "0.5rem" }}>Peak Mastery</h4>
+                            <p style={{ color: s.sub, fontSize: "0.95rem", lineHeight: 1.5 }}>Top builders demonstrate 95%+ mastery in national values assessment across Nigeria.</p>
+                        </motion.div>
+
+                        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} viewport={{ once: true }} style={{ background: s.surf, padding: "2rem", borderRadius: 24, border: `1px solid ${s.brd}`, boxShadow: "0 10px 40px rgba(0,0,0,.03)" }}>
+                            <div style={{ borderRadius: 12, overflow: "hidden", marginBottom: "1.5rem", background: "#f5f5f5" }}>
+                                <img src="/kids-inspiring-nation/psalm119/images/Psalm 119 National Values Challenge_ Minimum Score Across the CBTs.png" alt="Baseline Growth CBT" style={{ width: "100%", display: "block" }} />
+                            </div>
+                            <h4 style={{ fontSize: "1.3rem", fontWeight: 800, color: s.txt, marginBottom: "0.5rem" }}>Sustained Elevation</h4>
+                            <p style={{ color: s.sub, fontSize: "0.95rem", lineHeight: 1.5 }}>Participants show significantly higher integrity scores than traditional peer groups.</p>
                         </motion.div>
                     </div>
                 </div>
@@ -173,7 +217,7 @@ export default function NVC({ onBack, dark }) {
                 <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 2rem", position: "relative", zIndex: 2 }}>
                     <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ textAlign: "center", marginBottom: "5rem" }}>
                         <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "3.5rem", fontWeight: 900, color: T.goldL, letterSpacing: "-0.02em" }}>Elite Recognition</h2>
-                        <p style={{ color: "rgba(253,247,236,.6)", fontSize: "1.1rem", maxWidth: "60ch", margin: "1rem auto" }}>Our Grand Finale is where <GoDs style={{ color: T.goldL }} /> are celebrated by the Nation.</p>
+                        <p style={{ color: "rgba(253,247,236,.6)", fontSize: "1.1rem", maxWidth: "60ch", margin: "1rem auto" }}>Our Grand Finale is where Nation Builders are celebrated by the Nation.</p>
                     </motion.div>
 
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "2rem" }}>
@@ -193,32 +237,57 @@ export default function NVC({ onBack, dark }) {
                 </div>
             </section>
 
-            {/* Values Grid */}
-            <section id="values" style={{ padding: "8rem 0", background: s.bg }}>
+            {/* Builder's Toolkit */}
+            <section id="toolkit" style={{ padding: "8rem 0", background: s.bg }}>
                 <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 2rem" }}>
-                    <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} style={{ borderLeft: `4px solid ${T.gold}`, paddingLeft: "2rem", marginBottom: "5rem" }}>
-                        <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "3rem", fontWeight: 900, color: s.txt }}>8 Pillars of Legacy.</h2>
-                        <p style={{ color: s.sub, fontSize: "1.2rem", marginTop: "0.5rem" }}>The traits of every Genius Ordained by Destiny.</p>
+                    <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} style={{ borderLeft: `4px solid ${T.gold}`, paddingLeft: "2rem", marginBottom: "4rem" }}>
+                        <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "3rem", fontWeight: 900, color: s.txt }}>The Builder's Toolkit.</h2>
+                        <p style={{ color: s.sub, fontSize: "1.2rem", marginTop: "0.5rem" }}>Free resources to help you design, launch, and track your impact.</p>
                     </motion.div>
 
-                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "1.5rem" }}>
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "1.5rem" }}>
                         {[
-                            { i: "✅", t: "Integrity", q: "I go do am well", d: "Uncompromising truth and honesty." },
-                            { i: "💪", t: "Discipline", q: "I no dey give up", d: "Consistent work and persistence." },
-                            { i: "🧠", t: "Wisdom", q: "I sabi think am well", d: "Strategic and thoughtful action." },
-                            { i: "❤️", t: "Service", q: "My brother's problem", d: "Radical community compassion." },
-                            { i: "⚖️", t: "Justice", q: "E must fair", d: "Standing for the vulnerable." },
-                            { i: "🔥", t: "Resilience", q: "Wahala no stop me", d: "Bouncing back from failure." },
-                            { i: "🙏", t: "Humility", q: "I fit learn", d: "A teachable and collaborative heart." },
-                            { i: "⭐", t: "Excellence", q: "Do am correct", d: "Quality that leaves a lasting mark." }
+                            { i: "📖", t: "Values Workbook", d: "The core training curriculum.", f: "Values Training Workbook.pdf" },
+                            { i: "🎓", t: "Mentor Guide", d: "For parents and supporters.", f: "Mentor Guide.pdf" },
+                            { i: "📋", t: "Project Planner", d: "Design your local solution.", f: "Project Planning Guide.pdf" },
+                            { i: "📊", t: "Impact Tracker", d: "Log your monthly progress.", f: "Monthly Progress Tracker.pdf" },
+                            { i: "🏆", t: "Impact Report", d: "Final submission template.", f: "Impact Report.pdf" }
                         ].map((v, idx) => (
-                            <motion.div key={v.t} initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ delay: idx * 0.05 }} viewport={{ once: true }} style={{ background: s.surf, padding: "2.5rem 2rem", borderRadius: 28, border: `1px solid ${s.brd}`, position: "relative" }}>
-                                <div style={{ fontSize: "2.5rem", marginBottom: "1.25rem" }}>{v.i}</div>
-                                <h4 style={{ fontSize: "1.3rem", fontWeight: 800, color: s.txt, marginBottom: "0.25rem" }}>{v.t}</h4>
-                                <p style={{ fontSize: "0.75rem", fontWeight: 700, color: T.gold, marginBottom: "1rem", fontStyle: "italic" }}>"{v.q}"</p>
-                                <p style={{ fontSize: "0.88rem", color: s.sub, lineHeight: 1.5 }}>{v.d}</p>
+                            <motion.div key={v.t} initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ delay: idx * 0.05 }} viewport={{ once: true }} style={{ background: s.surf, padding: "2.5rem 1.75rem", borderRadius: 24, border: `1px solid ${s.brd}`, textAlign: "center", display: "flex", flexDirection: "column" }}>
+                                <div style={{ fontSize: "2.5rem", marginBottom: "1rem" }}>{v.i}</div>
+                                <h4 style={{ fontSize: "1.1rem", fontWeight: 800, color: s.txt, marginBottom: "0.5rem" }}>{v.t}</h4>
+                                <p style={{ fontSize: "0.85rem", color: s.sub, lineHeight: 1.5, marginBottom: "2rem", flex: 1 }}>{v.d}</p>
+                                <a href={`/kids-inspiring-nation/psalm119/downloads/${v.f}`} download style={{ display: "inline-flex", justifyContent: "center", alignItems: "center", gap: "0.5rem", padding: "0.75rem 1.5rem", background: idx === 0 ? T.green : "rgba(22,97,62,0.08)", color: idx === 0 ? "#fff" : T.green, borderRadius: 999, fontWeight: 700, fontSize: "0.85rem", border: idx === 0 ? "none" : `1px solid ${T.green}30`, transition: "all 0.2s" }} className="hover:scale-105">
+                                    <Download size={14} /> Download
+                                </a>
                             </motion.div>
                         ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Categories & CTA */}
+            <section style={{ padding: "0 0 8rem", background: s.bg }}>
+                <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 2rem" }}>
+                    <div style={{ background: dark ? T.srfD : "#FDF7EC", borderRadius: 32, padding: "4rem", border: `2px solid ${T.gold}30`, display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center" }}>
+                        <div style={{ fontSize: "0.85rem", fontWeight: 800, color: T.gold, textTransform: "uppercase", letterSpacing: "0.15em", marginBottom: "1rem" }}>Your Field of Impact</div>
+                        <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: "2.5rem", fontWeight: 900, color: s.txt, marginBottom: "3rem" }}>Project Categories</h3>
+                        
+                        <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "1rem", marginBottom: "4rem", maxWidth: "48rem" }}>
+                            {['Education & Literacy', 'Environment & Sanitation', 'Health & Wellness', 'Economic Empowerment', 'Civic Engagement', 'Arts & Culture', 'Infrastructure', 'Innovation & Tech'].map(cat => (
+                                <span key={cat} style={{ background: s.surf, padding: "0.75rem 1.5rem", borderRadius: 999, fontSize: "0.9rem", fontWeight: 600, color: s.txt, border: `1px solid ${s.brd}`, boxShadow: "0 4px 12px rgba(0,0,0,0.02)" }}>
+                                    {cat}
+                                </span>
+                            ))}
+                        </div>
+
+                        <div style={{ height: 1, width: "100%", maxWidth: "20rem", background: `${T.gold}30`, marginBottom: "3rem" }} />
+
+                        <h3 style={{ fontSize: "2rem", fontWeight: 900, color: s.txt, marginBottom: "1rem", fontFamily: "'Plus Jakarta Sans',sans-serif" }}>Ready to join the 2026 Cycle?</h3>
+                        <p style={{ color: s.sub, fontSize: "1.1rem", marginBottom: "2rem" }}>Registration closes March 31, 2026.</p>
+                        <motion.a whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} href="mailto:KidsinspiringNation@gmail.com" style={{ padding: "1.2rem 3rem", borderRadius: 999, background: T.gold, color: "#fff", fontWeight: 800, fontSize: "1.1rem", boxShadow: `0 10px 30px ${T.gold}40`, display: "inline-block" }}>
+                            Apply Now — It's Free
+                        </motion.a>
                     </div>
                 </div>
             </section>
@@ -227,7 +296,7 @@ export default function NVC({ onBack, dark }) {
             <footer style={{ background: dark ? "#000" : T.greenD, padding: "6rem 0", color: T.cream }}>
                 <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 2rem", textAlign: "center" }}>
                     <div style={{ fontSize: "1.5rem", fontWeight: 900, fontFamily: "'Playfair Display',serif", marginBottom: "1rem" }}>Building a New Nigeria.</div>
-                    <div style={{ color: T.goldL, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", fontSize: "0.8rem", marginBottom: "3rem" }}>Raising <GoDs /></div>
+                    <div style={{ color: T.goldL, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", fontSize: "0.8rem", marginBottom: "3rem" }}>Raising Nation Builders</div>
 
                     <div style={{ display: "flex", justifyContent: "center", gap: "2rem", marginBottom: "3rem" }}>
                         <MessageCircle size={20} className="hover:text-gold transition-colors" />
@@ -236,7 +305,7 @@ export default function NVC({ onBack, dark }) {
                     </div>
 
                     <div style={{ opacity: 0.4, fontSize: "0.75rem" }}>
-                        &copy; 2025 goDs Global KidsInspiring · IT No. 6980735
+                        &copy; 2026 KidsInspiring Nation · IT No. 6980735
                     </div>
                 </div>
             </footer>
