@@ -23,6 +23,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import NVC from "./NVC.jsx";
+import Giving from "./Giving.jsx";
 import {
   AreaChart, Area, BarChart, Bar, XAxis, YAxis, Tooltip,
   ResponsiveContainer, CartesianGrid, Cell, PieChart, Pie,
@@ -357,14 +358,14 @@ function DarkToggle({ dark, toggle }) {
 //  WEBSITE
 // ═══════════════════════════════════════════════════════════════════════════════
 
-function Website({ onDash, onNVC, dark }) {
+function Website({ onDash, onNVC, onGive, dark }) {
   useReveal();
   const bg = dark ? "#0A1C12" : "#FAFAF5";
   const txt = dark ? T.cream : T.greenD;
 
   return (
     <div style={{ fontFamily: "'DM Sans',sans-serif", background: bg, color: txt, overflowX: "hidden" }}>
-      <SiteNav onDash={onDash} onNVC={onNVC} dark={dark} />
+      <SiteNav onDash={onDash} onNVC={onNVC} onGive={() => onGive()} dark={dark} />
       <Hero onDash={onDash} dark={dark} />
       <Marquee />
       <KINDStrip dark={dark} />
@@ -381,7 +382,7 @@ function Website({ onDash, onNVC, dark }) {
 }
 
 // ─── NAV ──────────────────────────────────────────────────────────────────────
-function SiteNav({ onDash, onNVC, dark }) {
+function SiteNav({ onDash, onNVC, onGive, dark }) {
   const [sc, setSc] = useState(false);
   const [mob, setMob] = useState(false);
   useEffect(() => {
@@ -409,9 +410,16 @@ function SiteNav({ onDash, onNVC, dark }) {
           </a>
           {/* Links */}
           <div className="nav-links" style={{ display: "flex", alignItems: "center", gap: "2rem" }}>
-            {["About", "Programs", "Impact", "Give"].map(l => (
-              <a key={l} href={l === "Give" ? "https://bit.ly/KINgiv" : `#${l.toLowerCase()}`} target={l === "Give" ? "_blank" : undefined} style={{ fontSize: "0.76rem", fontWeight: 500, letterSpacing: "0.04em", textTransform: "uppercase", color: linkC, transition: "color .2s" }} onMouseEnter={e => e.currentTarget.style.color = T.goldL} onMouseLeave={e => e.currentTarget.style.color = linkC}>{l}</a>
-            ))}
+            {["About", "Programs", "Impact", "Give"].map(l => {
+              if (l === "Give") {
+                return (
+                  <button key={l} onClick={() => onGive()} style={{ fontSize: "0.76rem", fontWeight: 500, letterSpacing: "0.04em", textTransform: "uppercase", color: linkC, transition: "color .2s", cursor: "pointer", background: "none", border: "none", padding: 0 }} onMouseEnter={e => e.currentTarget.style.color = T.goldL} onMouseLeave={e => e.currentTarget.style.color = linkC}>{l}</button>
+                )
+              }
+              return (
+                <a key={l} href={`#${l.toLowerCase()}`} style={{ fontSize: "0.76rem", fontWeight: 500, letterSpacing: "0.04em", textTransform: "uppercase", color: linkC, transition: "color .2s" }} onMouseEnter={e => e.currentTarget.style.color = T.goldL} onMouseLeave={e => e.currentTarget.style.color = linkC}>{l}</a>
+              )
+            })}
             <button onClick={onNVC} style={{ fontSize: "0.76rem", fontWeight: 500, letterSpacing: "0.04em", textTransform: "uppercase", color: linkC, transition: "color .2s" }} onMouseEnter={e => e.currentTarget.style.color = T.goldL} onMouseLeave={e => e.currentTarget.style.color = linkC}>
               National Builders
             </button>
@@ -432,9 +440,10 @@ function SiteNav({ onDash, onNVC, dark }) {
       {mob && (
         <div style={{ position: "fixed", inset: 0, zIndex: 199, background: dark ? "#050505" : "#0D3D26", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "2rem", animation: "fadeUp .3s ease-out" }}>
           <button onClick={() => setMob(false)} style={{ position: "absolute", top: 24, right: 24, color: T.cream, cursor: "pointer" }}><X size={22} strokeWidth={1.5} /></button>
-          {["About", "Programs", "Impact", "Give"].map(l => (
-            <a key={l} onClick={() => setMob(false)} href={l === "Give" ? "https://bit.ly/KINgiv" : `#${l.toLowerCase()}`} target={l === "Give" ? "_blank" : undefined} style={{ fontFamily: "'Playfair Display',serif", fontSize: "2.5rem", fontWeight: 700, color: T.cream, transition: "color .2s" }} onMouseEnter={e => e.currentTarget.style.color = T.goldL} onMouseLeave={e => e.currentTarget.style.color = T.cream}>{l}</a>
+          {["About", "Programs", "Impact"].map(l => (
+            <a key={l} onClick={() => setMob(false)} href={`#${l.toLowerCase()}`} style={{ fontFamily: "'Playfair Display',serif", fontSize: "2.5rem", fontWeight: 700, color: T.cream, transition: "color .2s" }} onMouseEnter={e => e.currentTarget.style.color = T.goldL} onMouseLeave={e => e.currentTarget.style.color = T.cream}>{l}</a>
           ))}
+          <button onClick={() => { setMob(false); onGive(); }} style={{ fontFamily: "'Playfair Display',serif", fontSize: "2.5rem", fontWeight: 700, color: T.cream, cursor: "pointer" }}>Give</button>
           <button onClick={() => { setMob(false); onDash(); }} style={{ fontFamily: "'Playfair Display',serif", fontSize: "2.5rem", fontWeight: 700, color: T.goldL, cursor: "pointer" }}>Dashboard</button>
         </div>
       )}
@@ -1555,7 +1564,7 @@ function DFView({ ctx }) {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export default function App() {
-  const [mode, setMode] = useState("website"); // "website" | "dashboard" | "nvc"
+  const [mode, setMode] = useState("website"); // "website" | "dashboard" | "nvc" | "giving"
   const [dark, setDark] = useState(false);
   const toggleDark = useCallback(() => setDark(d => !d), []);
 
@@ -1564,7 +1573,7 @@ export default function App() {
       <AnimatePresence mode="wait">
         {mode === "website" && (
           <motion.div key="web" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <Website onDash={() => setMode("dashboard")} onNVC={() => setMode("nvc")} dark={dark} />
+            <Website onDash={() => setMode("dashboard")} onNVC={() => setMode("nvc")} onGive={() => setMode("giving")} dark={dark} />
           </motion.div>
         )}
         {mode === "dashboard" && (
@@ -1575,6 +1584,11 @@ export default function App() {
         {mode === "nvc" && (
           <motion.div key="nvc" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             <NVC onBack={() => setMode("website")} dark={dark} />
+          </motion.div>
+        )}
+        {mode === "giving" && (
+          <motion.div key="giving" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            <Giving onBack={() => setMode("website")} dark={dark} />
           </motion.div>
         )}
       </AnimatePresence>
