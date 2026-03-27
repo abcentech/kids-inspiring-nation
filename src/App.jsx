@@ -24,6 +24,8 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import NVC from "./NVC.jsx";
 import Giving from "./Giving.jsx";
+import Gallery from "./Gallery.jsx";
+import GodsUniversity from "./GodsUniversity.jsx";
 import {
   AreaChart, Area, BarChart, Bar, XAxis, YAxis, Tooltip,
   ResponsiveContainer, CartesianGrid, Cell, PieChart, Pie,
@@ -34,7 +36,8 @@ import {
   TrendingUp, TrendingDown, Eye, EyeOff, Menu, X, ChevronRight,
   Heart, MessageCircle, Youtube, Instagram, ExternalLink, Bell,
   CheckCircle2, Clock, Send, Phone, Mail, Shield, Cookie,
-  Activity, Award, Star, Globe, Zap, Music, Coffee
+  Activity, Award, Star, Globe, Zap, Music, Coffee, ChevronDown,
+  Sparkles, ArrowRight, Timer, Landmark, Utensils, Crown
 } from "lucide-react";
 
 // ─── FONTS ───────────────────────────────────────────────────────────────────
@@ -358,16 +361,19 @@ function DarkToggle({ dark, toggle }) {
 //  WEBSITE
 // ═══════════════════════════════════════════════════════════════════════════════
 
-function Website({ onDash, onNVC, onGive, dark }) {
+function Website({ onDash, onNVC, onGive, onGallery, onGodsU, dark }) {
   useReveal();
   const bg = dark ? "#0A1C12" : "#FAFAF5";
   const txt = dark ? T.cream : T.greenD;
 
   return (
     <div style={{ fontFamily: "'DM Sans',sans-serif", background: bg, color: txt, overflowX: "hidden" }}>
-      <SiteNav onDash={onDash} onNVC={onNVC} onGive={() => onGive()} dark={dark} />
+      <SiteNav onDash={onDash} onNVC={onNVC} onGive={() => onGive()} onGallery={onGallery} onGodsU={onGodsU} dark={dark} />
+      <NBCInvitePopup onNVC={onNVC} dark={dark} />
+      <UpdatesSlider dark={dark} />
       <Hero onDash={onDash} dark={dark} />
       <Marquee />
+      <KINDCountdown dark={dark} />
       <KINDStrip dark={dark} />
       <AboutSection dark={dark} />
       <ProgramsSection dark={dark} />
@@ -381,72 +387,556 @@ function Website({ onDash, onNVC, onGive, dark }) {
   );
 }
 
+// ─── UPDATES SLIDER ────────────────────────────────────────────────────
+const SLIDES = [
+  {
+    id: 1,
+    tag: "LATEST UPDATE",
+    headline: "KIND Daily — 365 Days,\nNever Missed",
+    body: "2025 closed with 13,350 KIND entries across 359 sessions. Our character flagship ran every single day of the year — shaping the hearts of 639 goDs.",
+    icon: BookOpen,
+    gradient: `linear-gradient(135deg, ${T.greenD} 0%, #060E08 55%, #16613E 100%)`,
+    accent: T.goldL,
+    photo: "/kids-inspiring-nation/slider/1.jpg",
+  },
+  {
+    id: 2,
+    tag: "DANIEL FAST 2025",
+    headline: "DF3 Grew 200%.\nThe Culture Deepens.",
+    body: "Daniel Fast Week 3 surged from 212 entries in 2024 to 637 in 2025. Consecration is becoming a defining identity for KidsInspiring Nation.",
+    icon: Flame,
+    gradient: `linear-gradient(135deg, ${T.goldD} 0%, #5C3210 60%, ${T.gold} 100%)`,
+    accent: T.goldL,
+    photo: "/kids-inspiring-nation/slider/2.jpg",
+  },
+  {
+    id: 3,
+    tag: "NATIONAL BUILDERS",
+    headline: "The Challenge\nBegins in 2026.",
+    body: "1,000 Nation Builders. ₦3M in Grand Prizes. 9 months of character, resourcefulness and excellence. Applications are open for the 2026 cohort.",
+    icon: Landmark,
+    gradient: `linear-gradient(135deg, #1A0E3A 0%, #2D1B69 50%, #0D3D26 100%)`,
+    accent: "#A78BFA",
+    photo: "/kids-inspiring-nation/slider/3.jpg",
+  },
+  {
+    id: 4,
+    tag: "FACE PROGRAMME",
+    headline: "1,952 Meals.\nEvery Sunday.",
+    body: "Week after week, KidsInspiring Nation feeds every child in the community. FACE served 1,952 meals in 2025 — because raising Nations starts with meeting needs.",
+    icon: Utensils,
+    gradient: `linear-gradient(135deg, #A83920 0%, #D94F30 60%, #8B2010 100%)`,
+    accent: "#FBBF72",
+    photo: "/kids-inspiring-nation/slider/4.jpg",
+  },
+  {
+    id: 5,
+    tag: "KINGS CELLS",
+    headline: "3 Cohorts.\n224 Unique goDs.",
+    body: "KINGs 001, 002, and 003 ran all year, building mentorship chains from senior to junior goDs. Sunday at 5pm — the cells that shape the nation-builders of tomorrow.",
+    icon: Crown,
+    gradient: `linear-gradient(135deg, #4A1B55 0%, #7B2D8B 60%, #2D0A3A 100%)`,
+    accent: "#D8B4FE",
+    photo: "/kids-inspiring-nation/slider/5.jpg",
+  },
+];
+
+function UpdatesSlider({ dark }) {
+  const [current, setCurrent] = useState(0);
+  const [dir, setDir] = useState(1);
+  const timerRef = useRef(null);
+
+  const go = (idx, direction = 1) => {
+    setDir(direction);
+    setCurrent(idx);
+  };
+
+  const next = useCallback(() => {
+    setDir(1);
+    setCurrent(c => (c + 1) % SLIDES.length);
+  }, []);
+
+  const prev = () => go((current - 1 + SLIDES.length) % SLIDES.length, -1);
+
+  useEffect(() => {
+    timerRef.current = setInterval(next, 5500);
+    return () => clearInterval(timerRef.current);
+  }, [next]);
+
+  const slide = SLIDES[current];
+
+  return (
+    <div style={{ position: "relative", overflow: "hidden", background: dark ? "#060e08" : "#0D3D26" }}>
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.div
+          key={current}
+          initial={{ opacity: 0, x: dir * 60 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: dir * -60 }}
+          transition={{ duration: .5, ease: [.25,.46,.45,.94] }}
+          style={{ background: slide.gradient, position: "relative", overflow: "hidden" }}
+        >
+          {/* Ambient orb */}
+          <div style={{ position: "absolute", inset: 0, background: `radial-gradient(ellipse 60% 80% at 90% 50%, ${slide.accent}18, transparent 60%)`, pointerEvents: "none" }} />
+          
+          {/* Dynamic Image Overlay (fails gracefully if file doesn't exist) */}
+          <img 
+            src={slide.photo} 
+            alt={slide.headline}
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.65, mixBlendMode: 'overlay', pointerEvents: 'none', transition: 'opacity 0.5s' }}
+            onError={(e) => { e.currentTarget.style.opacity = '0'; }}
+          />
+
+          {/* Graceful Transition Masks (Top for Nav Contrast, Bottom for Hero blend) */}
+          <div aria-hidden style={{ position: "absolute", top: 0, left: 0, right: 0, height: 180, background: "linear-gradient(to bottom, rgba(3,11,6,0.9) 0%, transparent 100%)", pointerEvents: "none", zIndex: 10 }} />
+          <div aria-hidden style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 140, background: `linear-gradient(to top, ${dark ? "#0A1C12" : "#FAFAF5"} 0%, transparent 100%)`, pointerEvents: "none", zIndex: 10 }} />
+
+          <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "5.5rem clamp(1.25rem,5vw,3rem) 4rem", display: "grid", gridTemplateColumns: "1fr auto", gap: "2rem", alignItems: "center", position: "relative", zIndex: 12 }}>
+            <div style={{ maxWidth: "52ch" }}>
+              {/* Tag */}
+              <div style={{ display: "inline-flex", alignItems: "center", gap: ".5rem", background: `${slide.accent}22`, border: `1px solid ${slide.accent}44`, borderRadius: 999, padding: ".3em .9em", marginBottom: "1.25rem" }}>
+                <span style={{ width: 6, height: 6, borderRadius: "50%", background: slide.accent, display: "block", animation: "pulse 1.5s ease-in-out infinite" }} />
+                <span style={{ fontFamily: "'DM Mono',monospace", fontSize: ".66rem", fontWeight: 700, color: slide.accent, letterSpacing: ".15em", textTransform: "uppercase" }}>{slide.tag}</span>
+              </div>
+              {/* Headline */}
+              <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(2rem,5vw,3.4rem)", fontWeight: 900, color: T.cream, lineHeight: 1.05, letterSpacing: "-0.03em", marginBottom: "1rem", whiteSpace: "pre-line" }}>
+                {slide.headline}
+              </h2>
+              <p style={{ fontSize: "clamp(.9rem,2vw,1.05rem)", color: "rgba(253,247,236,.7)", lineHeight: 1.75, maxWidth: "48ch" }}>
+                {slide.body}
+              </p>
+            </div>
+            {/* Icon display */}
+            <div style={{ color: "#fff", opacity: .12, userSelect: "none", pointerEvents: "none" }} aria-hidden>
+              <slide.icon size={260} strokeWidth={0.5} />
+            </div>
+          </div>
+
+          {/* Bottom bar: dots + arrows */}
+          <div style={{ borderTop: `1px solid rgba(253,247,236,.08)`, padding: "1rem clamp(1.25rem,5vw,3rem)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            {/* Dots */}
+            <div style={{ display: "flex", gap: ".5rem" }}>
+              {SLIDES.map((_, i) => (
+                <button key={i} onClick={() => go(i, i > current ? 1 : -1)} style={{ width: i === current ? 24 : 8, height: 8, borderRadius: 999, background: i === current ? slide.accent : "rgba(253,247,236,.2)", border: "none", cursor: "pointer", transition: "all .35s ease-out", padding: 0 }} />
+              ))}
+            </div>
+            {/* Arrows */}
+            <div style={{ display: "flex", gap: ".5rem" }}>
+              <button onClick={prev} style={{ width: 38, height: 38, borderRadius: "50%", background: "rgba(255,255,255,.08)", border: "1px solid rgba(255,255,255,.12)", display: "grid", placeItems: "center", color: T.cream, cursor: "pointer", transition: "background .2s" }}
+                onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,.18)"}
+                onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,.08)"}>
+                ←
+              </button>
+              <button onClick={next} style={{ width: 38, height: 38, borderRadius: "50%", background: "rgba(255,255,255,.08)", border: "1px solid rgba(255,255,255,.12)", display: "grid", placeItems: "center", color: T.cream, cursor: "pointer", transition: "background .2s" }}
+                onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,.18)"}
+                onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,.08)"}>
+                →
+              </button>
+            </div>
+          </div>
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  );
+}
+
+function KINDCountdown({ dark }) {
+  const [timeLeft, setTimeLeft] = useState({ h: 0, m: 0, s: 0, isLive: false });
+
+  useEffect(() => {
+    function calcNext() {
+      // WAT = UTC+1. Current time in WAT.
+      const now = new Date();
+      const watOffset = 1 * 60; // minutes from UTC
+      const utcMs = now.getTime() + now.getTimezoneOffset() * 60000;
+      const watNow = new Date(utcMs + watOffset * 60000);
+
+      // Target: next 8pm WAT
+      const target = new Date(watNow);
+      target.setHours(20, 0, 0, 0);
+      if (watNow >= target) target.setDate(target.getDate() + 1);
+
+      const diffMs = target - watNow;
+      const totalSec = Math.floor(diffMs / 1000);
+      const h = Math.floor(totalSec / 3600);
+      const m = Math.floor((totalSec % 3600) / 60);
+      const s = totalSec % 60;
+      const isLive = h === 0 && m < 30;
+      return { h, m, s, isLive };
+    }
+    setTimeLeft(calcNext());
+    const id = setInterval(() => setTimeLeft(calcNext()), 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  const pad = n => String(n).padStart(2, "0");
+  const { h, m, s, isLive } = timeLeft;
+
+  return (
+    <div style={{
+      background: isLive
+        ? `linear-gradient(135deg, ${T.green} 0%, ${T.greenD} 100%)`
+        : `linear-gradient(135deg, #071209 0%, #0D3D26 60%, #071209 100%)`,
+      borderTop: `1px solid rgba(196,136,44,.18)`,
+      borderBottom: `1px solid rgba(196,136,44,.25)`,
+      padding: "1.5rem 0",
+      position: "relative",
+      overflow: "hidden",
+      transition: "background 1s"
+    }}>
+      {/* Ambient glow orbs */}
+      <div style={{ position: "absolute", left: "5%", top: "50%", transform: "translateY(-50%)", width: 250, height: 250, borderRadius: "50%", background: `radial-gradient(circle, ${T.green}30, transparent 65%)`, pointerEvents: "none" }} />
+      <div style={{ position: "absolute", right: "8%", top: "50%", transform: "translateY(-50%)", width: 300, height: 300, borderRadius: "50%", background: `radial-gradient(circle, ${T.gold}18, transparent 65%)`, pointerEvents: "none" }} />
+
+      <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 clamp(1.25rem,5vw,3rem)", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1.5rem", position: "relative", zIndex: 2 }}>
+
+        {/* Left: label */}
+        <div style={{ display: "flex", flexDirection: "column", gap: ".3rem" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: ".6rem" }}>
+            {isLive
+              ? <span style={{ fontSize: "1.2rem", animation: "pulse 1s ease-in-out infinite" }}>🔴</span>
+              : <Clock size={18} color={T.goldL} strokeWidth={2} />}
+            <span style={{ fontFamily: "'Plus Jakarta Sans',sans-serif", fontSize: "1rem", fontWeight: 800, color: T.cream, letterSpacing: ".01em", textTransform: "uppercase" }}>
+              {isLive ? "KIND is LIVE right now —" : "Next KIND Session"}
+            </span>
+          </div>
+          <span style={{ fontSize: ".78rem", color: "rgba(253,247,236,.45)", fontWeight: 500, letterSpacing: ".04em", paddingLeft: isLive ? 0 : "1.6rem" }}>
+            {isLive ? "Join the devotional on WhatsApp or Telegram now" : "Daily KidsInspiring Nation Devotional · 8pm WAT every day"}
+          </span>
+        </div>
+
+        {/* Right: countdown OR CTA */}
+        {!isLive && (
+          <div style={{ display: "flex", alignItems: "center", gap: ".75rem" }}>
+            {[{ v: pad(h), l: "Hours" }, { v: pad(m), l: "Mins" }, { v: pad(s), l: "Secs" }].map(({ v, l }, i) => (
+              <>
+                <div key={l} style={{
+                  textAlign: "center",
+                  background: "rgba(232,185,84,.1)",
+                  border: "1px solid rgba(232,185,84,.2)",
+                  borderRadius: 12,
+                  padding: ".6rem 1rem",
+                  minWidth: 70,
+                  backdropFilter: "blur(8px)"
+                }}>
+                  <div style={{ fontFamily: "'DM Mono',monospace", fontSize: "clamp(1.8rem,4vw,2.6rem)", fontWeight: 700, color: T.goldL, lineHeight: 1, letterSpacing: "-0.03em" }}>{v}</div>
+                  <div style={{ fontSize: ".6rem", color: "rgba(253,247,236,.35)", fontWeight: 700, letterSpacing: ".15em", textTransform: "uppercase", marginTop: 4 }}>{l}</div>
+                </div>
+                {i < 2 && <span style={{ fontFamily: "'DM Mono',monospace", fontSize: "2rem", color: "rgba(196,136,44,.4)", lineHeight: 1, userSelect: "none" }}>:</span>}
+              </>
+            ))}
+          </div>
+        )}
+        {isLive && (
+          <div style={{ display: "flex", gap: ".75rem", flexWrap: "wrap" }}>
+            <a href="https://whatsapp.com/channel/0029Va8XnCuGE56c4SMaT41w" target="_blank" rel="noopener" style={{ display: "inline-flex", alignItems: "center", gap: ".5rem", padding: ".7em 1.8em", borderRadius: 999, background: T.gold, color: "#fff", fontWeight: 800, fontSize: ".9rem", boxShadow: `0 6px 24px ${T.gold}60`, textDecoration: "none" }}>
+              Join Now →
+            </a>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ─── NBC INVITE POPUP ─────────────────────────────────────────────────────────
+function NBCInvitePopup({ onNVC, dark }) {
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    const seen = sessionStorage.getItem("kin_nbc_popup_seen");
+    if (!seen) setTimeout(() => setShow(true), 3500);
+  }, []);
+  const close = () => { sessionStorage.setItem("kin_nbc_popup_seen", "1"); setShow(false); };
+  const join = () => { close(); onNVC(); };
+
+  if (!show) return null;
+  return (
+    <AnimatePresence>
+      {show && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          style={{ position: "fixed", inset: 0, zIndex: 8000, display: "grid", placeItems: "center", background: "rgba(0,0,0,.65)", backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)", padding: "1rem" }}
+          onClick={e => { if (e.target === e.currentTarget) close(); }}
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: .9, y: 30 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: .9, y: 20 }}
+            transition={{ type: "spring", stiffness: 300, damping: 28 }}
+            style={{
+              position: "relative",
+              width: "min(520px, 100%)",
+              borderRadius: 28,
+              overflow: "hidden",
+              boxShadow: "0 40px 100px rgba(0,0,0,.6), 0 0 0 1px rgba(196,136,44,.2)",
+            }}
+          >
+            {/* Background */}
+            <div style={{ position: "absolute", inset: 0, background: `linear-gradient(155deg, ${T.greenD} 0%, #050E07 60%, ${T.greenD} 100%)` }} />
+            <div style={{ position: "absolute", top: "-40%", right: "-20%", width: 400, height: 400, borderRadius: "50%", background: `radial-gradient(circle, ${T.gold}28, transparent 65%)`, pointerEvents: "none" }} />
+            <div style={{ position: "absolute", bottom: "-30%", left: "-10%", width: 300, height: 300, borderRadius: "50%", background: `radial-gradient(circle, ${T.green}40, transparent 65%)`, pointerEvents: "none" }} />
+
+            {/* Ghost text */}
+            <div aria-hidden style={{ position: "absolute", bottom: "-0.15em", right: "-0.05em", fontSize: "clamp(10rem,35vw,18rem)", color: "transparent", WebkitTextStroke: "1px rgba(232,185,84,.05)", fontFamily: "'Playfair Display',serif", fontWeight: 900, fontStyle: "italic", lineHeight: 1, userSelect: "none", pointerEvents: "none" }}>NBC</div>
+
+            {/* Content */}
+            <div style={{ position: "relative", zIndex: 2, padding: "clamp(2rem,6vw,3rem)" }}>
+              {/* Close */}
+              <motion.button onClick={close}
+                whileHover={{ scale: 1.15, background: T.cream, color: "#000" }}
+                whileTap={{ scale: .9 }}
+                style={{ position: "absolute", top: 20, right: 20, width: 38, height: 38, borderRadius: "50%", background: "rgba(255,255,255,.08)", border: "1px solid rgba(255,255,255,.12)", display: "grid", placeItems: "center", color: "rgba(253,247,236,.6)", cursor: "pointer", transition: "all .2s" }}
+              >
+                <X size={16} strokeWidth={2} />
+              </motion.button>
+
+              {/* Badge */}
+              <div style={{ display: "inline-flex", alignItems: "center", gap: ".5rem", background: `${T.gold}22`, border: `1px solid ${T.gold}55`, borderRadius: 999, padding: ".35em 1em", marginBottom: "1.5rem" }}>
+                <span style={{ width: 7, height: 7, borderRadius: "50%", background: T.goldL, animation: "pulse 1.5s ease-in-out infinite", display: "block" }} />
+                <span style={{ fontFamily: "'DM Mono',monospace", fontSize: ".68rem", fontWeight: 600, color: T.goldL, letterSpacing: ".1em", textTransform: "uppercase" }}>2026 Cohort Now Open</span>
+              </div>
+
+              <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(1.8rem,5vw,2.6rem)", fontWeight: 900, color: T.cream, lineHeight: 1.05, letterSpacing: "-0.03em", marginBottom: ".75rem" }}>
+                Build the Nigeria<br /><em style={{ fontStyle: "italic", color: T.goldL }}>You Want to See.</em>
+              </h2>
+              <p style={{ fontSize: ".95rem", color: "rgba(253,247,236,.7)", lineHeight: 1.7, marginBottom: "2rem", maxWidth: "40ch" }}>
+                The National Builders Challenge is a 10-month masterclass in character, resourcefulness, and nation-building — open to goDs aged 7–17.
+              </p>
+
+              {/* Stats row */}
+              <div style={{ display: "flex", gap: "1.5rem", marginBottom: "2rem", flexWrap: "wrap" }}>
+                {[{ v: "₦3M", l: "Grand Prizes" }, { v: "1,000", l: "Nation Builders" }, { v: "9 mo.", l: "Programme" }].map(stat => (
+                  <div key={stat.l}>
+                    <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.5rem", fontWeight: 900, color: T.goldL, letterSpacing: "-0.04em", lineHeight: 1 }}>{stat.v}</div>
+                    <div style={{ fontSize: ".7rem", color: "rgba(253,247,236,.45)", fontWeight: 500, letterSpacing: ".05em", textTransform: "uppercase" }}>{stat.l}</div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Actions */}
+              <div style={{ display: "flex", gap: ".75rem", flexWrap: "wrap" }}>
+                <motion.button
+                  onClick={join}
+                  whileHover={{ scale: 1.04, filter: "brightness(1.1)" }}
+                  whileTap={{ scale: .97 }}
+                  style={{ display: "inline-flex", alignItems: "center", gap: ".5rem", padding: ".9em 2.2em", borderRadius: 999, background: T.gold, color: "#fff", fontWeight: 700, fontSize: ".95rem", fontFamily: "'Plus Jakarta Sans',sans-serif", boxShadow: `0 12px 36px ${T.gold}55`, cursor: "pointer" }}
+                >
+                  Register Now <ArrowRight size={16} />
+                </motion.button>
+                <motion.button onClick={close} 
+                  whileHover={{ scale: 1.05, background: "rgba(253,247,236,.12)", color: T.cream }}
+                  whileTap={{ scale: .96 }}
+                  style={{ display: "inline-flex", alignItems: "center", padding: ".9em 1.8em", borderRadius: 999, background: "rgba(253,247,236,.07)", color: "rgba(253,247,236,.6)", fontWeight: 600, fontSize: ".9rem", border: "1.5px solid rgba(253,247,236,.15)", cursor: "pointer", transition: "all .2s" }}>
+                  Maybe later
+                </motion.button>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
 // ─── NAV ──────────────────────────────────────────────────────────────────────
-function SiteNav({ onDash, onNVC, onGive, dark }) {
+function SiteNav({ onDash, onNVC, onGive, onGallery, onGodsU, dark }) {
   const [sc, setSc] = useState(false);
   const [mob, setMob] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState(null);
+  const navRef = useRef(null);
+
   useEffect(() => {
     const h = () => setSc(window.scrollY > 50);
     window.addEventListener("scroll", h, { passive: true }); h();
     return () => window.removeEventListener("scroll", h);
   }, []);
-  const scrolled_light = sc && !dark, scrolled_dark = sc && dark;
-  const navBg = scrolled_light ? "rgba(250,250,245,.92)" : scrolled_dark ? "rgba(5,5,5,.85)" : "transparent";
-  const navBdr = sc ? `1px solid ${dark ? "rgba(255,255,255,.06)" : "rgba(22,97,62,.08)"}` : "1px solid transparent";
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    const h = e => { if (navRef.current && !navRef.current.contains(e.target)) setOpenDropdown(null); };
+    document.addEventListener("mousedown", h);
+    return () => document.removeEventListener("mousedown", h);
+  }, []);
+
+  const navBg = sc ? (dark ? "rgba(5,5,5,.92)" : "rgba(250,250,245,.94)") : "transparent";
+  const navBdr = sc ? `1px solid ${dark ? "rgba(255,255,255,.07)" : "rgba(22,97,62,.09)"}` : "1px solid transparent";
   const logoC = sc ? (dark ? T.goldL : T.green) : T.cream;
-  const linkC = sc ? (dark ? "rgba(253,247,236,.75)" : T.greenM) : "rgba(253,247,236,.8)";
+  const linkC = sc ? (dark ? "rgba(253,247,236,.8)" : T.greenM) : "rgba(253,247,236,.85)";
+
+  const DROPDOWNS = {
+    About: [
+      { label: "Who We Are", href: "#about", icon: "🌱", desc: "Our mission & story" },
+      { label: "goDs Defined", href: "#about", icon: "👑", desc: "Genius Ordained by Destiny" },
+      { label: "2025 Data", href: "#about", icon: "📊", desc: "639 goDs, 19,695 entries" },
+      { label: "Photo Gallery", href: null, icon: "📸", desc: "View our memories", action: onGallery },
+    ],
+    Programs: [
+      { label: "goDs University", href: null, icon: "👑", desc: "Our 44-week flagship", action: onGodsU },
+      { label: "KIND · Daily", href: "#programs", icon: "📖", desc: "Devotional · 8pm WAT" },
+      { label: "KINGs Cells", href: "#programs", icon: "👑", desc: "Sunday mentorship · 5pm" },
+      { label: "Daniel Fast", href: "#programs", icon: "🔥", desc: "Annual spiritual programme" },
+      { label: "P119 Academy", href: "#programs", icon: "🧠", desc: "Maths, English & Character" },
+      { label: "FACE · Meals", href: "#programs", icon: "🍽️", desc: "1,952 meals in 2025" },
+      { label: "All Programmes →", href: "#programs", icon: "✨", desc: "View all 14 programmes" },
+    ],
+    Impact: [
+      { label: "Impact Report", href: "#impact", icon: "📈", desc: "2025 results & data" },
+      { label: "Live Dashboard", href: null, icon: "⚡", desc: "Real-time stats", action: onDash },
+      { label: "Testimonies", href: "#testimony", icon: "💬", desc: "goD stories" },
+    ],
+  };
+
+  const toggleDropdown = key => setOpenDropdown(prev => prev === key ? null : key);
+
+  const dropdownSurf = dark ? "rgba(12,20,14,.97)" : "rgba(255,255,255,.98)";
+  const dropdownBrd = dark ? "rgba(255,255,255,.08)" : "rgba(22,97,62,.1)";
 
   return (
     <>
-      <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 200, padding: ".75rem 0", transition: "all .35s ease-out", background: navBg, backdropFilter: sc ? "blur(18px)" : "none", WebkitBackdropFilter: sc ? "blur(18px)" : "none", borderBottom: navBdr }}>
+      <style>{`
+        @keyframes nvc-glow { 0% { box-shadow: 0 0 0 0 rgba(196,136,44,0.5); } 70% { box-shadow: 0 0 0 12px rgba(196,136,44,0); } 100% { box-shadow: 0 0 0 0 rgba(196,136,44,0); } }
+        .nvc-pulse { animation: nvc-glow 2.2s infinite; }
+        .nav-dd-item:hover { background: ${dark ? "rgba(255,255,255,.06)" : "rgba(22,97,62,.05)"} !important; }
+        @media(max-width:900px){.nav-links{display:none!important}.mob-menu{display:flex!important}}
+      `}</style>
+      <nav ref={navRef} style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 500, padding: ".7rem 0", transition: "all .35s ease-out", background: navBg, backdropFilter: sc ? "blur(22px)" : "none", WebkitBackdropFilter: sc ? "blur(22px)" : "none", borderBottom: navBdr }}>
         <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 clamp(1.25rem,5vw,3rem)", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "1.5rem" }}>
-          {/* Logo */}
-          <a href="#" style={{ display: "flex", alignItems: "center", gap: "0.6rem", transition: "opacity .2s" }} onMouseEnter={e => e.currentTarget.style.opacity = ".8"} onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
-            <div style={{ width: 36, height: 36, background: T.green, borderRadius: 9, display: "grid", placeItems: "center", color: T.goldL, fontSize: "1rem", fontWeight: 900, flexShrink: 0, fontFamily: "'Playfair Display',serif", fontStyle: "italic" }}>g</div>
+
+          {/* Logo with Glassmorphism Shimmering Effect */}
+          <a href="#" style={{ display: "flex", alignItems: "center", gap: ".65rem", textDecoration: "none" }}>
+            <div className="glass-logo" style={{ width: 42, height: 42, borderRadius: 12, display: "grid", placeItems: "center", flexShrink: 0 }}>
+              <img src="/kids-inspiring-nation/logo.svg" alt="KidsInspiring Nation" style={{ width: 32, height: 32, objectFit: "contain", position: "relative", zIndex: 2 }} />
+            </div>
             <div>
-              <div style={{ fontFamily: "'Plus Jakarta Sans',sans-serif", fontSize: "0.85rem", fontWeight: 700, color: logoC, letterSpacing: "-0.02em", lineHeight: 1 }}>KidsInspiring Nation</div>
-              <div style={{ fontFamily: "'DM Mono',monospace", fontSize: "0.6rem", color: sc ? (dark ? T.d3 : T.p3) : "rgba(253,247,236,.4)", letterSpacing: "0.06em", textTransform: "uppercase" }}>goDs Global KidsInspiring</div>
+              <div style={{ fontFamily: "'Plus Jakarta Sans',sans-serif", fontSize: ".88rem", fontWeight: 800, color: logoC, letterSpacing: "-0.02em", lineHeight: 1, transition: "color .35s" }}>KidsInspiring Nation</div>
+              <div style={{ fontFamily: "'DM Mono',monospace", fontSize: ".58rem", color: sc ? (dark ? T.d3 : T.p3) : "rgba(253,247,236,.38)", letterSpacing: ".08em", textTransform: "uppercase", transition: "color .35s" }}>goDs Global KidsInspiring</div>
             </div>
           </a>
+
           {/* Links */}
-          <div className="nav-links" style={{ display: "flex", alignItems: "center", gap: "2rem" }}>
-            {["About", "Programs", "Impact", "Give"].map(l => {
-              if (l === "Give") {
-                return (
-                  <button key={l} onClick={() => onGive()} style={{ fontSize: "0.76rem", fontWeight: 500, letterSpacing: "0.04em", textTransform: "uppercase", color: linkC, transition: "color .2s", cursor: "pointer", background: "none", border: "none", padding: 0 }} onMouseEnter={e => e.currentTarget.style.color = T.goldL} onMouseLeave={e => e.currentTarget.style.color = linkC}>{l}</button>
-                )
-              }
-              return (
-                <a key={l} href={`#${l.toLowerCase()}`} style={{ fontSize: "0.76rem", fontWeight: 500, letterSpacing: "0.04em", textTransform: "uppercase", color: linkC, transition: "color .2s" }} onMouseEnter={e => e.currentTarget.style.color = T.goldL} onMouseLeave={e => e.currentTarget.style.color = linkC}>{l}</a>
-              )
-            })}
-            <button onClick={onNVC} style={{ fontSize: "0.76rem", fontWeight: 500, letterSpacing: "0.04em", textTransform: "uppercase", color: linkC, transition: "color .2s" }} onMouseEnter={e => e.currentTarget.style.color = T.goldL} onMouseLeave={e => e.currentTarget.style.color = linkC}>
-              National Builders
+          <div className="nav-links" style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
+
+            {/* Dropdown items */}
+            {Object.entries(DROPDOWNS).map(([key, items]) => (
+              <div key={key} style={{ position: "relative" }}>
+                <button
+                  onClick={() => toggleDropdown(key)}
+                  style={{ display: "flex", alignItems: "center", gap: ".3rem", padding: ".45rem .75rem", borderRadius: 8, fontSize: ".76rem", fontWeight: 600, letterSpacing: ".04em", textTransform: "uppercase", color: openDropdown === key ? T.goldL : linkC, background: openDropdown === key ? (dark ? "rgba(255,255,255,.07)" : "rgba(22,97,62,.07)") : "transparent", cursor: "pointer", transition: "all .2s", border: "none" }}
+                  onMouseEnter={e => { if (openDropdown !== key) { e.currentTarget.style.color = T.goldL; e.currentTarget.style.background = dark ? "rgba(255,255,255,.05)" : "rgba(22,97,62,.05)"; } }}
+                  onMouseLeave={e => { if (openDropdown !== key) { e.currentTarget.style.color = linkC; e.currentTarget.style.background = "transparent"; } }}
+                >
+                  {key}
+                  <ChevronDown size={12} strokeWidth={2.5} style={{ transition: "transform .25s", transform: openDropdown === key ? "rotate(180deg)" : "none" }} />
+                </button>
+
+                <AnimatePresence>
+                  {openDropdown === key && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -8, scale: .97 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -6, scale: .97 }}
+                      transition={{ duration: .18 }}
+                      style={{ position: "absolute", top: "calc(100% + 10px)", left: "50%", transform: "translateX(-50%)", minWidth: 240, background: dropdownSurf, borderRadius: 16, padding: "0.5rem", border: `1px solid ${dropdownBrd}`, boxShadow: dark ? "0 24px 60px rgba(0,0,0,.7), 0 2px 8px rgba(0,0,0,.4)" : "0 20px 50px rgba(10,28,18,.15), 0 2px 6px rgba(0,0,0,.06)", zIndex: 100 }}
+                    >
+                      {/* Arrow pip */}
+                      <div style={{ position: "absolute", top: -6, left: "50%", transform: "translateX(-50%)", width: 12, height: 12, background: dropdownSurf, border: `1px solid ${dropdownBrd}`, borderRadius: 3, rotate: "45deg", borderBottom: "none", borderRight: "none" }} />
+                      {items.map(item => (
+                        item.action
+                          ? <button key={item.label} onClick={() => { item.action(); setOpenDropdown(null); }} className="nav-dd-item" style={{ width: "100%", display: "flex", alignItems: "center", gap: ".85rem", padding: ".65rem .85rem", borderRadius: 10, background: "transparent", border: "none", cursor: "pointer", textAlign: "left", transition: "background .15s" }}>
+                              <span style={{ fontSize: "1rem", flexShrink: 0 }}>{item.icon}</span>
+                              <div>
+                                <div style={{ fontSize: ".83rem", fontWeight: 700, color: dark ? T.cream : T.greenD, fontFamily: "'Plus Jakarta Sans',sans-serif" }}>{item.label}</div>
+                                <div style={{ fontSize: ".72rem", color: dark ? T.d2 : T.p2, marginTop: 1 }}>{item.desc}</div>
+                              </div>
+                            </button>
+                          : <a key={item.label} href={item.href} onClick={() => setOpenDropdown(null)} className="nav-dd-item" style={{ display: "flex", alignItems: "center", gap: ".85rem", padding: ".65rem .85rem", borderRadius: 10, background: "transparent", transition: "background .15s", textDecoration: "none" }}>
+                              <span style={{ fontSize: "1rem", flexShrink: 0 }}>{item.icon}</span>
+                              <div>
+                                <div style={{ fontSize: ".83rem", fontWeight: 700, color: dark ? T.cream : T.greenD, fontFamily: "'Plus Jakarta Sans',sans-serif" }}>{item.label}</div>
+                                <div style={{ fontSize: ".72rem", color: dark ? T.d2 : T.p2, marginTop: 1 }}>{item.desc}</div>
+                              </div>
+                            </a>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            ))}
+
+            {/* Give */}
+            <button onClick={() => onGive()} style={{ padding: ".45rem .75rem", borderRadius: 8, fontSize: ".76rem", fontWeight: 600, letterSpacing: ".04em", textTransform: "uppercase", color: linkC, background: "transparent", border: "none", cursor: "pointer", transition: "all .2s" }}
+              onMouseEnter={e => { e.currentTarget.style.color = T.goldL; e.currentTarget.style.background = dark ? "rgba(255,255,255,.05)" : "rgba(22,97,62,.05)"; }}
+              onMouseLeave={e => { e.currentTarget.style.color = linkC; e.currentTarget.style.background = "transparent"; }}
+            >Give</button>
+
+            {/* National Builders CTA */}
+            <button onClick={onNVC} className="nvc-pulse" style={{ display: "flex", alignItems: "center", gap: ".4rem", fontSize: ".76rem", fontWeight: 800, letterSpacing: ".04em", textTransform: "uppercase", color: "#fff", background: `linear-gradient(135deg,${T.gold},${T.goldD})`, padding: ".5rem 1.15rem", borderRadius: 999, cursor: "pointer", border: "none", transition: "all .2s", boxShadow: `0 4px 16px ${T.gold}44` }}
+              onMouseEnter={e => e.currentTarget.style.filter = "brightness(1.12)"}
+              onMouseLeave={e => e.currentTarget.style.filter = "none"}
+            >
+              <Star size={12} fill="currentColor" /> National Builders
             </button>
-            <button onClick={onDash} style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "0.76rem", fontWeight: 600, letterSpacing: "0.04em", textTransform: "uppercase", color: sc ? (dark ? T.goldL : T.green) : T.goldL, cursor: "pointer", transition: "color .2s", padding: 0 }}>
-              <LayoutDashboard size={13} strokeWidth={1.5} /> Dashboard
-            </button>
-            <a href="#join" style={{ display: "inline-flex", alignItems: "center", padding: ".5em 1.4em", borderRadius: 999, background: T.gold, color: "#fff", fontWeight: 600, fontSize: "0.76rem", letterSpacing: "0.02em", transition: "filter .2s ease-out" }} onMouseEnter={e => e.currentTarget.style.filter = "brightness(.88)"} onMouseLeave={e => e.currentTarget.style.filter = "none"}>
-              Join
-            </a>
+
+            {/* Join */}
+            <a href="#join" style={{ display: "inline-flex", alignItems: "center", padding: ".5em 1.3em", borderRadius: 999, background: T.green, color: "#fff", fontWeight: 700, fontSize: ".76rem", letterSpacing: ".02em", transition: "filter .2s ease-out", boxShadow: `0 4px 14px ${T.green}44` }}
+              onMouseEnter={e => e.currentTarget.style.filter = "brightness(.88)"}
+              onMouseLeave={e => e.currentTarget.style.filter = "none"}
+            >Join</a>
           </div>
-          {/* Mobile */}
-          <button onClick={() => setMob(!mob)} style={{ display: "none", color: linkC, cursor: "pointer", padding: 4 }} className="mob-menu">
-            {mob ? <X size={20} strokeWidth={1.5} /> : <Menu size={20} strokeWidth={1.5} />}
+
+          {/* Mobile burger */}
+          <button onClick={() => setMob(!mob)} style={{ display: "none", color: linkC, cursor: "pointer", padding: 4, background: "none", border: "none" }} className="mob-menu">
+            {mob ? <X size={22} strokeWidth={1.5} /> : <Menu size={22} strokeWidth={1.5} />}
           </button>
         </div>
       </nav>
+
       {/* Mobile overlay */}
-      {mob && (
-        <div style={{ position: "fixed", inset: 0, zIndex: 199, background: dark ? "#050505" : "#0D3D26", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "2rem", animation: "fadeUp .3s ease-out" }}>
-          <button onClick={() => setMob(false)} style={{ position: "absolute", top: 24, right: 24, color: T.cream, cursor: "pointer" }}><X size={22} strokeWidth={1.5} /></button>
-          {["About", "Programs", "Impact"].map(l => (
-            <a key={l} onClick={() => setMob(false)} href={`#${l.toLowerCase()}`} style={{ fontFamily: "'Playfair Display',serif", fontSize: "2.5rem", fontWeight: 700, color: T.cream, transition: "color .2s" }} onMouseEnter={e => e.currentTarget.style.color = T.goldL} onMouseLeave={e => e.currentTarget.style.color = T.cream}>{l}</a>
-          ))}
-          <button onClick={() => { setMob(false); onGive(); }} style={{ fontFamily: "'Playfair Display',serif", fontSize: "2.5rem", fontWeight: 700, color: T.cream, cursor: "pointer" }}>Give</button>
-          <button onClick={() => { setMob(false); onDash(); }} style={{ fontFamily: "'Playfair Display',serif", fontSize: "2.5rem", fontWeight: 700, color: T.goldL, cursor: "pointer" }}>Dashboard</button>
-        </div>
-      )}
+      <AnimatePresence>
+        {mob && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            style={{ position: "fixed", inset: 0, zIndex: 499, background: dark ? "rgba(5,10,7,.97)" : "rgba(10,30,18,.97)", backdropFilter: "blur(20px)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "1rem", padding: "2rem" }}
+          >
+            <button onClick={() => setMob(false)} style={{ position: "absolute", top: 24, right: 24, width: 40, height: 40, borderRadius: "50%", background: "rgba(255,255,255,.08)", border: "1px solid rgba(255,255,255,.12)", display: "grid", placeItems: "center", color: T.cream, cursor: "pointer" }}>
+              <X size={20} strokeWidth={1.5} />
+            </button>
+            {["About", "Programs", "Impact"].map((l, i) => (
+              <motion.a
+                key={l}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * .07 }}
+                href={`#${l.toLowerCase()}`}
+                onClick={() => setMob(false)}
+                style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(2rem,8vw,3rem)", fontWeight: 900, color: T.cream, transition: "color .2s", textDecoration: "none" }}
+                onMouseEnter={e => e.currentTarget.style.color = T.goldL}
+                onMouseLeave={e => e.currentTarget.style.color = T.cream}
+              >{l}</motion.a>
+            ))}
+            <motion.button
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: .24 }}
+              onClick={() => { setMob(false); onNVC(); }}
+              style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(1.8rem,7vw,2.6rem)", fontWeight: 900, color: T.goldL, cursor: "pointer", display: "flex", alignItems: "center", gap: ".75rem", background: "none", border: "none" }}
+            >
+              <Star size={28} fill="currentColor" /> National Builders
+            </motion.button>
+            <motion.button
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: .31 }}
+              onClick={() => { setMob(false); onGive(); }}
+              style={{ fontFamily: "'Plus Jakarta Sans',sans-serif", fontSize: "1.1rem", fontWeight: 600, color: "rgba(253,247,236,.55)", cursor: "pointer", background: "none", border: "none" }}
+            >Give</motion.button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }
@@ -1564,7 +2054,7 @@ function DFView({ ctx }) {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export default function App() {
-  const [mode, setMode] = useState("website"); // "website" | "dashboard" | "nvc" | "giving"
+  const [mode, setMode] = useState("website"); // "website" | "dashboard" | "nvc" | "giving" | "gallery" | "gods-university"
   const [dark, setDark] = useState(false);
   const toggleDark = useCallback(() => setDark(d => !d), []);
 
@@ -1573,7 +2063,7 @@ export default function App() {
       <AnimatePresence mode="wait">
         {mode === "website" && (
           <motion.div key="web" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <Website onDash={() => setMode("dashboard")} onNVC={() => setMode("nvc")} onGive={() => setMode("giving")} dark={dark} />
+            <Website onDash={() => setMode("dashboard")} onNVC={() => setMode("nvc")} onGive={() => setMode("giving")} onGallery={() => setMode("gallery")} onGodsU={() => setMode("gods-university")} dark={dark} />
           </motion.div>
         )}
         {mode === "dashboard" && (
@@ -1589,6 +2079,16 @@ export default function App() {
         {mode === "giving" && (
           <motion.div key="giving" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             <Giving onBack={() => setMode("website")} dark={dark} />
+          </motion.div>
+        )}
+        {mode === "gallery" && (
+          <motion.div key="gallery" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            <Gallery onBack={() => setMode("website")} dark={dark} />
+          </motion.div>
+        )}
+        {mode === "gods-university" && (
+          <motion.div key="gods" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            <GodsUniversity onBack={() => setMode("website")} dark={dark} />
           </motion.div>
         )}
       </AnimatePresence>
