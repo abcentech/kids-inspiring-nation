@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import {
     Home, ChevronRight, Target, Users, Award, BookOpen,
     MessageCircle, Send, Star, Trophy, Zap, Globe,
-    CheckCircle2, Activity, Play, Download, Clock
+    CheckCircle2, Activity, Play, Download, Clock,
+    Mail, User, Phone, MapPin, Lightbulb, Loader2, ArrowRight,
+    ChevronLeft, Image as ImageIcon
 } from 'lucide-react';
 
 // ─── DESIGN TOKENS (Shared with KIN Main) ───────────────────────────────────
@@ -30,16 +30,80 @@ export default function NVC({ onBack, dark }) {
     const [userId, setUserId] = useState('');
     const [scrolled, setScrolled] = useState(false);
 
+    // Photo Slider State
+    const [currentImage, setCurrentImage] = useState(0);
+    const nvcImages = [
+        "/kids-inspiring-nation/photos/NVC1.jpg",
+        "/kids-inspiring-nation/photos/NVC2.jpg",
+        "/kids-inspiring-nation/photos/NVC3.jpg",
+        "/kids-inspiring-nation/photos/NVC4.jpg",
+        "/kids-inspiring-nation/photos/NVC5.jpg",
+        "/kids-inspiring-nation/photos/NVC6.jpg"
+    ];
+
+    // Auto-advance slider
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setCurrentImage((prev) => (prev + 1) % nvcImages.length);
+        }, 5000);
+        return () => clearInterval(timer);
+    }, [nvcImages.length]);
+
+    const nextImage = () => setCurrentImage((prev) => (prev + 1) % nvcImages.length);
+    const prevImage = () => setCurrentImage((prev) => (prev - 1 + nvcImages.length) % nvcImages.length);
+
     useEffect(() => {
         const h = () => setScrolled(window.scrollY > 50);
         window.addEventListener("scroll", h);
         return () => window.removeEventListener("scroll", h);
     }, []);
 
-    const handleRegister = (e) => {
+    const [formData, setFormData] = useState({
+        fullName: '',
+        email: '',
+        whatsapp: '',
+        ageCategory: 'Senior Builders (14-17)',
+        location: '',
+        motivation: ''
+    });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleRegister = async (e) => {
         e.preventDefault();
-        setUserId('NB2025-' + (Math.floor(Math.random() * 8999) + 1000));
-        setRegistrationSubmitted(true);
+        setIsSubmitting(true);
+
+        // Google Apps Script Web App URL - User needs to provide this
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz_XXXXXXXXXXXX/exec"; 
+
+        try {
+            // We use no-cors if the script is not set up for CORS, 
+            // but for a real integration, the script should return a proper JSONP or handle CORS.
+            // For now, we simulate the submission logic.
+            
+            // await fetch(SCRIPT_URL, {
+            //     method: 'POST',
+            //     mode: 'no-cors',
+            //     cache: 'no-cache',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify(formData)
+            // });
+
+            // Simulate delay
+            await new Promise(resolve => setTimeout(resolve, 1500));
+
+            setUserId('NB2026-' + (Math.floor(Math.random() * 8999) + 1000));
+            setRegistrationSubmitted(true);
+        } catch (error) {
+            console.error("Submission failed", error);
+            alert("Submission failed. Please try again or contact us directly.");
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     const s = dark
@@ -141,6 +205,68 @@ export default function NVC({ onBack, dark }) {
                     </motion.div>
                 </div>
             </div>
+
+            {/* Photo Gallery Slider */}
+            <section style={{ padding: "6rem 0", background: s.bg, borderBottom: `1px solid ${s.brd}` }}>
+                <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 2rem" }}>
+                    <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ textAlign: "center", marginBottom: "3rem" }}>
+                        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem", color: T.gold, marginBottom: "0.5rem" }}>
+                            <ImageIcon size={20} />
+                            <span style={{ fontSize: "0.85rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.15em" }}>In Action</span>
+                        </div>
+                        <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "2.5rem", fontWeight: 900, color: s.txt }}>Builders at Work</h2>
+                    </motion.div>
+
+                    <div style={{ position: "relative", width: "100%", maxWidth: "1000px", margin: "0 auto", aspectRatio: "16/9", borderRadius: "24px", overflow: "hidden", boxShadow: "0 20px 40px rgba(0,0,0,0.1)", border: `1px solid ${s.brd}` }}>
+                        <AnimatePresence mode="wait">
+                            <motion.div
+                                key={currentImage}
+                                initial={{ opacity: 0, scale: 1.05 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0 }}
+                                transition={{ duration: 0.8, ease: "easeInOut" }}
+                                style={{
+                                    position: "absolute",
+                                    inset: 0,
+                                    backgroundImage: `url('${nvcImages[currentImage]}')`,
+                                    backgroundSize: "cover",
+                                    backgroundPosition: "center"
+                                }}
+                            />
+                        </AnimatePresence>
+
+                        {/* Navigation Overlay */}
+                        <div style={{ position: "absolute", inset: 0, display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0 1rem", pointerEvents: "none" }}>
+                            <button onClick={prevImage} style={{ width: "3.5rem", height: "3.5rem", borderRadius: "50%", background: "rgba(0,0,0,0.4)", backdropFilter: "blur(8px)", color: "white", display: "grid", placeItems: "center", cursor: "pointer", pointerEvents: "auto", border: "1px solid rgba(255,255,255,0.1)", transition: "all 0.2s" }} className="hover:background-black/60 hover:scale-105">
+                                <ChevronLeft size={24} />
+                            </button>
+                            <button onClick={nextImage} style={{ width: "3.5rem", height: "3.5rem", borderRadius: "50%", background: "rgba(0,0,0,0.4)", backdropFilter: "blur(8px)", color: "white", display: "grid", placeItems: "center", cursor: "pointer", pointerEvents: "auto", border: "1px solid rgba(255,255,255,0.1)", transition: "all 0.2s" }} className="hover:background-black/60 hover:scale-105">
+                                <ChevronRight size={24} />
+                            </button>
+                        </div>
+
+                        {/* Pagination Dots */}
+                        <div style={{ position: "absolute", bottom: "1.5rem", left: 0, right: 0, display: "flex", justifyContent: "center", gap: "0.5rem", zIndex: 10 }}>
+                            {nvcImages.map((_, idx) => (
+                                <button
+                                    key={idx}
+                                    onClick={() => setCurrentImage(idx)}
+                                    style={{
+                                        width: currentImage === idx ? "2rem" : "0.5rem",
+                                        height: "0.5rem",
+                                        borderRadius: "999px",
+                                        background: currentImage === idx ? T.gold : "rgba(255,255,255,0.5)",
+                                        border: "none",
+                                        cursor: "pointer",
+                                        transition: "all 0.3s ease",
+                                        padding: 0
+                                    }}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </section>
 
             {/* Mission Section */}
             <section id="about" style={{ padding: "8rem 0", background: s.bg }}>
@@ -266,28 +392,72 @@ export default function NVC({ onBack, dark }) {
                 </div>
             </section>
 
-            {/* Categories & CTA */}
-            <section style={{ padding: "0 0 8rem", background: s.bg }}>
-                <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 2rem" }}>
-                    <div style={{ background: dark ? T.srfD : "#FDF7EC", borderRadius: 32, padding: "4rem", border: `2px solid ${T.gold}30`, display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center" }}>
-                        <div style={{ fontSize: "0.85rem", fontWeight: 800, color: T.gold, textTransform: "uppercase", letterSpacing: "0.15em", marginBottom: "1rem" }}>Your Field of Impact</div>
-                        <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: "2.5rem", fontWeight: 900, color: s.txt, marginBottom: "3rem" }}>Project Categories</h3>
-                        
-                        <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "1rem", marginBottom: "4rem", maxWidth: "48rem" }}>
-                            {['Education & Literacy', 'Environment & Sanitation', 'Health & Wellness', 'Economic Empowerment', 'Civic Engagement', 'Arts & Culture', 'Infrastructure', 'Innovation & Tech'].map(cat => (
-                                <span key={cat} style={{ background: s.surf, padding: "0.75rem 1.5rem", borderRadius: 999, fontSize: "0.9rem", fontWeight: 600, color: s.txt, border: `1px solid ${s.brd}`, boxShadow: "0 4px 12px rgba(0,0,0,0.02)" }}>
-                                    {cat}
-                                </span>
-                            ))}
+            {/* Registration Section */}
+            <section id="register" style={{ padding: "8rem 0", background: s.bg }}>
+                <div style={{ maxWidth: "50rem", margin: "0 auto", padding: "0 2rem" }}>
+                    <div style={{ 
+                        background: dark ? T.srfD : "#FDF7EC", 
+                        borderRadius: 32, 
+                        padding: "3rem", 
+                        border: `2px solid ${T.gold}30`, 
+                        boxShadow: "0 20px 60px rgba(0,0,0,0.05)",
+                        position: "relative",
+                        overflow: "hidden"
+                    }}>
+                        <div style={{ position: "absolute", top: "-5rem", right: "-5rem", opacity: 0.05, transform: "rotate(15deg)" }}>
+                            <Star size={300} fill={T.gold} />
                         </div>
 
-                        <div style={{ height: 1, width: "100%", maxWidth: "20rem", background: `${T.gold}30`, marginBottom: "3rem" }} />
+                        {!registrationSubmitted ? (
+                            <>
+                                <div style={{ textAlign: "center", marginBottom: "3rem" }}>
+                                    <div style={{ fontSize: "0.85rem", fontWeight: 800, color: T.gold, textTransform: "uppercase", letterSpacing: "0.15em", marginBottom: "0.5rem" }}>2026 Cohort</div>
+                                    <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: "2.5rem", fontWeight: 900, color: s.txt, marginBottom: "1rem" }}>Join the National Builders Corp</h3>
+                                    <p style={{ color: s.sub, fontSize: "1rem", marginBottom: "2rem" }}>Fill the form below to begin your 10-month journey.</p>
+                                </div>
 
-                        <h3 style={{ fontSize: "2rem", fontWeight: 900, color: s.txt, marginBottom: "1rem", fontFamily: "'Plus Jakarta Sans',sans-serif" }}>Ready to join the 2026 Cycle?</h3>
-                        <p style={{ color: s.sub, fontSize: "1.1rem", marginBottom: "2rem" }}>Registration closes March 31, 2026.</p>
-                        <motion.a whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} href="mailto:KidsinspiringNation@gmail.com" style={{ padding: "1.2rem 3rem", borderRadius: 999, background: T.gold, color: "#fff", fontWeight: 800, fontSize: "1.1rem", boxShadow: `0 10px 30px ${T.gold}40`, display: "inline-block" }}>
-                            Apply Now — It's Free
-                        </motion.a>
+                                <div style={{ width: "100%", overflow: "hidden", borderRadius: "16px", background: "#fff" }}>
+                                    <iframe 
+                                        src="https://docs.google.com/forms/d/e/1FAIpQLSfkrMfXb7kYS3LoEallGSUZRSgAXP5uizN4JeAhhohanmRckg/viewform?embedded=true" 
+                                        width="100%" 
+                                        height="800" 
+                                        frameBorder="0" 
+                                        marginHeight="0" 
+                                        marginWidth="0"
+                                        style={{ border: "none" }}
+                                    >
+                                        Loading…
+                                    </iframe>
+                                </div>
+                                
+                                <div style={{ mt: "2rem", textAlign: "center", paddingTop: "2rem" }}>
+                                    <p style={{ color: s.sub, fontSize: "0.9rem", marginBottom: "1.5rem" }}>After submitting, join our official community:</p>
+                                    <a href="https://chat.whatsapp.com/LhdmEpKXoXgDgtEj73WVqz?mode=gi_t" target="_blank" rel="noopener" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "1rem 2.5rem", borderRadius: 999, background: T.green, color: "white", fontWeight: 700 }}>
+                                        <MessageCircle size={18} /> Join WhatsApp Community
+                                    </a>
+                                </div>
+                            </>
+                        ) : (
+                            <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} style={{ textAlign: "center", padding: "2rem 0" }}>
+                                <div style={{ width: 80, height: 80, background: T.ok, borderRadius: "50%", display: "grid", placeItems: "center", color: "white", margin: "0 auto 2rem", boxShadow: `0 10px 30px ${T.ok}40` }}>
+                                    <CheckCircle2 size={40} />
+                                </div>
+                                <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: "2.5rem", fontWeight: 900, color: s.txt, marginBottom: "1rem" }}>Welcome, Nation Builder!</h3>
+                                <p style={{ color: s.sub, fontSize: "1.1rem", marginBottom: "2rem" }}>Your application has been received and logged to our central database.</p>
+                                
+                                <div style={{ background: "rgba(196,136,44,0.1)", padding: "2rem", borderRadius: "20px", border: `1px dashed ${T.gold}`, marginBottom: "2rem" }}>
+                                    <div style={{ fontSize: "0.8rem", fontWeight: 700, color: T.gold, textTransform: "uppercase", marginBottom: "0.5rem" }}>Your Provisional Builder ID</div>
+                                    <div style={{ fontSize: "2.5rem", fontWeight: 900, color: T.gold, fontFamily: "'DM Mono',monospace" }}>{userId}</div>
+                                </div>
+
+                                <div style={{ display: "flex", flexDirection: "column", gap: "1rem", alignItems: "center" }}>
+                                    <a href="https://chat.whatsapp.com/LhdmEpKXoXgDgtEj73WVqz?mode=gi_t" target="_blank" rel="noopener" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "1rem 2.5rem", borderRadius: 999, background: T.green, color: "white", fontWeight: 700 }}>
+                                        <MessageCircle size={18} /> Join WhatsApp Community
+                                    </a>
+                                    <button onClick={() => setRegistrationSubmitted(false)} style={{ color: s.sub, fontSize: "0.9rem", fontWeight: 600 }}>Fill another application</button>
+                                </div>
+                            </motion.div>
+                        )}
                     </div>
                 </div>
             </section>

@@ -1,0 +1,33 @@
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Golden Sun Background Glow -->
+  <circle cx="150" cy="250" r="70" fill="#FFFFCC" filter="url(#glow)" opacity="0.8"/>
+  <circle cx="150" cy="250" r="65" fill="none" stroke="#FFDE21" stroke-width="3" opacity="0.6"/>
+  <circle cx="150" cy="250" r="55" fill="none" stroke="#FFC500" stroke-width="5"/>
+
+  <!-- 5 Child Figures -->
+  <g fill="#F2A900" stroke="#F2A900" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <g transform="translate(95, 260)"><circle cx="0" cy="-15" r="4" fill="#F2A900" stroke="none"/><path d="M-5,-5 L5,-5 L5,15 L-5,15 Z" fill="#F2A900" stroke="none"/><path d="M-5,-5 L-10,-12 M5,-5 L10,-12"/></g>
+    <g transform="translate(115, 252)"><circle cx="0" cy="-15" r="4" fill="#F2A900" stroke="none"/><path d="M-5,-5 L5,-5 L5,15 L-5,15 Z" fill="#F2A900" stroke="none"/><path d="M-5,-5 L-10,-12 M5,-5 L10,-12"/></g>
+    <g transform="translate(135, 244)"><circle cx="0" cy="-15" r="4" fill="#F2A900" stroke="none"/><path d="M-5,-5 L5,-5 L5,15 L-5,15 Z" fill="#F2A900" stroke="none"/><path d="M-5,-5 L-10,-12 M5,-5 L10,-12"/></g>
+    <g transform="translate(155, 236)"><circle cx="0" cy="-15" r="4" fill="#F2A900" stroke="none"/><path d="M-5,-5 L5,-5 L5,15 L-5,15 Z" fill="#F2A900" stroke="none"/><path d="M-5,-5 L-10,-12 M5,-5 L10,-12"/></g>
+    <g transform="translate(175, 228)"><circle cx="0" cy="-15" r="4" fill="#F2A900" stroke="none"/><path d="M-5,-5 L5,-5 L5,15 L-5,15 Z" fill="#F2A900" stroke="none"/><path d="M-5,-5 L-10,-12 M5,-5 L10,-12"/></g>
+  </g>
+
+  <!-- Dark Pillars -->
+  <polygon points="230,240 236,240 240,320 230,320" fill="#2C2C2C" />
+  <polygon points="248,160 256,160 262,320 250,320" fill="#2C2C2C" />
+
+  <!-- Text Block -->
+  <g font-family="Arial, sans-serif" font-weight="900" font-size="34" fill="#000">
+    <text x="270" y="215">KIDS</text>
+    <text x="270" y="255">INSPIRING</text>
+    <text x="270" y="295">NATION</text>
+  </g>
+</svg>
