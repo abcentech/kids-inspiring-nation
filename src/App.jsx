@@ -140,6 +140,7 @@ const PROGRAMS = [
     tagline: "Our Character Flagship — holds every single day of the year",
     desc: "A daily devotional programme shaping the character of every goD. KIND runs 365 days a year — every evening at 8pm WAT. It is the heartbeat of KidsInspiring Nation, producing the most attendance of any programme.",
     bg: `linear-gradient(135deg,${T.green},${T.greenD})`,
+    photo: "/kids-inspiring-nation/photos/KIN_programs.jpg",
     cta: true, // has JOIN CTA
   },
   {
@@ -151,6 +152,7 @@ const PROGRAMS = [
     tagline: "Senior goDs mentor junior goDs in communal cells",
     desc: "A structured mentorship community where senior goDs pour into juniors across three cohorts. Every Sunday at 5pm, cells gather to share wisdom, challenge growth, and build legacy.",
     bg: `linear-gradient(135deg,#7B2D8B,#4A1B55)`,
+    photo: "/kids-inspiring-nation/photos/Community_impact.jpg",
     sub: [{ label: "KINGs 001", entries: 616, unique: 69 }, { label: "KINGs 002", entries: 864, unique: 123 }, { label: "KINGs 003", entries: 238, unique: 32 }],
   },
   {
@@ -162,6 +164,7 @@ const PROGRAMS = [
     tagline: "Our most prestigious spiritual programme",
     desc: "A three-week season of consecration through fasting, prayer and the Word. DF1, DF2 and DF3 run consecutively — each week building on the last. In 2025, DF3 grew by 200% over 2024, signalling a deepening culture of spiritual discipline.",
     bg: `linear-gradient(135deg,${T.gold},${T.goldD})`,
+    photo: "/kids-inspiring-nation/photos/Daniel_Fast.jpg",
     sub: [{ label: "DF Week 1", entries: 406, prev: 259 }, { label: "DF Week 2", entries: 576, prev: 272 }, { label: "DF Week 3", entries: 637, prev: 212 }],
   },
   {
@@ -173,6 +176,7 @@ const PROGRAMS = [
     tagline: "Faith-based training for Nation-building goDs",
     desc: "A Sunday morning spiritual formation experience teaching goDs how to live by faith, think by Kingdom principles, and position themselves as Nation-builders. Meets every Sunday at 11am WAT.",
     bg: `linear-gradient(135deg,${T.goldL},${T.gold})`,
+    photo: "/kids-inspiring-nation/photos/Spirit_Filled_Parents.jpg",
   },
   {
     code: "P119", name: "P119 Academy",
@@ -183,6 +187,7 @@ const PROGRAMS = [
     tagline: "Maths, English & Character — from the Oldest Book",
     desc: "A weekly community programme teaching core academic subjects — Mathematics, English and Character — anchored in the wisdom of Psalm 119, the oldest book written. Every Friday at 5pm.",
     bg: `linear-gradient(135deg,${T.info},#004C99)`,
+    photo: "/kids-inspiring-nation/photos/P119_Academy.jpg",
   },
   {
     code: "FACE", name: "Feed A Community",
@@ -194,6 +199,7 @@ const PROGRAMS = [
     tagline: "1,952 meals served in 2025",
     desc: "Every Sunday at 3pm, KidsInspiring Nation feeds every child in the community. In 2025, FACE served 1,952 meals — demonstrating that the mission of raising goDs includes meeting their most practical needs.",
     bg: `linear-gradient(135deg,${T.coral},#A83920)`,
+    photo: "/kids-inspiring-nation/photos/FACE_Feed_A_Community_EveryWeek.jpg",
   },
   {
     code: "TJC", name: "Jesus Christ Concert",
@@ -204,6 +210,7 @@ const PROGRAMS = [
     tagline: "Songs, awards, drama, feeding & the true meaning of Christmas",
     desc: "TJC is KidsInspiring Nation's yearly celebration — bringing the true experience of Christmas alive through songs, dance, drama, awards, feeding and community. It marks the close of the year for every goD.",
     bg: `linear-gradient(135deg,#8B4513,#5C2D0A)`,
+    photo: "/kids-inspiring-nation/photos/Epic_moments.jpg",
   },
   {
     code: "CST", name: "Covenant Servants",
@@ -214,6 +221,7 @@ const PROGRAMS = [
     tagline: "Training the volunteers who power KidsInspiring Nation",
     desc: "CST equips our volunteers — called Covenant Servants — with the heart, skills and spiritual formation needed to serve excellently. Every facilitator, mentor and host is a Covenant Servant shaped by this programme.",
     bg: `linear-gradient(135deg,#27AE60,#1A6B3C)`,
+    photo: "/kids-inspiring-nation/photos/Skills_Development.jpg",
   },
 ];
 
@@ -397,7 +405,7 @@ const SLIDES = [
     icon: BookOpen,
     gradient: `linear-gradient(135deg, ${T.greenD} 0%, #060E08 55%, #16613E 100%)`,
     accent: T.goldL,
-    photo: "/kids-inspiring-nation/slider/1.jpg",
+    photo: "/kids-inspiring-nation/photos/KIN_programs.jpg",
   },
   {
     id: 2,
@@ -407,7 +415,7 @@ const SLIDES = [
     icon: Flame,
     gradient: `linear-gradient(135deg, ${T.goldD} 0%, #5C3210 60%, ${T.gold} 100%)`,
     accent: T.goldL,
-    photo: "/kids-inspiring-nation/slider/2.jpg",
+    photo: "/kids-inspiring-nation/photos/Daniel_Fast.jpg",
   },
   {
     id: 3,
@@ -417,7 +425,7 @@ const SLIDES = [
     icon: Landmark,
     gradient: `linear-gradient(135deg, #1A0E3A 0%, #2D1B69 50%, #0D3D26 100%)`,
     accent: "#A78BFA",
-    photo: "/kids-inspiring-nation/slider/3.jpg",
+    photo: "/kids-inspiring-nation/photos/Nation_Builders_Program1.jpg",
   },
   {
     id: 4,
@@ -427,7 +435,7 @@ const SLIDES = [
     icon: Utensils,
     gradient: `linear-gradient(135deg, #A83920 0%, #D94F30 60%, #8B2010 100%)`,
     accent: "#FBBF72",
-    photo: "/kids-inspiring-nation/slider/4.jpg",
+    photo: "/kids-inspiring-nation/photos/FACE_Feed_A_Community_EveryWeek.jpg",
   },
   {
     id: 5,
@@ -437,7 +445,7 @@ const SLIDES = [
     icon: Crown,
     gradient: `linear-gradient(135deg, #4A1B55 0%, #7B2D8B 60%, #2D0A3A 100%)`,
     accent: "#D8B4FE",
-    photo: "/kids-inspiring-nation/slider/5.jpg",
+    photo: "/kids-inspiring-nation/photos/Community_impact.jpg",
   },
 ];
 
@@ -674,7 +682,8 @@ function NBCInvitePopup({ onNVC, dark }) {
             }}
           >
             {/* Background */}
-            <div style={{ position: "absolute", inset: 0, background: `linear-gradient(155deg, ${T.greenD} 0%, #050E07 60%, ${T.greenD} 100%)` }} />
+            <img src="/kids-inspiring-nation/photos/Join_the_NBC_challenge.jpg" alt="NBC Challenge" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.35, mixBlendMode: "luminosity" }} />
+            <div style={{ position: "absolute", inset: 0, background: `linear-gradient(155deg, ${T.greenD}E6 0%, #050E07E6 60%, ${T.greenD}CC 100%)` }} />
             <div style={{ position: "absolute", top: "-40%", right: "-20%", width: 400, height: 400, borderRadius: "50%", background: `radial-gradient(circle, ${T.gold}28, transparent 65%)`, pointerEvents: "none" }} />
             <div style={{ position: "absolute", bottom: "-30%", left: "-10%", width: 300, height: 300, borderRadius: "50%", background: `radial-gradient(circle, ${T.green}40, transparent 65%)`, pointerEvents: "none" }} />
 
@@ -744,6 +753,7 @@ function NBCInvitePopup({ onNVC, dark }) {
 function SiteNav({ onDash, onNVC, onGive, onGallery, onGodsU, dark }) {
   const [sc, setSc] = useState(false);
   const [mob, setMob] = useState(false);
+  const [mobSection, setMobSection] = useState(null);
   const [openDropdown, setOpenDropdown] = useState(null);
   const navRef = useRef(null);
 
@@ -900,40 +910,92 @@ function SiteNav({ onDash, onNVC, onGive, onGallery, onGodsU, dark }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            style={{ position: "fixed", inset: 0, zIndex: 499, background: dark ? "rgba(5,10,7,.97)" : "rgba(10,30,18,.97)", backdropFilter: "blur(20px)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "1rem", padding: "2rem" }}
+            style={{ position: "fixed", inset: 0, zIndex: 1000, background: dark ? "rgba(5,12,8,.98)" : "rgba(250,250,245,.98)", backdropFilter: "blur(20px)", display: "flex", flexDirection: "column", padding: "1.5rem" }}
           >
-            <button onClick={() => setMob(false)} style={{ position: "absolute", top: 24, right: 24, width: 40, height: 40, borderRadius: "50%", background: "rgba(255,255,255,.08)", border: "1px solid rgba(255,255,255,.12)", display: "grid", placeItems: "center", color: T.cream, cursor: "pointer" }}>
-              <X size={20} strokeWidth={1.5} />
-            </button>
-            {["About", "Programs", "Impact"].map((l, i) => (
-              <motion.a
-                key={l}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * .07 }}
-                href={`#${l.toLowerCase()}`}
-                onClick={() => setMob(false)}
-                style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(2rem,8vw,3rem)", fontWeight: 900, color: T.cream, transition: "color .2s", textDecoration: "none" }}
-                onMouseEnter={e => e.currentTarget.style.color = T.goldL}
-                onMouseLeave={e => e.currentTarget.style.color = T.cream}
-              >{l}</motion.a>
-            ))}
-            <motion.button
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: .24 }}
-              onClick={() => { setMob(false); onNVC(); }}
-              style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(1.8rem,7vw,2.6rem)", fontWeight: 900, color: T.goldL, cursor: "pointer", display: "flex", alignItems: "center", gap: ".75rem", background: "none", border: "none" }}
-            >
-              <Star size={28} fill="currentColor" /> National Builders
-            </motion.button>
-            <motion.button
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: .31 }}
-              onClick={() => { setMob(false); onGive(); }}
-              style={{ fontFamily: "'Plus Jakarta Sans',sans-serif", fontSize: "1.1rem", fontWeight: 600, color: "rgba(253,247,236,.55)", cursor: "pointer", background: "none", border: "none" }}
-            >Give</motion.button>
+            {/* Mobile Header */}
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "2rem" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                <img src="/kids-inspiring-nation/logo.svg" alt="logo" style={{ width: 32, height: 32 }} />
+                <span style={{ fontFamily: "Cinzel, serif", fontWeight: 900, fontSize: "1rem", color: dark ? T.goldL : T.green }}>KIN</span>
+              </div>
+              <button onClick={() => { setMob(false); setMobSection(null); }} style={{ width: 40, height: 40, borderRadius: "50%", background: dark ? "rgba(255,255,255,.05)" : "rgba(0,0,0,.05)", border: "none", display: "grid", placeItems: "center", color: dark ? T.cream : T.greenD }}>
+                <X size={20} />
+              </button>
+            </div>
+
+            {/* Mobile Links Scrollable area */}
+            <div className="ds" style={{ flex: 1, overflowY: "auto", paddingRight: "0.5rem" }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                
+                {Object.entries(DROPDOWNS).map(([key, items]) => {
+                  const isExp = mobSection === key;
+                  return (
+                    <div key={key} style={{ background: isExp ? (dark ? "rgba(255,255,255,.03)" : "rgba(22,97,62,.03)") : "transparent", borderRadius: 16, overflow: "hidden", transition: "all .3s" }}>
+                      <button 
+                        onClick={() => setMobSection(isExp ? null : key)}
+                        style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "1.25rem 1rem", border: "none", background: "none", textAlign: "left", cursor: "pointer" }}
+                      >
+                        <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.75rem", fontWeight: 900, color: isExp ? T.goldL : (dark ? T.cream : T.greenD) }}>{key}</span>
+                        <ChevronDown size={22} style={{ color: isExp ? T.goldL : (dark ? T.d3 : T.p3), transition: "transform .3s", transform: isExp ? "rotate(180deg)" : "none" }} />
+                      </button>
+                      
+                      <AnimatePresence>
+                        {isExp && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.3 }}
+                          >
+                            <div style={{ padding: "0 1rem 1.25rem", display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                              {items.map(item => (
+                                <button 
+                                  key={item.label} 
+                                  onClick={() => {
+                                    if(item.action) { item.action(); setMob(false); setMobSection(null); }
+                                    else if(item.href) { setMob(false); setMobSection(null); window.location.hash = item.href; }
+                                  }}
+                                  style={{ display: "flex", alignItems: "center", gap: "0.75rem", padding: "0.85rem", borderRadius: 12, background: dark ? "rgba(255,255,255,0.04)" : "rgba(22,97,62,0.04)", border: "none", textAlign: "left", width: "100%" }}
+                                >
+                                  <span style={{ fontSize: "1.2rem" }}>{item.icon}</span>
+                                  <div>
+                                    <div style={{ fontSize: "0.95rem", fontWeight: 700, color: dark ? T.cream : T.greenD }}>{item.label}</div>
+                                    <div style={{ fontSize: "0.75rem", color: dark ? T.d3 : T.p2 }}>{item.desc}</div>
+                                  </div>
+                                </button>
+                              ))}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  );
+                })}
+
+                {/* Prominent Actions */}
+                <div style={{ marginTop: "1rem", paddingTop: "1rem", borderTop: `1px dashed ${dark ? "rgba(255,255,255,.1)" : "rgba(22,97,62,.1)"}`, display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+                  <button 
+                    onClick={() => { onNVC(); setMob(false); }}
+                    style={{ background: `linear-gradient(135deg,${T.gold},${T.goldD})`, padding: "1.1rem", borderRadius: 16, display: "flex", alignItems: "center", justifyContent: "center", gap: "0.75rem", color: "#fff", fontWeight: 800, fontSize: "1.1rem", border: "none", boxShadow: `0 8px 24px ${T.gold}33` }}
+                  >
+                    <Star size={20} fill="currentColor" /> National Builders
+                  </button>
+                  
+                  <button 
+                    onClick={() => { onGive(); setMob(false); }}
+                    style={{ background: T.green, padding: "1.1rem", borderRadius: 16, textAlign: "center", color: "#fff", fontWeight: 700, fontSize: "1.1rem", border: "none", boxShadow: `0 8px 24px ${T.green}22` }}
+                  >
+                    Give Support
+                  </button>
+                </div>
+
+              </div>
+            </div>
+            
+            {/* Mobile Footer */}
+            <div style={{ marginTop: "1rem", textAlign: "center" }}>
+              <div style={{ fontSize: "0.65rem", color: dark ? T.d3 : T.p3, letterSpacing: "0.05em", textTransform: "uppercase" }}>Raising goDs · building Nations</div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -1086,8 +1148,9 @@ function AboutSection({ dark }) {
               "Every child is a goD — a Genius Ordained by Destiny."
             </div>
             <div style={{ background: T.green, borderRadius: 24, position: "relative", overflow: "hidden", padding: "2rem", minHeight: "22rem", display: "flex", alignItems: "flex-end" }}>
+              <img src="/kids-inspiring-nation/photos/Nation_Builders_Program.jpg" alt="Nation Builders" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.5, mixBlendMode: "overlay" }} />
               <div aria-hidden style={{ position: "absolute", top: "-.1em", right: "-.05em", fontSize: "clamp(10rem,30vw,22rem)", color: "transparent", WebkitTextStroke: "1px rgba(232,185,84,.07)", lineHeight: 1, pointerEvents: "none", userSelect: "none", fontFamily: "'Playfair Display',serif", fontStyle: "italic", fontWeight: 900 }}>goD</div>
-              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(13,61,38,.9) 0%,transparent 50%)" }} />
+              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(13,61,38,.9) 0%,transparent 60%)" }} />
               <div style={{ position: "relative", zIndex: 2 }}>
                 <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(2.8rem,7vw,4.2rem)", fontWeight: 900, color: T.goldL, letterSpacing: "-0.04em", lineHeight: 1 }}>19,695</div>
                 <div style={{ color: "rgba(253,247,236,.8)", fontSize: ".85rem", fontWeight: 500, letterSpacing: ".04em", marginTop: ".25rem" }}>Attendance entries · 2025</div>
@@ -1132,13 +1195,21 @@ function ProgramsSection({ dark }) {
                 style={{ background: card, borderRadius: 22, overflow: "hidden", border: `1px solid ${dark ? "rgba(255,255,255,.06)" : "rgba(22,97,62,.09)"}`, boxShadow: dark ? "0 2px 12px rgba(0,0,0,.4)" : "0 2px 8px rgba(10,28,18,.05)", display: "flex", flexDirection: "column", cursor: "pointer" }}
                 onClick={() => setActive(isOpen ? null : p.code)}>
                 {/* Header */}
-                <div style={{ height: "6.5rem", background: p.bg, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 1.5rem", position: "relative", overflow: "hidden" }}>
-                  <span style={{ fontSize: "2.2rem" }}>{p.icon}</span>
-                  <div style={{ textAlign: "right" }}>
-                    <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.6rem", fontWeight: 900, color: "rgba(255,255,255,.9)", letterSpacing: "-0.04em", lineHeight: 1 }}>
-                      {p.meals ? `${p.meals.toLocaleString()}+` : p.entries?.toLocaleString() || ""}
+                <div style={{ height: "9.5rem", background: p.bg, display: "flex", alignItems: "flex-end", padding: "1.25rem 1.5rem", justifyContent: "space-between", position: "relative", overflow: "hidden" }}>
+                  {p.photo && (
+                    <img src={p.photo} alt={p.name} style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", objectFit: "cover", mixBlendMode: "overlay", opacity: 0.85, zIndex: 0 }} />
+                  )}
+                  <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%)", zIndex: 1 }} />
+                  <div style={{ position: "relative", zIndex: 2, display: "flex", justifyContent: "space-between", width: "100%", alignItems: "flex-end" }}>
+                    <span style={{ fontSize: "2.8rem", lineHeight: 1, filter: "drop-shadow(0 4px 12px rgba(0,0,0,0.3))" }}>{p.icon}</span>
+                    <div style={{ textAlign: "right", textShadow: "0 2px 8px rgba(0,0,0,0.5)" }}>
+                      <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.8rem", fontWeight: 900, color: "rgba(255,255,255,.95)", letterSpacing: "-0.04em", lineHeight: 1 }}>
+                        {p.meals ? `${p.meals.toLocaleString()}+` : p.entries?.toLocaleString() || ""}
+                      </div>
+                      <div style={{ fontSize: ".65rem", color: "rgba(255,255,255,.8)", fontWeight: 600, textTransform: "uppercase", letterSpacing: ".05em", marginTop: ".25rem" }}>
+                        {p.meals ? "meals served" : "entries 2025"}
+                      </div>
                     </div>
-                    <div style={{ fontSize: ".65rem", color: "rgba(255,255,255,.6)", fontWeight: 500 }}>{p.meals ? "meals served" : "entries 2025"}</div>
                   </div>
                 </div>
                 {/* Body */}

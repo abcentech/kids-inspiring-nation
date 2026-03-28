@@ -1,3 +1,5 @@
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
     Home, ChevronRight, Target, Users, Award, BookOpen,
     MessageCircle, Send, Star, Trophy, Zap, Globe,
