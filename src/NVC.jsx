@@ -35,12 +35,12 @@ export default function NVC({ onBack, dark }) {
     // Photo Slider State
     const [currentImage, setCurrentImage] = useState(0);
     const nvcImages = [
-        "/kids-inspiring-nation/photos/NVC1.jpg",
-        "/kids-inspiring-nation/photos/NVC2.jpg",
-        "/kids-inspiring-nation/photos/NVC3.jpg",
-        "/kids-inspiring-nation/photos/NVC4.jpg",
-        "/kids-inspiring-nation/photos/NVC5.jpg",
-        "/kids-inspiring-nation/photos/NVC6.jpg"
+        "/photos/NVC1.jpg",
+        "/photos/NVC2.jpg",
+        "/photos/NVC3.jpg",
+        "/photos/NVC4.jpg",
+        "/photos/NVC5.jpg",
+        "/photos/NVC6.jpg"
     ];
 
     // Auto-advance slider
@@ -322,7 +322,7 @@ export default function NVC({ onBack, dark }) {
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))", gap: "3rem" }}>
                         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ background: s.surf, padding: "2rem", borderRadius: 24, border: `1px solid ${s.brd}`, boxShadow: "0 10px 40px rgba(0,0,0,.03)" }}>
                             <div style={{ borderRadius: 12, overflow: "hidden", marginBottom: "1.5rem", background: "#f5f5f5" }}>
-                                <img src="/kids-inspiring-nation/psalm119/images/Psalm 119 National Values Challenge_ Maximum of Score Across the CBT.png" alt="Max Mastery CBT" style={{ width: "100%", display: "block" }} />
+                                <img src="/psalm119/images/Psalm 119 National Values Challenge_ Maximum of Score Across the CBT.png" alt="Max Mastery CBT" style={{ width: "100%", display: "block" }} />
                             </div>
                             <h4 style={{ fontSize: "1.3rem", fontWeight: 800, color: s.txt, marginBottom: "0.5rem" }}>Peak Mastery</h4>
                             <p style={{ color: s.sub, fontSize: "0.95rem", lineHeight: 1.5 }}>Top builders demonstrate 95%+ mastery in national values assessment across Nigeria.</p>
@@ -330,7 +330,7 @@ export default function NVC({ onBack, dark }) {
 
                         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} viewport={{ once: true }} style={{ background: s.surf, padding: "2rem", borderRadius: 24, border: `1px solid ${s.brd}`, boxShadow: "0 10px 40px rgba(0,0,0,.03)" }}>
                             <div style={{ borderRadius: 12, overflow: "hidden", marginBottom: "1.5rem", background: "#f5f5f5" }}>
-                                <img src="/kids-inspiring-nation/psalm119/images/Psalm 119 National Values Challenge_ Minimum Score Across the CBTs.png" alt="Baseline Growth CBT" style={{ width: "100%", display: "block" }} />
+                                <img src="/psalm119/images/Psalm 119 National Values Challenge_ Minimum Score Across the CBTs.png" alt="Baseline Growth CBT" style={{ width: "100%", display: "block" }} />
                             </div>
                             <h4 style={{ fontSize: "1.3rem", fontWeight: 800, color: s.txt, marginBottom: "0.5rem" }}>Sustained Elevation</h4>
                             <p style={{ color: s.sub, fontSize: "0.95rem", lineHeight: 1.5 }}>Participants show significantly higher integrity scores than traditional peer groups.</p>
@@ -385,7 +385,7 @@ export default function NVC({ onBack, dark }) {
                                 <div style={{ fontSize: "2.5rem", marginBottom: "1rem" }}>{v.i}</div>
                                 <h4 style={{ fontSize: "1.1rem", fontWeight: 800, color: s.txt, marginBottom: "0.5rem" }}>{v.t}</h4>
                                 <p style={{ fontSize: "0.85rem", color: s.sub, lineHeight: 1.5, marginBottom: "2rem", flex: 1 }}>{v.d}</p>
-                                <a href={`/kids-inspiring-nation/psalm119/downloads/${v.f}`} download style={{ display: "inline-flex", justifyContent: "center", alignItems: "center", gap: "0.5rem", padding: "0.75rem 1.5rem", background: idx === 0 ? T.green : "rgba(22,97,62,0.08)", color: idx === 0 ? "#fff" : T.green, borderRadius: 999, fontWeight: 700, fontSize: "0.85rem", border: idx === 0 ? "none" : `1px solid ${T.green}30`, transition: "all 0.2s" }} className="hover:scale-105">
+                                <a href={`/psalm119/downloads/${v.f}`} download style={{ display: "inline-flex", justifyContent: "center", alignItems: "center", gap: "0.5rem", padding: "0.75rem 1.5rem", background: idx === 0 ? T.green : "rgba(22,97,62,0.08)", color: idx === 0 ? "#fff" : T.green, borderRadius: 999, fontWeight: 700, fontSize: "0.85rem", border: idx === 0 ? "none" : `1px solid ${T.green}30`, transition: "all 0.2s" }} className="hover:scale-105">
                                     <Download size={14} /> Download
                                 </a>
                             </motion.div>
