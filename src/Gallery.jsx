@@ -15,7 +15,7 @@ const T = {
 const PHOTOS = [
   {
     id: 1,
-    src: null,
+    src: "/kids-inspiring-nation/photos/KIN_programs.jpg",
     gradient: `linear-gradient(135deg, ${T.green} 0%, ${T.greenD} 100%)`,
     caption: "KIND Daily Devotional — goDs in character session",
     tag: "KIND", date: "March 2025",
@@ -23,7 +23,7 @@ const PHOTOS = [
   },
   {
     id: 2,
-    src: null,
+    src: "/kids-inspiring-nation/photos/Epic_moments.jpg",
     gradient: `linear-gradient(135deg, #7B2D8B 0%, #4A1B55 100%)`,
     caption: "KINGs 002 Cell — Sunday mentorship circle",
     tag: "KINGs", date: "February 2025",
@@ -31,7 +31,7 @@ const PHOTOS = [
   },
   {
     id: 3,
-    src: null,
+    src: "/kids-inspiring-nation/photos/Daniel_Fast.jpg",
     gradient: `linear-gradient(135deg, ${T.gold} 0%, ${T.goldD} 100%)`,
     caption: "Daniel Fast Week 3 — 637 participants, 200% growth",
     tag: "Daniel Fast", date: "January 2025",
@@ -39,7 +39,7 @@ const PHOTOS = [
   },
   {
     id: 4,
-    src: null,
+    src: "/kids-inspiring-nation/photos/FACE_Feed_A_Community_EveryWeek.jpg",
     gradient: `linear-gradient(135deg, #D94F30 0%, #A83920 100%)`,
     caption: "FACE — feeding the community every Sunday",
     tag: "FACE", date: "April 2025",
@@ -47,7 +47,7 @@ const PHOTOS = [
   },
   {
     id: 5,
-    src: null,
+    src: "/kids-inspiring-nation/photos/P119_Academy.jpg",
     gradient: `linear-gradient(135deg, #0071E3 0%, #004C99 100%)`,
     caption: "P119 Academy — Mathematics & Character class",
     tag: "P119", date: "May 2025",
@@ -55,7 +55,7 @@ const PHOTOS = [
   },
   {
     id: 6,
-    src: null,
+    src: "/kids-inspiring-nation/photos/Community_impact.jpg",
     gradient: `linear-gradient(135deg, #8B4513 0%, #5C2D0A 100%)`,
     caption: "The Jesus Christ Concert 2025 — Annual celebration",
     tag: "TJC", date: "December 2025",
@@ -63,7 +63,7 @@ const PHOTOS = [
   },
   {
     id: 7,
-    src: null,
+    src: "/kids-inspiring-nation/photos/Spirit_Filled_Parents.jpg",
     gradient: `linear-gradient(135deg, #27AE60 0%, #1A6B3C 100%)`,
     caption: "Covenant Servants — volunteer formation session",
     tag: "CST", date: "October 2025",
@@ -71,7 +71,7 @@ const PHOTOS = [
   },
   {
     id: 8,
-    src: null,
+    src: "/kids-inspiring-nation/photos/Skills_Development.jpg",
     gradient: `linear-gradient(135deg, ${T.goldL} 0%, ${T.gold} 100%)`,
     caption: "goDxperience — Sunday faith formation gathering",
     tag: "gDX", date: "June 2025",
