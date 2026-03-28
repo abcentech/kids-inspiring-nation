@@ -140,7 +140,7 @@ const PROGRAMS = [
     tagline: "Our Character Flagship — holds every single day of the year",
     desc: "A daily devotional programme shaping the character of every goD. KIND runs 365 days a year — every evening at 8pm WAT. It is the heartbeat of KidsInspiring Nation, producing the most attendance of any programme.",
     bg: `linear-gradient(135deg,${T.green},${T.greenD})`,
-    photo: "/kids-inspiring-nation/photos/KIN_programs.jpg",
+    photo: "/photos/KIN_programs.jpg",
     cta: true, // has JOIN CTA
   },
   {
@@ -152,7 +152,7 @@ const PROGRAMS = [
     tagline: "Senior goDs mentor junior goDs in communal cells",
     desc: "A structured mentorship community where senior goDs pour into juniors across three cohorts. Every Sunday at 5pm, cells gather to share wisdom, challenge growth, and build legacy.",
     bg: `linear-gradient(135deg,#7B2D8B,#4A1B55)`,
-    photo: "/kids-inspiring-nation/photos/Community_impact.jpg",
+    photo: "/photos/Community_impact.jpg",
     sub: [{ label: "KINGs 001", entries: 616, unique: 69 }, { label: "KINGs 002", entries: 864, unique: 123 }, { label: "KINGs 003", entries: 238, unique: 32 }],
   },
   {
@@ -164,7 +164,7 @@ const PROGRAMS = [
     tagline: "Our most prestigious spiritual programme",
     desc: "A three-week season of consecration through fasting, prayer and the Word. DF1, DF2 and DF3 run consecutively — each week building on the last. In 2025, DF3 grew by 200% over 2024, signalling a deepening culture of spiritual discipline.",
     bg: `linear-gradient(135deg,${T.gold},${T.goldD})`,
-    photo: "/kids-inspiring-nation/photos/Daniel_Fast.jpg",
+    photo: "/photos/Daniel_Fast.jpg",
     sub: [{ label: "DF Week 1", entries: 406, prev: 259 }, { label: "DF Week 2", entries: 576, prev: 272 }, { label: "DF Week 3", entries: 637, prev: 212 }],
   },
   {
@@ -176,7 +176,7 @@ const PROGRAMS = [
     tagline: "Faith-based training for Nation-building goDs",
     desc: "A Sunday morning spiritual formation experience teaching goDs how to live by faith, think by Kingdom principles, and position themselves as Nation-builders. Meets every Sunday at 11am WAT.",
     bg: `linear-gradient(135deg,${T.goldL},${T.gold})`,
-    photo: "/kids-inspiring-nation/photos/Spirit_Filled_Parents.jpg",
+    photo: "/photos/Spirit_Filled_Parents.jpg",
   },
   {
     code: "P119", name: "P119 Academy",
@@ -187,7 +187,7 @@ const PROGRAMS = [
     tagline: "Maths, English & Character — from the Oldest Book",
     desc: "A weekly community programme teaching core academic subjects — Mathematics, English and Character — anchored in the wisdom of Psalm 119, the oldest book written. Every Friday at 5pm.",
     bg: `linear-gradient(135deg,${T.info},#004C99)`,
-    photo: "/kids-inspiring-nation/photos/P119_Academy.jpg",
+    photo: "/photos/P119_Academy.jpg",
   },
   {
     code: "FACE", name: "Feed A Community",
@@ -199,7 +199,7 @@ const PROGRAMS = [
     tagline: "1,952 meals served in 2025",
     desc: "Every Sunday at 3pm, KidsInspiring Nation feeds every child in the community. In 2025, FACE served 1,952 meals — demonstrating that the mission of raising goDs includes meeting their most practical needs.",
     bg: `linear-gradient(135deg,${T.coral},#A83920)`,
-    photo: "/kids-inspiring-nation/photos/FACE_Feed_A_Community_EveryWeek.jpg",
+    photo: "/photos/FACE_Feed_A_Community_EveryWeek.jpg",
   },
   {
     code: "TJC", name: "Jesus Christ Concert",
@@ -210,7 +210,7 @@ const PROGRAMS = [
     tagline: "Songs, awards, drama, feeding & the true meaning of Christmas",
     desc: "TJC is KidsInspiring Nation's yearly celebration — bringing the true experience of Christmas alive through songs, dance, drama, awards, feeding and community. It marks the close of the year for every goD.",
     bg: `linear-gradient(135deg,#8B4513,#5C2D0A)`,
-    photo: "/kids-inspiring-nation/photos/Epic_moments.jpg",
+    photo: "/photos/Epic_moments.jpg",
   },
   {
     code: "CST", name: "Covenant Servants",
@@ -221,7 +221,7 @@ const PROGRAMS = [
     tagline: "Training the volunteers who power KidsInspiring Nation",
     desc: "CST equips our volunteers — called Covenant Servants — with the heart, skills and spiritual formation needed to serve excellently. Every facilitator, mentor and host is a Covenant Servant shaped by this programme.",
     bg: `linear-gradient(135deg,#27AE60,#1A6B3C)`,
-    photo: "/kids-inspiring-nation/photos/Skills_Development.jpg",
+    photo: "/photos/Skills_Development.jpg",
   },
 ];
 
@@ -405,7 +405,7 @@ const SLIDES = [
     icon: BookOpen,
     gradient: `linear-gradient(135deg, ${T.greenD} 0%, #060E08 55%, #16613E 100%)`,
     accent: T.goldL,
-    photo: "/kids-inspiring-nation/photos/KIN_programs.jpg",
+    photo: "/photos/KIN_programs.jpg",
   },
   {
     id: 2,
@@ -415,7 +415,7 @@ const SLIDES = [
     icon: Flame,
     gradient: `linear-gradient(135deg, ${T.goldD} 0%, #5C3210 60%, ${T.gold} 100%)`,
     accent: T.goldL,
-    photo: "/kids-inspiring-nation/photos/Daniel_Fast.jpg",
+    photo: "/photos/Daniel_Fast.jpg",
   },
   {
     id: 3,
@@ -425,7 +425,7 @@ const SLIDES = [
     icon: Landmark,
     gradient: `linear-gradient(135deg, #1A0E3A 0%, #2D1B69 50%, #0D3D26 100%)`,
     accent: "#A78BFA",
-    photo: "/kids-inspiring-nation/photos/Nation_Builders_Program1.jpg",
+    photo: "/photos/Nation_Builders_Program1.jpg",
   },
   {
     id: 4,
@@ -435,7 +435,7 @@ const SLIDES = [
     icon: Utensils,
     gradient: `linear-gradient(135deg, #A83920 0%, #D94F30 60%, #8B2010 100%)`,
     accent: "#FBBF72",
-    photo: "/kids-inspiring-nation/photos/FACE_Feed_A_Community_EveryWeek.jpg",
+    photo: "/photos/FACE_Feed_A_Community_EveryWeek.jpg",
   },
   {
     id: 5,
@@ -445,7 +445,7 @@ const SLIDES = [
     icon: Crown,
     gradient: `linear-gradient(135deg, #4A1B55 0%, #7B2D8B 60%, #2D0A3A 100%)`,
     accent: "#D8B4FE",
-    photo: "/kids-inspiring-nation/photos/Community_impact.jpg",
+    photo: "/photos/Community_impact.jpg",
   },
 ];
 
@@ -682,7 +682,7 @@ function NBCInvitePopup({ onNVC, dark }) {
             }}
           >
             {/* Background */}
-            <img src="/kids-inspiring-nation/photos/Join_the_NBC_challenge.jpg" alt="NBC Challenge" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.35, mixBlendMode: "luminosity" }} />
+            <img src="/photos/Join_the_NBC_challenge.jpg" alt="NBC Challenge" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.35, mixBlendMode: "luminosity" }} />
             <div style={{ position: "absolute", inset: 0, background: `linear-gradient(155deg, ${T.greenD}E6 0%, #050E07E6 60%, ${T.greenD}CC 100%)` }} />
             <div style={{ position: "absolute", top: "-40%", right: "-20%", width: 400, height: 400, borderRadius: "50%", background: `radial-gradient(circle, ${T.gold}28, transparent 65%)`, pointerEvents: "none" }} />
             <div style={{ position: "absolute", bottom: "-30%", left: "-10%", width: 300, height: 300, borderRadius: "50%", background: `radial-gradient(circle, ${T.green}40, transparent 65%)`, pointerEvents: "none" }} />
@@ -817,7 +817,7 @@ function SiteNav({ onDash, onNVC, onGive, onGallery, onGodsU, dark }) {
           {/* Logo with Glassmorphism Shimmering Effect */}
           <a href="#" style={{ display: "flex", alignItems: "center", gap: ".65rem", textDecoration: "none" }}>
             <div className="glass-logo" style={{ width: 42, height: 42, borderRadius: 12, display: "grid", placeItems: "center", flexShrink: 0 }}>
-              <img src="/kids-inspiring-nation/logo.svg" alt="KidsInspiring Nation" style={{ width: 32, height: 32, objectFit: "contain", position: "relative", zIndex: 2 }} />
+              <img src="/logo.svg" alt="KidsInspiring Nation" style={{ width: 32, height: 32, objectFit: "contain", position: "relative", zIndex: 2 }} />
             </div>
             <div>
               <div style={{ fontFamily: "'Plus Jakarta Sans',sans-serif", fontSize: ".88rem", fontWeight: 800, color: logoC, letterSpacing: "-0.02em", lineHeight: 1, transition: "color .35s" }}>KidsInspiring Nation</div>
@@ -915,7 +915,7 @@ function SiteNav({ onDash, onNVC, onGive, onGallery, onGodsU, dark }) {
             {/* Mobile Header */}
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "2rem" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                <img src="/kids-inspiring-nation/logo.svg" alt="logo" style={{ width: 32, height: 32 }} />
+                <img src="/logo.svg" alt="logo" style={{ width: 32, height: 32 }} />
                 <span style={{ fontFamily: "Cinzel, serif", fontWeight: 900, fontSize: "1rem", color: dark ? T.goldL : T.green }}>KIN</span>
               </div>
               <button onClick={() => { setMob(false); setMobSection(null); }} style={{ width: 40, height: 40, borderRadius: "50%", background: dark ? "rgba(255,255,255,.05)" : "rgba(0,0,0,.05)", border: "none", display: "grid", placeItems: "center", color: dark ? T.cream : T.greenD }}>
@@ -1148,7 +1148,7 @@ function AboutSection({ dark }) {
               "Every child is a goD — a Genius Ordained by Destiny."
             </div>
             <div style={{ background: T.green, borderRadius: 24, position: "relative", overflow: "hidden", padding: "2rem", minHeight: "22rem", display: "flex", alignItems: "flex-end" }}>
-              <img src="/kids-inspiring-nation/photos/Nation_Builders_Program.jpg" alt="Nation Builders" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.5, mixBlendMode: "overlay" }} />
+              <img src="/photos/Nation_Builders_Program.jpg" alt="Nation Builders" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.5, mixBlendMode: "overlay" }} />
               <div aria-hidden style={{ position: "absolute", top: "-.1em", right: "-.05em", fontSize: "clamp(10rem,30vw,22rem)", color: "transparent", WebkitTextStroke: "1px rgba(232,185,84,.07)", lineHeight: 1, pointerEvents: "none", userSelect: "none", fontFamily: "'Playfair Display',serif", fontStyle: "italic", fontWeight: 900 }}>goD</div>
               <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(13,61,38,.9) 0%,transparent 60%)" }} />
               <div style={{ position: "relative", zIndex: 2 }}>
