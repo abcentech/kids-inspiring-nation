@@ -23,7 +23,7 @@ const T = {
   coral: "#D94F30", cream: "#FDF7EC", warmBg: "#F5EFE3",
 };
 
-export default function Giving({ onBack, dark }) {
+export default function Giving({ dark }) {
   const [copied, setCopied] = useState(null);
 
   const copyToClipboard = (text, id) => {
@@ -80,26 +80,6 @@ export default function Giving({ onBack, dark }) {
       }} />
 
       <div style={{ maxWidth: "72rem", margin: "0 auto", padding: "0 1.5rem", position: "relative", zIndex: 1 }}>
-        {/* Navigation */}
-        <motion.button 
-          initial={{ opacity: 0, x: -10 }}
-          animate={{ opacity: 1, x: 0 }}
-          onClick={onBack}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "0.5rem",
-            color: T.gold,
-            fontWeight: 600,
-            fontSize: "0.9rem",
-            marginBottom: "3rem",
-            cursor: "pointer",
-            padding: "0.5rem 0"
-          }}
-        >
-          <ArrowLeft size={18} /> Back to Home
-        </motion.button>
-
         {/* Hero Section */}
         <motion.div 
           initial="initial"

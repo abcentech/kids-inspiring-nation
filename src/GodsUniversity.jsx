@@ -140,7 +140,7 @@ const gUStyles = `
   }
 `;
 
-export default function GodsUniversity({ onBack, dark }) {
+export default function GodsUniversity({ dark }) {
   // Using dark mode prop to gently alter the mostly dark theme
   const bg = dark ? "#050508" : T.htmlDark;
   const altBg = dark ? "#0A0D15" : T.htmlDark2;
@@ -171,34 +171,8 @@ export default function GodsUniversity({ onBack, dark }) {
   return (
     <div className="gu-page" style={{ background: bg, color: textColor, minHeight: "100vh" }}>
       
-      {/* Back Navigation */}
-      <div style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 200, padding: "1.5rem 5vw", pointerEvents: "none" }}>
-        <motion.button 
-          initial={{ opacity: 0, x: -10 }}
-          animate={{ opacity: 1, x: 0 }}
-          onClick={onBack}
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "0.5rem",
-            color: T.goldL,
-            fontWeight: 600,
-            fontSize: "0.9rem",
-            cursor: "pointer",
-            background: "rgba(8,13,30,0.6)",
-            backdropFilter: "blur(8px)",
-            padding: "0.5rem 1rem",
-            borderRadius: "99px",
-            border: `1px solid rgba(232,196,67,.2)`,
-            pointerEvents: "auto"
-          }}
-        >
-          <ArrowLeft size={18} /> Back to KidsInspiring Nation
-        </motion.button>
-      </div>
-
       {/* Hero Section */}
-      <section style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", padding: "100px 5vw 80px", position: "relative", overflow: "hidden" }}>
+      <section style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", padding: "120px 5vw 80px", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", top: "20%", left: "50%", transform: "translateX(-50%)", width: 800, height: 600, background: "radial-gradient(ellipse, rgba(232,196,67,.06) 0%, transparent 70%)", pointerEvents: "none" }} />
         
         <motion.div initial="initial" animate="whileInView" variants={containerVars} style={{ position: "relative", zIndex: 1, maxWidth: 800, margin: "0 auto" }}>

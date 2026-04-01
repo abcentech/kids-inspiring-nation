@@ -81,7 +81,7 @@ const PHOTOS = [
 
 const TAGS = ["All", "KIND", "KINGs", "Daniel Fast", "FACE", "P119", "TJC", "CST", "gDX"];
 
-export default function Gallery({ onBack, dark }) {
+export default function Gallery({ dark }) {
   const [activeTag, setActiveTag] = useState("All");
   const [lightbox, setLightbox] = useState(null); // index into filtered
 
@@ -118,9 +118,6 @@ export default function Gallery({ onBack, dark }) {
         <div aria-hidden style={{ position: "absolute", right: "-.05em", bottom: "-.15em", fontSize: "clamp(10rem,35vw,20rem)", color: "transparent", WebkitTextStroke: "1px rgba(232,185,84,.04)", fontFamily: "'Playfair Display',serif", fontWeight: 900, fontStyle: "italic", lineHeight: 1, userSelect: "none", pointerEvents: "none" }}>KIN</div>
 
         <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 clamp(1.25rem,5vw,3rem)", position: "relative", zIndex: 2 }}>
-          <button onClick={onBack} style={{ display: "inline-flex", alignItems: "center", gap: ".5rem", fontSize: ".78rem", fontWeight: 600, color: "rgba(253,247,236,.55)", background: "none", border: "none", cursor: "pointer", marginBottom: "1.5rem", letterSpacing: ".04em", textTransform: "uppercase", padding: 0 }}>
-            <Home size={14} strokeWidth={2} /> Back to Home
-          </button>
           <div style={{ display: "flex", alignItems: "center", gap: ".75rem", marginBottom: "1rem" }}>
             <Camera size={22} color={T.goldL} strokeWidth={1.5} />
             <span style={{ fontFamily: "'DM Mono',monospace", fontSize: ".75rem", fontWeight: 600, color: T.goldL, letterSpacing: ".15em", textTransform: "uppercase" }}>KIN Photo Gallery</span>

@@ -5,7 +5,7 @@ import {
     MessageCircle, Send, Star, Trophy, Zap, Globe,
     CheckCircle2, Activity, Play, Download, Clock,
     Mail, User, Phone, MapPin, Lightbulb, Loader2, ArrowRight,
-    ChevronLeft, Image as ImageIcon
+    ChevronLeft, Image as ImageIcon, ChevronDown
 } from 'lucide-react';
 
 // ─── DESIGN TOKENS (Shared with KIN Main) ───────────────────────────────────
@@ -26,7 +26,71 @@ const GoDs = ({ style = {} }) => (
     </span>
 );
 
-export default function NVC({ onBack, dark }) {
+const FAQItem = ({ faq, idx, s }) => {
+    const [open, setOpen] = useState(false);
+    return (
+        <motion.div 
+            initial={{ opacity: 0, scale: 0.98, y: 15 }} 
+            whileInView={{ opacity: 1, scale: 1, y: 0 }} 
+            transition={{ delay: idx * 0.05 }} 
+            viewport={{ once: true }}
+            onClick={() => setOpen(!open)}
+            style={{ 
+                background: s.surf, 
+                padding: "1.75rem 2rem", 
+                borderRadius: "20px", 
+                border: `1px solid ${open ? '#E8B954' : s.brd}`, 
+                boxShadow: open ? "0 20px 40px rgba(232,185,84,0.12)" : "0 10px 30px rgba(0,0,0,0.02)", 
+                cursor: "pointer",
+                transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+                position: "relative",
+                overflow: "hidden"
+            }}
+            whileHover={{ y: -4, boxShadow: "0 15px 35px rgba(0,0,0,0.05)" }}
+        >
+            {open && (
+                <motion.div 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    style={{ 
+                        position: "absolute", 
+                        top: 0, 
+                        left: 0, 
+                        width: "4px", 
+                        height: "100%", 
+                        background: "#E8B954" 
+                    }} 
+                />
+            )}
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <h4 style={{ fontSize: "1.15rem", fontWeight: 800, color: open ? "#E8B954" : s.txt, margin: 0, paddingRight: '2rem', transition: "color 0.3s" }}>{faq.q}</h4>
+                <motion.div 
+                    animate={{ rotate: open ? 180 : 0, color: open ? "#E8B954" : "inherit" }} 
+                    transition={{ type: "spring", stiffness: 260, damping: 20 }}
+                >
+                    <ChevronDown size={22} strokeWidth={2.5} />
+                </motion.div>
+            </div>
+            <AnimatePresence>
+                {open && (
+                    <motion.div 
+                        initial={{ height: 0, opacity: 0 }} 
+                        animate={{ height: "auto", opacity: 1 }} 
+                        exit={{ height: 0, opacity: 0 }} 
+                        transition={{ duration: 0.4, ease: [0.04, 0.62, 0.23, 0.98] }}
+                        style={{ overflow: "hidden" }}
+                    >
+                        <div style={{ padding: "1.25rem 0 0.5rem 0", fontSize: "1.05rem", color: s.sub, lineHeight: 1.6, borderTop: `1px solid ${s.brd}`, marginTop: "1.25rem" }}>
+                            {faq.a}
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </motion.div>
+    );
+};
+
+export default function NVC({ dark }) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [registrationSubmitted, setRegistrationSubmitted] = useState(false);
     const [userId, setUserId] = useState('');
@@ -124,7 +188,7 @@ export default function NVC({ onBack, dark }) {
         <div style={{ fontFamily: "'DM Sans',sans-serif", background: s.bg, color: s.txt, overflowX: "hidden", minHeight: "100vh" }}>
 
             {/* Navigation */}
-            <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000, padding: ".85rem 0", transition: "all .35s", background: navBg, backdropFilter: scrolled ? "blur(20px)" : "none", borderBottom: navBdr }}>
+            <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, padding: ".85rem 0", transition: "all .35s", background: navBg, backdropFilter: scrolled ? "blur(20px)" : "none", borderBottom: navBdr }}>
                 <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 2rem", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                     <motion.div initial={{ x: -20, opacity: 0 }} animate={{ x: 0, opacity: 1 }} style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
                         <div style={{ width: 34, height: 34, background: T.green, borderRadius: 10, display: "grid", placeItems: "center", color: T.goldL, fontWeight: 900, fontFamily: "'Playfair Display',serif" }}>g</div>
@@ -135,9 +199,6 @@ export default function NVC({ onBack, dark }) {
                         {['About', 'Process', 'Prizes', 'Values'].map(item => (
                             <a key={item} href={`#${item.toLowerCase()}`} style={{ fontSize: "0.78rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.06em", color: navTxt, opacity: 0.8 }} className="hover:opacity-100 transition-opacity">{item}</a>
                         ))}
-                        <button onClick={onBack} style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "0.78rem", fontWeight: 700, textTransform: "uppercase", color: T.goldL }}>
-                            <Home size={14} /> Home
-                        </button>
                         <motion.a whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} href="#register" style={{ padding: ".6rem 1.6rem", borderRadius: 999, background: T.gold, color: "#fff", fontWeight: 700, fontSize: "0.78rem" }}>Join Challenge</motion.a>
                     </div>
 
@@ -148,7 +209,7 @@ export default function NVC({ onBack, dark }) {
             </nav>
 
             {/* Hero Section */}
-            <section style={{ minHeight: "100svh", background: T.greenD, position: "relative", display: "flex", alignItems: "center", overflow: "hidden", padding: "6rem 0" }}>
+            <section style={{ minHeight: "100svh", background: T.greenD, position: "relative", display: "flex", alignItems: "center", overflow: "hidden", padding: "8rem 0" }}>
                 <div style={{ position: "absolute", inset: 0, opacity: 0.8, background: `radial-gradient(ellipse 80% 70% at 85% 40%,${T.green}40 0%,transparent 60%), linear-gradient(135deg,#050505 0%,#0D3D26 70%,#16613E 100%)` }} />
                 <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 2 }} style={{ position: "absolute", right: "-2vw", bottom: "10vh", fontSize: "25vw", fontWeight: 900, color: "transparent", WebkitTextStroke: "1.5px rgba(232,185,84,.06)", fontFamily: "'Playfair Display',serif", fontStyle: "italic", userSelect: "none", pointerEvents: "none" }}>NBC</motion.div>
 
@@ -162,7 +223,7 @@ export default function NVC({ onBack, dark }) {
                             You Want To <em style={{ fontStyle: "italic", color: T.goldL }}>See</em>.
                         </motion.h1>
                         <motion.p variants={fadeIn} style={{ fontSize: "clamp(1.1rem, 2.5vw, 1.4rem)", color: "rgba(253,247,236,.75)", lineHeight: 1.6, marginBottom: "3rem", maxWidth: "42ch" }}>
-                            A 10-month masterclass in resourcefulness. Join 1,000 young visionaries solving real community problems through character and grit.
+                            A 9-month masterclass in resourcefulness. Join 1,000 young visionaries solving real community problems through character and grit.
                         </motion.p>
 
                         <motion.div variants={fadeIn} style={{ display: "flex", flexWrap: "wrap", gap: "1.25rem", alignItems: "center" }}>
@@ -175,25 +236,6 @@ export default function NVC({ onBack, dark }) {
                     </motion.div>
                 </div>
             </section>
-
-            {/* Age Divisions Strip */}
-            <div style={{ background: T.gold, borderBottom: `1px solid ${T.goldL}40`, padding: "0.85rem 0" }}>
-                <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 2rem", display: "flex", alignItems: "center", justifyContent: "center", flexWrap: "wrap", gap: "2rem" }}>
-                    {[
-                        { label: "Junior Builders", sub: "Ages 7–10", icon: "🟢" },
-                        { label: "Intermediate", sub: "Ages 11–13", icon: "🔵" },
-                        { label: "Senior Builders", sub: "Ages 14–17", icon: "🟡" },
-                    ].map(d => (
-                        <div key={d.label} style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
-                            <span style={{ fontSize: "1.2rem" }}>{d.icon}</span>
-                            <div>
-                                <div style={{ fontSize: "0.85rem", fontWeight: 800, color: "#fff", textTransform: "uppercase", letterSpacing: "0.05em" }}>{d.label}</div>
-                                <div style={{ fontSize: "0.75rem", fontWeight: 600, color: "rgba(255,255,255,0.8)" }}>{d.sub}</div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
 
             {/* Live Activity Strip */}
             <div style={{ background: dark ? T.srfD : T.green, borderBottom: `1px solid ${T.gold}20`, padding: "0.85rem 0" }}>
@@ -350,9 +392,9 @@ export default function NVC({ onBack, dark }) {
 
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "2rem" }}>
                         {[
-                            { n: "₦1,000,000", t: "Grand Champion", i: "🥇", accent: T.gold },
-                            { n: "₦600,000", t: "First Runner Up", i: "🥈", accent: "#E5E7EB" },
-                            { n: "₦400,000", t: "Second Runner Up", i: "🥉", accent: "#D97706" },
+                            { n: "₦1.19M", t: "Most Impactful Project", i: "🥇", accent: T.gold },
+                            { n: "₦200,000", t: "Top 5 Projects (Each)", i: "🌟", accent: "#E5E7EB" },
+                            { n: "₦200,000", t: "Various Category Awards", i: "🏆", accent: "#D97706" },
                         ].map((p, idx) => (
                             <motion.div key={p.t} initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.15 }} viewport={{ once: true }} whileHover={{ y: -10 }} style={{ background: "rgba(255,255,255,.05)", padding: "4rem 2rem", borderRadius: 32, border: "1px solid rgba(255,255,255,.12)", backdropFilter: "blur(20px)", textAlign: "center", position: "relative", overflow: "hidden" }}>
                                 <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 4, background: p.accent }} />
@@ -375,6 +417,7 @@ export default function NVC({ onBack, dark }) {
 
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "1.5rem" }}>
                         {[
+                            { i: "🖼️", t: "NBC Main Flyer", d: "Official Program Flyer.", f: "NBC_Main.jpeg" },
                             { i: "📖", t: "Values Workbook", d: "The core training curriculum.", f: "Values Training Workbook.pdf" },
                             { i: "🎓", t: "Mentor Guide", d: "For parents and supporters.", f: "Mentor Guide.pdf" },
                             { i: "📋", t: "Project Planner", d: "Design your local solution.", f: "Project Planning Guide.pdf" },
@@ -385,10 +428,83 @@ export default function NVC({ onBack, dark }) {
                                 <div style={{ fontSize: "2.5rem", marginBottom: "1rem" }}>{v.i}</div>
                                 <h4 style={{ fontSize: "1.1rem", fontWeight: 800, color: s.txt, marginBottom: "0.5rem" }}>{v.t}</h4>
                                 <p style={{ fontSize: "0.85rem", color: s.sub, lineHeight: 1.5, marginBottom: "2rem", flex: 1 }}>{v.d}</p>
-                                <a href={`/psalm119/downloads/${v.f}`} download style={{ display: "inline-flex", justifyContent: "center", alignItems: "center", gap: "0.5rem", padding: "0.75rem 1.5rem", background: idx === 0 ? T.green : "rgba(22,97,62,0.08)", color: idx === 0 ? "#fff" : T.green, borderRadius: 999, fontWeight: 700, fontSize: "0.85rem", border: idx === 0 ? "none" : `1px solid ${T.green}30`, transition: "all 0.2s" }} className="hover:scale-105">
+                                <a href={v.f.includes("NBC_Main") ? "/photos/NBC_Main.jpeg" : `/psalm119/downloads/${v.f}`} download style={{ display: "inline-flex", justifyContent: "center", alignItems: "center", gap: "0.5rem", padding: "0.75rem 1.5rem", background: idx === 0 ? T.green : "rgba(22,97,62,0.08)", color: idx === 0 ? "#fff" : T.green, borderRadius: 999, fontWeight: 700, fontSize: "0.85rem", border: idx === 0 ? "none" : `1px solid ${T.green}30`, transition: "all 0.2s" }} className="hover:scale-105">
                                     <Download size={14} /> Download
                                 </a>
                             </motion.div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            
+            
+            {/* Timeline Section */}
+            <section id="timeline" style={{ padding: "8rem 0", background: dark ? "#080808" : "#FFFFFF", borderBottom: `1px solid ${s.brd}` }}>
+                <div style={{ maxWidth: "60rem", margin: "0 auto", padding: "0 2rem" }}>
+                    <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ textAlign: "center", marginBottom: "4rem" }}>
+                        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem", color: '#E8B954', marginBottom: "1rem" }}>
+                            <Clock size={20} />
+                            <span style={{ fontSize: "0.85rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.15em" }}>Journey</span>
+                        </div>
+                        <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "3rem", fontWeight: 900, color: s.txt }}>The 9-Month Roadmap</h2>
+                        <p style={{ color: s.sub, fontSize: "1.1rem", marginTop: "0.5rem" }}>Key milestones on the path to becoming a Nation Builder.</p>
+                    </motion.div>
+
+                    <div className="timeline-container" style={{ position: "relative", padding: "2rem 0" }}>
+                        <div className="timeline-line" style={{ position: "absolute", left: "50%", top: 0, bottom: 0, width: "2px", background: 'rgba(232,185,84,0.3)', transform: "translateX(-50%)" }} />
+                        
+                        {[
+                            { m: "April", t: "2026 Cohort Registration Opens", d: "Applications open nationwide for all young visionaries." },
+                            { m: "July", t: "Evaluation on Community Projects", d: "Mid-point reviews of actual impact data from local solution implementations." },
+                            { m: "October", t: "Preliminary Submission", d: "Builders submit their completed Impact Reports and metrics for initial grading." },
+                            { m: "December", t: "Grand Finale", d: "Elite Recognition event where the most impactful projects receive their awards." }
+                        ].map((evt, idx) => (
+                            <motion.div 
+                                key={evt.m} 
+                                initial={{ opacity: 0, y: 20 }} 
+                                whileInView={{ opacity: 1, y: 0 }} 
+                                viewport={{ once: true }} 
+                                className={`timeline-item ${idx % 2 === 0 ? 'left' : 'right'}`}
+                                style={{ 
+                                    display: "flex", 
+                                    justifyContent: idx % 2 === 0 ? "flex-end" : "flex-start", 
+                                    alignItems: "center", 
+                                    width: "100%", 
+                                    marginBottom: "3.5rem", 
+                                    position: "relative" 
+                                }}
+                            >
+                                <div className="timeline-dot" style={{ position: "absolute", left: "50%", transform: "translateX(-50%)", width: "16px", height: "16px", borderRadius: "50%", background: '#E8B954', border: "4px solid " + (dark ? "#080808" : "#FFFFFF"), zIndex: 2 }} />
+
+                                <div className="timeline-content" style={{ width: "45%", textAlign: idx % 2 === 0 ? "right" : "left" }}>
+                                    <div style={{ fontSize: "1.25rem", fontWeight: 800, color: '#E8B954', fontFamily: "'Playfair Display',serif", letterSpacing: "0.05em" }}>{evt.m}</div>
+                                    <h4 style={{ fontSize: "1.2rem", fontWeight: 800, color: s.txt, margin: "0.5rem 0" }}>{evt.t}</h4>
+                                    <p style={{ fontSize: "1rem", color: s.sub, lineHeight: 1.6 }}>{evt.d}</p>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* FAQ Section */}
+            <section id="faq" style={{ padding: "8rem 0", background: dark ? "#050505" : "#FAFAF5", borderTop: `1px solid ${s.brd}` }}>
+                <div style={{ maxWidth: "50rem", margin: "0 auto", padding: "0 2rem" }}>
+                    <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ textAlign: "center", marginBottom: "4rem" }}>
+                        <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "2.8rem", fontWeight: 900, color: s.txt }}>Frequently Asked Questions</h2>
+                        <p style={{ color: s.sub, fontSize: "1.1rem", marginTop: "0.5rem" }}>Everything you need to know about the Nation Builders Challenge.</p>
+                    </motion.div>
+                    
+                    <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+                        {[
+                            { q: "Who can apply for the challenge?", a: "The challenge is open to all youths and visionaries who want to solve community problems. We have removed specific age categories—if you have a viable solution, you belong here." },
+                            { q: "Is there an application fee?", a: "No, participation in the National Builders Corp is 100% free. We believe in merit and hard work, not financial prerequisites." },
+                            { q: "How long does the programme last?", a: "The challenge is a 9-month masterclass in resourcefulness. Builders will design, execute, and track the impact of their local community project over this period." },
+                            { q: "How are the winners selected?", a: "Winners are chosen based on the actual, documented impact of their projects on their communities, overall resourcefulness, and demonstration of radical character." },
+                            { q: "What are the prizes?", a: "The most impactful project receives ₦1.19 million. The next top 5 projects receive ₦200k each, and there's another pool of ₦200k for various specific category awards." }
+                        ].map((faq, idx) => (
+                            <FAQItem key={idx} faq={faq} idx={idx} s={s} />
                         ))}
                     </div>
                 </div>
@@ -415,7 +531,7 @@ export default function NVC({ onBack, dark }) {
                                 <div style={{ textAlign: "center", marginBottom: "3rem" }}>
                                     <div style={{ fontSize: "0.85rem", fontWeight: 800, color: T.gold, textTransform: "uppercase", letterSpacing: "0.15em", marginBottom: "0.5rem" }}>2026 Cohort</div>
                                     <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: "2.5rem", fontWeight: 900, color: s.txt, marginBottom: "1rem" }}>Join the National Builders Corp</h3>
-                                    <p style={{ color: s.sub, fontSize: "1rem", marginBottom: "2rem" }}>Fill the form below to begin your 10-month journey.</p>
+                                    <p style={{ color: s.sub, fontSize: "1rem", marginBottom: "2rem" }}>Fill the form below to begin your 9-month journey.</p>
                                 </div>
 
                                 <div style={{ width: "100%", overflow: "hidden", borderRadius: "16px", background: "#fff" }}>
@@ -486,6 +602,14 @@ export default function NVC({ onBack, dark }) {
         @keyframes pulse { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.1); } 100% { opacity: 1; transform: scale(1); } }
         .ds::-webkit-scrollbar { width: 4px; }
         .ds::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 10px; }
+
+        @media (max-width: 768px) {
+            .timeline-line { left: 24px !important; transform: none !important; }
+            .timeline-dot { left: 24px !important; transform: none !important; margin-left: -7px; }
+            .timeline-item { justify-content: flex-start !important; padding-left: 3.5rem !important; }
+            .timeline-content { width: 100% !important; text-align: left !important; padding: 0 !important; }
+            .timeline-item.left .timeline-content { text-align: left !important; }
+        }
       `}</style>
         </div>
     );
