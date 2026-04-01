@@ -1,5 +1,5 @@
 /*
-  KidsInspiring Nation — 2025 Complete Website + Impact Dashboard
+  KidsInspiring Nation — 2026 Complete Website + Impact Dashboard
   ═══════════════════════════════════════════════════════════════
   Vision: Raising goDs — Geniuses with divine purpose — building Nations
   NGO: goDs Global KidsInspiring | IT No. 6980735
@@ -11,7 +11,7 @@
   YouTube: https://youtu.be/E5b-H_IQPyI
   Giving: Bit.ly/KINgiv
 
-  REAL 2025 DATA (from KIN_DB_2025_1.zip):
+  REAL 2026 DATA (from KIN_DB_2026_1.zip):
   19,695 entries | 639 goDChildren | 365 events | 7 tracked programmes
   KIND: 13,350 | KINGs: 1,718 | DF: 1,619 | gDX: 1,107 | P119: 999
   TJC: 49 | CST: 35 | FACE: 3,000+ meals
@@ -21,11 +21,14 @@
 */
 
 import { useState, useEffect, useRef, useCallback } from "react";
+import { Routes, Route, useNavigate, useLocation, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import NVC from "./NVC.jsx";
 import Giving from "./Giving.jsx";
 import Gallery from "./Gallery.jsx";
 import GodsUniversity from "./GodsUniversity.jsx";
+import About from "./About.jsx";
+import Contact from "./Contact.jsx";
 import {
   AreaChart, Area, BarChart, Bar, XAxis, YAxis, Tooltip,
   ResponsiveContainer, CartesianGrid, Cell, PieChart, Pie,
@@ -120,7 +123,7 @@ const T = {
   tjcC: "#8B4513", cstC: "#27AE60",
 };
 
-// ─── REAL 2025 DATA ───────────────────────────────────────────────────────────
+// ─── REAL 2026 DATA ───────────────────────────────────────────────────────────
 const MONTHLY = [
   { m: "Jan", total: 2468, sessions: 31, avg: 79 }, { m: "Feb", total: 1108, sessions: 28, avg: 39 },
   { m: "Mar", total: 1633, sessions: 31, avg: 52 }, { m: "Apr", total: 1612, sessions: 30, avg: 53 },
@@ -138,7 +141,7 @@ const PROGRAMS = [
     entries: 13350, sessions: 359, unique: 276, pct: 67.8,
     schedule: "Daily · 8pm WAT",
     tagline: "Our Character Flagship — holds every single day of the year",
-    desc: "A daily devotional programme shaping the character of every goD. KIND runs 365 days a year — every evening at 8pm WAT. It is the heartbeat of KidsInspiring Nation, producing the most attendance of any programme.",
+    desc: "A daily devotional shaping the character of every goD. It is the heartbeat of KIN.",
     bg: `linear-gradient(135deg,${T.green},${T.greenD})`,
     photo: "/photos/KIN_programs.jpg",
     cta: true, // has JOIN CTA
@@ -150,7 +153,7 @@ const PROGRAMS = [
     entries: 1718, sessions: 129, unique: 224, pct: 8.7,
     schedule: "Sundays · 5pm WAT",
     tagline: "Senior goDs mentor junior goDs in communal cells",
-    desc: "A structured mentorship community where senior goDs pour into juniors across three cohorts. Every Sunday at 5pm, cells gather to share wisdom, challenge growth, and build legacy.",
+    desc: "A structured mentorship community where senior goDs pour into juniors.",
     bg: `linear-gradient(135deg,#7B2D8B,#4A1B55)`,
     photo: "/photos/Community_impact.jpg",
     sub: [{ label: "KINGs 001", entries: 616, unique: 69 }, { label: "KINGs 002", entries: 864, unique: 123 }, { label: "KINGs 003", entries: 238, unique: 32 }],
@@ -162,7 +165,7 @@ const PROGRAMS = [
     entries: 1619, sessions: 9, unique: 63, pct: 8.2,
     schedule: "Annual · 3-week programme",
     tagline: "Our most prestigious spiritual programme",
-    desc: "A three-week season of consecration through fasting, prayer and the Word. DF1, DF2 and DF3 run consecutively — each week building on the last. In 2025, DF3 grew by 200% over 2024, signalling a deepening culture of spiritual discipline.",
+    desc: "A three-week season of consecration through fasting, prayer and the Word.",
     bg: `linear-gradient(135deg,${T.gold},${T.goldD})`,
     photo: "/photos/Daniel_Fast.jpg",
     sub: [{ label: "DF Week 1", entries: 406, prev: 259 }, { label: "DF Week 2", entries: 576, prev: 272 }, { label: "DF Week 3", entries: 637, prev: 212 }],
@@ -174,7 +177,7 @@ const PROGRAMS = [
     entries: 1107, sessions: 47, unique: 134, pct: 5.6,
     schedule: "Sundays · 11am WAT",
     tagline: "Faith-based training for Nation-building goDs",
-    desc: "A Sunday morning spiritual formation experience teaching goDs how to live by faith, think by Kingdom principles, and position themselves as Nation-builders. Meets every Sunday at 11am WAT.",
+    desc: "A Sunday morning spiritual formation experience raising Nation-builders.",
     bg: `linear-gradient(135deg,${T.goldL},${T.gold})`,
     photo: "/photos/Spirit_Filled_Parents.jpg",
   },
@@ -185,7 +188,7 @@ const PROGRAMS = [
     entries: 999, sessions: 42, unique: 131, pct: 5.1,
     schedule: "Fridays · 5pm WAT",
     tagline: "Maths, English & Character — from the Oldest Book",
-    desc: "A weekly community programme teaching core academic subjects — Mathematics, English and Character — anchored in the wisdom of Psalm 119, the oldest book written. Every Friday at 5pm.",
+    desc: "A weekly community programme teaching core academic subjects and Character.",
     bg: `linear-gradient(135deg,${T.info},#004C99)`,
     photo: "/photos/P119_Academy.jpg",
   },
@@ -196,8 +199,8 @@ const PROGRAMS = [
     entries: null, sessions: 52, unique: null, pct: null,
     meals: 1952,
     schedule: "Sundays · 3pm WAT",
-    tagline: "1,952 meals served in 2025",
-    desc: "Every Sunday at 3pm, KidsInspiring Nation feeds every child in the community. In 2025, FACE served 1,952 meals — demonstrating that the mission of raising goDs includes meeting their most practical needs.",
+    tagline: "1,952 meals served in 2026",
+    desc: "KidsInspiring Nation feeds every child in the community, meeting their practical needs.",
     bg: `linear-gradient(135deg,${T.coral},#A83920)`,
     photo: "/photos/FACE_Feed_A_Community_EveryWeek.jpg",
   },
@@ -208,7 +211,7 @@ const PROGRAMS = [
     entries: 49, sessions: 1, unique: 49, pct: 0.2,
     schedule: "Annual · Christmas Season",
     tagline: "Songs, awards, drama, feeding & the true meaning of Christmas",
-    desc: "TJC is KidsInspiring Nation's yearly celebration — bringing the true experience of Christmas alive through songs, dance, drama, awards, feeding and community. It marks the close of the year for every goD.",
+    desc: "TJC is KidsInspiring Nation's yearly celebration with a true Christmas experience.",
     bg: `linear-gradient(135deg,#8B4513,#5C2D0A)`,
     photo: "/photos/Epic_moments.jpg",
   },
@@ -219,7 +222,7 @@ const PROGRAMS = [
     entries: 35, sessions: 4, unique: 10, pct: 0.2,
     schedule: "Ongoing",
     tagline: "Training the volunteers who power KidsInspiring Nation",
-    desc: "CST equips our volunteers — called Covenant Servants — with the heart, skills and spiritual formation needed to serve excellently. Every facilitator, mentor and host is a Covenant Servant shaped by this programme.",
+    desc: "CST equips our volunteers — called Covenant Servants — with the heart, skills and spiritual formation.",
     bg: `linear-gradient(135deg,#27AE60,#1A6B3C)`,
     photo: "/photos/Skills_Development.jpg",
   },
@@ -233,9 +236,9 @@ const PILLAR_DATA = [
 ];
 
 const DF_GROWTH = [
-  { name: "DF Week 1", y2024: 259, y2025: 406, pct: 57 },
-  { name: "DF Week 2", y2024: 272, y2025: 576, pct: 112 },
-  { name: "DF Week 3", y2024: 212, y2025: 637, pct: 200 },
+  { name: "DF Week 1", y2024: 259, y2026: 406, pct: 57 },
+  { name: "DF Week 2", y2024: 272, y2026: 576, pct: 112 },
+  { name: "DF Week 3", y2024: 212, y2026: 637, pct: 200 },
 ];
 
 const TOP_gDX = [
@@ -369,14 +372,17 @@ function DarkToggle({ dark, toggle }) {
 //  WEBSITE
 // ═══════════════════════════════════════════════════════════════════════════════
 
-function Website({ onDash, onNVC, onGive, onGallery, onGodsU, dark }) {
+function Website({ dark }) {
+  const navigate = useNavigate();
+  const onDash = () => navigate("/dashboard");
+  const onNVC = () => navigate("/NBC");
   useReveal();
   const bg = dark ? "#0A1C12" : "#FAFAF5";
   const txt = dark ? T.cream : T.greenD;
 
   return (
     <div style={{ fontFamily: "'DM Sans',sans-serif", background: bg, color: txt, overflowX: "hidden" }}>
-      <SiteNav onDash={onDash} onNVC={onNVC} onGive={() => onGive()} onGallery={onGallery} onGodsU={onGodsU} dark={dark} />
+      
       <NBCInvitePopup onNVC={onNVC} dark={dark} />
       <UpdatesSlider dark={dark} />
       <Hero onDash={onDash} dark={dark} />
@@ -387,7 +393,7 @@ function Website({ onDash, onNVC, onGive, onGallery, onGodsU, dark }) {
       <ProgramsSection dark={dark} />
       <VideoSection dark={dark} />
       <ImpactSection onDash={onDash} dark={dark} />
-      <FACESection dark={dark} />
+      <FACESection dark={dark} />\n      <PhotoHighlightsStrip dark={dark} />
       <TestimonySection dark={dark} />
       <CTASection dark={dark} />
       <Footer dark={dark} />
@@ -401,7 +407,7 @@ const SLIDES = [
     id: 1,
     tag: "LATEST UPDATE",
     headline: "KIND Daily — 365 Days,\nNever Missed",
-    body: "2025 closed with 13,350 KIND entries across 359 sessions. Our character flagship ran every single day of the year — shaping the hearts of 639 goDs.",
+    body: "2026 closed with 13,350 KIND entries across 359 sessions. Our character flagship ran every single day of the year — shaping the hearts of 639 goDs.",
     icon: BookOpen,
     gradient: `linear-gradient(135deg, ${T.greenD} 0%, #060E08 55%, #16613E 100%)`,
     accent: T.goldL,
@@ -409,9 +415,9 @@ const SLIDES = [
   },
   {
     id: 2,
-    tag: "DANIEL FAST 2025",
+    tag: "DANIEL FAST 2026",
     headline: "DF3 Grew 200%.\nThe Culture Deepens.",
-    body: "Daniel Fast Week 3 surged from 212 entries in 2024 to 637 in 2025. Consecration is becoming a defining identity for KidsInspiring Nation.",
+    body: "Daniel Fast Week 3 surged from 212 entries in 2024 to 637 in 2026. Consecration is becoming a defining identity for KidsInspiring Nation.",
     icon: Flame,
     gradient: `linear-gradient(135deg, ${T.goldD} 0%, #5C3210 60%, ${T.gold} 100%)`,
     accent: T.goldL,
@@ -431,7 +437,7 @@ const SLIDES = [
     id: 4,
     tag: "FACE PROGRAMME",
     headline: "1,952 Meals.\nEvery Sunday.",
-    body: "Week after week, KidsInspiring Nation feeds every child in the community. FACE served 1,952 meals in 2025 — because raising Nations starts with meeting needs.",
+    body: "Week after week, KidsInspiring Nation feeds every child in the community. FACE served 1,952 meals in 2026 — because raising Nations starts with meeting needs.",
     icon: Utensils,
     gradient: `linear-gradient(135deg, #A83920 0%, #D94F30 60%, #8B2010 100%)`,
     accent: "#FBBF72",
@@ -711,7 +717,7 @@ function NBCInvitePopup({ onNVC, dark }) {
                 Build the Nigeria<br /><em style={{ fontStyle: "italic", color: T.goldL }}>You Want to See.</em>
               </h2>
               <p style={{ fontSize: ".95rem", color: "rgba(253,247,236,.7)", lineHeight: 1.7, marginBottom: "2rem", maxWidth: "40ch" }}>
-                The National Builders Challenge is a 10-month masterclass in character, resourcefulness, and nation-building — open to goDs aged 7–17.
+                The National Builders Challenge is a 9-month masterclass in character, resourcefulness, and nation-building — open to goDs aged 7–17.
               </p>
 
               {/* Stats row */}
@@ -750,7 +756,15 @@ function NBCInvitePopup({ onNVC, dark }) {
 }
 
 // ─── NAV ──────────────────────────────────────────────────────────────────────
-function SiteNav({ onDash, onNVC, onGive, onGallery, onGodsU, dark }) {
+function SiteNav({ dark, onGive }) {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const goTo = (path) => {
+    navigate(path);
+    window.scrollTo(0, 0);
+    setMob(false);
+    setOpenDropdown(null);
+  };
   const [sc, setSc] = useState(false);
   const [mob, setMob] = useState(false);
   const [mobSection, setMobSection] = useState(null);
@@ -777,23 +791,24 @@ function SiteNav({ onDash, onNVC, onGive, onGallery, onGodsU, dark }) {
 
   const DROPDOWNS = {
     About: [
-      { label: "Who We Are", href: "#about", icon: "🌱", desc: "Our mission & story" },
-      { label: "goDs Defined", href: "#about", icon: "👑", desc: "Genius Ordained by Destiny" },
-      { label: "2025 Data", href: "#about", icon: "📊", desc: "639 goDs, 19,695 entries" },
-      { label: "Photo Gallery", href: null, icon: "📸", desc: "View our memories", action: onGallery },
+      { label: "Who We Are", href: null, action: () => goTo('/about'), icon: "🌱", desc: "Our mission & story" },
+      { label: "goDs Defined", href: null, action: () => goTo('/about'), icon: "👑", desc: "Genius Ordained by Destiny" },
+      { label: "2026 Data", href: null, action: () => goTo('/about'), icon: "📊", desc: "639 goDs, 19,695 entries" },
+      { label: "Photo Gallery", href: null, icon: "📸", desc: "View our memories", action: () => goTo('/gallery') },
+      { label: "Contact Us", href: null, icon: "✉️", desc: "Get in touch", action: () => goTo('/contact') },
     ],
     Programs: [
-      { label: "goDs University", href: null, icon: "👑", desc: "Our 44-week flagship", action: onGodsU },
+      { label: "goDs University", href: null, icon: "👑", desc: "Our 44-week flagship", action: () => goTo('/gU') },
       { label: "KIND · Daily", href: "#programs", icon: "📖", desc: "Devotional · 8pm WAT" },
       { label: "KINGs Cells", href: "#programs", icon: "👑", desc: "Sunday mentorship · 5pm" },
       { label: "Daniel Fast", href: "#programs", icon: "🔥", desc: "Annual spiritual programme" },
       { label: "P119 Academy", href: "#programs", icon: "🧠", desc: "Maths, English & Character" },
-      { label: "FACE · Meals", href: "#programs", icon: "🍽️", desc: "1,952 meals in 2025" },
+      { label: "FACE · Meals", href: "#programs", icon: "🍽️", desc: "1,952 meals in 2026" },
       { label: "All Programmes →", href: "#programs", icon: "✨", desc: "View all 14 programmes" },
     ],
     Impact: [
-      { label: "Impact Report", href: "#impact", icon: "📈", desc: "2025 results & data" },
-      { label: "Live Dashboard", href: null, icon: "⚡", desc: "Real-time stats", action: onDash },
+      { label: "Impact Report", href: "#impact", icon: "📈", desc: "2026 results & data" },
+      { label: "Live Dashboard", href: null, icon: "⚡", desc: "Real-time stats", action: () => goTo('/dashboard') },
       { label: "Testimonies", href: "#testimony", icon: "💬", desc: "goD stories" },
     ],
   };
@@ -815,7 +830,7 @@ function SiteNav({ onDash, onNVC, onGive, onGallery, onGodsU, dark }) {
         <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 clamp(1.25rem,5vw,3rem)", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "1.5rem" }}>
 
           {/* Logo with Glassmorphism Shimmering Effect */}
-          <a href="#" style={{ display: "flex", alignItems: "center", gap: ".65rem", textDecoration: "none" }}>
+          <button onClick={() => goTo('/')} style={{ display: "flex", alignItems: "center", gap: ".65rem", textDecoration: "none", background: "none", border: "none", padding: 0, cursor: "pointer", textAlign: "left" }}>
             <div className="glass-logo" style={{ width: 42, height: 42, borderRadius: 12, display: "grid", placeItems: "center", flexShrink: 0 }}>
               <img src="/logo.svg" alt="KidsInspiring Nation" style={{ width: 32, height: 32, objectFit: "contain", position: "relative", zIndex: 2 }} />
             </div>
@@ -823,7 +838,7 @@ function SiteNav({ onDash, onNVC, onGive, onGallery, onGodsU, dark }) {
               <div style={{ fontFamily: "'Plus Jakarta Sans',sans-serif", fontSize: ".88rem", fontWeight: 800, color: logoC, letterSpacing: "-0.02em", lineHeight: 1, transition: "color .35s" }}>KidsInspiring Nation</div>
               <div style={{ fontFamily: "'DM Mono',monospace", fontSize: ".58rem", color: sc ? (dark ? T.d3 : T.p3) : "rgba(253,247,236,.38)", letterSpacing: ".08em", textTransform: "uppercase", transition: "color .35s" }}>goDs Global KidsInspiring</div>
             </div>
-          </a>
+          </button>
 
           {/* Links */}
           <div className="nav-links" style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
@@ -882,7 +897,7 @@ function SiteNav({ onDash, onNVC, onGive, onGallery, onGodsU, dark }) {
             >Give</button>
 
             {/* National Builders CTA */}
-            <button onClick={onNVC} className="nvc-pulse" style={{ display: "flex", alignItems: "center", gap: ".4rem", fontSize: ".76rem", fontWeight: 800, letterSpacing: ".04em", textTransform: "uppercase", color: "#fff", background: `linear-gradient(135deg,${T.gold},${T.goldD})`, padding: ".5rem 1.15rem", borderRadius: 999, cursor: "pointer", border: "none", transition: "all .2s", boxShadow: `0 4px 16px ${T.gold}44` }}
+            <button onClick={() => goTo('/NBC')} className="nvc-pulse" style={{ display: "flex", alignItems: "center", gap: ".4rem", fontSize: ".76rem", fontWeight: 800, letterSpacing: ".04em", textTransform: "uppercase", color: "#fff", background: `linear-gradient(135deg,${T.gold},${T.goldD})`, padding: ".5rem 1.15rem", borderRadius: 999, cursor: "pointer", border: "none", transition: "all .2s", boxShadow: `0 4px 16px ${T.gold}44` }}
               onMouseEnter={e => e.currentTarget.style.filter = "brightness(1.12)"}
               onMouseLeave={e => e.currentTarget.style.filter = "none"}
             >
@@ -890,10 +905,10 @@ function SiteNav({ onDash, onNVC, onGive, onGallery, onGodsU, dark }) {
             </button>
 
             {/* Join */}
-            <a href="#join" style={{ display: "inline-flex", alignItems: "center", padding: ".5em 1.3em", borderRadius: 999, background: T.green, color: "#fff", fontWeight: 700, fontSize: ".76rem", letterSpacing: ".02em", transition: "filter .2s ease-out", boxShadow: `0 4px 14px ${T.green}44` }}
+            <button onClick={() => goTo('#join')} style={{ display: "inline-flex", alignItems: "center", padding: ".5em 1.3em", borderRadius: 999, background: T.green, color: "#fff", fontWeight: 700, fontSize: ".76rem", letterSpacing: ".02em", transition: "filter .2s ease-out", boxShadow: `0 4px 14px ${T.green}44` }}
               onMouseEnter={e => e.currentTarget.style.filter = "brightness(.88)"}
               onMouseLeave={e => e.currentTarget.style.filter = "none"}
-            >Join</a>
+            >Join</button>
           </div>
 
           {/* Mobile burger */}
@@ -1019,7 +1034,7 @@ function Hero({ onDash, dark }) {
           {/* Eyebrow */}
           <motion.div variants={{ initial: { opacity: 0, y: 15 }, animate: { opacity: 1, y: 0 } }} style={{ display: "inline-flex", alignItems: "center", gap: "0.75rem", fontSize: "0.76rem", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase", color: T.goldL, marginBottom: "1.75rem" }}>
             <span style={{ width: "2rem", height: "1.5px", background: T.gold, display: "block" }} />
-            goDs Global KidsInspiring · Est. 2025 · IT No. 6980735
+            goDs Global KidsInspiring · Est. 2026 · IT No. 6980735
           </motion.div>
           {/* Main headline */}
           <motion.h1 variants={{ initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 } }} style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(2.8rem,8vw,5.8rem)", fontWeight: 900, color: T.cream, letterSpacing: "-0.03em", lineHeight: .96, marginBottom: "1.5rem" }}>
@@ -1028,15 +1043,15 @@ function Hero({ onDash, dark }) {
             building <em style={{ fontStyle: "italic", color: T.goldL }}>Nations</em>
           </motion.h1>
           <motion.p variants={{ initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 } }} style={{ fontSize: "clamp(1rem,2.4vw,1.2rem)", color: "rgba(253,247,236,.72)", lineHeight: 1.68, marginBottom: "2rem", maxWidth: "48ch" }}>
-            In 2025, <strong style={{ color: T.goldL, fontWeight: 600 }}>639 goDs</strong> generated <strong style={{ color: T.goldL, fontWeight: 600 }}>19,695 attendance entries</strong> across 14 programmes — 365 events, every single day of the year.
+            In 2026, <strong style={{ color: T.goldL, fontWeight: 600 }}>639 goDs</strong> generated <strong style={{ color: T.goldL, fontWeight: 600 }}>19,695 attendance entries</strong> across 14 programmes — 365 events, every single day of the year.
           </motion.p>
           {/* CTAs */}
           <motion.div variants={{ initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 } }} className="hero-btns" style={{ display: "flex", gap: ".75rem", alignItems: "center", flexWrap: "wrap" }}>
             <motion.a whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }} href="#join" className="gold-btn" style={{ display: "inline-flex", alignItems: "center", gap: ".5rem", padding: ".9em 2.4em", borderRadius: 999, background: T.gold, color: "#fff", fontWeight: 700, fontSize: "1rem", fontFamily: "'Plus Jakarta Sans',sans-serif" }}>
-              Join a Programme
+              🔥 Join a Programme
             </motion.a>
             <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }} onClick={onDash} className="ghost-btn" style={{ display: "inline-flex", alignItems: "center", gap: ".5rem", padding: ".9em 2.4em", borderRadius: 999, background: "rgba(253,247,236,.07)", color: T.cream, fontWeight: 500, fontSize: "1rem", border: "1.5px solid rgba(253,247,236,.2)", cursor: "pointer" }}>
-              <Activity size={16} strokeWidth={1.5} /> 2025 Live Data
+              <Activity size={16} strokeWidth={1.5} /> 2026 Live Data
             </motion.button>
           </motion.div>
           {/* Schedule strip */}
@@ -1119,14 +1134,14 @@ function AboutSection({ dark }) {
               A Movement,<br />Not Just an Organisation
             </h2>
             <p className="reveal d2" style={{ fontSize: "clamp(.95rem,2vw,1.1rem)", color: dark ? "rgba(253,247,236,.75)" : T.greenM, lineHeight: 1.78, marginBottom: "1rem", maxWidth: "58ch" }}>
-              KidsInspiring Nation exists to raise <strong><GoDs style={{ color: T.gold }} /></strong> — Geniuses with divine purpose — who will build the Nations they were born to lead. We call every child we work with a <strong style={{ color: T.green }}>goD</strong>.
+              KidsInspiring Nation exists to raise <strong><GoDs style={{ color: T.gold }} /></strong> — Geniuses with divine purpose — to build Nations.
             </p>
             <p className="reveal d2" style={{ fontSize: "1rem", color: txt, lineHeight: 1.72, maxWidth: "58ch", marginBottom: "1.75rem" }}>
-              Registered as <strong>goDs Global KidsInspiring</strong> (IT No. 6980735), we are a Nigerian NGO running 14 concurrent programmes. In 2025, we ran a programme activity every single day of the year.
+              We are a Nigerian NGO running 14 concurrent programmes.
             </p>
             {/* Quick stats */}
             <div className="reveal d3" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: ".75rem", marginBottom: "1.75rem" }}>
-              {[{ n: "639", l: "goDs reached" }, { n: "19,695", l: "Entries 2025" }, { n: "365", l: "Events held" }].map(s => (
+              {[{ n: "639", l: "goDs reached" }, { n: "19,695", l: "Entries 2026" }, { n: "365", l: "Events held" }].map(s => (
                 <div key={s.l} style={{ background: card, borderRadius: 14, padding: ".9rem .75rem", border: `1px solid rgba(22,97,62,.1)`, textAlign: "center" }}>
                   <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.7rem", fontWeight: 900, color: T.green, letterSpacing: "-0.04em", lineHeight: 1 }}>{s.n}</div>
                   <div style={{ fontSize: ".72rem", color: txt, fontWeight: 500, marginTop: ".2rem" }}>{s.l}</div>
@@ -1153,7 +1168,7 @@ function AboutSection({ dark }) {
               <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(13,61,38,.9) 0%,transparent 60%)" }} />
               <div style={{ position: "relative", zIndex: 2 }}>
                 <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(2.8rem,7vw,4.2rem)", fontWeight: 900, color: T.goldL, letterSpacing: "-0.04em", lineHeight: 1 }}>19,695</div>
-                <div style={{ color: "rgba(253,247,236,.8)", fontSize: ".85rem", fontWeight: 500, letterSpacing: ".04em", marginTop: ".25rem" }}>Attendance entries · 2025</div>
+                <div style={{ color: "rgba(253,247,236,.8)", fontSize: ".85rem", fontWeight: 500, letterSpacing: ".04em", marginTop: ".25rem" }}>Attendance entries · 2026</div>
                 <div style={{ marginTop: "1rem", display: "flex", gap: "1.5rem", flexWrap: "wrap" }}>
                   {[{ v: "639", l: "goDs" }, { v: "14", l: "Programmes" }, { v: "365", l: "Events" }, { v: "1,952", l: "Meals served" }].map(s => (
                     <div key={s.l}>
@@ -1197,7 +1212,7 @@ function ProgramsSection({ dark }) {
                 {/* Header */}
                 <div style={{ height: "9.5rem", background: p.bg, display: "flex", alignItems: "flex-end", padding: "1.25rem 1.5rem", justifyContent: "space-between", position: "relative", overflow: "hidden" }}>
                   {p.photo && (
-                    <img src={p.photo} alt={p.name} style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", objectFit: "cover", mixBlendMode: "overlay", opacity: 0.85, zIndex: 0 }} />
+                    <img src={p.photo} alt={p.name} style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", objectFit: "cover", mixBlendMode: "luminosity", opacity: 0.4, zIndex: 0 }} />
                   )}
                   <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%)", zIndex: 1 }} />
                   <div style={{ position: "relative", zIndex: 2, display: "flex", justifyContent: "space-between", width: "100%", alignItems: "flex-end" }}>
@@ -1207,7 +1222,7 @@ function ProgramsSection({ dark }) {
                         {p.meals ? `${p.meals.toLocaleString()}+` : p.entries?.toLocaleString() || ""}
                       </div>
                       <div style={{ fontSize: ".65rem", color: "rgba(255,255,255,.8)", fontWeight: 600, textTransform: "uppercase", letterSpacing: ".05em", marginTop: ".25rem" }}>
-                        {p.meals ? "meals served" : "entries 2025"}
+                        {p.meals ? "meals served" : "entries 2026"}
                       </div>
                     </div>
                   </div>
@@ -1316,14 +1331,14 @@ function ImpactSection({ onDash, dark }) {
     <section id="impact" style={{ background: T.greenD, padding: "clamp(4rem,10vw,8rem) 0", position: "relative", overflow: "hidden" }}>
       <div aria-hidden style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", fontFamily: "'Playfair Display',serif", fontSize: "clamp(10rem,35vw,48rem)", fontWeight: 900, fontStyle: "italic", lineHeight: 1, color: "transparent", WebkitTextStroke: "1px rgba(196,136,44,.04)", userSelect: "none", pointerEvents: "none", whiteSpace: "nowrap", letterSpacing: "-0.06em" }}>KIN</div>
       <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 clamp(1.25rem,5vw,3rem)", position: "relative", zIndex: 2 }}>
-        <div className="reveal" style={{ fontSize: ".76rem", fontWeight: 500, letterSpacing: ".1em", textTransform: "uppercase", color: T.gold, textAlign: "center", marginBottom: ".75rem" }}>2025 Impact</div>
+        <div className="reveal" style={{ fontSize: ".76rem", fontWeight: 500, letterSpacing: ".1em", textTransform: "uppercase", color: T.gold, textAlign: "center", marginBottom: ".75rem" }}>2026 Impact</div>
         <h2 className="reveal d1" style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(2rem,5vw,3.2rem)", fontWeight: 900, letterSpacing: "-0.025em", lineHeight: 1.08, color: T.cream, textAlign: "center", maxWidth: "20ch", margin: "0 auto clamp(2.5rem,5vw,4rem)" }}>
           The Numbers Speak for the Nation
         </h2>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,11rem),1fr))", gap: "1rem", marginBottom: "3rem" }}>
           {[
             { n: "19,695", l: "Total\nAttendance Entries", d: "d1" }, { n: "639", l: "Unique\ngoDs", d: "d2" },
-            { n: "365", l: "Events Held\nin 2025", d: "d3" }, { n: "14", l: "Active\nProgrammes", d: "d4" },
+            { n: "365", l: "Events Held\nin 2026", d: "d3" }, { n: "14", l: "Active\nProgrammes", d: "d4" },
             { n: "13,350", l: "KIND Entries\n(Flagship)", d: "d1" }, { n: "301", l: "Peak Day\nJan 25", d: "d2" },
             { n: "+58%", l: "KIND Growth\nQ1 YoY", d: "d3" }, { n: "+200%", l: "DF3 Growth\nvs 2024", d: "d4" },
             { n: "1,952", l: "Meals Served\nby FACE", d: "d1" }, { n: "9", l: "Daniel Fast\nSessions", d: "d2" },
@@ -1340,7 +1355,7 @@ function ImpactSection({ onDash, dark }) {
           <button onClick={onDash} style={{ display: "inline-flex", alignItems: "center", gap: ".6rem", padding: ".85em 2.25em", borderRadius: 999, background: "rgba(196,136,44,.14)", color: T.goldL, fontWeight: 500, fontSize: ".9rem", border: "1px solid rgba(196,136,44,.3)", cursor: "pointer", transition: "background .2s" }}
             onMouseEnter={e => e.currentTarget.style.background = "rgba(196,136,44,.24)"}
             onMouseLeave={e => e.currentTarget.style.background = "rgba(196,136,44,.14)"}>
-            <LayoutDashboard size={15} strokeWidth={1.5} /> Explore Full 2025 Dashboard →
+            <LayoutDashboard size={15} strokeWidth={1.5} /> Explore Full 2026 Dashboard →
           </button>
         </div>
       </div>
@@ -1366,7 +1381,7 @@ function FACESection({ dark }) {
               Every Sunday at 3pm, KidsInspiring Nation shows up to feed every child in the community. This is not a charity event — it is an act of love, a declaration that raising <GoDs style={{ color: T.coral }} /> includes meeting their most practical needs.
             </p>
             <div className="reveal d3" style={{ display: "flex", gap: "1.5rem", flexWrap: "wrap", marginBottom: "2rem" }}>
-              {[{ n: "1,952", l: "Meals in 2025" }, { n: "52", l: "Sundays served" }, { n: "3pm", l: "Every Sunday" }].map(s => (
+              {[{ n: "1,952", l: "Meals in 2026" }, { n: "52", l: "Sundays served" }, { n: "3pm", l: "Every Sunday" }].map(s => (
                 <div key={s.l} style={{ textAlign: "center" }}>
                   <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "2rem", fontWeight: 900, color: T.coral, letterSpacing: "-0.04em", lineHeight: 1 }}>{s.n}</div>
                   <div style={{ fontSize: ".72rem", color: dark ? T.d2 : T.p2, fontWeight: 500, marginTop: ".2rem" }}>{s.l}</div>
@@ -1377,10 +1392,32 @@ function FACESection({ dark }) {
           <div className="reveal d2" style={{ background: `linear-gradient(135deg,${T.coral},#8B2500)`, borderRadius: 24, padding: "2.5rem", position: "relative", overflow: "hidden", minHeight: "22rem", display: "flex", flexDirection: "column", justifyContent: "flex-end", boxShadow: "0 16px 48px rgba(217,79,48,.35)" }}>
             <div aria-hidden style={{ position: "absolute", top: "-.1em", right: "-.05em", fontSize: "8rem", lineHeight: 1, pointerEvents: "none", userSelect: "none", opacity: .12 }}>🍽️</div>
             <div style={{ fontSize: ".76rem", fontWeight: 600, letterSpacing: ".08em", textTransform: "uppercase", color: "rgba(255,255,255,.6)", marginBottom: ".5rem" }}>FACE · Feed A Community Every week</div>
-            <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(2.5rem,6vw,3.5rem)", fontWeight: 900, color: "#fff", letterSpacing: "-0.04em", lineHeight: 1, marginBottom: ".5rem" }}>3,000+</div>
-            <div style={{ color: "rgba(255,255,255,.8)", fontSize: ".9rem" }}>meals served across 52 Sundays in 2025</div>
+            <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(2.5rem,6vw,3.5rem)", fontWeight: 900, color: "#fff", letterSpacing: "-0.04em", lineHeight: 1, marginBottom: ".5rem" }}>1,952</div>
+            <div style={{ color: "rgba(255,255,255,.8)", fontSize: ".9rem" }}>meals served across 52 Sundays in 2026</div>
           </div>
         </div>
+      </div>
+    </section>
+  );
+}
+
+
+// ─── PHOTO HIGHLIGHTS STRIP ───────────────────────────────────────────────────
+function PhotoHighlightsStrip({ dark }) {
+  const images = [
+    "/photos/Nation_Builders_Program1.jpg",
+    "/photos/Daniel_Fast.jpg",
+    "/photos/P119_Academy.jpg",
+    "/photos/Spirit_Filled_Parents.jpg",
+    "/photos/Community_impact.jpg",
+    "/photos/FACE_Feed_A_Community_EveryWeek.jpg",
+  ];
+  return (
+    <section aria-label="Photo highlights" style={{ background: dark ? "#050505" : "#FAFAF5", padding: "1rem 0 3rem", overflowX: "hidden" }}>
+      <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 clamp(1.25rem,5vw,3rem)", display: "flex", alignItems: "center", gap: "1rem", overflowX: "auto", scrollSnapType: "x mandatory", paddingBottom: "1.5rem" }} className="hide-scroll">
+        {images.map((src, i) => (
+          <img key={i} src={src} alt="" loading="lazy" style={{ height: "240px", width: "auto", borderRadius: "16px", objectFit: "cover", flexShrink: 0, scrollSnapAlign: "center", boxShadow: dark ? "0 4px 16px rgba(0,0,0,.4)" : "0 4px 16px rgba(10,28,18,.08)", border: `1px solid ${dark ? "rgba(255,255,255,.05)" : "rgba(22,97,62,.08)"}` }} />
+        ))}
       </div>
     </section>
   );
@@ -1444,7 +1481,7 @@ function CTASection({ dark }) {
           Your Child Belongs <em style={{ fontStyle: "italic", color: T.goldL }}>Here</em>
         </h2>
         <p className="reveal d2" style={{ fontSize: "clamp(1rem,2.5vw,1.15rem)", color: "rgba(253,247,236,.7)", maxWidth: "46ch", margin: "0 auto 2.5rem", lineHeight: 1.7 }}>
-          In 2025, 639 goDs showed up — day after day, programme after programme. The 2026 story is being written. Your child belongs in it.
+          In 2026, 639 goDs showed up — day after day, programme after programme. The 2026 story is being written. Your child belongs in it.
         </p>
         {/* ACTION GRID */}
         <div className="reveal d3" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,200px),1fr))", gap: ".75rem", maxWidth: "700px", margin: "0 auto 2.5rem" }}>
@@ -1582,7 +1619,7 @@ function Footer({ dark }) {
 
         {/* Bottom */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: ".5rem" }}>
-          <p style={{ fontSize: ".72rem", color: "rgba(253,247,236,.25)" }}>© 2025 goDs Global KidsInspiring · IT No. 6980735 · All rights reserved</p>
+          <p style={{ fontSize: ".72rem", color: "rgba(253,247,236,.25)" }}>© 2026 goDs Global KidsInspiring · IT No. 6980735 · All rights reserved</p>
           <p style={{ fontSize: ".72rem", color: "rgba(253,247,236,.25)" }}>NDPR Compliant · 19,695 entries · 639 goDs · One mission 🇳🇬</p>
         </div>
       </div>
@@ -1619,7 +1656,7 @@ function Dashboard({ onBack, dark, toggleDark }) {
       <aside style={{ width: sideOpen ? 220 : 58, flexShrink: 0, transition: "width .2s ease-out", background: s.surf, borderRight: `1px solid ${s.brd}`, display: "flex", flexDirection: "column", overflow: "hidden" }}>
         <div style={{ padding: "16px 12px", borderBottom: `1px solid ${s.brd}`, display: "flex", alignItems: "center", gap: 9, minHeight: 58 }}>
           <div style={{ width: 30, height: 30, background: T.green, borderRadius: 7, display: "grid", placeItems: "center", color: T.goldL, fontFamily: "'Playfair Display',serif", fontStyle: "italic", fontWeight: 900, fontSize: ".95rem", flexShrink: 0 }}>g</div>
-          {sideOpen && <div><div style={{ fontSize: 12, fontWeight: 700, color: s.p1, fontFamily: "'Plus Jakarta Sans',sans-serif" }}>KIN Dashboard</div><div style={{ fontSize: 10, color: s.p3, fontFamily: "'DM Mono',monospace" }}>2025 Live Data</div></div>}
+          {sideOpen && <div><div style={{ fontSize: 12, fontWeight: 700, color: s.p1, fontFamily: "'Plus Jakarta Sans',sans-serif" }}>KIN Dashboard</div><div style={{ fontSize: 10, color: s.p3, fontFamily: "'DM Mono',monospace" }}>2026 Live Data</div></div>}
         </div>
         <nav style={{ padding: "10px 6px", flex: 1 }}>
           {NAV.map(({ label, icon: Ic }, i) => {
@@ -1658,7 +1695,7 @@ function Dashboard({ onBack, dark, toggleDark }) {
             </button>
             <div>
               <h1 style={{ fontSize: 14, fontWeight: 700, color: s.p1, fontFamily: "'Plus Jakarta Sans',sans-serif", letterSpacing: "-0.02em" }}>{view}</h1>
-              <p style={{ fontSize: 10, color: s.p3, fontFamily: "'DM Mono',monospace" }}>KidsInspiring Nation · 2025 · 19,695 entries · 639 goDs</p>
+              <p style={{ fontSize: 10, color: s.p3, fontFamily: "'DM Mono',monospace" }}>KidsInspiring Nation · 2026 · 19,695 entries · 639 goDs</p>
             </div>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
@@ -1730,7 +1767,7 @@ function OverviewView({ ctx }) {
       <div style={{ marginBottom: 16 }}>
         <div className="dhover" style={{ background: surf, borderRadius: 16, padding: "26px 26px 20px", border: `1px solid ${brd}`, boxShadow: dark ? "none" : "0 1px 2px rgba(0,0,0,.04),0 4px 16px rgba(0,0,0,.04)", display: "grid", gridTemplateColumns: "auto 1fr", gap: 32, alignItems: "center", animation: ready ? "enter 250ms 0ms ease-out both" : "none" }}>
           <div>
-            <div style={{ fontSize: 10, fontWeight: 500, letterSpacing: ".07em", textTransform: "uppercase", color: p3, marginBottom: 6 }}>Total Attendance Entries · 2025</div>
+            <div style={{ fontSize: 10, fontWeight: 500, letterSpacing: ".07em", textTransform: "uppercase", color: p3, marginBottom: 6 }}>Total Attendance Entries · 2026</div>
             <div style={{ fontSize: "clamp(42px,5vw,66px)", fontWeight: 300, letterSpacing: "-0.04em", color: p1, lineHeight: 1, fontVariantNumeric: "tabular-nums", fontFamily: "'Plus Jakarta Sans',sans-serif" }}>
               {ctx.hide ? "••,•••" : hero.toLocaleString()}
             </div>
@@ -1769,7 +1806,7 @@ function OverviewView({ ctx }) {
           <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 16 }}>
             <div>
               <div style={{ fontSize: 13, fontWeight: 600, color: p1, letterSpacing: "-0.02em", fontFamily: "'Plus Jakarta Sans',sans-serif" }}>Monthly Attendance</div>
-              <div style={{ fontSize: 11, color: p2, marginTop: 2 }}>All programmes combined · 2025</div>
+              <div style={{ fontSize: 11, color: p2, marginTop: 2 }}>All programmes combined · 2026</div>
             </div>
             <div style={{ display: "flex", gap: 12 }}>
               {[{ c: T.green, l: "Entries" }, { c: T.gold, l: "Avg/session" }].map(s => (
@@ -1826,7 +1863,7 @@ function OverviewView({ ctx }) {
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
         <div className="dhover" style={{ background: surf, borderRadius: 16, padding: 20, border: `1px solid ${brd}`, boxShadow: dark ? "none" : "0 1px 2px rgba(0,0,0,.04),0 4px 16px rgba(0,0,0,.04)", animation: ready ? "enter 250ms 280ms ease-out both" : "none" }}>
           <div style={{ fontSize: 13, fontWeight: 600, color: p1, fontFamily: "'Plus Jakarta Sans',sans-serif", marginBottom: 3 }}>Programme Mix</div>
-          <div style={{ fontSize: 11, color: p2, marginBottom: 14 }}>Entries by programme · 2025</div>
+          <div style={{ fontSize: 11, color: p2, marginBottom: 14 }}>Entries by programme · 2026</div>
           <ResponsiveContainer width="100%" height={195}>
             <BarChart data={PROGRAMS.filter(p => p.entries && p.entries > 30)} layout="vertical" margin={{ top: 0, right: 4, left: 0, bottom: 0 }} barSize={12}>
               <CartesianGrid horizontal={false} vertical stroke={dark ? "rgba(255,255,255,.04)" : "rgba(0,0,0,.04)"} />
@@ -1843,7 +1880,7 @@ function OverviewView({ ctx }) {
           <div style={{ fontSize: 13, fontWeight: 600, color: p1, fontFamily: "'Plus Jakarta Sans',sans-serif", marginBottom: 3 }}>KIND · Q1 Growth</div>
           <div style={{ fontSize: 11, color: p2, marginBottom: 14 }}>Avg attendance per session · Q1 YoY</div>
           <ResponsiveContainer width="100%" height={195}>
-            <BarChart data={[{ name: "Q1 2024", val: 83 }, { name: "Q1 2025", val: 131 }]} margin={{ top: 4, right: 4, left: -22, bottom: 0 }} barSize={52}>
+            <BarChart data={[{ name: "Q1 2024", val: 83 }, { name: "Q1 2026", val: 131 }]} margin={{ top: 4, right: 4, left: -22, bottom: 0 }} barSize={52}>
               <CartesianGrid horizontal stroke={dark ? "rgba(255,255,255,.04)" : "rgba(0,0,0,.04)"} vertical={false} />
               <XAxis dataKey="name" tick={{ fontSize: 10, fill: p3, fontFamily: "'DM Mono',monospace" }} axisLine={false} tickLine={false} />
               <YAxis tick={{ fontSize: 10, fill: p3, fontFamily: "'DM Mono',monospace" }} axisLine={false} tickLine={false} />
@@ -1869,7 +1906,7 @@ function ProgrammesView({ ctx }) {
       <div className="dhover" style={{ background: surf, borderRadius: 16, border: `1px solid ${brd}`, boxShadow: dark ? "none" : "0 1px 2px rgba(0,0,0,.04),0 4px 16px rgba(0,0,0,.04)", overflow: "hidden", marginBottom: 16, animation: ready ? "enter 250ms 0ms ease-out both" : "none" }}>
         <div style={{ padding: "14px 18px", borderBottom: `1px solid ${brd}`, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <div>
-            <div style={{ fontSize: 13, fontWeight: 700, color: p1, fontFamily: "'Plus Jakarta Sans',sans-serif" }}>All 8 Programmes · 2025</div>
+            <div style={{ fontSize: 13, fontWeight: 700, color: p1, fontFamily: "'Plus Jakarta Sans',sans-serif" }}>All 8 Programmes · 2026</div>
             <div style={{ fontSize: 11, color: p2, marginTop: 2 }}>KidsInspiring Nation · NDPR Data Controller: goDs Global KidsInspiring (IT No. 6980735)</div>
           </div>
         </div>
@@ -1960,7 +1997,7 @@ function ParticipantsView({ ctx }) {
         <div className="dhover" style={{ background: surf, borderRadius: 16, border: `1px solid ${brd}`, boxShadow: dark ? "none" : "0 1px 2px rgba(0,0,0,.04),0 4px 16px rgba(0,0,0,.04)", overflow: "hidden", animation: ready ? "enter 250ms 0ms ease-out both" : "none" }}>
           <div style={{ padding: "14px 18px", borderBottom: `1px solid ${brd}`, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
             <div>
-              <div style={{ fontSize: 13, fontWeight: 700, color: p1, fontFamily: "'Plus Jakarta Sans',sans-serif" }}>gDX Leaders · 2025</div>
+              <div style={{ fontSize: 13, fontWeight: 700, color: p1, fontFamily: "'Plus Jakarta Sans',sans-serif" }}>gDX Leaders · 2026</div>
               <div style={{ fontSize: 10, color: p2, marginTop: 2 }}>goDxperience attendance — Sunday 11am</div>
             </div>
             <span className="kinbadge" style={{ background: "rgba(232,185,84,.15)", color: T.goldL }}>gDX</span>
@@ -1986,7 +2023,7 @@ function ParticipantsView({ ctx }) {
         <div className="dhover" style={{ background: surf, borderRadius: 16, border: `1px solid ${brd}`, boxShadow: dark ? "none" : "0 1px 2px rgba(0,0,0,.04),0 4px 16px rgba(0,0,0,.04)", overflow: "hidden", animation: ready ? "enter 250ms 60ms ease-out both" : "none" }}>
           <div style={{ padding: "14px 18px", borderBottom: `1px solid ${brd}`, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
             <div>
-              <div style={{ fontSize: 13, fontWeight: 700, color: p1, fontFamily: "'Plus Jakarta Sans',sans-serif" }}>KIND Champions · H1 2025</div>
+              <div style={{ fontSize: 13, fontWeight: 700, color: p1, fontFamily: "'Plus Jakarta Sans',sans-serif" }}>KIND Champions · H1 2026</div>
               <div style={{ fontSize: 10, color: p2, marginTop: 2 }}>Devotional attendance H1 score — Daily 8pm</div>
             </div>
             <span className="kinbadge" style={{ background: "rgba(22,97,62,.12)", color: T.kindC }}>KIND</span>
@@ -2014,7 +2051,7 @@ function ParticipantsView({ ctx }) {
         <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 16 }}>
           <div>
             <div style={{ fontSize: 13, fontWeight: 700, color: p1, fontFamily: "'Plus Jakarta Sans',sans-serif" }}>KINGs goD Cells — Cohort Breakdown</div>
-            <div style={{ fontSize: 11, color: p2, marginTop: 2 }}>Three cohorts · 43 sessions each · Sundays 5pm · 2025</div>
+            <div style={{ fontSize: 11, color: p2, marginTop: 2 }}>Three cohorts · 43 sessions each · Sundays 5pm · 2026</div>
           </div>
           <span className="kinbadge" style={{ background: "rgba(123,45,139,.12)", color: T.kingsC }}>KINGs</span>
         </div>
@@ -2060,7 +2097,7 @@ function DFView({ ctx }) {
               <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 11, fontWeight: 700, color: T.ok }}>{hide ? "••%" : `+${d.pct}%`}</span>
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 14 }}>
-              {[{ l: "2024", v: d.y2024, dim: true }, { l: "2025", v: d.y2025, dim: false }].map(y => (
+              {[{ l: "2024", v: d.y2024, dim: true }, { l: "2026", v: d.y2026, dim: false }].map(y => (
                 <div key={y.l} style={{ textAlign: "center", padding: "10px 6px", borderRadius: 10, background: y.dim ? (dark ? "rgba(255,255,255,.03)" : "rgba(0,0,0,.03)") : (dark ? "rgba(196,136,44,.12)" : "rgba(196,136,44,.06)"), border: y.dim ? "none" : `1px solid rgba(196,136,44,.2)` }}>
                   <div style={{ fontSize: 9, color: p3, letterSpacing: ".06em", textTransform: "uppercase", marginBottom: 4 }}>{y.l}</div>
                   <div style={{ fontSize: 26, fontWeight: 300, color: y.dim ? p2 : T.gold, letterSpacing: "-0.04em", fontFamily: "'Plus Jakarta Sans',sans-serif" }}>{hide ? "•••" : y.v}</div>
@@ -2069,19 +2106,19 @@ function DFView({ ctx }) {
               ))}
             </div>
             <div style={{ height: 3, borderRadius: 999, background: dark ? "rgba(255,255,255,.08)" : "rgba(0,0,0,.06)", overflow: "hidden" }}>
-              <div style={{ height: "100%", background: T.dfC, borderRadius: 999, width: `${Math.round(d.y2025 / (d.y2025 + d.y2024) * 100)}%` }} />
+              <div style={{ height: "100%", background: T.dfC, borderRadius: 999, width: `${Math.round(d.y2026 / (d.y2026 + d.y2024) * 100)}%` }} />
             </div>
-            <div style={{ fontSize: 9, color: p3, marginTop: 5, fontFamily: "'DM Mono',monospace" }}>2025 share of 2-year combined total</div>
+            <div style={{ fontSize: 9, color: p3, marginTop: 5, fontFamily: "'DM Mono',monospace" }}>2026 share of 2-year combined total</div>
           </div>
         ))}
       </div>
 
       {/* Grouped bar chart */}
       <div className="dhover" style={{ background: surf, borderRadius: 16, padding: 20, border: `1px solid ${brd}`, boxShadow: dark ? "none" : "0 1px 2px rgba(0,0,0,.04),0 4px 16px rgba(0,0,0,.04)", marginBottom: 14, animation: ready ? "enter 250ms 200ms ease-out both" : "none" }}>
-        <div style={{ fontSize: 13, fontWeight: 700, color: p1, fontFamily: "'Plus Jakarta Sans',sans-serif", marginBottom: 3 }}>Daniel Fast · 2024 vs 2025</div>
+        <div style={{ fontSize: 13, fontWeight: 700, color: p1, fontFamily: "'Plus Jakarta Sans',sans-serif", marginBottom: 3 }}>Daniel Fast · 2024 vs 2026</div>
         <div style={{ fontSize: 11, color: p2, marginBottom: 14 }}>Attendance entries per week · year-over-year comparison</div>
         <div style={{ display: "flex", gap: 14, marginBottom: 14 }}>
-          {[{ c: dark ? "rgba(196,136,44,.35)" : T.greenM, l: "2024" }, { c: T.dfC, l: "2025" }].map(s => (
+          {[{ c: dark ? "rgba(196,136,44,.35)" : T.greenM, l: "2024" }, { c: T.dfC, l: "2026" }].map(s => (
             <div key={s.l} style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 10, color: p3 }}>
               <div style={{ width: 8, height: 8, borderRadius: 2, background: s.c }} />{s.l}
             </div>
@@ -2094,7 +2131,7 @@ function DFView({ ctx }) {
             <YAxis tick={{ fontSize: 10, fill: p3, fontFamily: "'DM Mono',monospace" }} axisLine={false} tickLine={false} />
             <Tooltip content={<CustomTooltip dark={dark} />} />
             <Bar dataKey="y2024" name="2024" fill={dark ? "rgba(196,136,44,.3)" : T.greenM} radius={[4, 4, 0, 0]} />
-            <Bar dataKey="y2025" name="2025" fill={T.dfC} radius={[4, 4, 0, 0]} />
+            <Bar dataKey="y2026" name="2026" fill={T.dfC} radius={[4, 4, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </div>
@@ -2105,7 +2142,7 @@ function DFView({ ctx }) {
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,200px),1fr))", gap: 12 }}>
           {[
             { icon: "🔥", t: "DF3 is the defining story", d: "200% growth in DF Week 3 (212→637) shows that goDs who complete earlier weeks deepen their commitment. The fasting culture is compounding." },
-            { icon: "📈", t: "Overall DF momentum", d: "Total DF grew from 743 (2024) to 1,619 (2025) — a 118% increase. Daniel Fast is now a defining identity marker for KidsInspiring Nation." },
+            { icon: "📈", t: "Overall DF momentum", d: "Total DF grew from 743 (2024) to 1,619 (2026) — a 118% increase. Daniel Fast is now a defining identity marker for KidsInspiring Nation." },
             { icon: "✨", t: "Retention driving numbers", d: "DF3 unique participants grew +43%, but entries grew +200% — meaning existing participants attended far more sessions, not just more people attending once." },
           ].map(c => (
             <div key={c.t} style={{ background: dark ? "rgba(196,136,44,.07)" : "rgba(196,136,44,.04)", borderRadius: 10, padding: 14, border: "1px solid rgba(196,136,44,.12)" }}>
@@ -2125,47 +2162,95 @@ function DFView({ ctx }) {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export default function App() {
-  const [mode, setMode] = useState("website"); // "website" | "dashboard" | "nvc" | "giving" | "gallery" | "gods-university"
   const [dark, setDark] = useState(false);
+  const [givingOpen, setGivingOpen] = useState(false);
   const toggleDark = useCallback(() => setDark(d => !d), []);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
 
   return (
-    <>
+    <div style={{ background: dark ? "#0A1C12" : "#FAFAF5", color: dark ? T.cream : T.greenD, minHeight: "100vh" }}>
+      <SiteNav dark={dark} onGive={() => setGivingOpen(true)} />
+      
       <AnimatePresence mode="wait">
-        {mode === "website" && (
-          <motion.div key="web" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <Website onDash={() => setMode("dashboard")} onNVC={() => setMode("nvc")} onGive={() => setMode("giving")} onGallery={() => setMode("gallery")} onGodsU={() => setMode("gods-university")} dark={dark} />
-          </motion.div>
-        )}
-        {mode === "dashboard" && (
-          <motion.div key="dash" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} style={{ height: "100vh" }}>
-            <Dashboard onBack={() => setMode("website")} dark={dark} toggleDark={toggleDark} />
-          </motion.div>
-        )}
-        {mode === "nvc" && (
-          <motion.div key="nvc" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <NVC onBack={() => setMode("website")} dark={dark} />
-          </motion.div>
-        )}
-        {mode === "giving" && (
-          <motion.div key="giving" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <Giving onBack={() => setMode("website")} dark={dark} />
-          </motion.div>
-        )}
-        {mode === "gallery" && (
-          <motion.div key="gallery" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <Gallery onBack={() => setMode("website")} dark={dark} />
-          </motion.div>
-        )}
-        {mode === "gods-university" && (
-          <motion.div key="gods" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <GodsUniversity onBack={() => setMode("website")} dark={dark} />
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+              <Website dark={dark} />
+            </motion.div>
+          } />
+          <Route path="/gU" element={
+            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }}>
+              <div style={{ paddingTop: "80px" }}>
+                <GodsUniversity dark={dark} />
+              </div>
+            </motion.div>
+          } />
+          <Route path="/NBC" element={
+            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }}>
+              <div style={{ paddingTop: "80px" }}>
+                <NVC dark={dark} />
+              </div>
+            </motion.div>
+          } />
+          <Route path="/dashboard" element={
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} style={{ height: "100vh" }}>
+              <Dashboard onBack={() => navigate(-1)} dark={dark} toggleDark={toggleDark} />
+            </motion.div>
+          } />
+          <Route path="/about" element={
+            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }}>
+              <div style={{ paddingTop: "80px" }}>
+                <About dark={dark} />
+              </div>
+            </motion.div>
+          } />
+          <Route path="/contact" element={
+            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }}>
+              <div style={{ paddingTop: "80px" }}>
+                <Contact dark={dark} />
+              </div>
+            </motion.div>
+          } />
+          <Route path="/gallery" element={
+            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }}>
+              <div style={{ paddingTop: "80px" }}>
+                <Gallery dark={dark} />
+              </div>
+            </motion.div>
+          } />
+        </Routes>
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {givingOpen && (
+          <motion.div 
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            exit={{ opacity: 0 }}
+            style={{ position: "fixed", inset: 0, zIndex: 9000, background: dark ? "rgba(5,12,8,.98)" : "rgba(250,250,245,.98)", overflowY: "auto" }}
+          >
+            <div style={{ paddingTop: "80px" }}>
+              <Giving dark={dark} />
+            </div>
+            <button 
+              onClick={() => setGivingOpen(false)}
+              style={{ position: "fixed", top: 20, right: 20, zIndex: 9001, width: 44, height: 44, borderRadius: "50%", background: dark ? "#1C1C1E" : "#fff", border: `1px solid ${dark ? "rgba(255,255,255,.1)" : "rgba(0,0,0,.08)"}`, display: "grid", placeItems: "center", color: dark ? T.goldL : T.greenD }}
+            >
+              <X size={20} />
+            </button>
           </motion.div>
         )}
       </AnimatePresence>
 
       <DarkToggle dark={dark} toggle={toggleDark} />
       <CookieBanner dark={dark} />
-    </>
+    </div>
   );
 }
+
+
