@@ -124,20 +124,13 @@ export default function NVC({ dark }) {
         return () => window.removeEventListener("scroll", h);
     }, []);
 
-    const [formData, setFormData] = useState({
-        fullName: '',
-        email: '',
-        whatsapp: '',
-        ageCategory: 'Senior Builders (14-17)',
-        location: '',
-        motivation: ''
-    });
+    const [step, setStep] = useState(1);
+    const [teamType, setTeamType] = useState('solo');
+    const [hasMentor, setHasMentor] = useState('no');
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
-    };
+    const nextStep = (e) => { e.preventDefault(); setStep(prev => prev + 1); };
+    const prevStep = () => setStep(prev => prev - 1);
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -534,18 +527,248 @@ export default function NVC({ dark }) {
                                     <p style={{ color: s.sub, fontSize: "1rem", marginBottom: "2rem" }}>Fill the form below to begin your 9-month journey.</p>
                                 </div>
 
-                                <div style={{ width: "100%", overflow: "hidden", borderRadius: "16px", background: "#fff" }}>
-                                    <iframe 
-                                        src="https://docs.google.com/forms/d/e/1FAIpQLSfkrMfXb7kYS3LoEallGSUZRSgAXP5uizN4JeAhhohanmRckg/viewform?embedded=true" 
-                                        width="100%" 
-                                        height="800" 
-                                        frameBorder="0" 
-                                        marginHeight="0" 
-                                        marginWidth="0"
-                                        style={{ border: "none" }}
-                                    >
-                                        Loading…
-                                    </iframe>
+                                <div className="mt-8 bg-white p-6 sm:p-10 rounded-[32px] shadow-2xl relative overflow-hidden border border-gray-100">
+                                    {/* Progress Bar */}
+                                    <div className="absolute top-0 left-0 h-2 bg-gray-100 w-full">
+                                        <motion.div 
+                                            className="h-full bg-green-800"
+                                            initial={{ width: "33%" }}
+                                            animate={{ width: `${(step / 3) * 100}%` }}
+                                            transition={{ duration: 0.5, ease: "easeInOut" }}
+                                        />
+                                    </div>
+
+                                    <div className="flex justify-between items-center mb-8 mt-2">
+                                        <div className="flex flex-col">
+                                            <span className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-1">Step {step} of 3</span>
+                                            <h4 className="text-2xl font-black text-green-900 font-['Playfair_Display']">
+                                                {step === 1 ? "Personal Details" : step === 2 ? "Your Project" : "Final Steps"}
+                                            </h4>
+                                        </div>
+                                        <div className="w-12 h-12 rounded-full bg-yellow-50 flex items-center justify-center text-yellow-600 font-bold text-xl border border-yellow-200 shadow-sm">
+                                            {step}
+                                        </div>
+                                    </div>
+
+                                    <form id="registration-form" onSubmit={step === 3 ? handleRegister : nextStep} className="text-left relative min-h-[400px]">
+                                        <AnimatePresence mode="wait">
+                                            {step === 1 && (
+                                                <motion.div 
+                                                    key="step1"
+                                                    initial={{ opacity: 0, x: 20 }}
+                                                    animate={{ opacity: 1, x: 0 }}
+                                                    exit={{ opacity: 0, x: -20 }}
+                                                    className="space-y-5"
+                                                >
+                                                    <div className="grid md:grid-cols-2 gap-4">
+                                                        <div>
+                                                            <label className="block text-sm text-gray-600 font-bold mb-1.5 uppercase tracking-wide">Full Name *</label>
+                                                            <input type="text" name="full_name" required className="w-full px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:border-green-800 focus:bg-white focus:ring-4 focus:ring-green-800/10 transition-all outline-none" placeholder="Enter your full name" />
+                                                        </div>
+                                                        <div>
+                                                            <label className="block text-sm text-gray-600 font-bold mb-1.5 uppercase tracking-wide">Email (Optional)</label>
+                                                            <input type="email" name="email" className="w-full px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:border-green-800 focus:bg-white focus:ring-4 focus:ring-green-800/10 transition-all outline-none" placeholder="your@email.com" />
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                                                        <div>
+                                                            <label className="block text-sm text-gray-600 font-bold mb-1.5 uppercase tracking-wide">Age *</label>
+                                                            <input type="number" name="age" required min="7" max="17" className="w-full px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:border-green-800 focus:bg-white focus:ring-4 focus:ring-green-800/10 transition-all outline-none" placeholder="e.g. 15" />
+                                                        </div>
+                                                        <div className="col-span-1 md:col-span-2">
+                                                            <label className="block text-sm text-gray-600 font-bold mb-1.5 uppercase tracking-wide">Referral Code</label>
+                                                            <input type="text" name="referral_code" className="w-full px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:border-green-800 focus:bg-white focus:ring-4 focus:ring-green-800/10 transition-all outline-none" placeholder="Optional (e.g. NBC2026-JOHN-001)" />
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="grid md:grid-cols-2 gap-4">
+                                                        <div>
+                                                            <label className="block text-sm text-gray-600 font-bold mb-1.5 uppercase tracking-wide">Phone Number *</label>
+                                                            <input type="tel" name="phone" required className="w-full px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:border-green-800 focus:bg-white focus:ring-4 focus:ring-green-800/10 transition-all outline-none" placeholder="08012345678" />
+                                                        </div>
+                                                        <div>
+                                                            <label className="block text-sm text-gray-600 font-bold mb-1.5 uppercase tracking-wide">WhatsApp Number *</label>
+                                                            <input type="tel" name="whatsapp" required className="w-full px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:border-green-800 focus:bg-white focus:ring-4 focus:ring-green-800/10 transition-all outline-none" placeholder="For community access" />
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="grid md:grid-cols-2 gap-4">
+                                                        <div>
+                                                            <label className="block text-sm text-gray-600 font-bold mb-1.5 uppercase tracking-wide">State *</label>
+                                                            <select name="state" required className="w-full px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:border-green-800 focus:bg-white focus:ring-4 focus:ring-green-800/10 transition-all outline-none appearance-none">
+                                                                <option value="">Select your state</option>
+                                                                <option value="Lagos">Lagos</option>
+                                                                <option value="FCT">FCT Abuja</option>
+                                                                <option value="Rivers">Rivers</option>
+                                                                <option value="Oyo">Oyo</option>
+                                                                <option value="Kano">Kano</option>
+                                                                <option value="Other">Other</option>
+                                                            </select>
+                                                        </div>
+                                                        <div>
+                                                            <label className="block text-sm text-gray-600 font-bold mb-1.5 uppercase tracking-wide">City/Town *</label>
+                                                            <input type="text" name="city" required className="w-full px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:border-green-800 focus:bg-white focus:ring-4 focus:ring-green-800/10 transition-all outline-none" placeholder="Where do you live?" />
+                                                        </div>
+                                                    </div>
+                                                </motion.div>
+                                            )}
+
+                                            {step === 2 && (
+                                                <motion.div 
+                                                    key="step2"
+                                                    initial={{ opacity: 0, x: 20 }}
+                                                    animate={{ opacity: 1, x: 0 }}
+                                                    exit={{ opacity: 0, x: -20 }}
+                                                    className="space-y-6"
+                                                >
+                                                    <div>
+                                                        <label className="block text-sm text-gray-600 font-bold mb-2.5 uppercase tracking-wide">Team or Solo? *</label>
+                                                        <div className="flex flex-col sm:flex-row gap-3">
+                                                            <label className={`flex-1 border-2 rounded-xl p-4 flex items-center cursor-pointer transition-all ${teamType === 'solo' ? 'border-green-700 bg-green-50' : 'border-gray-200 hover:border-green-200'}`}>
+                                                                <input type="radio" name="team_type" value="solo" checked={teamType === 'solo'} onChange={(e) => setTeamType(e.target.value)} required className="hidden" />
+                                                                <div className={`w-5 h-5 rounded-full border-2 mr-3 flex items-center justify-center ${teamType === 'solo' ? 'border-green-700' : 'border-gray-300'}`}>
+                                                                    {teamType === 'solo' && <div className="w-2.5 h-2.5 rounded-full bg-green-700" />}
+                                                                </div>
+                                                                <span className={`font-bold ${teamType === 'solo' ? 'text-green-800' : 'text-gray-600'}`}>Just me (Solo)</span>
+                                                            </label>
+                                                            <label className={`flex-1 border-2 rounded-xl p-4 flex items-center cursor-pointer transition-all ${teamType === 'team' ? 'border-green-700 bg-green-50' : 'border-gray-200 hover:border-green-200'}`}>
+                                                                <input type="radio" name="team_type" value="team" checked={teamType === 'team'} onChange={(e) => setTeamType(e.target.value)} className="hidden" />
+                                                                <div className={`w-5 h-5 rounded-full border-2 mr-3 flex items-center justify-center ${teamType === 'team' ? 'border-green-700' : 'border-gray-300'}`}>
+                                                                    {teamType === 'team' && <div className="w-2.5 h-2.5 rounded-full bg-green-700" />}
+                                                                </div>
+                                                                <span className={`font-bold ${teamType === 'team' ? 'text-green-800' : 'text-gray-600'}`}>I have a team</span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+
+                                                    <AnimatePresence>
+                                                        {teamType === 'team' && (
+                                                            <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} className="overflow-hidden">
+                                                                <label className="block text-sm text-gray-600 font-bold mb-1.5 uppercase tracking-wide">Team Name</label>
+                                                                <input type="text" name="team_name" className="w-full px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:border-green-800 focus:bg-white focus:ring-4 focus:ring-green-800/10 transition-all outline-none" placeholder="Choose an inspiring team name" />
+                                                            </motion.div>
+                                                        )}
+                                                    </AnimatePresence>
+
+                                                    <div>
+                                                        <label className="block text-sm text-gray-600 font-bold mb-1.5 uppercase tracking-wide">Problem Category *</label>
+                                                        <select name="problem_category" required className="w-full px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:border-green-800 focus:bg-white focus:ring-4 focus:ring-green-800/10 transition-all outline-none appearance-none">
+                                                            <option value="">What sector are you tackling?</option>
+                                                            <option value="Education">Education (schools, learning, literacy)</option>
+                                                            <option value="Environment">Environment (waste, water, sanitation)</option>
+                                                            <option value="Health">Health (healthcare, hygiene, wellness)</option>
+                                                            <option value="Jobs">Jobs/Skills (helping people earn money)</option>
+                                                            <option value="Infrastructure">Community Spaces (roads, drainage, public areas)</option>
+                                                            <option value="Arts">Arts/Culture (preserving Nigerian heritage)</option>
+                                                            <option value="Other">Other</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div>
+                                                        <label className="block text-sm text-gray-600 font-bold mb-1.5 uppercase tracking-wide">Problem Statement *</label>
+                                                        <textarea name="problem_statement" required rows="3" className="w-full px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:border-green-800 focus:bg-white focus:ring-4 focus:ring-green-800/10 transition-all outline-none resize-none" placeholder="Example: Our community has no clean water. People walk 2km to fetch dirty water."></textarea>
+                                                    </div>
+
+                                                    <div>
+                                                        <label className="block text-sm text-gray-600 font-bold mb-1.5 uppercase tracking-wide">Your Solution *</label>
+                                                        <textarea name="solution" required rows="3" className="w-full px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:border-green-800 focus:bg-white focus:ring-4 focus:ring-green-800/10 transition-all outline-none resize-none" placeholder="Example: We will build 3 rainwater collection tanks using local materials."></textarea>
+                                                    </div>
+                                                </motion.div>
+                                            )}
+
+                                            {step === 3 && (
+                                                <motion.div 
+                                                    key="step3"
+                                                    initial={{ opacity: 0, x: 20 }}
+                                                    animate={{ opacity: 1, x: 0 }}
+                                                    exit={{ opacity: 0, x: -20 }}
+                                                    className="space-y-6"
+                                                >
+                                                    <div>
+                                                        <label className="block text-sm text-gray-600 font-bold mb-2.5 uppercase tracking-wide">Do you have an adult mentor? *</label>
+                                                        <div className="flex flex-col sm:flex-row gap-3">
+                                                            <label className={`flex-1 border-2 rounded-xl p-4 flex items-center cursor-pointer transition-all ${hasMentor === 'yes' ? 'border-green-700 bg-green-50' : 'border-gray-200 hover:border-green-200'}`}>
+                                                                <input type="radio" name="has_mentor" value="yes" checked={hasMentor === 'yes'} onChange={(e) => setHasMentor(e.target.value)} required className="hidden" />
+                                                                <div className={`w-5 h-5 rounded-full border-2 mr-3 flex items-center justify-center ${hasMentor === 'yes' ? 'border-green-700' : 'border-gray-300'}`}>
+                                                                    {hasMentor === 'yes' && <div className="w-2.5 h-2.5 rounded-full bg-green-700" />}
+                                                                </div>
+                                                                <span className={`font-bold ${hasMentor === 'yes' ? 'text-green-800' : 'text-gray-600'}`}>Yes, I have one</span>
+                                                            </label>
+                                                            <label className={`flex-1 border-2 rounded-xl p-4 flex items-center cursor-pointer transition-all ${hasMentor === 'no' ? 'border-green-700 bg-green-50' : 'border-gray-200 hover:border-green-200'}`}>
+                                                                <input type="radio" name="has_mentor" value="no" checked={hasMentor === 'no'} onChange={(e) => setHasMentor(e.target.value)} className="hidden" />
+                                                                <div className={`w-5 h-5 rounded-full border-2 mr-3 flex items-center justify-center ${hasMentor === 'no' ? 'border-green-700' : 'border-gray-300'}`}>
+                                                                    {hasMentor === 'no' && <div className="w-2.5 h-2.5 rounded-full bg-green-700" />}
+                                                                </div>
+                                                                <span className={`font-bold ${hasMentor === 'no' ? 'text-green-800' : 'text-gray-600'}`}>Not yet</span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+
+                                                    <AnimatePresence>
+                                                        {hasMentor === 'yes' && (
+                                                            <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} className="overflow-hidden space-y-4">
+                                                                <div className="mt-2">
+                                                                    <label className="block text-sm text-gray-600 font-bold mb-1.5 uppercase tracking-wide">Mentor's Name</label>
+                                                                    <input type="text" name="mentor_name" className="w-full px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:border-green-800 focus:bg-white focus:ring-4 focus:ring-green-800/10 transition-all outline-none" placeholder="Their full name" />
+                                                                </div>
+                                                                <div>
+                                                                    <label className="block text-sm text-gray-600 font-bold mb-1.5 uppercase tracking-wide">Mentor's Phone</label>
+                                                                    <input type="tel" name="mentor_phone" className="w-full px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:border-green-800 focus:bg-white focus:ring-4 focus:ring-green-800/10 transition-all outline-none" placeholder="Their phone number" />
+                                                                </div>
+                                                            </motion.div>
+                                                        )}
+                                                    </AnimatePresence>
+
+                                                    <label className="flex items-start bg-yellow-50/50 border border-yellow-200/60 p-5 rounded-xl mt-6 cursor-pointer hover:bg-yellow-50 transition-colors group">
+                                                        <div className="flex-shrink-0 mt-0.5">
+                                                            <input type="checkbox" name="agreement" required className="w-5 h-5 text-yellow-500 rounded border-gray-300 focus:ring-yellow-500" />
+                                                        </div>
+                                                        <span className="ml-3 text-[0.9rem] leading-relaxed text-gray-700 font-medium group-hover:text-gray-900 transition-colors">
+                                                            I agree to work on my project for 10 months, embrace the 8 core values, report transparently, and permit NBC to share my story to inspire others.
+                                                        </span>
+                                                    </label>
+
+                                                    <div className="pt-4">
+                                                        <button 
+                                                            type="submit" 
+                                                            disabled={isSubmitting}
+                                                            className="w-full bg-green-800 text-yellow-400 px-6 py-4 rounded-xl font-bold hover:bg-green-900 hover:-translate-y-0.5 active:translate-y-0 transition-all text-xl disabled:opacity-70 disabled:hover:translate-y-0 flex items-center justify-center shadow-lg shadow-green-900/20"
+                                                        >
+                                                            {isSubmitting ? (
+                                                                <>
+                                                                    <Loader2 className="animate-spin mr-2" /> Finalizing...
+                                                                </>
+                                                            ) : (
+                                                                "COMPLETE REGISTRATION 🌟"
+                                                            )}
+                                                        </button>
+                                                    </div>
+                                                </motion.div>
+                                            )}
+                                        </AnimatePresence>
+
+                                        {/* Navigation Buttons */}
+                                        <div className={`mt-8 flex items-center ${step > 1 ? 'justify-between' : 'justify-end'}`}>
+                                            {step > 1 && (
+                                                <button 
+                                                    type="button" 
+                                                    onClick={prevStep}
+                                                    className="px-6 py-3 rounded-xl font-bold text-gray-500 bg-gray-100 hover:bg-gray-200 transition-colors"
+                                                >
+                                                    Back
+                                                </button>
+                                            )}
+                                            {step < 3 && (
+                                                <button 
+                                                    type="submit"
+                                                    className="px-8 py-3 rounded-xl font-bold text-green-900 bg-yellow-400 hover:bg-yellow-300 shadow-md shadow-yellow-400/20 transition-all hover:-translate-y-0.5"
+                                                >
+                                                    Next Step →
+                                                </button>
+                                            )}
+                                        </div>
+                                    </form>
                                 </div>
                                 
                                 <div style={{ mt: "2rem", textAlign: "center", paddingTop: "2rem" }}>
