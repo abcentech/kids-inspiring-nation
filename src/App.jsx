@@ -24,6 +24,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { Routes, Route, useNavigate, useLocation, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import NVC from "./NVC.jsx";
+import NBCRegister from "./NBCRegister.jsx";
 import Giving from "./Giving.jsx";
 import Gallery from "./Gallery.jsx";
 import GodsUniversity from "./GodsUniversity.jsx";
@@ -2194,6 +2195,13 @@ export default function App() {
             <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }}>
               <div style={{ paddingTop: "80px" }}>
                 <NVC dark={dark} />
+              </div>
+            </motion.div>
+          } />
+          <Route path="/NBC/register" element={
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+              <div style={{ paddingTop: "80px" }}>
+                <NBCRegister dark={dark} />
               </div>
             </motion.div>
           } />
