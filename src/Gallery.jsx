@@ -18,7 +18,7 @@ const PHOTOS = [
     src: "/photos/KIN_programs.jpg",
     gradient: `linear-gradient(135deg, ${T.green} 0%, ${T.greenD} 100%)`,
     caption: "KIND Daily Devotional — goDs in character session",
-    tag: "KIND", date: "March 2025",
+    tag: "KIND", date: "March 2026",
     icon: BookOpen,
   },
   {
@@ -26,7 +26,7 @@ const PHOTOS = [
     src: "/photos/Epic_moments.jpg",
     gradient: `linear-gradient(135deg, #7B2D8B 0%, #4A1B55 100%)`,
     caption: "KINGs 002 Cell — Sunday mentorship circle",
-    tag: "KINGs", date: "February 2025",
+    tag: "KINGs", date: "February 2026",
     icon: Crown,
   },
   {
@@ -34,7 +34,7 @@ const PHOTOS = [
     src: "/photos/Daniel_Fast.jpg",
     gradient: `linear-gradient(135deg, ${T.gold} 0%, ${T.goldD} 100%)`,
     caption: "Daniel Fast Week 3 — 637 participants, 200% growth",
-    tag: "Daniel Fast", date: "January 2025",
+    tag: "Daniel Fast", date: "January 2026",
     icon: Flame,
   },
   {
@@ -42,7 +42,7 @@ const PHOTOS = [
     src: "/photos/FACE_Feed_A_Community_EveryWeek.jpg",
     gradient: `linear-gradient(135deg, #D94F30 0%, #A83920 100%)`,
     caption: "FACE — feeding the community every Sunday",
-    tag: "FACE", date: "April 2025",
+    tag: "FACE", date: "April 2026",
     icon: Utensils,
   },
   {
@@ -50,15 +50,15 @@ const PHOTOS = [
     src: "/photos/P119_Academy.jpg",
     gradient: `linear-gradient(135deg, #0071E3 0%, #004C99 100%)`,
     caption: "P119 Academy — Mathematics & Character class",
-    tag: "P119", date: "May 2025",
+    tag: "P119", date: "May 2026",
     icon: GraduationCap,
   },
   {
     id: 6,
     src: "/photos/Community_impact.jpg",
     gradient: `linear-gradient(135deg, #8B4513 0%, #5C2D0A 100%)`,
-    caption: "The Jesus Christ Concert 2025 — Annual celebration",
-    tag: "TJC", date: "December 2025",
+    caption: "The Jesus Christ Concert 2026 — Annual celebration",
+    tag: "TJC", date: "December 2026",
     icon: Music,
   },
   {
@@ -66,7 +66,7 @@ const PHOTOS = [
     src: "/photos/Spirit_Filled_Parents.jpg",
     gradient: `linear-gradient(135deg, #27AE60 0%, #1A6B3C 100%)`,
     caption: "Covenant Servants — volunteer formation session",
-    tag: "CST", date: "October 2025",
+    tag: "CST", date: "October 2026",
     icon: Bird,
   },
   {
@@ -74,7 +74,7 @@ const PHOTOS = [
     src: "/photos/Skills_Development.jpg",
     gradient: `linear-gradient(135deg, ${T.goldL} 0%, ${T.gold} 100%)`,
     caption: "goDxperience — Sunday faith formation gathering",
-    tag: "gDX", date: "June 2025",
+    tag: "gDX", date: "June 2026",
     icon: Sparkles,
   },
 ];

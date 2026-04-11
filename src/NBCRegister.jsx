@@ -31,6 +31,11 @@ export default function NBCRegister({ dark }) {
     const [refLink, setRefLink] = useState('');
     const [userId, setUserId] = useState('');
     const [submitted, setSubmitted] = useState(false);
+    
+    // New state for DOB and Dynamic Team
+    const [dob, setDob] = useState('');
+    const [calculatedAge, setCalculatedAge] = useState('');
+    const [teamMembers, setTeamMembers] = useState([{ name: '', age: '', phone: '' }]);
 
     // Ref for the form card — we scroll this into view instead of window
     const formCardRef = useRef(null);
@@ -65,6 +70,27 @@ export default function NBCRegister({ dark }) {
         setTimeout(scrollToForm, 50);
     };
 
+    const calculateAge = (birthDate) => {
+        if (!birthDate) return "";
+        const today = new Date();
+        const birth = new Date(birthDate);
+        let years = today.getFullYear() - birth.getFullYear();
+        let months = today.getMonth() - birth.getMonth();
+        if (months < 0 || (months === 0 && today.getDate() < birth.getDate())) {
+            years--;
+            months += 12;
+        }
+        return `${years} years, ${months} months`;
+    };
+
+    const handleAddMember = () => setTeamMembers([...teamMembers, { name: '', age: '', phone: '' }]);
+    const handleRemoveMember = (index) => setTeamMembers(teamMembers.filter((_, i) => i !== index));
+    const handleMemberChange = (index, field, value) => {
+        const newMembers = [...teamMembers];
+        newMembers[index][field] = value;
+        setTeamMembers(newMembers);
+    };
+
     const toggleValue = (val) => {
         setValuesError(false);
         if (selectedValues.includes(val)) {
@@ -88,7 +114,7 @@ export default function NBCRegister({ dark }) {
         // Generate NBC ID
         const ts = Date.now().toString(36).toUpperCase();
         const rand = Math.random().toString(36).substring(2, 6).toUpperCase();
-        const nbcId = `NBC2025-${ts}${rand}`;
+        const nbcId = `NBC2026-${ts}${rand}`;
 
         const fundingSources = ['funding_donations','funding_local','funding_borrow','funding_inkind','funding_personal','funding_other']
             .filter(n => raw.get(n))
@@ -114,7 +140,11 @@ export default function NBCRegister({ dark }) {
             team_type: raw.get('team_type') || 'Solo',
             team_name: raw.get('team_name') || '',
             team_size: raw.get('team_size') || '',
-            team_members: raw.get('team_members') || '',
+            team_members: teamType === 'Team' 
+                ? teamMembers.map((m, i) => `Member ${i+1}: ${m.name} (${m.age}) - ${m.phone}`).join('; ')
+                : '',
+            dob: dob,
+            calculated_age: calculatedAge,
             project_title: raw.get('project_title') || '',
             problem_category: raw.get('problem_category') || '',
             problem_statement: raw.get('problem_statement') || '',
@@ -189,11 +219,11 @@ export default function NBCRegister({ dark }) {
                             padding: '0.4rem 1.2rem', fontSize: '0.8rem', fontWeight: 800,
                             color: T.goldL, textTransform: 'uppercase', letterSpacing: '0.15em',
                             marginBottom: '1.25rem',
-                        }}>2025 Cohort · Limited Spots</div>
+                        }}>2026 Cohort · Limited Spots</div>
                         <h1 style={{
                             fontFamily: "'Playfair Display', serif", fontSize: 'clamp(2rem, 5vw, 3rem)',
                             fontWeight: 900, color: 'white', marginBottom: '0.75rem', lineHeight: 1.2,
-                        }}>Register for NBC 2025</h1>
+                        }}>Register for NBC 2026</h1>
                         <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: '1.05rem', maxWidth: '500px', margin: '0 auto' }}>
                             Join 1,000 National Builders competing for <strong style={{ color: T.goldL }}>₦3,000,000</strong>
                         </p>
@@ -269,10 +299,25 @@ export default function NBCRegister({ dark }) {
                                                         <label className={LABEL}>Full Name <span style={{ color: '#ef4444' }}>*</span></label>
                                                         <input type="text" name="full_name" required className={INPUT} placeholder="Your full legal name" />
                                                     </div>
-                                                    <div>
-                                                        <label className={LABEL}>Age <span style={{ color: '#ef4444' }}>*</span></label>
-                                                        <input type="number" name="age" required min="7" max="17" className={INPUT} placeholder="7 – 17" />
-                                                        <p style={{ fontSize: '0.72rem', color: '#94a3b8', marginTop: '0.3rem' }}>Must be 7–17 years old</p>
+                                                    <div style={{ gridColumn: '1 / -1' }}>
+                                                        <label className={LABEL}>Date of Birth <span style={{ color: '#ef4444' }}>*</span></label>
+                                                        <input 
+                                                            type="date" 
+                                                            name="dob" 
+                                                            required 
+                                                            className={INPUT} 
+                                                            value={dob}
+                                                            onChange={(e) => {
+                                                                setDob(e.target.value);
+                                                                setCalculatedAge(calculateAge(e.target.value));
+                                                            }}
+                                                        />
+                                                        {calculatedAge && (
+                                                            <p style={{ fontSize: '0.85rem', color: T.green, fontWeight: 700, marginTop: '0.4rem' }}>
+                                                                Calculated Age: {calculatedAge}
+                                                            </p>
+                                                        )}
+                                                        <p style={{ fontSize: '0.72rem', color: '#94a3b8', marginTop: '0.3rem' }}>Participants must be 7–17 years old</p>
                                                     </div>
                                                     <div>
                                                         <label className={LABEL}>Gender <span style={{ color: '#ef4444' }}>*</span></label>
@@ -368,14 +413,37 @@ export default function NBCRegister({ dark }) {
                                                                 <label className={LABEL}>Number of Members (incl. you) <span style={{ color: '#ef4444' }}>*</span></label>
                                                                 <select name="team_size" className={SELECT}>
                                                                     <option value="">Select</option>
-                                                                    {['2','3','4','5'].map(n => <option key={n}>{n} members</option>)}
+                                                                    {['2','3','4','5','6+'].map(n => <option key={n} value={n === '6+' ? 'More than 5' : n}>{n} members</option>)}
                                                                 </select>
                                                             </div>
                                                             <div>
-                                                                <label className={LABEL}>Team Members' Names &amp; Ages</label>
-                                                                <textarea name="team_members" rows="4" className={INPUT} style={{ resize: 'none' }}
-                                                                    placeholder={"List members (excluding yourself):\n1. John Okafor, Age 14\n2. Mary Eze, Age 13"}
-                                                                />
+                                                                <label className={LABEL} style={{ marginBottom: '1rem' }}>Team Members Details <span style={{ fontWeight: 400, color: '#64748b' }}>(Excluding yourself)</span></label>
+                                                                <div className="space-y-4">
+                                                                    {teamMembers.map((member, idx) => (
+                                                                        <div key={idx} style={{ background: '#f8fafc', padding: '1rem', borderRadius: '16px', border: '1px solid #e2e8f0', position: 'relative' }}>
+                                                                            <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 0.8fr 1.2fr', gap: '0.75rem' }}>
+                                                                                <div>
+                                                                                    <label style={{ fontSize: '0.7rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase' }}>Name</label>
+                                                                                    <input type="text" placeholder="Full Name" className={INPUT} style={{ padding: '0.6rem 0.8rem', fontSize: '0.85rem' }} value={member.name} onChange={(e) => handleMemberChange(idx, 'name', e.target.value)} />
+                                                                                </div>
+                                                                                <div>
+                                                                                    <label style={{ fontSize: '0.7rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase' }}>Age</label>
+                                                                                    <input type="number" placeholder="Age" className={INPUT} style={{ padding: '0.6rem 0.8rem', fontSize: '0.85rem' }} value={member.age} onChange={(e) => handleMemberChange(idx, 'age', e.target.value)} />
+                                                                                </div>
+                                                                                <div style={{ position: 'relative' }}>
+                                                                                    <label style={{ fontSize: '0.7rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase' }}>Phone</label>
+                                                                                    <input type="tel" placeholder="Phone" className={INPUT} style={{ padding: '0.6rem 0.8rem', fontSize: '0.85rem' }} value={member.phone} onChange={(e) => handleMemberChange(idx, 'phone', e.target.value)} />
+                                                                                    {teamMembers.length > 1 && (
+                                                                                        <button type="button" onClick={() => handleRemoveMember(idx)} style={{ position: 'absolute', top: '-0.5rem', right: '-0.5rem', width: '24px', height: '24px', borderRadius: '50%', background: '#ef4444', color: 'white', display: 'grid', placeItems: 'center', fontSize: '1rem', border: 'none', cursor: 'pointer', boxShadow: '0 4px 10px rgba(239,68,68,0.3)' }}>×</button>
+                                                                                    )}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    ))}
+                                                                    <button type="button" onClick={handleAddMember} style={{ width: '100%', padding: '0.75rem', borderRadius: '12px', border: `2px dashed ${T.green}`, color: T.green, fontWeight: 700, fontSize: '0.85rem', cursor: 'pointer', transition: 'all 0.2s', background: 'transparent' }} onMouseEnter={e => e.currentTarget.style.background = '#f0fdf4'} onMouseLeave={e => e.currentTarget.style.background = 'transparent'}>
+                                                                        + Add Team Member
+                                                                    </button>
+                                                                </div>
                                                             </div>
                                                         </motion.div>
                                                     )}
@@ -412,12 +480,12 @@ export default function NBCRegister({ dark }) {
                                                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                                                     <div>
                                                         <label className={LABEL}>Start Date <span style={{ color: '#ef4444' }}>*</span></label>
-                                                        <input type="date" name="start_date" required min="2025-05-01" className={INPUT} />
+                                                        <input type="date" name="start_date" required min="2026-01-01" className={INPUT} />
                                                     </div>
                                                     <div>
                                                         <label className={LABEL}>Completion Date <span style={{ color: '#ef4444' }}>*</span></label>
-                                                        <input type="date" name="completion_date" required max="2025-10-31" className={INPUT} />
-                                                        <p style={{ fontSize: '0.72rem', color: '#94a3b8', marginTop: '0.3rem' }}>By Oct 31, 2025</p>
+                                                        <input type="date" name="completion_date" required max="2026-11-30" className={INPUT} />
+                                                        <p style={{ fontSize: '0.72rem', color: '#94a3b8', marginTop: '0.3rem' }}>By Nov 30, 2026</p>
                                                     </div>
                                                 </div>
                                                 <div>
@@ -461,7 +529,7 @@ export default function NBCRegister({ dark }) {
                                                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: '0.5rem' }}>
                                                         {[
                                                             { v: 'Yes', sub: 'Parent, Teacher, Pastor/Imam, Community Leader' },
-                                                            { v: 'No', sub: 'NBC will help me find one' },
+                                                            { v: 'No', sub: 'I am still searching for one' },
                                                         ].map(opt => (
                                                             <label key={opt.v} style={{
                                                                 display: 'flex', alignItems: 'center', padding: '1rem',
@@ -572,7 +640,7 @@ export default function NBCRegister({ dark }) {
                                                     <h4 style={{ fontSize: '1rem', fontWeight: 800, color: '#0f172a', marginBottom: '1rem' }}>NBC Participant Agreement</h4>
                                                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                                                         {[
-                                                            { name: 'agree_commitment', text: 'I commit to working on my project for the full 10-month period (March–December 2025)' },
+                                                            { name: 'agree_commitment', text: 'I commit to working on my project for the full 10-month period (March–December 2026)' },
                                                             { name: 'agree_values', text: 'I agree to study and apply the 8 National Builder values in my project and life' },
                                                             { name: 'agree_honesty', text: 'I promise to report honestly about my project progress — no exaggeration or false information' },
                                                             { name: 'agree_documentation', text: 'I agree to document my project with photos/videos and submit monthly progress reports' },
@@ -678,8 +746,8 @@ export default function NBCRegister({ dark }) {
                                     }}>Copy</button>
                                 </div>
                                 <div style={{ fontSize: '0.85rem', color: '#374151', lineHeight: 2 }}>
-                                    <p>✅ 5 referrals → Become <strong>Regional Ambassador</strong></p>
-                                    <p>✅ 10 referrals → Get a <strong>Physical Certificate</strong></p>
+                                    <p>✅ 10 referrals → Become <strong>Regional Ambassador</strong></p>
+                                    <p>✅ 20 referrals → Get a <strong>Physical Certificate</strong></p>
                                     <p>✅ 50 referrals → <strong>Free Trip to Grand Finale!</strong></p>
                                 </div>
                                 {/* Social Sharing */}
@@ -702,9 +770,9 @@ export default function NBCRegister({ dark }) {
                             <div style={{ textAlign: 'left', background: '#fffbeb', borderLeft: `4px solid ${T.gold}`, padding: '1rem 1.25rem', borderRadius: '0 12px 12px 0', marginBottom: '2rem' }}>
                                 <p style={{ fontWeight: 700, marginBottom: '0.5rem', color: '#0f172a' }}>📱 What happens next:</p>
                                 <ul style={{ fontSize: '0.875rem', color: '#374151', lineHeight: 2 }}>
-                                    <li>✅ Welcome SMS within 24 hours</li>
+                                    <li>✅ Welcome WhatsApp within 24 hours</li>
                                     <li>✅ You'll be added to your state WhatsApp group</li>
-                                    <li>✅ Download the Values Workbook (link in SMS)</li>
+                                    <li>✅ Download the Values Workbook (link in WhatsApp)</li>
                                     <li>✅ Start planning your project RIGHT NOW!</li>
                                 </ul>
                             </div>
