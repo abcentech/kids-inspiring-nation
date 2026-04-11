@@ -21,7 +21,7 @@
 */
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import { Routes, Route, useNavigate, useLocation, Link } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation, Link, Navigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import NVC from "./NVC.jsx";
 import NBCRegister from "./NBCRegister.jsx";
@@ -394,7 +394,8 @@ function Website({ dark }) {
       <ProgramsSection dark={dark} />
       <VideoSection dark={dark} />
       <ImpactSection onDash={onDash} dark={dark} />
-      <FACESection dark={dark} />\n      <PhotoHighlightsStrip dark={dark} />
+      <FACESection dark={dark} />
+      <PhotoHighlightsStrip dark={dark} />
       <TestimonySection dark={dark} />
       <CTASection dark={dark} />
       <Footer dark={dark} />
@@ -2198,6 +2199,7 @@ export default function App() {
               </div>
             </motion.div>
           } />
+          <Route path="/nbc" element={<Navigate to="/NBC" replace />} />
           <Route path="/NBC/register" element={
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
               <div style={{ paddingTop: "80px" }}>
