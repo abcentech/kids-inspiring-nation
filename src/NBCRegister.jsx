@@ -32,10 +32,11 @@ export default function NBCRegister({ dark }) {
     const [userId, setUserId] = useState('');
     const [submitted, setSubmitted] = useState(false);
     
-    // New state for DOB and Dynamic Team
+    // New state for DOB, Dynamic Team, and School
     const [dob, setDob] = useState('');
     const [calculatedAge, setCalculatedAge] = useState('');
     const [teamMembers, setTeamMembers] = useState([{ name: '', age: '', phone: '' }]);
+    const [schoolName, setSchoolName] = useState('');
 
     // Ref for the form card — we scroll this into view instead of window
     const formCardRef = useRef(null);
@@ -349,7 +350,32 @@ export default function NBCRegister({ dark }) {
                                                     </div>
                                                     <div style={{ gridColumn: '1 / -1' }}>
                                                         <label className={LABEL}>School Name <span style={{ color: '#ef4444' }}>*</span></label>
-                                                        <input type="text" name="school_name" required className={INPUT} placeholder="e.g. Unity Primary School, Ikeja" />
+                                                        <input 
+                                                            type="text" 
+                                                            name="school_name" 
+                                                            required 
+                                                            className={INPUT} 
+                                                            value={schoolName}
+                                                            onChange={(e) => setSchoolName(e.target.value)}
+                                                            placeholder="e.g. Unity Primary School, Ikeja" 
+                                                        />
+                                                        <button 
+                                                            type="button"
+                                                            onClick={() => setSchoolName('I am out of school')}
+                                                            style={{ 
+                                                                marginTop: '0.4rem', 
+                                                                fontSize: '0.75rem', 
+                                                                color: T.green, 
+                                                                fontWeight: 700,
+                                                                textDecoration: 'underline',
+                                                                cursor: 'pointer',
+                                                                background: 'none',
+                                                                border: 'none',
+                                                                padding: 0
+                                                            }}
+                                                        >
+                                                            I am out of school
+                                                        </button>
                                                     </div>
                                                     <div>
                                                         <label className={LABEL}>State <span style={{ color: '#ef4444' }}>*</span></label>
