@@ -171,9 +171,17 @@ export default function NBCRegister({ dark }) {
         };
 
         try {
-            const fd = new FormData();
-            Object.entries(payload).forEach(([k, v]) => fd.append(k, v));
-            await fetch(SCRIPT_URL, { method: 'POST', body: fd, mode: 'no-cors' });
+            const params = new URLSearchParams();
+            Object.entries(payload).forEach(([k, v]) => params.append(k, v));
+            
+            await fetch(SCRIPT_URL, { 
+                method: 'POST', 
+                body: params, 
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
 
             const link = `${window.location.origin}/NBC/register?ref=${nbcId}`;
             setRefLink(link);
