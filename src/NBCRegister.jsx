@@ -80,7 +80,7 @@ export default function NBCRegister({ dark }) {
         setIsSubmitting(true);
 
         // ⚠️ REPLACE with your Google Apps Script Web App URL
-        const SCRIPT_URL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID_HERE/exec";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzJipOJljZxXDmUWjoagFyRotta8ohyMPNrCPn4EeqhEXd9zOFm4z5i-_QsIii7bBoYHA/exec";
 
         const form = document.getElementById('nbc-registration-form');
         const raw = new FormData(form);
