@@ -478,7 +478,7 @@ export default function NVC({ dark }) {
 
                         {/* Registration CTA — full form is at /NBC/register */}
                         <div style={{ textAlign: "center" }}>
-                            <div style={{ fontSize: "0.85rem", fontWeight: 800, color: T.gold, textTransform: "uppercase", letterSpacing: "0.15em", marginBottom: "0.75rem" }}>2025 Cohort · Limited Spots</div>
+                            <div style={{ fontSize: "0.85rem", fontWeight: 800, color: T.gold, textTransform: "uppercase", letterSpacing: "0.15em", marginBottom: "0.75rem" }}>2026 Cohort · Limited Spots</div>
                             <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(2rem,5vw,2.8rem)", fontWeight: 900, color: s.txt, marginBottom: "1.25rem", lineHeight: 1.2 }}>
                                 Ready to Build Nigeria?
                             </h3>
