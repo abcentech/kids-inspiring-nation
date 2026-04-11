@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Loader2, CheckCircle2, MessageCircle, ArrowLeft, ChevronLeft } from 'lucide-react';
+import { Loader2, CheckCircle2, MessageCircle, ArrowLeft, ChevronLeft, Info, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const T = {
@@ -21,37 +21,137 @@ const INPUT = "w-full px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl f
 const SELECT = "w-full px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:border-green-700 outline-none appearance-none text-gray-800";
 const LABEL = "block text-sm font-bold text-gray-700 mb-1.5";
 
+const VALUE_INFO = {
+    'Integrity': {
+        def: "Consistently obeying moral principles even when no one is watching. Honesty in every action.",
+        example: "Returning a lost item to its owner or admitting a mistake in your project even if it affects your score."
+    },
+    'Discipline': {
+        def: "The practice of training yourself to obey rules or a code of behavior through consistency.",
+        example: "Allocating exactly 1 hour every day to work on your builder project, even when you feel tired."
+    },
+    'Wisdom': {
+        def: "The ability to judge what is true, right, or lasting by using knowledge to solve problems.",
+        example: "Choosing a project that solves a long-term problem for many people rather than a quick fix for one person."
+    },
+    'Service': {
+        def: "Putting the needs of others above your own and helping your community without expecting a reward.",
+        example: "Spending your weekend organizing a free cleanup for the neighborhood gutter or teaching younger kids."
+    },
+    'Justice': {
+        def: "Fairness, equity, and treating everyone with respect irrespective of their background.",
+        example: "Ensuring all your team members have a chance to lead and that everyone's voice is heard equally."
+    },
+    'Perseverance': {
+        def: "Persistence in doing something despite difficulty or delay in achieving success.",
+        example: "Continuing to refine your solution when your first three attempts fail to solve the problem."
+    },
+    'Humility': {
+        def: "A modest view of one's importance and the willingness to learn from everyone.",
+        example: "Listening carefully to your mentor's feedback and being willing to change your approach."
+    },
+    'Excellence': {
+        def: "The quality of being outstanding. Doing your absolute best in every small detail.",
+        example: "Ensuring your project documentation is neat, your photos are clear, and your results are well-recorded."
+    }
+};
+
+const ValueModal = ({ valueName, info, onClose }) => (
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)', zIndex: 999, display: 'grid', placeItems: 'center', padding: '1.5rem' }}>
+        <motion.div initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, y: 20 }} onClick={e => e.stopPropagation()} style={{ background: 'white', borderRadius: '24px', padding: '2rem', maxWidth: '440px', width: '100%', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)', position: 'relative' }}>
+            <button onClick={onClose} style={{ position: 'absolute', top: '1.25rem', right: '1.25rem', color: '#94a3b8' }}><X size={20} /></button>
+            <div style={{ fontSize: '1.5rem', fontWeight: 900, color: '#16613E', marginBottom: '1rem', fontFamily: 'serif' }}>{valueName}</div>
+            <div style={{ fontSize: '1.1rem', color: '#334155', lineHeight: 1.6, marginBottom: '1.5rem' }}>{info.def}</div>
+            <div style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: '16px', padding: '1.25rem' }}>
+                <div style={{ fontSize: '0.75rem', fontWeight: 800, color: '#16613E', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>Workbook Example</div>
+                <div style={{ fontSize: '0.95rem', color: '#166534', fontStyle: 'italic', lineHeight: 1.5 }}>"{info.example}"</div>
+            </div>
+            <button onClick={onClose} style={{ width: '100%', marginTop: '2rem', padding: '1rem', background: '#16613E', color: 'white', borderRadius: '12px', fontWeight: 700 }}>Got it!</button>
+        </motion.div>
+    </motion.div>
+);
+
 export default function NBCRegister({ dark }) {
     const [step, setStep] = useState(1);
-    const [teamType, setTeamType] = useState('Solo');
-    const [hasMentor, setHasMentor] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [selectedValues, setSelectedValues] = useState([]);
     const [valuesError, setValuesError] = useState(false);
     const [refLink, setRefLink] = useState('');
     const [userId, setUserId] = useState('');
     const [submitted, setSubmitted] = useState(false);
+    const [activeValueModal, setActiveValueModal] = useState(null);
     
-    // New state for DOB, Dynamic Team, and School
-    const [dob, setDob] = useState('');
-    const [calculatedAge, setCalculatedAge] = useState('');
+    // Centralized form state
+    const [formData, setFormData] = useState({
+        referral_code: '',
+        first_name: '',
+        middle_name: '',
+        last_name: '',
+        dob: '',
+        age: '',
+        gender: '',
+        phone: '',
+        whatsapp: '',
+        email: '',
+        school_name: '',
+        state: '',
+        lga: '',
+        city: '',
+        address: '',
+        team_type: 'Solo',
+        team_name: '',
+        team_size: '',
+        project_title: '',
+        problem_category: '',
+        problem_statement: '',
+        solution: '',
+        expected_impact: '',
+        start_date: '',
+        completion_date: '',
+        budget: '',
+        funding_donations: false,
+        funding_local: false,
+        funding_borrow: false,
+        funding_inkind: false,
+        funding_personal: false,
+        funding_other: false,
+        has_mentor: '',
+        mentor_name: '',
+        mentor_phone: '',
+        mentor_email: '',
+        mentor_relationship: '',
+        source: '',
+        agree_commitment: false,
+        agree_values: false,
+        agree_honesty: false,
+        agree_documentation: false,
+        agree_media: false,
+        agree_rules: false,
+        agree_final: false
+    });
+
     const [teamMembers, setTeamMembers] = useState([{ name: '', age: '', phone: '' }]);
-    const [schoolName, setSchoolName] = useState('');
 
-    // Ref for the form card — we scroll this into view instead of window
-    const formCardRef = useRef(null);
+    const handleInputChange = (e) => {
+        const { name, value, type, checked } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: type === 'checkbox' ? checked : value
+        }));
+    };
 
-    const TOTAL_STEPS = 4;
+    const TOTAL_STEPS = 5; // Step 5 is Review
 
     // Auto-fill referral code from URL ?ref=
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
         const ref = params.get('ref');
-        if (ref) {
-            const el = document.querySelector('[name="referral_code"]');
-            if (el) el.value = ref;
+        if (ref && !formData.referral_code) {
+            setFormData(prev => ({ ...prev, referral_code: ref }));
         }
-    }, [step]);
+    }, []);
+
+    const formCardRef = useRef(null);
 
     const scrollToForm = () => {
         if (formCardRef.current) {
@@ -60,9 +160,8 @@ export default function NBCRegister({ dark }) {
     };
 
     const nextStep = (e) => {
-        e.preventDefault();
+        if (e) e.preventDefault();
         setStep(prev => prev + 1);
-        // Small delay so new step renders before we scroll
         setTimeout(scrollToForm, 50);
     };
 
@@ -71,7 +170,7 @@ export default function NBCRegister({ dark }) {
         setTimeout(scrollToForm, 50);
     };
 
-    const calculateAge = (birthDate) => {
+    function calculateAge(birthDate) {
         if (!birthDate) return "";
         const today = new Date();
         const birth = new Date(birthDate);
@@ -82,7 +181,14 @@ export default function NBCRegister({ dark }) {
             months += 12;
         }
         return `${years} years, ${months} months`;
-    };
+    }
+
+    // Update age when DOB changes
+    useEffect(() => {
+        if (formData.dob) {
+            setFormData(prev => ({ ...prev, age: calculateAge(formData.dob) }));
+        }
+    }, [formData.dob]);
 
     const handleAddMember = () => setTeamMembers([...teamMembers, { name: '', age: '', phone: '' }]);
     const handleRemoveMember = (index) => setTeamMembers(teamMembers.filter((_, i) => i !== index));
@@ -101,73 +207,81 @@ export default function NBCRegister({ dark }) {
         }
     };
 
-    const handleRegister = async (e) => {
-        e.preventDefault();
+    const getAgeDivision = (ageString) => {
+        if (!ageString) return "";
+        const years = parseInt(ageString.split(' ')[0]);
+        if (isNaN(years)) return "Junior"; // Default
+        return years < 13 ? "Junior" : "Senior";
+    };
+
+    const handleRegister = async () => {
         if (selectedValues.length !== 3) { setValuesError(true); return; }
         setIsSubmitting(true);
 
-        // ⚠️ REPLACE with your Google Apps Script Web App URL
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzJipOJljZxXDmUWjoagFyRotta8ohyMPNrCPn4EeqhEXd9zOFm4z5i-_QsIii7bBoYHA/exec";
 
-        const form = document.getElementById('nbc-registration-form');
-        const raw = new FormData(form);
-
-        // Generate NBC ID
         const ts = Date.now().toString(36).toUpperCase();
         const rand = Math.random().toString(36).substring(2, 6).toUpperCase();
         const nbcId = `NBC2026-${ts}${rand}`;
 
-        const fundingSources = ['funding_donations','funding_local','funding_borrow','funding_inkind','funding_personal','funding_other']
-            .filter(n => raw.get(n))
-            .map(n => raw.get(n))
-            .join(', ');
+        const fundingSources = [
+            formData.funding_donations && 'Donations',
+            formData.funding_local && 'Local Materials',
+            formData.funding_borrow && 'Borrow',
+            formData.funding_inkind && 'In-kind',
+            formData.funding_personal && 'Personal',
+            formData.funding_other && 'Other'
+        ].filter(Boolean).join(', ');
 
         const payload = {
             'Timestamp': new Date().toISOString(),
             'Registration Date': new Date().toLocaleDateString(),
             'NBC ID': nbcId,
-            'Referral Code': raw.get('referral_code') || '',
-            'Full Name': raw.get('full_name') || '',
-            'DOB': dob,
-            'Age': calculatedAge,
-            'Gender': raw.get('gender') || '',
-            'Phone': raw.get('phone') || '',
-            'WhatsApp': raw.get('whatsapp') || '',
-            'Email': raw.get('email') || '',
-            'School Name': raw.get('school_name') || '',
-            'State': raw.get('state') || '',
-            'LGA': raw.get('lga') || '',
-            'City': raw.get('city') || '',
-            'Address': raw.get('address') || '',
-            'Team Type': raw.get('team_type') || 'Solo',
-            'Team Name': raw.get('team_name') || '',
-            'Team Size': raw.get('team_size') || '',
-            'Team Members': teamType === 'Team' 
+            'Referral Code': formData.referral_code,
+            'First Name': formData.first_name,
+            'Middle Name': formData.middle_name,
+            'Last Name': formData.last_name,
+            'DOB': formData.dob,
+            'Age': formData.age,
+            'Gender': formData.gender,
+            'Phone': formData.phone,
+            'WhatsApp': formData.whatsapp,
+            'Email': formData.email,
+            'State': formData.state,
+            'LGA': formData.lga,
+            'City': formData.city,
+            'Address': formData.address,
+            'Team Type': formData.team_type,
+            'Team Name': formData.team_name,
+            'Team Size': formData.team_size,
+            'Team Members': formData.team_type === 'Team' 
                 ? teamMembers.map((m, i) => `Member ${i+1}: ${m.name} (${m.age}) - ${m.phone}`).join('; ')
-                : '',
-            'Project Title': raw.get('project_title') || '',
-            'Problem Category': raw.get('problem_category') || '',
-            'Problem Statement': raw.get('problem_statement') || '',
-            'Solution': raw.get('solution') || '',
-            'Expected Impact': raw.get('expected_impact') || '',
-            'Start Date': raw.get('start_date') || '',
-            'Completion Date': raw.get('completion_date') || '',
-            'Budget': raw.get('budget') || '',
+                : 'Solo',
+            'Age Division': getAgeDivision(formData.age),
+            'Project Title': formData.project_title,
+            'Problem Category': formData.problem_category,
+            'Problem Statement': formData.problem_statement,
+            'Solution': formData.solution,
+            'Expected Impact': formData.expected_impact,
+            'Start Date': formData.start_date,
+            'Completion Date': formData.completion_date,
+            'Budget': formData.budget,
             'Funding Sources': fundingSources,
-            'Has Mentor': raw.get('has_mentor') || '',
-            'Mentor Name': raw.get('mentor_name') || '',
-            'Mentor Phone': raw.get('mentor_phone') || '',
-            'Mentor Email': raw.get('mentor_email') || '',
-            'Mentor Relationship': raw.get('mentor_relationship') || '',
+            'Has Mentor': formData.has_mentor,
+            'Mentor Name': formData.mentor_name,
+            'Mentor Phone': formData.mentor_phone,
+            'Mentor Email': formData.mentor_email,
+            'Mentor Relationship': formData.mentor_relationship,
             'Core Values': selectedValues.join(', '),
-            'Source': raw.get('source') || '',
-            'Agree Commitment': raw.get('agree_commitment') ? 'Yes' : 'No',
-            'Agree Values': raw.get('agree_values') ? 'Yes' : 'No',
-            'Agree Honesty': raw.get('agree_honesty') ? 'Yes' : 'No',
-            'Agree Documentation': raw.get('agree_documentation') ? 'Yes' : 'No',
-            'Agree Media': raw.get('agree_media') ? 'Yes' : 'No',
-            'Agree Rules': raw.get('agree_rules') ? 'Yes' : 'No',
-            'Agree Final': raw.get('agree_final') ? 'Yes' : 'No',
+            'Source': formData.source,
+            'Agree Commitment': formData.agree_commitment ? 'Yes' : 'No',
+            'Agree Values': formData.agree_values ? 'Yes' : 'No',
+            'Agree Honesty': formData.agree_honesty ? 'Yes' : 'No',
+            'Agree Documentation': formData.agree_documentation ? 'Yes' : 'No',
+            'Agree Media': formData.agree_media ? 'Yes' : 'No',
+            'Agree Rules': formData.agree_rules ? 'Yes' : 'No',
+            'Agree Final': formData.agree_final ? 'Yes' : 'No',
+            'school_name': formData.school_name, // Added at the end as in user's manual list
         };
 
         try {
@@ -178,13 +292,10 @@ export default function NBCRegister({ dark }) {
                 method: 'POST', 
                 body: params, 
                 mode: 'no-cors',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
             });
 
-            const link = `${window.location.origin}/NBC/register?ref=${nbcId}`;
-            setRefLink(link);
+            setRefLink(`${window.location.origin}/NBC/register?ref=${nbcId}`);
             setUserId(nbcId);
             setSubmitted(true);
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -201,7 +312,27 @@ export default function NBCRegister({ dark }) {
         '👥 Team Info',
         '💡 Project Details',
         '👨‍🏫 Mentor & Agreement',
+        '👀 Review & Confirm'
     ];
+
+    const ReviewSection = ({ title, stepNum, children }) => (
+        <div style={{ marginBottom: '1.5rem', padding: '1.25rem', background: '#f8fafc', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                <h4 style={{ fontSize: '0.9rem', fontWeight: 800, color: T.green, textTransform: 'uppercase' }}>{title}</h4>
+                <button type="button" onClick={() => setStep(stepNum)} style={{ fontSize: '0.75rem', fontWeight: 700, color: '#64748b', textDecoration: 'underline', background: 'none', border: 'none', cursor: 'pointer' }}>Edit</button>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem' }}>
+                {children}
+            </div>
+        </div>
+    );
+
+    const ReviewItem = ({ label, value }) => (
+        <div>
+            <div style={{ fontSize: '0.7rem', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', marginBottom: '0.2rem' }}>{label}</div>
+            <div style={{ fontSize: '0.9rem', fontWeight: 600, color: '#0f172a' }}>{value || <span style={{ color: '#cbd5e1', fontWeight: 400 }}>Not provided</span>}</div>
+        </div>
+    );
 
     return (
         <div style={{
@@ -272,7 +403,6 @@ export default function NBCRegister({ dark }) {
                                         {stepLabels[step - 1]}
                                     </h2>
                                 </div>
-                                {/* Step Dots */}
                                 <div style={{ display: 'flex', gap: '0.5rem' }}>
                                     {Array.from({ length: TOTAL_STEPS }).map((_, i) => (
                                         <div key={i} style={{
@@ -287,49 +417,42 @@ export default function NBCRegister({ dark }) {
                             </div>
 
                             {/* Form Body */}
-                            <form id="nbc-registration-form" onSubmit={step === TOTAL_STEPS ? handleRegister : nextStep}>
+                            <form id="nbc-registration-form" onSubmit={step === TOTAL_STEPS ? (e) => { e.preventDefault(); handleRegister(); } : nextStep}>
                                 <div style={{ padding: '1.5rem 2rem' }}>
                                     <AnimatePresence mode="wait">
 
                                         {/* ── STEP 1: PERSONAL INFORMATION ── */}
                                         {step === 1 && (
                                             <motion.div key="s1" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.25 }} className="space-y-4">
-
-                                                {/* Referral Code */}
                                                 <div style={{ background: '#fefce8', border: '2px solid #fde047', borderRadius: '14px', padding: '1rem' }}>
                                                     <label className={LABEL}>🎁 Referral Code <span style={{ fontWeight: 400, color: '#64748b' }}>(Optional)</span></label>
-                                                    <input type="text" name="referral_code" className={INPUT} style={{ background: 'white' }} placeholder="Were you referred? Enter their code" />
-                                                    <p style={{ fontSize: '0.75rem', color: '#64748b', marginTop: '0.4rem' }}>✨ Your friend gets credit for recruiting you!</p>
+                                                    <input type="text" name="referral_code" value={formData.referral_code} onChange={handleInputChange} className={INPUT} style={{ background: 'white' }} placeholder="Were you referred? Enter their code" />
+                                                    <p style={{ fontSize: '0.75rem', color: T.gold, marginTop: '0.3rem', fontWeight: 600 }}>✨ Your friend gets credit for recruiting you!</p>
                                                 </div>
 
                                                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                                                     <div style={{ gridColumn: '1 / -1' }}>
-                                                        <label className={LABEL}>Full Name <span style={{ color: '#ef4444' }}>*</span></label>
-                                                        <input type="text" name="full_name" required className={INPUT} placeholder="Your full legal name" />
+                                                        <label className={LABEL}>Your Name <span style={{ color: '#ef4444' }}>*</span></label>
+                                                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                                                            <input type="text" name="first_name" value={formData.first_name} onChange={handleInputChange} placeholder="First Name" required className={INPUT} />
+                                                            <input type="text" name="last_name" value={formData.last_name} onChange={handleInputChange} placeholder="Last Name" required className={INPUT} />
+                                                        </div>
+                                                        <div style={{ marginTop: '0.75rem' }}>
+                                                            <input type="text" name="middle_name" value={formData.middle_name} onChange={handleInputChange} placeholder="Middle Name (Optional)" className={INPUT} />
+                                                        </div>
                                                     </div>
                                                     <div style={{ gridColumn: '1 / -1' }}>
                                                         <label className={LABEL}>Date of Birth <span style={{ color: '#ef4444' }}>*</span></label>
-                                                        <input 
-                                                            type="date" 
-                                                            name="dob" 
-                                                            required 
-                                                            className={INPUT} 
-                                                            value={dob}
-                                                            onChange={(e) => {
-                                                                setDob(e.target.value);
-                                                                setCalculatedAge(calculateAge(e.target.value));
-                                                            }}
-                                                        />
-                                                        {calculatedAge && (
-                                                            <p style={{ fontSize: '0.85rem', color: T.green, fontWeight: 700, marginTop: '0.4rem' }}>
-                                                                Calculated Age: {calculatedAge}
-                                                            </p>
+                                                        <input type="date" name="dob" value={formData.dob} onChange={handleInputChange} required className={INPUT} />
+                                                        {formData.age ? (
+                                                            <p style={{ fontSize: '0.85rem', color: T.green, fontWeight: 700, marginTop: '0.4rem' }}>Calculated Age: {formData.age}</p>
+                                                        ) : (
+                                                            <p style={{ fontSize: '0.75rem', color: '#94a3b8', marginTop: '0.3rem' }}>Participants must be 7-17 years old</p>
                                                         )}
-                                                        <p style={{ fontSize: '0.72rem', color: '#94a3b8', marginTop: '0.3rem' }}>Participants must be 7–17 years old</p>
                                                     </div>
                                                     <div>
                                                         <label className={LABEL}>Gender <span style={{ color: '#ef4444' }}>*</span></label>
-                                                        <select name="gender" required className={SELECT}>
+                                                        <select name="gender" value={formData.gender} onChange={handleInputChange} required className={SELECT}>
                                                             <option value="">Select</option>
                                                             <option>Male</option>
                                                             <option>Female</option>
@@ -337,64 +460,41 @@ export default function NBCRegister({ dark }) {
                                                     </div>
                                                     <div>
                                                         <label className={LABEL}>Phone Number <span style={{ color: '#ef4444' }}>*</span></label>
-                                                        <input type="tel" name="phone" required pattern="[0-9]{11}" className={INPUT} placeholder="08012345678" />
-                                                        <p style={{ fontSize: '0.72rem', color: '#94a3b8', marginTop: '0.3rem' }}>11 digits, no spaces</p>
+                                                        <input type="tel" name="phone" value={formData.phone} onChange={handleInputChange} required pattern="[0-9]{11}" className={INPUT} placeholder="08012345678" />
+                                                        <p style={{ fontSize: '0.7rem', color: '#94a3b8', marginTop: '0.2rem' }}>11 digits, no spaces</p>
                                                     </div>
                                                     <div>
                                                         <label className={LABEL}>WhatsApp Number <span style={{ color: '#ef4444' }}>*</span></label>
-                                                        <input type="tel" name="whatsapp" required pattern="[0-9]{11}" className={INPUT} placeholder="08012345678" />
+                                                        <input type="tel" name="whatsapp" value={formData.whatsapp} onChange={handleInputChange} required pattern="[0-9]{11}" className={INPUT} placeholder="08012345678" />
+                                                        <p style={{ fontSize: '0.7rem', color: '#94a3b8', marginTop: '0.2rem' }}>WhatsApp is preferred for updates</p>
                                                     </div>
                                                     <div style={{ gridColumn: '1 / -1' }}>
                                                         <label className={LABEL}>Email Address <span style={{ color: '#ef4444' }}>*</span></label>
-                                                        <input type="email" name="email" required className={INPUT} placeholder="your@email.com" />
+                                                        <input type="email" name="email" value={formData.email} onChange={handleInputChange} required className={INPUT} placeholder="your@email.com" />
                                                     </div>
                                                     <div style={{ gridColumn: '1 / -1' }}>
                                                         <label className={LABEL}>School Name <span style={{ color: '#ef4444' }}>*</span></label>
-                                                        <input 
-                                                            type="text" 
-                                                            name="school_name" 
-                                                            required 
-                                                            className={INPUT} 
-                                                            value={schoolName}
-                                                            onChange={(e) => setSchoolName(e.target.value)}
-                                                            placeholder="e.g. Unity Primary School, Ikeja" 
-                                                        />
-                                                        <button 
-                                                            type="button"
-                                                            onClick={() => setSchoolName('I am out of school')}
-                                                            style={{ 
-                                                                marginTop: '0.4rem', 
-                                                                fontSize: '0.75rem', 
-                                                                color: T.green, 
-                                                                fontWeight: 700,
-                                                                textDecoration: 'underline',
-                                                                cursor: 'pointer',
-                                                                background: 'none',
-                                                                border: 'none',
-                                                                padding: 0
-                                                            }}
-                                                        >
-                                                            I am out of school
-                                                        </button>
+                                                        <input type="text" name="school_name" value={formData.school_name} onChange={handleInputChange} required className={INPUT} placeholder="e.g. Unity Primary School, Ikeja" />
+                                                        <button type="button" onClick={() => setFormData(p => ({ ...p, school_name: 'I am out of school' }))} style={{ marginTop: '0.4rem', fontSize: '0.75rem', color: T.green, fontWeight: 700, textDecoration: 'underline', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>I am out of school</button>
                                                     </div>
                                                     <div>
                                                         <label className={LABEL}>State <span style={{ color: '#ef4444' }}>*</span></label>
-                                                        <select name="state" required className={SELECT}>
+                                                        <select name="state" value={formData.state} onChange={handleInputChange} required className={SELECT}>
                                                             <option value="">Select state</option>
                                                             {NIGERIAN_STATES.map(s => <option key={s} value={s}>{s === 'FCT' ? 'FCT Abuja' : s}</option>)}
                                                         </select>
                                                     </div>
                                                     <div>
                                                         <label className={LABEL}>LGA <span style={{ color: '#ef4444' }}>*</span></label>
-                                                        <input type="text" name="lga" required className={INPUT} placeholder="e.g. Ikeja" />
+                                                        <input type="text" name="lga" value={formData.lga} onChange={handleInputChange} required className={INPUT} placeholder="e.g. Ikeja" />
                                                     </div>
                                                     <div>
                                                         <label className={LABEL}>City / Town <span style={{ color: '#ef4444' }}>*</span></label>
-                                                        <input type="text" name="city" required className={INPUT} placeholder="Where do you live?" />
+                                                        <input type="text" name="city" value={formData.city} onChange={handleInputChange} required className={INPUT} placeholder="Where do you live?" />
                                                     </div>
                                                     <div>
-                                                        <label className={LABEL}>Street Address <span style={{ color: '#ef4444' }}>*</span></label>
-                                                        <input type="text" name="address" required className={INPUT} placeholder="House no. & street" />
+                                                        <label className={LABEL}>Address <span style={{ color: '#ef4444' }}>*</span></label>
+                                                        <input type="text" name="address" value={formData.address} onChange={handleInputChange} required className={INPUT} placeholder="House no. & street" />
                                                     </div>
                                                 </div>
                                             </motion.div>
@@ -404,311 +504,160 @@ export default function NBCRegister({ dark }) {
                                         {step === 2 && (
                                             <motion.div key="s2" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.25 }} className="space-y-5">
                                                 <div>
-                                                    <label className={LABEL}>Are you participating solo or with a team? <span style={{ color: '#ef4444' }}>*</span></label>
+                                                    <label className={LABEL}>Solo or Team? <span style={{ color: '#ef4444' }}>*</span></label>
                                                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: '0.5rem' }}>
-                                                        {[
-                                                            { v: 'Solo', sub: "I'm working on this project alone" },
-                                                            { v: 'Team', sub: 'I have 2–5 team members with me' },
-                                                        ].map(opt => (
-                                                            <label key={opt.v} style={{
-                                                                display: 'flex', alignItems: 'center', padding: '1rem',
-                                                                border: `2px solid ${teamType === opt.v ? T.green : '#e2e8f0'}`,
-                                                                borderRadius: '14px', cursor: 'pointer',
-                                                                background: teamType === opt.v ? '#f0fdf4' : 'transparent',
-                                                                transition: 'all 0.2s',
-                                                            }}>
-                                                                <input type="radio" name="team_type" value={opt.v} checked={teamType === opt.v} onChange={e => setTeamType(e.target.value)} required style={{ display: 'none' }} />
-                                                                <div style={{
-                                                                    width: '20px', height: '20px', borderRadius: '50%',
-                                                                    border: `2px solid ${teamType === opt.v ? T.green : '#cbd5e1'}`,
-                                                                    marginRight: '0.75rem', flexShrink: 0,
-                                                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                                                }}>
-                                                                    {teamType === opt.v && <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: T.green }} />}
-                                                                </div>
-                                                                <div>
-                                                                    <div style={{ fontWeight: 700, color: '#0f172a' }}>{opt.v}</div>
-                                                                    <div style={{ fontSize: '0.85rem', color: '#64748b' }}>{opt.sub}</div>
-                                                                </div>
+                                                        {['Solo', 'Team'].map(v => (
+                                                            <label key={v} style={{ display: 'flex', alignItems: 'center', padding: '1rem', border: `2px solid ${formData.team_type === v ? T.green : '#e2e8f0'}`, borderRadius: '14px', cursor: 'pointer', background: formData.team_type === v ? '#f0fdf4' : 'transparent', transition: 'all 0.2s' }}>
+                                                                <input type="radio" name="team_type" value={v} checked={formData.team_type === v} onChange={handleInputChange} style={{ display: 'none' }} />
+                                                                <div style={{ width: '20px', height: '20px', borderRadius: '50%', border: `2px solid ${formData.team_type === v ? T.green : '#cbd5e1'}`, marginRight: '0.75rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{formData.team_type === v && <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: T.green }} />}</div>
+                                                                <div><div style={{ fontWeight: 700 }}>{v}</div><div style={{ fontSize: '0.85rem', color: '#64748b' }}>{v === 'Solo' ? 'Working alone' : '2–5 members'}</div></div>
                                                             </label>
                                                         ))}
                                                     </div>
                                                 </div>
-
-                                                <AnimatePresence>
-                                                    {teamType === 'Team' && (
-                                                        <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} style={{ overflow: 'hidden' }} className="space-y-4">
-                                                            <div>
-                                                                <label className={LABEL}>Team Name <span style={{ color: '#ef4444' }}>*</span></label>
-                                                                <input type="text" name="team_name" className={INPUT} placeholder="Choose a creative team name" />
-                                                            </div>
-                                                            <div>
-                                                                <label className={LABEL}>Number of Members (incl. you) <span style={{ color: '#ef4444' }}>*</span></label>
-                                                                <select name="team_size" className={SELECT}>
-                                                                    <option value="">Select</option>
-                                                                    {['2','3','4','5','6+'].map(n => <option key={n} value={n === '6+' ? 'More than 5' : n}>{n} members</option>)}
-                                                                </select>
-                                                            </div>
-                                                            <div>
-                                                                <label className={LABEL} style={{ marginBottom: '1rem' }}>Team Members Details <span style={{ fontWeight: 400, color: '#64748b' }}>(Excluding yourself)</span></label>
-                                                                <div className="space-y-4">
-                                                                    {teamMembers.map((member, idx) => (
-                                                                        <div key={idx} style={{ background: '#f8fafc', padding: '1rem', borderRadius: '16px', border: '1px solid #e2e8f0', position: 'relative' }}>
-                                                                            <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 0.8fr 1.2fr', gap: '0.75rem' }}>
-                                                                                <div>
-                                                                                    <label style={{ fontSize: '0.7rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase' }}>Name</label>
-                                                                                    <input type="text" placeholder="Full Name" className={INPUT} style={{ padding: '0.6rem 0.8rem', fontSize: '0.85rem' }} value={member.name} onChange={(e) => handleMemberChange(idx, 'name', e.target.value)} />
-                                                                                </div>
-                                                                                <div>
-                                                                                    <label style={{ fontSize: '0.7rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase' }}>Age</label>
-                                                                                    <input type="number" placeholder="Age" className={INPUT} style={{ padding: '0.6rem 0.8rem', fontSize: '0.85rem' }} value={member.age} onChange={(e) => handleMemberChange(idx, 'age', e.target.value)} />
-                                                                                </div>
-                                                                                <div style={{ position: 'relative' }}>
-                                                                                    <label style={{ fontSize: '0.7rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase' }}>Phone</label>
-                                                                                    <input type="tel" placeholder="Phone" className={INPUT} style={{ padding: '0.6rem 0.8rem', fontSize: '0.85rem' }} value={member.phone} onChange={(e) => handleMemberChange(idx, 'phone', e.target.value)} />
-                                                                                    {teamMembers.length > 1 && (
-                                                                                        <button type="button" onClick={() => handleRemoveMember(idx)} style={{ position: 'absolute', top: '-0.5rem', right: '-0.5rem', width: '24px', height: '24px', borderRadius: '50%', background: '#ef4444', color: 'white', display: 'grid', placeItems: 'center', fontSize: '1rem', border: 'none', cursor: 'pointer', boxShadow: '0 4px 10px rgba(239,68,68,0.3)' }}>×</button>
-                                                                                    )}
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    ))}
-                                                                    <button type="button" onClick={handleAddMember} style={{ width: '100%', padding: '0.75rem', borderRadius: '12px', border: `2px dashed ${T.green}`, color: T.green, fontWeight: 700, fontSize: '0.85rem', cursor: 'pointer', transition: 'all 0.2s', background: 'transparent' }} onMouseEnter={e => e.currentTarget.style.background = '#f0fdf4'} onMouseLeave={e => e.currentTarget.style.background = 'transparent'}>
-                                                                        + Add Team Member
-                                                                    </button>
+                                                {formData.team_type === 'Team' && (
+                                                    <div className="space-y-4">
+                                                        <div><label className={LABEL}>Team Name</label><input type="text" name="team_name" value={formData.team_name} onChange={handleInputChange} className={INPUT} /></div>
+                                                        <div><label className={LABEL}>Team Size</label><select name="team_size" value={formData.team_size} onChange={handleInputChange} className={SELECT}><option value="">Select</option>{['2','3','4','5','6+'].map(n => <option key={n} value={n}>{n} members</option>)}</select></div>
+                                                        <div className="space-y-3">
+                                                            {teamMembers.map((m, i) => (
+                                                                <div key={i} style={{ display: 'grid', gridTemplateColumns: '1.5fr 0.8fr 1.2fr', gap: '0.5rem', background: '#f8fafc', padding: '0.75rem', borderRadius: '12px' }}>
+                                                                    <input type="text" placeholder="Name" value={m.name} onChange={e => handleMemberChange(i, 'name', e.target.value)} className={INPUT} style={{ padding: '0.5rem' }} />
+                                                                    <input type="number" placeholder="Age" value={m.age} onChange={e => handleMemberChange(i, 'age', e.target.value)} className={INPUT} style={{ padding: '0.5rem' }} />
+                                                                    <input type="tel" placeholder="Phone" value={m.phone} onChange={e => handleMemberChange(i, 'phone', e.target.value)} className={INPUT} style={{ padding: '0.5rem' }} />
                                                                 </div>
-                                                            </div>
-                                                        </motion.div>
-                                                    )}
-                                                </AnimatePresence>
+                                                            ))}
+                                                            <button type="button" onClick={handleAddMember} style={{ width: '100%', padding: '0.5rem', border: `2px dashed ${T.green}`, color: T.green, borderRadius: '10px', fontWeight: 700 }}>+ Add Member</button>
+                                                        </div>
+                                                    </div>
+                                                )}
                                             </motion.div>
                                         )}
 
                                         {/* ── STEP 3: PROJECT DETAILS ── */}
                                         {step === 3 && (
                                             <motion.div key="s3" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.25 }} className="space-y-5">
-                                                <div>
-                                                    <label className={LABEL}>Project Title <span style={{ color: '#ef4444' }}>*</span></label>
-                                                    <input type="text" name="project_title" required className={INPUT} placeholder="e.g. 'Clean Water for Mushin'" />
-                                                </div>
-                                                <div>
-                                                    <label className={LABEL}>Problem Category <span style={{ color: '#ef4444' }}>*</span></label>
-                                                    <select name="problem_category" required className={SELECT}>
-                                                        <option value="">Choose the main category</option>
-                                                        {['Education & Literacy','Environment & Sanitation','Health & Wellness','Economic Empowerment','Civic Engagement','Arts & Culture','Infrastructure','Innovation & Technology','Other'].map(c => <option key={c}>{c}</option>)}
-                                                    </select>
-                                                </div>
-                                                <div>
-                                                    <label className={LABEL}>Problem Statement <span style={{ fontWeight: 400, color: '#94a3b8', fontSize: '0.8rem' }}>(3–5 sentences)</span> <span style={{ color: '#ef4444' }}>*</span></label>
-                                                    <textarea name="problem_statement" required rows="5" className={INPUT} style={{ resize: 'none' }} placeholder="What is the problem? Who is affected? How serious is it?" />
-                                                </div>
-                                                <div>
-                                                    <label className={LABEL}>Your Solution <span style={{ fontWeight: 400, color: '#94a3b8', fontSize: '0.8rem' }}>(3–5 sentences)</span> <span style={{ color: '#ef4444' }}>*</span></label>
-                                                    <textarea name="solution" required rows="5" className={INPUT} style={{ resize: 'none' }} placeholder="What will you do? How will it work? Why will it solve the problem?" />
-                                                </div>
-                                                <div>
-                                                    <label className={LABEL}>Expected Impact <span style={{ color: '#ef4444' }}>*</span></label>
-                                                    <textarea name="expected_impact" required rows="3" className={INPUT} style={{ resize: 'none' }} placeholder="How many people will benefit? What will change?" />
-                                                </div>
+                                                <div><label className={LABEL}>Project Title</label><input type="text" name="project_title" value={formData.project_title} onChange={handleInputChange} required className={INPUT} placeholder="e.g. Waste to Wealth" /></div>
+                                                <div><label className={LABEL}>Problem Category</label><select name="problem_category" value={formData.problem_category} onChange={handleInputChange} required className={SELECT}><option value="">Select Category</option>{['Education','Environment','Health','Economic','Civic','Arts','Tech','Other'].map(c => <option key={c}>{c}</option>)}</select></div>
+                                                <div><label className={LABEL}>Problem Statement</label><textarea name="problem_statement" value={formData.problem_statement} onChange={handleInputChange} required rows="4" className={INPUT} placeholder="What specific community issue are you solving?" /></div>
+                                                <div><label className={LABEL}>Solution</label><textarea name="solution" value={formData.solution} onChange={handleInputChange} required rows="4" className={INPUT} placeholder="How exactly will you solve it using character and resourcefulness?" /></div>
+                                                <div><label className={LABEL}>Expected Impact</label><textarea name="expected_impact" value={formData.expected_impact} onChange={handleInputChange} required rows="2" className={INPUT} placeholder="Who will benefit and what will change?" /></div>
                                                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-                                                    <div>
-                                                        <label className={LABEL}>Start Date <span style={{ color: '#ef4444' }}>*</span></label>
-                                                        <input type="date" name="start_date" required min="2026-01-01" className={INPUT} />
-                                                    </div>
-                                                    <div>
-                                                        <label className={LABEL}>Completion Date <span style={{ color: '#ef4444' }}>*</span></label>
-                                                        <input type="date" name="completion_date" required max="2026-11-30" className={INPUT} />
-                                                        <p style={{ fontSize: '0.72rem', color: '#94a3b8', marginTop: '0.3rem' }}>By Nov 30, 2026</p>
-                                                    </div>
+                                                    <div><label className={LABEL}>Start</label><input type="date" name="start_date" value={formData.start_date} onChange={handleInputChange} required className={INPUT} /></div>
+                                                    <div><label className={LABEL}>End</label><input type="date" name="completion_date" value={formData.completion_date} onChange={handleInputChange} required className={INPUT} /></div>
                                                 </div>
-                                                <div>
-                                                    <label className={LABEL}>Estimated Budget (₦) <span style={{ color: '#ef4444' }}>*</span></label>
-                                                    <input type="number" name="budget" required min="0" className={INPUT} placeholder="Total project cost in Naira" />
-                                                    <p style={{ fontSize: '0.72rem', color: '#94a3b8', marginTop: '0.3rem' }}>NBC doesn't fund projects — be resourceful!</p>
-                                                </div>
-                                                <div>
-                                                    <label className={LABEL} style={{ marginBottom: '0.75rem' }}>How will you get resources? <span style={{ color: '#ef4444' }}>*</span></label>
-                                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                                                        {[
-                                                            { name: 'funding_donations', val: 'Donations', label: 'Donations from community members' },
-                                                            { name: 'funding_local', val: 'Local Materials', label: 'Use free / cheap local materials' },
-                                                            { name: 'funding_borrow', val: 'Borrow', label: 'Borrow tools or equipment' },
-                                                            { name: 'funding_inkind', val: 'In-kind', label: 'In-kind contributions (volunteer labour, services)' },
-                                                            { name: 'funding_personal', val: 'Personal', label: 'Personal savings or fundraising' },
-                                                            { name: 'funding_other', val: 'Other', label: 'Other' },
-                                                        ].map(f => (
-                                                            <label key={f.name} style={{
-                                                                display: 'flex', alignItems: 'center', gap: '0.75rem',
-                                                                padding: '0.75rem 1rem', borderRadius: '12px',
-                                                                border: '1px solid #e2e8f0', cursor: 'pointer',
-                                                                transition: 'background 0.15s',
-                                                            }}>
-                                                                <input type="checkbox" name={f.name} value={f.val} style={{ width: '16px', height: '16px', accentColor: T.green }} />
-                                                                <span style={{ fontSize: '0.9rem', color: '#374151' }}>{f.label}</span>
-                                                            </label>
-                                                        ))}
-                                                    </div>
+                                                <div><label className={LABEL}>Budget (₦)</label><input type="number" name="budget" value={formData.budget} onChange={handleInputChange} required className={INPUT} /></div>
+                                                <div className="space-y-2">
+                                                    <label className={LABEL}>Resources</label>
+                                                    {['Donations', 'Local Materials', 'Borrow', 'In-kind', 'Personal', 'Other'].map(v => (
+                                                        <label key={v} style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', cursor: 'pointer' }}>
+                                                            <input type="checkbox" name={`funding_${v.toLowerCase().replace(' ', '')}`} checked={formData[`funding_${v.toLowerCase().replace(' ', '')}`]} onChange={handleInputChange} /> <span>{v}</span>
+                                                        </label>
+                                                    ))}
                                                 </div>
                                             </motion.div>
                                         )}
 
-                                        {/* ── STEP 4: MENTOR & AGREEMENT ── */}
+                                         {/* ── STEP 4: MENTOR & AGREEMENT ── */}
                                         {step === 4 && (
-                                            <motion.div key="s4" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.25 }} className="space-y-5">
+                                            <motion.div key="s4" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.25 }} className="space-y-6">
+                                                <div style={{ background: 'linear-gradient(135deg, #16613E, #2d3748)', borderRadius: '16px', padding: '1.5rem', color: 'white', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}>
+                                                    <h3 style={{ fontSize: '1.25rem', fontWeight: 900, fontFamily: 'serif', marginBottom: '0.5rem' }}>Guidance & Commitment</h3>
+                                                    <p style={{ fontSize: '0.9rem', opacity: 0.9, lineHeight: 1.5 }}>Great projects are built with guidance. Tell us about your mentor, select the values that drive you, and commit to your journey as a National Builder.</p>
+                                                </div>
 
-                                                {/* Mentor Section */}
                                                 <div>
-                                                    <label className={LABEL}>Do you have an adult mentor? <span style={{ color: '#ef4444' }}>*</span></label>
-                                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: '0.5rem' }}>
-                                                        {[
-                                                            { v: 'Yes', sub: 'Parent, Teacher, Pastor/Imam, Community Leader' },
-                                                            { v: 'No', sub: 'I am still searching for one' },
-                                                        ].map(opt => (
-                                                            <label key={opt.v} style={{
-                                                                display: 'flex', alignItems: 'center', padding: '1rem',
-                                                                border: `2px solid ${hasMentor === opt.v ? T.green : '#e2e8f0'}`,
-                                                                borderRadius: '14px', cursor: 'pointer',
-                                                                background: hasMentor === opt.v ? '#f0fdf4' : 'transparent',
-                                                                transition: 'all 0.2s',
-                                                            }}>
-                                                                <input type="radio" name="has_mentor" value={opt.v} checked={hasMentor === opt.v} onChange={e => setHasMentor(e.target.value)} required style={{ display: 'none' }} />
-                                                                <div style={{
-                                                                    width: '20px', height: '20px', borderRadius: '50%',
-                                                                    border: `2px solid ${hasMentor === opt.v ? T.green : '#cbd5e1'}`,
-                                                                    marginRight: '0.75rem', flexShrink: 0,
-                                                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                                                }}>
-                                                                    {hasMentor === opt.v && <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: T.green }} />}
-                                                                </div>
-                                                                <div>
-                                                                    <div style={{ fontWeight: 700, color: '#0f172a' }}>{opt.v === 'Yes' ? 'Yes, I have a mentor' : 'Not yet'}</div>
-                                                                    <div style={{ fontSize: '0.85rem', color: '#64748b' }}>{opt.sub}</div>
-                                                                </div>
+                                                    <label className={LABEL}>Mentor Details <span style={{ color: '#ef4444' }}>*</span></label>
+                                                    <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1rem' }}>
+                                                        {['Yes', 'No'].map(v => (
+                                                            <label key={v} style={{ flex: 1, display: 'flex', alignItems: 'center', padding: '1rem', border: `2px solid ${formData.has_mentor === v ? T.green : '#e2e8f0'}`, borderRadius: '14px', cursor: 'pointer', background: formData.has_mentor === v ? '#f0fdf4' : 'transparent', transition: 'all 0.2s' }}>
+                                                                <input type="radio" name="has_mentor" value={v} checked={formData.has_mentor === v} onChange={handleInputChange} style={{ display: 'none' }} />
+                                                                <span style={{ fontWeight: 600, color: formData.has_mentor === v ? T.green : '#64748b' }}>{v === 'Yes' ? 'I have a mentor' : 'No mentor yet'}</span>
                                                             </label>
                                                         ))}
                                                     </div>
+                                                    
+                                                    {formData.has_mentor === 'Yes' && (
+                                                        <div className="space-y-3">
+                                                            <input type="text" name="mentor_name" value={formData.mentor_name} onChange={handleInputChange} placeholder="Who will guide you? (Name)" className={INPUT} />
+                                                            <input type="tel" name="mentor_phone" value={formData.mentor_phone} onChange={handleInputChange} placeholder="Mentor's Phone (11 digits)" className={INPUT} />
+                                                            <select name="mentor_relationship" value={formData.mentor_relationship} onChange={handleInputChange} className={SELECT}>
+                                                                <option value="">Relationship (e.g. Parent, Teacher)</option>
+                                                                {['Parent','Teacher','Leader','Other'].map(r => <option key={r}>{r}</option>)}
+                                                            </select>
+                                                        </div>
+                                                    )}
                                                 </div>
 
-                                                <AnimatePresence>
-                                                    {hasMentor === 'Yes' && (
-                                                        <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} style={{ overflow: 'hidden' }} className="space-y-4">
-                                                            <div>
-                                                                <label className={LABEL}>Mentor's Full Name <span style={{ color: '#ef4444' }}>*</span></label>
-                                                                <input type="text" name="mentor_name" className={INPUT} placeholder="Full legal name" />
-                                                            </div>
-                                                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-                                                                <div>
-                                                                    <label className={LABEL}>Mentor's Phone <span style={{ color: '#ef4444' }}>*</span></label>
-                                                                    <input type="tel" name="mentor_phone" pattern="[0-9]{11}" className={INPUT} placeholder="08012345678" />
-                                                                </div>
-                                                                <div>
-                                                                    <label className={LABEL}>Mentor's Email</label>
-                                                                    <input type="email" name="mentor_email" className={INPUT} placeholder="mentor@email.com" />
-                                                                </div>
-                                                            </div>
-                                                            <div>
-                                                                <label className={LABEL}>Relationship to You <span style={{ color: '#ef4444' }}>*</span></label>
-                                                                <select name="mentor_relationship" className={SELECT}>
-                                                                    <option value="">Select</option>
-                                                                    {['Parent','Guardian','Teacher','Pastor/Religious Leader','Community Leader','Uncle/Aunt','Other Family Member','Other'].map(r => <option key={r}>{r}</option>)}
-                                                                </select>
-                                                            </div>
-                                                        </motion.div>
-                                                    )}
-                                                </AnimatePresence>
-
-                                                {/* Core Values */}
                                                 <div>
-                                                    <label className={LABEL}>Choose Your 3 Core Values <span style={{ color: '#ef4444' }}>*</span></label>
-                                                    <p style={{ fontSize: '0.85rem', color: '#64748b', marginBottom: '0.75rem' }}>
-                                                        Select exactly 3 values that will guide your project &nbsp;
-                                                        <span style={{ fontWeight: 700, color: selectedValues.length === 3 ? T.green : '#94a3b8' }}>
-                                                            ({selectedValues.length}/3)
-                                                        </span>
-                                                    </p>
-                                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.6rem' }}>
-                                                        {[
-                                                            { v: 'Integrity', l: 'Integrity & Truth' },
-                                                            { v: 'Discipline', l: 'Discipline & Diligence' },
-                                                            { v: 'Wisdom', l: 'Wisdom & Discernment' },
-                                                            { v: 'Service', l: 'Service & Compassion' },
-                                                            { v: 'Justice', l: 'Justice & Righteousness' },
-                                                            { v: 'Perseverance', l: 'Perseverance & Resilience' },
-                                                            { v: 'Humility', l: 'Humility & Learning' },
-                                                            { v: 'Excellence', l: 'Excellence & Craftsmanship' },
-                                                        ].map(val => {
-                                                            const sel = selectedValues.includes(val.v);
-                                                            const dis = !sel && selectedValues.length >= 3;
-                                                            return (
-                                                                <button key={val.v} type="button" onClick={() => !dis && toggleValue(val.v)} style={{
-                                                                    padding: '0.75rem 1rem', borderRadius: '12px',
-                                                                    border: `2px solid ${sel ? T.green : dis ? '#f1f5f9' : '#e2e8f0'}`,
-                                                                    background: sel ? '#f0fdf4' : dis ? '#f8fafc' : 'white',
-                                                                    color: sel ? T.green : dis ? '#94a3b8' : '#374151',
-                                                                    fontSize: '0.85rem', fontWeight: 600, textAlign: 'left',
-                                                                    cursor: dis ? 'not-allowed' : 'pointer',
-                                                                    transition: 'all 0.2s', fontFamily: 'inherit',
-                                                                }}>
-                                                                    {sel ? '✅ ' : ''}{val.l}
+                                                    <label className={LABEL}>Core Values (Exactly 3) <span style={{ color: '#ef4444' }}>*</span></label>
+                                                    <p style={{ fontSize: '0.75rem', color: '#64748b', marginBottom: '0.75rem' }}>Click the <Info size={12} style={{ display: 'inline', verticalAlign: 'middle' }} /> icon to learn more about each value.</p>
+                                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+                                                        {Object.entries(VALUE_INFO).map(([v, info]) => (
+                                                            <div key={v} style={{ position: 'relative' }}>
+                                                                <button type="button" onClick={() => toggleValue(v)} style={{ width: '100%', textAlign: 'left', padding: '1rem', borderRadius: '14px', border: `2px solid ${selectedValues.includes(v) ? T.green : '#f1f5f9'}`, background: selectedValues.includes(v) ? '#f0fdf4' : 'white', fontWeight: 700, transition: 'all 0.2s', color: selectedValues.includes(v) ? T.green : '#334155' }}>
+                                                                    {v}
                                                                 </button>
-                                                            );
-                                                        })}
-                                                    </div>
-                                                    {valuesError && (
-                                                        <p style={{ color: '#ef4444', fontSize: '0.85rem', marginTop: '0.5rem' }}>Please select exactly 3 values before submitting.</p>
-                                                    )}
-                                                </div>
-
-                                                {/* How did you hear */}
-                                                <div>
-                                                    <label className={LABEL}>How did you hear about NBC? <span style={{ color: '#ef4444' }}>*</span></label>
-                                                    <select name="source" required className={SELECT}>
-                                                        <option value="">Select</option>
-                                                        {['Friend or Family Member','Social Media (Instagram, Facebook, Twitter)','Social Media Influencer','School Announcement','Church or Mosque','WhatsApp Group','Radio/TV','Poster or Flyer','NBC Website','Other'].map(s => <option key={s}>{s}</option>)}
-                                                    </select>
-                                                </div>
-
-                                                {/* Agreements */}
-                                                <div style={{ background: '#f8fafc', borderRadius: '16px', padding: '1.25rem', border: '1px solid #e2e8f0' }}>
-                                                    <h4 style={{ fontSize: '1rem', fontWeight: 800, color: '#0f172a', marginBottom: '1rem' }}>NBC Participant Agreement</h4>
-                                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                                                        {[
-                                                            { name: 'agree_commitment', text: 'I commit to working on my project for the full 10-month period (March–December 2026)' },
-                                                            { name: 'agree_values', text: 'I agree to study and apply the 8 National Builder values in my project and life' },
-                                                            { name: 'agree_honesty', text: 'I promise to report honestly about my project progress — no exaggeration or false information' },
-                                                            { name: 'agree_documentation', text: 'I agree to document my project with photos/videos and submit monthly progress reports' },
-                                                            { name: 'agree_media', text: "I give NBC permission to share my project story, photos, and videos on social media and website" },
-                                                            { name: 'agree_rules', text: "I have read NBC's rules and understand that breaking them may result in disqualification" },
-                                                        ].map(a => (
-                                                            <label key={a.name} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem', cursor: 'pointer' }}>
-                                                                <input type="checkbox" name={a.name} required style={{ marginTop: '3px', width: '16px', height: '16px', accentColor: T.green, flexShrink: 0 }} />
-                                                                <span style={{ fontSize: '0.875rem', color: '#374151', lineHeight: 1.5 }}>{a.text}</span>
-                                                            </label>
+                                                                <button type="button" onClick={() => setActiveValueModal(v)} style={{ position: 'absolute', top: '50%', right: '1rem', transform: 'translateY(-50%)', padding: '0.2rem', color: selectedValues.includes(v) ? T.green : '#94a3b8' }}>
+                                                                    <Info size={18} />
+                                                                </button>
+                                                            </div>
                                                         ))}
                                                     </div>
-                                                    <div style={{ marginTop: '1rem', background: 'white', border: `2px solid ${T.green}`, borderRadius: '12px', padding: '1rem' }}>
-                                                        <label style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem', cursor: 'pointer' }}>
-                                                            <input type="checkbox" name="agree_final" required style={{ marginTop: '3px', width: '16px', height: '16px', accentColor: T.green, flexShrink: 0 }} />
-                                                            <span style={{ fontSize: '0.875rem', fontWeight: 700, color: '#0f172a', lineHeight: 1.5 }}>
-                                                                I certify that all information provided is true and accurate. I understand that providing false information may lead to disqualification from NBC.
-                                                            </span>
-                                                        </label>
-                                                    </div>
                                                 </div>
 
-                                                {/* Submit Button */}
-                                                <button type="submit" disabled={isSubmitting} style={{
-                                                    width: '100%', padding: '1.1rem',
-                                                    background: isSubmitting ? '#d1d5db' : 'linear-gradient(135deg, #eab308, #f59e0b)',
-                                                    color: '#14532d', fontWeight: 800, fontSize: '1.1rem',
-                                                    borderRadius: '14px', border: 'none', cursor: isSubmitting ? 'not-allowed' : 'pointer',
-                                                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem',
-                                                    boxShadow: '0 8px 20px rgba(234,179,8,0.3)',
-                                                    transition: 'transform 0.15s',
-                                                    fontFamily: 'inherit',
-                                                }}>
-                                                    {isSubmitting ? <><Loader2 size={20} style={{ animation: 'spin 1s linear infinite' }} /> Submitting...</> : 'SUBMIT REGISTRATION ✓'}
-                                                </button>
+                                                <div className="space-y-3 pt-2">
+                                                    <label className={LABEL}>Required Commitments</label>
+                                                    {[
+                                                        { id: 'commitment', text: "I agree to commit to the 6-month duration of the challenge and see my project through to completion." },
+                                                        { id: 'values', text: "I agree to uphold the 8 Core Values of a National Builder in my personal life and project." },
+                                                        { id: 'honesty', text: "I certify that all information provided is true, and this project is my original idea." },
+                                                        { id: 'media', text: "I consent to the use of my photos, videos, and project documentation for educational and promotional purposes." },
+                                                        { id: 'rules', text: "I agree to abide by the official rules, regulations, and judge's decisions of NBC 2026." }
+                                                    ].map(v => (
+                                                        <label key={v.id} style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '0.75rem', fontSize: '0.85rem', cursor: 'pointer', background: '#f8fafc', padding: '1rem', borderRadius: '12px', border: '1px solid #f1f5f9' }}>
+                                                            <input type="checkbox" name={`agree_${v.id}`} checked={formData[`agree_${v.id}`]} onChange={handleInputChange} required style={{ marginTop: '0.15rem' }} /> 
+                                                            <span style={{ color: '#445164', fontWeight: 500 }}>{v.text}</span>
+                                                        </label>
+                                                    ))}
+                                                </div>
+                                            </motion.div>
+                                        )}
+
+                                        {/* ── STEP 5: REVIEW & CONFIRM ── */}
+                                        {step === 5 && (
+                                            <motion.div key="s5" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.25 }}>
+                                                <ReviewSection title="Personal Information" stepNum={1}>
+                                                    <ReviewItem label="Name" value={`${formData.first_name} ${formData.middle_name} ${formData.last_name}`.replace(/\s+/g, ' ').trim()} />
+                                                    <ReviewItem label="Age" value={formData.age} />
+                                                    <ReviewItem label="Email" value={formData.email} />
+                                                    <ReviewItem label="WhatsApp" value={formData.whatsapp} />
+                                                    <ReviewItem label="School" value={formData.school_name} />
+                                                    <ReviewItem label="Location" value={`${formData.city}, ${formData.state}`} />
+                                                </ReviewSection>
+
+                                                <ReviewSection title="Team Status" stepNum={2}>
+                                                    <ReviewItem label="Type" value={formData.team_type} />
+                                                    {formData.team_type === 'Team' && <ReviewItem label="Team Name" value={formData.team_name} />}
+                                                </ReviewSection>
+
+                                                <ReviewSection title="Project Vision" stepNum={3}>
+                                                    <ReviewItem label="Title" value={formData.project_title} />
+                                                    <ReviewItem label="Category" value={formData.problem_category} />
+                                                    <ReviewItem label="Budget" value={`₦${formData.budget}`} />
+                                                </ReviewSection>
+
+                                                <ReviewSection title="Leadership" stepNum={4}>
+                                                    <ReviewItem label="Mentor" value={formData.has_mentor === 'Yes' ? formData.mentor_name : 'No'} />
+                                                    <ReviewItem label="Core Values" value={selectedValues.join(', ')} />
+                                                </ReviewSection>
+
+                                                <div style={{ padding: '1rem', background: '#fffbeb', border: '1px solid #fef3c7', borderRadius: '16px', marginTop: '1.5rem' }}>
+                                                    <label style={{ display: 'flex', gap: '0.75rem', cursor: 'pointer' }}>
+                                                        <input type="checkbox" name="agree_final" checked={formData.agree_final} onChange={handleInputChange} required style={{ marginTop: '0.2rem' }} />
+                                                        <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#92400e' }}>I certify that all provided information is true and I am ready to build Nigeria!</span>
+                                                    </label>
+                                                </div>
                                             </motion.div>
                                         )}
 
@@ -716,32 +665,17 @@ export default function NBCRegister({ dark }) {
                                 </div>
 
                                 {/* Nav Buttons */}
-                                <div style={{
-                                    display: 'flex', justifyContent: step > 1 ? 'space-between' : 'flex-end',
-                                    padding: '0 2rem 2rem', gap: '1rem',
-                                }}>
-                                    {step > 1 && step < TOTAL_STEPS && (
-                                        <button type="button" onClick={prevStep} style={{
-                                            padding: '0.75rem 1.5rem', borderRadius: '12px',
-                                            background: '#f1f5f9', color: '#64748b', fontWeight: 700,
-                                            border: 'none', cursor: 'pointer', fontFamily: 'inherit',
-                                        }}>← Back</button>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0 2rem 2rem', gap: '1rem' }}>
+                                    {step > 1 && (
+                                        <button type="button" onClick={prevStep} style={{ padding: '0.75rem 1.5rem', borderRadius: '12px', background: '#f1f5f9', color: '#64748b', fontWeight: 700, border: 'none', cursor: 'pointer' }}>← Back</button>
                                     )}
-                                    {step === TOTAL_STEPS && (
-                                        <button type="button" onClick={prevStep} style={{
-                                            padding: '0.75rem 1.5rem', borderRadius: '12px',
-                                            background: '#f1f5f9', color: '#64748b', fontWeight: 700,
-                                            border: 'none', cursor: 'pointer', fontFamily: 'inherit',
-                                        }}>← Back</button>
-                                    )}
-                                    {step < TOTAL_STEPS && (
-                                        <button type="submit" style={{
-                                            padding: '0.85rem 2rem', borderRadius: '12px',
-                                            background: T.green, color: 'white', fontWeight: 800,
-                                            border: 'none', cursor: 'pointer', fontSize: '1rem',
-                                            boxShadow: `0 6px 16px ${T.green}40`,
-                                            fontFamily: 'inherit',
-                                        }}>Next Step →</button>
+                                    <div style={{ flex: 1 }} />
+                                    {step < TOTAL_STEPS ? (
+                                        <button type="submit" style={{ padding: '0.85rem 2rem', borderRadius: '12px', background: T.green, color: 'white', fontWeight: 800, border: 'none', cursor: 'pointer', boxShadow: `0 6px 16px ${T.green}40` }}>Next Step →</button>
+                                    ) : (
+                                        <button type="button" onClick={handleRegister} disabled={isSubmitting || !formData.agree_final} style={{ padding: '0.85rem 2rem', borderRadius: '12px', background: 'linear-gradient(135deg, #eab308, #f59e0b)', color: '#14532d', fontWeight: 800, border: 'none', cursor: isSubmitting ? 'not-allowed' : 'pointer', boxShadow: '0 8px 20px rgba(234,179,8,0.3)' }}>
+                                            {isSubmitting ? 'Submitting...' : 'FINISH & REGISTER ✓'}
+                                        </button>
                                     )}
                                 </div>
                             </form>
@@ -827,6 +761,7 @@ export default function NBCRegister({ dark }) {
                             </div>
                         </div>
                     )}
+                    {activeValueModal && <ValueModal valueName={activeValueModal} info={VALUE_INFO[activeValueModal]} onClose={() => setActiveValueModal(null)} />}
                 </div>
             </div>
 

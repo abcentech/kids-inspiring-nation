@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
     Home, ChevronRight, Target, Users, Award, BookOpen,
     MessageCircle, Send, Star, Trophy, Zap, Globe,
-    Activity, Play, Download, Clock,
+    Activity, Play, Download, Clock, Image as ImageIcon, ChevronLeft,
     Mail, User, Phone, MapPin, Lightbulb, ArrowRight, ChevronDown
 } from 'lucide-react';
 
@@ -440,19 +440,44 @@ export default function NVC({ dark }) {
 
             {/* FAQ Section */}
             <section id="faq" style={{ padding: "8rem 0", background: dark ? "#050505" : "#FAFAF5", borderTop: `1px solid ${s.brd}` }}>
-                <div style={{ maxWidth: "50rem", margin: "0 auto", padding: "0 2rem" }}>
+                <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 2rem" }}>
                     <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ textAlign: "center", marginBottom: "4rem" }}>
                         <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "2.8rem", fontWeight: 900, color: s.txt }}>Frequently Asked Questions</h2>
                         <p style={{ color: s.sub, fontSize: "1.1rem", marginTop: "0.5rem" }}>Everything you need to know about the Nation Builders Challenge.</p>
                     </motion.div>
                     
-                    <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+                    <div style={{ 
+                        display: "grid", 
+                        gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))", 
+                        gap: "1.5rem",
+                        alignItems: "start" 
+                    }}>
                         {[
-                            { q: "Who can apply for the challenge?", a: "The challenge is open to all youths and visionaries who want to solve community problems. We have removed specific age categories—if you have a viable solution, you belong here." },
-                            { q: "Is there an application fee?", a: "No, participation in the National Builders Corp is 100% free. We believe in merit and hard work, not financial prerequisites." },
-                            { q: "How long does the programme last?", a: "The challenge is a 9-month masterclass in resourcefulness. Builders will design, execute, and track the impact of their local community project over this period." },
-                            { q: "How are the winners selected?", a: "Winners are chosen based on the actual, documented impact of their projects on their communities, overall resourcefulness, and demonstration of radical character." },
-                            { q: "What are the prizes?", a: "The most impactful project receives ₦1.19 million. The next top 5 projects receive ₦200k each, and there's another pool of ₦200k for various specific category awards." }
+                            { q: "What exactly is the National Builders Corp (NBC)?", a: "It's a high-impact community challenge where 1,000 young visionaries solve real local problems. Think of it as a masterclass in leadership, resourcefulness, and national transformation." },
+                            { q: "I’m only 8 years old. Is this too big for me?", a: "Absolutely not! We’ve seen 7-year-olds lead incredible projects. You don’t need to be an adult to be a Nation Builder; you just need a solution for your community." },
+                            { q: "I have no money to start a project. How am I supposed to win?", a: "NBC is a test of resourcefulness, not wealth. The best builders use waste, volunteers, and creativity to solve problems without spending a kobo. Often, using no money is more impressive!" },
+                            { q: "Who is a 'Nation Builder'?", a: "Someone who stops complaining about what's broken and starts building what's needed. It's a title earned through discipline, service, and radical character." },
+                            { q: "Can I do this with my friends or do I have to be solo?", a: "You can choose! You can work as a Solo Builder or form a team (2-5 members or more). Teams are great for bigger projects, while Solo is great for focused execution." },
+                            { q: "I’m not in school right now. Can I still join?", a: "Yes! We have a specific 'I am out of school' option in the registration. This challenge is about your potential and your project, not just your school status." },
+                            { q: "What kind of 'problems' should I be solving?", a: "Anything that helps! This could be environment (cleaning a gutter), education (teaching younger kids), health (health awareness), or character building in your neighborhood." },
+                            { q: "Who should be my mentor?", a: "Your mentor should be an adult who believes in you. This can be your Parent, Teacher, Pastor/Imam, or a Community Leader." },
+                            { q: "What if I can’t find a mentor?", a: "Don't worry! Select 'I am still searching for one' during registration. We will provide you with a 'Mentor Guide' that helps you know how to find one in your community." },
+                            { q: "Do I have to live in a specific city to win?", a: "No. The NBC is open to builders across all 36 states and the FCT. Impact is impact, whether it's in a big city like Lagos or a small village." },
+                            { q: "How much total prize money is up for grabs?", a: "A total pool of ₦3,000,000! The Most Impactful Project wins ₦1.19M, with Top 5 projects getting ₦200k each, and special category awards filling the rest." },
+                            { q: "What is the 'Values Workbook' everyone talks about?", a: "It's your secret weapon. It’s a free download that teaches you the 8 core values required to succeed in the challenge and in life." },
+                            { q: "Is there a test or exam I need to pass?", a: "There isn't a traditional exam, but we evaluate your 'Impact Reports' and project data. Top builders also undergo a CBT (Computer Based Test) on national values." },
+                            { q: "What happens during the Grand Finale in December?", a: "It’s our elite recognition event! The top builders in Nigeria are celebrated, their projects are showcased, and the prize money is officially awarded." },
+                            { q: "Can I change my project idea after I’ve registered?", a: "Yes. You just need to document the change in your Monthly Progress Tracker. Builders often pivot when they find a better way to solve a problem!" },
+                            { q: "How do I 'log my progress' every month?", a: "Once registered, you'll use our 'Monthly Progress Tracker' template to note down what you did, who you helped, and any photos you took." },
+                            { q: "What are the 8 powerful values?", a: "Integrity, Humility, Responsibility, Courage, Justice, Discipline, Compassion, and Faith. These are the building blocks of a true Nation Builder." },
+                            { q: "Can I solve a problem using technology (like an app)?", a: "Absolutely! If you can build a digital solution that solves a local community problem, that counts as a project." },
+                            { q: "Will I get a certificate even if I don’t win the cash?", a: "Yes! Every participant who submits a complete Impact Report receives a certificate. Top 20 referrers also get Physical Certificates." },
+                            { q: "How do I become a 'Regional Ambassador'?", a: "By inviting your friends! Reach 10 successful referrals to become a Regional Ambassador and lead the movement in your area." },
+                            { q: "What happens if my project doesn't fully work?", a: "Failure is part of building. We grade you on your effort, your documentation, and the character you showed when things got tough." },
+                            { q: "Are the prizes for me or for my project?", a: "The prize money is awarded to the builder/team to celebrate their impact and to help them sustain or scale their solution." },
+                            { q: "Is there a WhatsApp group I can join?", a: "Yes! Once you register, follow the link to join our official community. It's the best place to get updates and meet other builders." },
+                            { q: "How are the winners actually picked?", a: "Our panel of judges looks at: 1. Actual recorded impact, 2. Resourcefulness (doing much with little), and 3. Demonstration of the 8 core values." },
+                            { q: "I just registered. What is my very first task?", a: "Download the 'Values Workbook' and the 'Project Planner' from the Toolkit section. These will guide your first steps!" }
                         ].map((faq, idx) => (
                             <FAQItem key={idx} faq={faq} idx={idx} s={s} />
                         ))}
