@@ -1,87 +1,12 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ChevronLeft, ChevronRight, Home, Camera, Images, BookOpen, Crown, Flame, Utensils, GraduationCap, Music, Bird, Sparkles } from "lucide-react";
-
-const T = {
-  green: "#16613E", greenD: "#0D3D26", greenM: "#2C4A35",
-  gold: "#C4882C", goldL: "#E8B954", goldD: "#9A6620",
-  cream: "#FDF7EC", warmBg: "#F5EFE3",
-  p1: "#1D1D1F", p2: "#6E6E73",
-};
-
-// ─── GALLERY DATA ─────────────────────────────────────────────────────────────
-// Replace these placeholder gradient tiles with real photo URLs as needed.
-// Format: { src: "URL or /kids-inspiring-nation/photos/filename.jpg", caption, tag, date }
-const PHOTOS = [
-  {
-    id: 1,
-    src: "/photos/KIN_programs.jpg",
-    gradient: `linear-gradient(135deg, ${T.green} 0%, ${T.greenD} 100%)`,
-    caption: "KIND Daily Devotional — goDs in character session",
-    tag: "KIND", date: "March 2026",
-    icon: BookOpen,
-  },
-  {
-    id: 2,
-    src: "/photos/Epic_moments.jpg",
-    gradient: `linear-gradient(135deg, #7B2D8B 0%, #4A1B55 100%)`,
-    caption: "KINGs 002 Cell — Sunday mentorship circle",
-    tag: "KINGs", date: "February 2026",
-    icon: Crown,
-  },
-  {
-    id: 3,
-    src: "/photos/Daniel_Fast.jpg",
-    gradient: `linear-gradient(135deg, ${T.gold} 0%, ${T.goldD} 100%)`,
-    caption: "Daniel Fast Week 3 — 637 participants, 200% growth",
-    tag: "Daniel Fast", date: "January 2026",
-    icon: Flame,
-  },
-  {
-    id: 4,
-    src: "/photos/FACE_Feed_A_Community_EveryWeek.jpg",
-    gradient: `linear-gradient(135deg, #D94F30 0%, #A83920 100%)`,
-    caption: "FACE — feeding the community every Sunday",
-    tag: "FACE", date: "April 2026",
-    icon: Utensils,
-  },
-  {
-    id: 5,
-    src: "/photos/P119_Academy.jpg",
-    gradient: `linear-gradient(135deg, #0071E3 0%, #004C99 100%)`,
-    caption: "P119 Academy — Mathematics & Character class",
-    tag: "P119", date: "May 2026",
-    icon: GraduationCap,
-  },
-  {
-    id: 6,
-    src: "/photos/Community_impact.jpg",
-    gradient: `linear-gradient(135deg, #8B4513 0%, #5C2D0A 100%)`,
-    caption: "The Jesus Christ Concert 2026 — Annual celebration",
-    tag: "TJC", date: "December 2026",
-    icon: Music,
-  },
-  {
-    id: 7,
-    src: "/photos/Spirit_Filled_Parents.jpg",
-    gradient: `linear-gradient(135deg, #27AE60 0%, #1A6B3C 100%)`,
-    caption: "Covenant Servants — volunteer formation session",
-    tag: "CST", date: "October 2026",
-    icon: Bird,
-  },
-  {
-    id: 8,
-    src: "/photos/Skills_Development.jpg",
-    gradient: `linear-gradient(135deg, ${T.goldL} 0%, ${T.gold} 100%)`,
-    caption: "goDxperience — Sunday faith formation gathering",
-    tag: "gDX", date: "June 2026",
-    icon: Sparkles,
-  },
-];
-
-const TAGS = ["All", "KIND", "KINGs", "Daniel Fast", "FACE", "P119", "TJC", "CST", "gDX"];
+import { X, ChevronLeft, ChevronRight, Home, Camera, Images } from "lucide-react";
+import { GALLERY_PHOTOS, GALLERY_TAGS } from "./galleryData.js";
+import { ROUTE_META, T } from "./siteConfig.js";
+import { usePageMeta } from "./usePageMeta.js";
 
 export default function Gallery({ dark }) {
+  usePageMeta(ROUTE_META.gallery);
   const [activeTag, setActiveTag] = useState("All");
   const [lightbox, setLightbox] = useState(null); // index into filtered
 
@@ -91,18 +16,29 @@ export default function Gallery({ dark }) {
   const sub = dark ? "#98989D" : T.p2;
   const brd = dark ? "rgba(255,255,255,.07)" : "rgba(22,97,62,.09)";
 
-  const filtered = activeTag === "All" ? PHOTOS : PHOTOS.filter(p => p.tag === activeTag);
+  const filtered = activeTag === "All" ? GALLERY_PHOTOS : GALLERY_PHOTOS.filter(p => p.tag === activeTag);
 
-  const navigate = (dir) => {
+  const navigate = useCallback((dir) => {
     setLightbox(prev => {
       const next = prev + dir;
       if (next < 0) return filtered.length - 1;
       if (next >= filtered.length) return 0;
       return next;
     });
-  };
+  }, [filtered.length]);
 
   const current = lightbox !== null ? filtered[lightbox] : null;
+
+  useEffect(() => {
+    if (lightbox === null) return undefined;
+    const onKeyDown = (e) => {
+      if (e.key === "Escape") setLightbox(null);
+      if (e.key === "ArrowLeft") navigate(-1);
+      if (e.key === "ArrowRight") navigate(1);
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [lightbox, navigate]);
 
   return (
     <div style={{ fontFamily: "'DM Sans',sans-serif", background: bg, minHeight: "100vh", color: txt }}>
@@ -134,7 +70,7 @@ export default function Gallery({ dark }) {
       {/* Filter tabs */}
       <div style={{ background: dark ? "#0A0A0A" : "#fff", borderBottom: `1px solid ${brd}`, position: "sticky", top: 0, zIndex: 100 }}>
         <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 clamp(1.25rem,5vw,3rem)", display: "flex", alignItems: "center", gap: ".5rem", overflowX: "auto", paddingTop: ".75rem", paddingBottom: ".75rem" }}>
-          {TAGS.map(tag => (
+          {GALLERY_TAGS.map(tag => (
             <button key={tag} onClick={() => setActiveTag(tag)} style={{
               padding: ".5em 1.2em", borderRadius: 999, fontSize: ".78rem", fontWeight: 700,
               background: activeTag === tag ? T.gold : dark ? "rgba(255,255,255,.07)" : "rgba(22,97,62,.06)",
@@ -181,7 +117,7 @@ export default function Gallery({ dark }) {
                 {/* Photo or placeholder */}
                 <div style={{ height: 220, background: photo.src ? undefined : photo.gradient, position: "relative", overflow: "hidden" }}>
                   {photo.src
-                    ? <img src={photo.src} alt={photo.caption} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                    ? <img src={photo.src} alt={photo.caption} width={photo.width} height={photo.height} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                     : (
                       <div style={{ width: "100%", height: "100%", display: "grid", placeItems: "center", position: "relative" }}>
                         <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 40%, rgba(0,0,0,.4) 100%)" }} />
@@ -204,13 +140,12 @@ export default function Gallery({ dark }) {
           </AnimatePresence>
         </motion.div>
 
-        {/* Add photos notice */}
-        <div style={{ marginTop: "3rem", background: dark ? "rgba(255,255,255,.03)" : "rgba(22,97,62,.04)", border: `1px dashed ${T.gold}55`, borderRadius: 16, padding: "1.5rem 2rem", display: "flex", alignItems: "center", gap: "1rem" }}>
+        <div style={{ marginTop: "3rem", background: dark ? "rgba(255,255,255,.03)" : "rgba(22,97,62,.04)", border: `1px solid ${T.gold}33`, borderRadius: 16, padding: "1.5rem 2rem", display: "flex", alignItems: "center", gap: "1rem" }}>
           <Camera size={20} color={T.gold} strokeWidth={1.5} style={{ flexShrink: 0 }} />
           <div>
-            <div style={{ fontWeight: 700, color: txt, fontSize: ".9rem", marginBottom: ".25rem" }}>Add Your Photos</div>
+            <div style={{ fontWeight: 700, color: txt, fontSize: ".9rem", marginBottom: ".25rem" }}>Captured Moments Across the Nation</div>
             <div style={{ fontSize: ".82rem", color: sub, lineHeight: 1.5 }}>
-              Place photo files in <code style={{ background: dark ? "rgba(255,255,255,.08)" : "rgba(0,0,0,.06)", padding: ".1em .4em", borderRadius: 4 }}>public/photos/</code> and update the <code style={{ background: dark ? "rgba(255,255,255,.08)" : "rgba(0,0,0,.06)", padding: ".1em .4em", borderRadius: 4 }}>PHOTOS</code> array in <code style={{ background: dark ? "rgba(255,255,255,.08)" : "rgba(0,0,0,.06)", padding: ".1em .4em", borderRadius: 4 }}>src/Gallery.jsx</code>.
+              This gallery is curated from recent programmes, worship moments, service projects, and nation-building milestones across KidsInspiring Nation.
             </div>
           </div>
         </div>
@@ -223,16 +158,19 @@ export default function Gallery({ dark }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Photo preview"
             style={{ position: "fixed", inset: 0, zIndex: 9000, background: "rgba(0,0,0,.92)", backdropFilter: "blur(16px)", display: "flex", alignItems: "center", justifyContent: "center", padding: "2rem" }}
             onClick={e => { if (e.target === e.currentTarget) setLightbox(null); }}
           >
-            <button onClick={() => setLightbox(null)} style={{ position: "absolute", top: 20, right: 20, width: 40, height: 40, borderRadius: "50%", background: "rgba(255,255,255,.1)", border: "1px solid rgba(255,255,255,.15)", display: "grid", placeItems: "center", color: "#fff", cursor: "pointer" }}>
+            <button autoFocus onClick={() => setLightbox(null)} aria-label="Close preview" style={{ position: "absolute", top: 20, right: 20, width: 40, height: 40, borderRadius: "50%", background: "rgba(255,255,255,.1)", border: "1px solid rgba(255,255,255,.15)", display: "grid", placeItems: "center", color: "#fff", cursor: "pointer" }}>
               <X size={18} strokeWidth={2} />
             </button>
-            <button onClick={() => navigate(-1)} style={{ position: "absolute", left: 20, top: "50%", transform: "translateY(-50%)", width: 48, height: 48, borderRadius: "50%", background: "rgba(255,255,255,.1)", border: "1px solid rgba(255,255,255,.15)", display: "grid", placeItems: "center", color: "#fff", cursor: "pointer" }}>
+            <button onClick={() => navigate(-1)} aria-label="Previous photo" style={{ position: "absolute", left: 20, top: "50%", transform: "translateY(-50%)", width: 48, height: 48, borderRadius: "50%", background: "rgba(255,255,255,.1)", border: "1px solid rgba(255,255,255,.15)", display: "grid", placeItems: "center", color: "#fff", cursor: "pointer" }}>
               <ChevronLeft size={22} />
             </button>
-            <button onClick={() => navigate(1)} style={{ position: "absolute", right: 20, top: "50%", transform: "translateY(-50%)", width: 48, height: 48, borderRadius: "50%", background: "rgba(255,255,255,.1)", border: "1px solid rgba(255,255,255,.15)", display: "grid", placeItems: "center", color: "#fff", cursor: "pointer" }}>
+            <button onClick={() => navigate(1)} aria-label="Next photo" style={{ position: "absolute", right: 20, top: "50%", transform: "translateY(-50%)", width: 48, height: 48, borderRadius: "50%", background: "rgba(255,255,255,.1)", border: "1px solid rgba(255,255,255,.15)", display: "grid", placeItems: "center", color: "#fff", cursor: "pointer" }}>
               <ChevronRight size={22} />
             </button>
             <motion.div
@@ -244,7 +182,7 @@ export default function Gallery({ dark }) {
             >
               <div style={{ height: 420, background: current.gradient, display: "flex", alignItems: "center", justifyContent: "center" }}>
                 {current.src
-                  ? <img src={current.src} alt={current.caption} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                  ? <img src={current.src} alt={current.caption} width={current.width} height={current.height} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                   : <div style={{ color: "#fff", opacity: 0.95 }}><current.icon size={130} strokeWidth={1.5} /></div>
                 }
               </div>

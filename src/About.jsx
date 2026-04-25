@@ -3,18 +3,11 @@
   Founding story (modal chapters) + Key dates slider + Vision
 */
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight, Heart, Globe, Star, BookOpen, Zap, Users } from "lucide-react";
-
-// ─── DESIGN TOKENS ────────────────────────────────────────────────────────────
-const T = {
-  green: "#16613E", greenD: "#0D3D26", greenM: "#2C4A35",
-  gold: "#C4882C", goldL: "#E8B954", goldD: "#9A6620",
-  coral: "#D94F30", cream: "#FDF7EC", warmBg: "#F5EFE3",
-  p1: "#1D1D1F", p2: "#6E6E73", p3: "#AEAEB2",
-  kingsC: "#7B2D8B",
-};
+import { ROUTE_META, SITE, T } from "./siteConfig.js";
+import { usePageMeta } from "./usePageMeta.js";
 
 // ─── FOUNDING STORY CHAPTERS (for modals) ─────────────────────────────────────
 const CHAPTERS = [
@@ -48,7 +41,8 @@ const CHAPTERS = [
       `In 2018, The Jesus Christ Concert (TJC) launched — an event to herald Jesus Christ as the reason for the season of Christmas. That same year, the Psalm 119 Challenge was born: a global challenge to get children to learn all 176 verses of Psalm 119, the longest chapter in God's Word.`,
       `Then in 2020, COVID-19 unexpectedly expanded our borders. KidsInspiring went Global — children from other nations of the world began to participate.`,
       `In 2021, The Scripture Class began — a weekly class to drill down to the tenets of Psalm 119, verse by verse. That same year, the Psalm 119 National Values Challenge reached schools across Nigeria:`,
-      `• 2021: 11,917 students\n• 2022: 119,119 students\n• 2023: 357,119 students\n• 2024: 528,119 students`,
+      `In 2021, we also began rewarding academic rigour and memorisation consistency with cash prizes (these are not student counts):`,
+      `• 2021: ₦11,917\n• 2022: ₦119,119\n• 2023: ₦357,119\n• 2024: ₦528,119`,
     ],
     photo: "/photos/P119_Academy.jpg",
   },
@@ -72,7 +66,7 @@ const CHAPTERS = [
   {
     id: 4,
     title: "The 7-Year University",
-    date: "2023–2026",
+    date: "2023–2025",
     icon: "🎓",
     color: T.kingsC,
     gradient: `linear-gradient(135deg, ${T.kingsC}, #4A1B55)`,
@@ -82,8 +76,8 @@ const CHAPTERS = [
       `• Their Spirit — to God\n• Their Skills — in themselves\n• Their Service — to Nations`,
       `In January 2023, Daniel Fast launched — a 10-day wait on the Lord with water and fruits, and prayers every 3 hours. It has since become one of our most defining programmes.`,
       `In February 2024, goDs University was formalised — a 7-year training regimen to raise goDs to nations.`,
-      `In February 2026, goDxperience launched — a church by kids, for kids, raising kids as goDs. Sparked by the experiences of Prince Todimu, Princess Todimumu, and Princess Talia.`,
-      `In March 2026, goDcell launched — a weekly meeting of sharing God's Word and training goDs from every community.`,
+      `In February 2025, goDxperience launched — a church by kids, for kids, raising kids as goDs. Sparked by the experiences of Prince Todimu, Princess Todimumu, and Princess Talia.`,
+      `In March 2025, goDcell launched — a weekly meeting of sharing God's Word and training goDs from every community.`,
     ],
     photo: "/photos/Community_impact.jpg",
   },
@@ -103,6 +97,23 @@ const CHAPTERS = [
     ],
     photo: "/photos/Spirit_Filled_Parents.jpg",
   },
+  {
+    id: 6,
+    title: "Nation Builders Corp",
+    date: "2021–2026",
+    icon: "🇳🇬",
+    color: T.gold,
+    gradient: `linear-gradient(135deg, ${T.gold}, ${T.goldD})`,
+    preview: "Psalm 119 matured from rigour into community impact — builders solving real problems.",
+    full: [
+      `The Psalm 119 roots shaped discipline. But the mandate is bigger: nation building.`,
+      `Over the years, the arm matured from rewarding academic rigour to rewarding measurable community impact — Nation Builders Corp.`,
+      `In 2026, the headline prize is ₦1,190,000 for the individual or group that can make a real difference in their community.`,
+      `Read the full story on the Nation Builders page: kidsinspiringnation.org/nation-builders`,
+      `#JesusChristisOurJOY`,
+    ],
+    photo: "/photos/Nation_Builders_Program.jpg",
+  },
 ];
 
 // ─── KEY DATES TIMELINE ────────────────────────────────────────────────────────
@@ -113,14 +124,14 @@ const KEY_DATES = [
   { year: "Apr–Jul 2019", event: "1st Psalm 119 Challenge completes", icon: "🏆" },
   { year: "2020", event: "KidsInspiring Global — COVID-19 opens the borders to other nations", icon: "🌍" },
   { year: "2021", event: "The Scripture Class begins — weekly verse-by-verse teaching", icon: "📜" },
-  { year: "2021", event: "Psalm 119 National Values Challenge: 11,917 students in schools", icon: "🏫" },
+  { year: "2021", event: "Psalm 119 National Values Challenge: Star Award cash prize (₦11,917)", icon: "🏫" },
   { year: "2022", event: "The Bible Challenge — 2-year challenge to learn, love & live God's Word", icon: "📖" },
   { year: "Jul 2, 2022", event: "KidsInspiring becomes a Nation — Genesis 12:1-3", icon: "🇳🇬", highlight: true },
   { year: "Jan 2023", event: "Daniel Fast launches — 10-day fast, prayer every 3 hours", icon: "🔥" },
   { year: "Feb 2023", event: "Nehemiah Feb 23 — 24+ hours of prayer and fasting for Nigeria", icon: "🙏" },
   { year: "Feb 2024", event: "goDs University — a 7-year training regimen formalised", icon: "🎓", highlight: true },
-  { year: "Feb 2026", event: "goDxperience — a church by kids, for kids, raising kids as goDs", icon: "⚡" },
-  { year: "Mar 2026", event: "goDcell — weekly community meetings of goDs", icon: "👑" },
+  { year: "Feb 2025", event: "goDxperience — a church by kids, for kids, raising kids as goDs", icon: "⚡" },
+  { year: "Mar 2025", event: "goDcell — weekly community meetings of goDs", icon: "👑" },
   { year: "Jul 2, 2092", event: "75th Year Vision — Billions of goD-children part of the KIN", icon: "🌌", highlight: true },
 ];
 
@@ -128,8 +139,15 @@ const KEY_DATES = [
 function ChapterModal({ chapter, onClose, dark }) {
   useEffect(() => {
     document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = ""; };
-  }, []);
+    const onKeyDown = (e) => {
+      if (e.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = "";
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [onClose]);
 
   return (
     <AnimatePresence>
@@ -352,6 +370,7 @@ function TimelineSlider({ dark }) {
 
 // ─── MAIN ABOUT PAGE ──────────────────────────────────────────────────────────
 export default function About({ dark }) {
+  usePageMeta(ROUTE_META.about);
   const [openChapter, setOpenChapter] = useState(null);
   const bg = dark ? "#0A1C12" : "#FAFAF5";
   const txt = dark ? T.cream : T.greenD;
@@ -391,10 +410,10 @@ export default function About({ dark }) {
         <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 clamp(1.25rem,5vw,3rem)", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 10rem), 1fr))", gap: "1.25rem" }}>
           {[
             { n: "2017", l: "Year Founded" },
-            { n: "639", l: "goDs Reached (2026)" },
+            { n: "639", l: "goDs Reached (as at 2025)" },
             { n: "19,695", l: "Attendance Entries" },
             { n: "14", l: "Active Programmes" },
-            { n: "365", l: "Events in 2026" },
+            { n: "365", l: "Events (as at 2025)" },
             { n: "7", l: "Year University" },
           ].map(s => (
             <div key={s.l} style={{ textAlign: "center" }}>
@@ -413,7 +432,7 @@ export default function About({ dark }) {
               The Founding Story
             </div>
             <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(2rem,5vw,3rem)", fontWeight: 900, letterSpacing: "-0.025em", color: dark ? T.cream : T.greenD, marginBottom: ".75rem" }}>
-              Five Chapters of a Movement
+              Six Chapters of a Movement
             </h2>
             <p style={{ fontSize: "1rem", color: dark ? "rgba(253,247,236,.6)" : T.p2, maxWidth: "40ch", margin: "0 auto" }}>
               Click any chapter to read the full story — how KIDsInspiring Nation came to be.
@@ -532,18 +551,21 @@ export default function About({ dark }) {
             <em style={{ fontFamily: "'Playfair Display',serif", fontWeight: 700, color: T.gold }}>#JesusChristisOurJOY</em>
           </p>
           <div style={{ display: "flex", gap: ".75rem", justifyContent: "center", flexWrap: "wrap" }}>
-            <a href="https://whatsapp.com/channel/0029Va8XnCuGE56c4SMaT41w" target="_blank" rel="noopener"
+            <a href={SITE.socials.whatsappChannel} target="_blank" rel="noopener noreferrer" aria-label="Open the official WhatsApp channel in a new tab"
               style={{ display: "inline-flex", alignItems: "center", gap: ".5rem", padding: ".9em 2.4em", borderRadius: 999, background: T.green, color: "#fff", fontWeight: 700, fontSize: "1rem", fontFamily: "'Plus Jakarta Sans',sans-serif", textDecoration: "none", transition: "filter .2s" }}
               onMouseEnter={e => e.currentTarget.style.filter = "brightness(.88)"}
               onMouseLeave={e => e.currentTarget.style.filter = "none"}>
               Join KIND Daily →
             </a>
-            <a href="mailto:KidsinspiringNation@gmail.com"
+            <a href={`mailto:${SITE.email}`}
               style={{ display: "inline-flex", alignItems: "center", gap: ".5rem", padding: ".9em 2.2em", borderRadius: 999, background: "transparent", color: T.gold, fontWeight: 600, fontSize: "1rem", border: `1.5px solid ${T.gold}`, textDecoration: "none", transition: "background .2s" }}
               onMouseEnter={e => e.currentTarget.style.background = "rgba(196,136,44,.08)"}
               onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
               Contact Us
             </a>
+          </div>
+          <div style={{ fontSize: ".8rem", color: dark ? "rgba(253,247,236,.4)" : T.p3, letterSpacing: ".02em", marginTop: "2rem" }}>
+            Information as at {SITE.infoAsAtYear}. Established {SITE.establishedYear} (founded {SITE.foundedYears}).
           </div>
         </div>
       </section>
