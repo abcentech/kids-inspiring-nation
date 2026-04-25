@@ -2,12 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Loader2, CheckCircle2, MessageCircle, ArrowLeft, ChevronLeft, Info, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { ROUTE_META, SITE, T } from './siteConfig.js';
+import { usePageMeta } from './usePageMeta.js';
+import { submitUrlEncodedForm } from './formSubmit.js';
 
-const T = {
-    green: "#16613E", greenD: "#0D3D26",
-    gold: "#C4882C", goldL: "#E8B954",
-    cream: "#FDF7EC",
-};
+const SCRIPT_URL = import.meta.env.VITE_NBC_FORM_URL || "";
 
 const NIGERIAN_STATES = [
     'Abia','Adamawa','Akwa Ibom','Anambra','Bauchi','Bayelsa','Benue','Borno',
@@ -17,9 +16,9 @@ const NIGERIAN_STATES = [
     'Yobe','Zamfara'
 ];
 
-const INPUT = "w-full px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:border-green-700 focus:bg-white focus:ring-4 focus:ring-green-800/10 transition-all outline-none text-gray-800";
-const SELECT = "w-full px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:border-green-700 outline-none appearance-none text-gray-800";
-const LABEL = "block text-sm font-bold text-gray-700 mb-1.5";
+const INPUT = "w-full px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:border-[#C5A037] focus:bg-white focus:ring-4 focus:ring-[#C5A037]/5 transition-all outline-none text-gray-800 placeholder-gray-400";
+const SELECT = "w-full px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:border-[#C5A037] outline-none appearance-none text-gray-800";
+const LABEL = "block text-xs font-bold text-gray-500 uppercase letter-spacing-[0.05em] mb-1.5";
 
 const VALUE_INFO = {
     'Integrity': {
@@ -71,7 +70,8 @@ const ValueModal = ({ valueName, info, onClose }) => (
     </motion.div>
 );
 
-export default function NBCRegister({ dark }) {
+export default function NBCRegister() {
+    usePageMeta(ROUTE_META.nbcRegister);
     const [step, setStep] = useState(1);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [selectedValues, setSelectedValues] = useState([]);
@@ -80,6 +80,7 @@ export default function NBCRegister({ dark }) {
     const [userId, setUserId] = useState('');
     const [submitted, setSubmitted] = useState(false);
     const [activeValueModal, setActiveValueModal] = useState(null);
+    const [submitError, setSubmitError] = useState("");
     
     // Centralized form state
     const [formData, setFormData] = useState({
@@ -149,7 +150,7 @@ export default function NBCRegister({ dark }) {
         if (ref && !formData.referral_code) {
             setFormData(prev => ({ ...prev, referral_code: ref }));
         }
-    }, []);
+    }, [formData.referral_code]);
 
     const formCardRef = useRef(null);
 
@@ -191,7 +192,6 @@ export default function NBCRegister({ dark }) {
     }, [formData.dob]);
 
     const handleAddMember = () => setTeamMembers([...teamMembers, { name: '', age: '', phone: '' }]);
-    const handleRemoveMember = (index) => setTeamMembers(teamMembers.filter((_, i) => i !== index));
     const handleMemberChange = (index, field, value) => {
         const newMembers = [...teamMembers];
         newMembers[index][field] = value;
@@ -217,12 +217,11 @@ export default function NBCRegister({ dark }) {
     const handleRegister = async () => {
         if (selectedValues.length !== 3) { setValuesError(true); return; }
         setIsSubmitting(true);
-
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzJipOJljZxXDmUWjoagFyRotta8ohyMPNrCPn4EeqhEXd9zOFm4z5i-_QsIii7bBoYHA/exec";
+        setSubmitError("");
 
         const ts = Date.now().toString(36).toUpperCase();
         const rand = Math.random().toString(36).substring(2, 6).toUpperCase();
-        const nbcId = `NBC2026-${ts}${rand}`;
+        const nbcId = `NBC2025-${ts}${rand}`;
 
         const fundingSources = [
             formData.funding_donations && 'Donations',
@@ -285,15 +284,7 @@ export default function NBCRegister({ dark }) {
         };
 
         try {
-            const params = new URLSearchParams();
-            Object.entries(payload).forEach(([k, v]) => params.append(k, v));
-            
-            await fetch(SCRIPT_URL, { 
-                method: 'POST', 
-                body: params, 
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-            });
+            await submitUrlEncodedForm(SCRIPT_URL, payload, 'NBC registration');
 
             setRefLink(`${window.location.origin}/NBC/register?ref=${nbcId}`);
             setUserId(nbcId);
@@ -301,7 +292,7 @@ export default function NBCRegister({ dark }) {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         } catch (err) {
             console.error('Submission failed', err);
-            alert('Registration failed. Please try again or contact info@nationalbuilders.ng');
+            setSubmitError(err.message || `Registration failed. Please try again or contact ${SITE.email}.`);
         } finally {
             setIsSubmitting(false);
         }
@@ -358,11 +349,11 @@ export default function NBCRegister({ dark }) {
                             padding: '0.4rem 1.2rem', fontSize: '0.8rem', fontWeight: 800,
                             color: T.goldL, textTransform: 'uppercase', letterSpacing: '0.15em',
                             marginBottom: '1.25rem',
-                        }}>2026 Cohort · Limited Spots</div>
+                        }}>2025 Cohort · Limited Spots</div>
                         <h1 style={{
                             fontFamily: "'Playfair Display', serif", fontSize: 'clamp(2rem, 5vw, 3rem)',
                             fontWeight: 900, color: 'white', marginBottom: '0.75rem', lineHeight: 1.2,
-                        }}>Register for NBC 2026</h1>
+                        }}>Register for NBC 2025</h1>
                         <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: '1.05rem', maxWidth: '500px', margin: '0 auto' }}>
                             Join 1,000 National Builders competing for <strong style={{ color: T.goldL }}>₦3,000,000</strong>
                         </p>
@@ -383,13 +374,18 @@ export default function NBCRegister({ dark }) {
                 >
                     {!submitted ? (
                         <>
-                            {/* Progress Bar */}
-                            <div style={{ height: '6px', background: '#f1f5f9' }}>
+                            {/* Progress Bar with Gold Glow */}
+                            <div style={{ height: '8px', background: 'rgba(5, 20, 13, 0.05)', position: 'relative' }}>
                                 <motion.div
-                                    style={{ height: '100%', background: 'linear-gradient(90deg, #16613E, #2a9e64)', borderRadius: '0 3px 3px 0' }}
+                                    style={{ 
+                                        height: '100%', 
+                                        background: `linear-gradient(90deg, ${T.green}, ${T.gold})`, 
+                                        borderRadius: '0 4px 4px 0',
+                                        boxShadow: `0 0 15px ${T.gold}66`
+                                    }}
                                     initial={{ width: `${(1 / TOTAL_STEPS) * 100}%` }}
                                     animate={{ width: `${(step / TOTAL_STEPS) * 100}%` }}
-                                    transition={{ duration: 0.5, ease: 'easeInOut' }}
+                                    transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
                                 />
                             </div>
 
@@ -561,9 +557,9 @@ export default function NBCRegister({ dark }) {
                                          {/* ── STEP 4: MENTOR & AGREEMENT ── */}
                                         {step === 4 && (
                                             <motion.div key="s4" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.25 }} className="space-y-6">
-                                                <div style={{ background: 'linear-gradient(135deg, #16613E, #2d3748)', borderRadius: '16px', padding: '1.5rem', color: 'white', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}>
-                                                    <h3 style={{ fontSize: '1.25rem', fontWeight: 900, fontFamily: 'serif', marginBottom: '0.5rem' }}>Guidance & Commitment</h3>
-                                                    <p style={{ fontSize: '0.9rem', opacity: 0.9, lineHeight: 1.5 }}>Great projects are built with guidance. Tell us about your mentor, select the values that drive you, and commit to your journey as a National Builder.</p>
+                                                <div style={{ background: `linear-gradient(135deg, ${T.green}, ${T.greenD})`, borderRadius: '16px', padding: '1.75rem', color: 'white', boxShadow: '0 10px 30px rgba(11,42,27,0.2)' }}>
+                                                    <h3 style={{ fontSize: '1.35rem', fontWeight: 900, fontFamily: "'Playfair Display', serif", marginBottom: '0.6rem', color: T.goldL }}>Guidance & Commitment</h3>
+                                                    <p style={{ fontSize: '0.9rem', opacity: 0.85, lineHeight: 1.6 }}>Great projects are built with guidance. Tell us about your mentor, select the values that drive you, and commit to your journey as a National Builder.</p>
                                                 </div>
 
                                                 <div>
@@ -593,7 +589,7 @@ export default function NBCRegister({ dark }) {
                                                     <label className={LABEL}>Core Values (Exactly 3) <span style={{ color: '#ef4444' }}>*</span></label>
                                                     <p style={{ fontSize: '0.75rem', color: '#64748b', marginBottom: '0.75rem' }}>Click the <Info size={12} style={{ display: 'inline', verticalAlign: 'middle' }} /> icon to learn more about each value.</p>
                                                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
-                                                        {Object.entries(VALUE_INFO).map(([v, info]) => (
+                                                        {Object.entries(VALUE_INFO).map(([v]) => (
                                                             <div key={v} style={{ position: 'relative' }}>
                                                                 <button type="button" onClick={() => toggleValue(v)} style={{ width: '100%', textAlign: 'left', padding: '1rem', borderRadius: '14px', border: `2px solid ${selectedValues.includes(v) ? T.green : '#f1f5f9'}`, background: selectedValues.includes(v) ? '#f0fdf4' : 'white', fontWeight: 700, transition: 'all 0.2s', color: selectedValues.includes(v) ? T.green : '#334155' }}>
                                                                     {v}
@@ -604,6 +600,11 @@ export default function NBCRegister({ dark }) {
                                                             </div>
                                                         ))}
                                                     </div>
+                                                    {valuesError && (
+                                                        <p style={{ fontSize: '0.75rem', color: T.err, marginTop: '0.75rem' }}>
+                                                            Select exactly 3 core values before submitting your registration.
+                                                        </p>
+                                                    )}
                                                 </div>
 
                                                 <div className="space-y-3 pt-2">
@@ -613,7 +614,7 @@ export default function NBCRegister({ dark }) {
                                                         { id: 'values', text: "I agree to uphold the 8 Core Values of a National Builder in my personal life and project." },
                                                         { id: 'honesty', text: "I certify that all information provided is true, and this project is my original idea." },
                                                         { id: 'media', text: "I consent to the use of my photos, videos, and project documentation for educational and promotional purposes." },
-                                                        { id: 'rules', text: "I agree to abide by the official rules, regulations, and judge's decisions of NBC 2026." }
+                                                        { id: 'rules', text: "I agree to abide by the official rules, regulations, and judge's decisions of NBC 2025." }
                                                     ].map(v => (
                                                         <label key={v.id} style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '0.75rem', fontSize: '0.85rem', cursor: 'pointer', background: '#f8fafc', padding: '1rem', borderRadius: '12px', border: '1px solid #f1f5f9' }}>
                                                             <input type="checkbox" name={`agree_${v.id}`} checked={formData[`agree_${v.id}`]} onChange={handleInputChange} required style={{ marginTop: '0.15rem' }} /> 
@@ -627,6 +628,11 @@ export default function NBCRegister({ dark }) {
                                         {/* ── STEP 5: REVIEW & CONFIRM ── */}
                                         {step === 5 && (
                                             <motion.div key="s5" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.25 }}>
+                                                {submitError && (
+                                                    <div style={{ marginBottom: '1rem', padding: '1rem 1.25rem', borderRadius: '14px', border: `1px solid ${T.err}33`, background: `${T.err}10`, color: T.err, fontSize: '0.9rem', lineHeight: 1.6 }}>
+                                                        {submitError}
+                                                    </div>
+                                                )}
                                                 <ReviewSection title="Personal Information" stepNum={1}>
                                                     <ReviewItem label="Name" value={`${formData.first_name} ${formData.middle_name} ${formData.last_name}`.replace(/\s+/g, ' ').trim()} />
                                                     <ReviewItem label="Age" value={formData.age} />
@@ -747,14 +753,22 @@ export default function NBCRegister({ dark }) {
                             <p style={{ fontSize: '1.3rem', fontWeight: 900, color: T.green, marginBottom: '1.5rem' }}>The ₦3M Grand Finale awaits! 🏆</p>
 
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
-                                <a href="https://chat.whatsapp.com/LhdmEpKXoXgDgtEj73WVqz?mode=gi_t" target="_blank" rel="noopener" style={{
+                                <a href="https://chat.whatsapp.com/LhdmEpKXoXgDgtEj73WVqz?mode=gi_t" target="_blank" rel="noopener noreferrer" aria-label="Open the NBC WhatsApp community in a new tab" style={{
                                     display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
                                     padding: '1rem 2.5rem', borderRadius: '999px', background: T.green,
                                     color: 'white', fontWeight: 700, textDecoration: 'none',
                                 }}>
                                     <MessageCircle size={18} /> Join WhatsApp Community
                                 </a>
-                                <button onClick={() => { setSubmitted(false); setStep(1); setSelectedValues([]); setHasMentor(''); setTeamType('Solo'); setUserId(''); setRefLink(''); }} style={{
+                                <button onClick={() => {
+                                    setSubmitted(false);
+                                    setStep(1);
+                                    setSelectedValues([]);
+                                    setUserId('');
+                                    setRefLink('');
+                                    setSubmitError("");
+                                    setFormData(prev => ({ ...prev, has_mentor: '', team_type: 'Solo' }));
+                                }} style={{
                                     color: '#94a3b8', fontSize: '0.875rem', fontWeight: 600,
                                     background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit',
                                 }}>Register Another Person</button>
