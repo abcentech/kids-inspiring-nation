@@ -1,5 +1,5 @@
 /*
-  KidsInspiring Nation — 2026 Complete Website + Impact Dashboard
+  KidsInspiring Nation — Main Website + Impact Dashboard (as at 2025)
   ═══════════════════════════════════════════════════════════════
   Vision: Raising goDs — Geniuses with divine purpose — building Nations
   NGO: goDs Global KidsInspiring | IT No. 6980735
@@ -11,7 +11,7 @@
   YouTube: https://youtu.be/E5b-H_IQPyI
   Giving: Bit.ly/KINgiv
 
-  REAL 2026 DATA (from KIN_DB_2026_1.zip):
+  IMPACT DATA (as at 2025):
   19,695 entries | 639 goDChildren | 365 events | 7 tracked programmes
   KIND: 13,350 | KINGs: 1,718 | DF: 1,619 | gDX: 1,107 | P119: 999
   TJC: 49 | CST: 35 | FACE: 3,000+ meals
@@ -20,16 +20,9 @@
   Dark mode: floating toggle button
 */
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { lazy, Suspense, useState, useEffect, useRef, useCallback } from "react";
 import { Routes, Route, useNavigate, useLocation, Link, Navigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import NVC from "./NVC.jsx";
-import NBCRegister from "./NBCRegister.jsx";
-import Giving from "./Giving.jsx";
-import Gallery from "./Gallery.jsx";
-import GodsUniversity from "./GodsUniversity.jsx";
-import About from "./About.jsx";
-import Contact from "./Contact.jsx";
 import {
   AreaChart, Area, BarChart, Bar, XAxis, YAxis, Tooltip,
   ResponsiveContainer, CartesianGrid, Cell, PieChart, Pie,
@@ -43,88 +36,26 @@ import {
   Activity, Award, Star, Globe, Zap, Music, Coffee, ChevronDown,
   Sparkles, ArrowRight, Timer, Landmark, Utensils, Crown
 } from "lucide-react";
+import { ROUTE_META, SITE, T } from "./siteConfig.js";
+import { usePageMeta } from "./usePageMeta.js";
+import { initAnalytics } from "./analytics.js";
 
-// ─── FONTS ───────────────────────────────────────────────────────────────────
-const fl = document.createElement("link");
-fl.rel = "stylesheet";
-fl.href = "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@300;400;500&display=swap";
-document.head.appendChild(fl);
+const NVC = lazy(() => import("./NVC.jsx"));
+const NBCRegister = lazy(() => import("./NBCRegister.jsx"));
+const Giving = lazy(() => import("./Giving.jsx"));
+const Gallery = lazy(() => import("./Gallery.jsx"));
+const GodsUniversity = lazy(() => import("./GodsUniversity.jsx"));
+const About = lazy(() => import("./About.jsx"));
+const Contact = lazy(() => import("./Contact.jsx"));
+const KidsInspiringLanding = lazy(() => import("./KidsInspiringLanding.jsx"));
+const InvestingInKidsLanding = lazy(() => import("./InvestingInKidsLanding.jsx"));
+const NationBuildersCorp = lazy(() => import("./NationBuildersCorp.jsx"));
+const Transparency = lazy(() => import("./Transparency.jsx"));
+const FAQ = lazy(() => import("./FAQ.jsx"));
+const Daily = lazy(() => import("./Daily.jsx"));
+const Privacy = lazy(() => import("./Privacy.jsx"));
 
-// ─── GLOBAL CSS ───────────────────────────────────────────────────────────────
-const css = document.createElement("style");
-css.textContent = `
-  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
-  body{overflow-x:hidden}
-  button{cursor:pointer;border:none;background:none;font-family:inherit}
-  a{text-decoration:none;color:inherit}
-  ul{list-style:none}
-  img{display:block;max-width:100%}
-
-  @keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
-  @keyframes enter{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-  @keyframes marqueeL{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-  @keyframes floatStar{0%,100%{transform:translateY(-50%) scale(1)}50%{transform:translateY(-51.5%) scale(1.005)}}
-  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
-  @keyframes slideUp{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
-  @keyframes cookieIn{from{transform:translateY(120%)}to{transform:translateY(0)}}
-  @keyframes ripple{from{transform:scale(0);opacity:.6}to{transform:scale(4);opacity:0}}
-
-  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease-out,transform .7s ease-out}
-  .rev{opacity:1;transform:translateY(0)}
-  .d1{transition-delay:80ms}.d2{transition-delay:160ms}.d3{transition-delay:240ms}.d4{transition-delay:320ms}
-
-  .chover{transition:transform .2s ease-out,box-shadow .2s ease-out}
-  .chover:hover{transform:translateY(-6px);box-shadow:0 24px 60px rgba(10,28,18,.18)!important}
-  .dhover{transition:transform .15s ease-out,box-shadow .15s ease-out}
-  .dhover:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(0,0,0,.1),0 1px 4px rgba(0,0,0,.05)!important}
-  .trh{transition:background .1s ease-out;cursor:default}
-  .trh:hover{background:rgba(0,0,0,.018)}
-  .trh-dk:hover{background:rgba(255,255,255,.04)!important}
-  .nb{transition:background .12s ease-out,color .12s ease-out;cursor:pointer}
-
-  .gold-btn{transition:filter .2s ease-out,transform .2s ease-out}
-  .gold-btn:hover{filter:brightness(.88);transform:translateY(-2px)}
-  .ghost-btn:hover{background:rgba(253,247,236,.14)!important}
-
-  .ds::-webkit-scrollbar{width:5px;height:5px}
-  .ds::-webkit-scrollbar-track{background:transparent}
-  .ds::-webkit-scrollbar-thumb{background:rgba(0,0,0,.1);border-radius:999px}
-
-  .kinbadge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:500;padding:2px 10px;border-radius:999px;white-space:nowrap}
-
-  @media(max-width:768px){
-    .nav-links{display:none}
-    .hero-btns{flex-wrap:wrap}
-  }
-  @media(prefers-reduced-motion:reduce){
-    *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
-    .reveal{opacity:1;transform:none;transition:none}
-  }
-`;
-document.head.appendChild(css);
-
-// ─── DESIGN TOKENS ────────────────────────────────────────────────────────────
-const T = {
-  // Brand
-  green: "#16613E", greenD: "#0D3D26", greenM: "#2C4A35",
-  gold: "#C4882C", goldL: "#E8B954", goldD: "#9A6620",
-  coral: "#D94F30", cream: "#FDF7EC", warmBg: "#F5EFE3",
-  // Dashboard light
-  bg: "#F5F5F7", surf: "#FFFFFF", brd: "rgba(0,0,0,.06)",
-  p1: "#1D1D1F", p2: "#6E6E73", p3: "#AEAEB2",
-  // Dashboard dark
-  bgD: "#050505", srfD: "#1C1C1E", brdD: "rgba(255,255,255,.08)",
-  d1: "#F5F5F7", d2: "#98989D", d3: "#636366",
-  // Semantic
-  ok: "#34C759", warn: "#FF9F0A", err: "#FF3B30", info: "#0071E3",
-  // Program colors
-  kindC: "#16613E", kingsC: "#7B2D8B", dfC: "#C4882C",
-  gdxC: "#E8B954", p119C: "#0071E3", faceC: "#D94F30",
-  tjcC: "#8B4513", cstC: "#27AE60",
-};
-
-// ─── REAL 2026 DATA ───────────────────────────────────────────────────────────
+// ─── IMPACT DATA (AS AT 2025) ──────────────────────────────────────────────────
 const MONTHLY = [
   { m: "Jan", total: 2468, sessions: 31, avg: 79 }, { m: "Feb", total: 1108, sessions: 28, avg: 39 },
   { m: "Mar", total: 1633, sessions: 31, avg: 52 }, { m: "Apr", total: 1612, sessions: 30, avg: 53 },
@@ -200,7 +131,7 @@ const PROGRAMS = [
     entries: null, sessions: 52, unique: null, pct: null,
     meals: 1952,
     schedule: "Sundays · 3pm WAT",
-    tagline: "1,952 meals served in 2026",
+    tagline: "1,952 meals served (as at 2025)",
     desc: "KidsInspiring Nation feeds every child in the community, meeting their practical needs.",
     bg: `linear-gradient(135deg,${T.coral},#A83920)`,
     photo: "/photos/FACE_Feed_A_Community_EveryWeek.jpg",
@@ -264,16 +195,18 @@ const KINGS_COHORTS = [
 function useCountUp(target, dur = 800, active = true) {
   const [v, setV] = useState(0);
   useEffect(() => {
-    if (!active) { setV(target); return; }
+    if (!active) return undefined;
     const t0 = performance.now();
+    let frame = 0;
     const tick = (now) => {
       const p = Math.min((now - t0) / dur, 1), e = 1 - Math.pow(1 - p, 3);
       setV(Math.round(target * e));
-      if (p < 1) requestAnimationFrame(tick);
+      if (p < 1) frame = requestAnimationFrame(tick);
     };
-    requestAnimationFrame(tick);
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
   }, [target, dur, active]);
-  return v;
+  return active ? v : target;
 }
 
 function useReveal() {
@@ -325,7 +258,7 @@ function CookieBanner({ dark }) {
   if (!show) return null;
   const bg = dark ? "#1C1C1E" : "#fff", txt = dark ? T.d1 : T.p1, sub = dark ? T.d2 : T.p2, brd = dark ? T.brdD : T.brd;
   return (
-    <div style={{ position: "fixed", bottom: 24, left: "50%", transform: "translateX(-50%)", zIndex: 9999, width: "min(560px,calc(100vw - 32px))", animation: "cookieIn .4s ease-out both" }}>
+    <div className="kin-cookie-banner" style={{ zIndex: 9999, width: "min(560px,calc(100vw - 32px))", animation: "cookieIn .4s ease-out both" }}>
       <div style={{ background: bg, borderRadius: 16, padding: 20, boxShadow: "0 16px 64px rgba(0,0,0,.2),0 2px 8px rgba(0,0,0,.08)", border: `1px solid ${brd}` }}>
         <div style={{ display: "flex", alignItems: "flex-start", gap: 12, marginBottom: 12 }}>
           <Cookie size={18} strokeWidth={1.5} style={{ color: T.gold, flexShrink: 0, marginTop: 2 }} />
@@ -361,7 +294,8 @@ function CookieBanner({ dark }) {
 function DarkToggle({ dark, toggle }) {
   return (
     <button onClick={toggle} title="Toggle dark mode"
-      style={{ position: "fixed", bottom: 24, right: 24, zIndex: 8999, width: 44, height: 44, borderRadius: "50%", background: dark ? "#1C1C1E" : "#fff", border: `1.5px solid ${dark ? T.brdD : T.brd}`, boxShadow: "0 4px 16px rgba(0,0,0,.14)", display: "grid", placeItems: "center", cursor: "pointer", color: dark ? T.goldL : T.greenD, transition: "all .2s ease-out" }}
+      className="kin-fixed-control kin-fixed-control--right"
+      style={{ zIndex: 8999, width: 44, height: 44, borderRadius: "50%", background: dark ? "#1C1C1E" : "#fff", border: `1.5px solid ${dark ? T.brdD : T.brd}`, boxShadow: "0 4px 16px rgba(0,0,0,.14)", display: "grid", placeItems: "center", cursor: "pointer", color: dark ? T.goldL : T.greenD, transition: "all .2s ease-out" }}
       onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.08)"; e.currentTarget.style.boxShadow = "0 6px 24px rgba(0,0,0,.2)"; }}
       onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 4px 16px rgba(0,0,0,.14)"; }}>
       {dark ? <Sun size={18} strokeWidth={1.5} /> : <Moon size={18} strokeWidth={1.5} />}
@@ -378,28 +312,86 @@ function Website({ dark }) {
   const onDash = () => navigate("/dashboard");
   const onNVC = () => navigate("/NBC");
   useReveal();
-  const bg = dark ? "#0A1C12" : "#FAFAF5";
-  const txt = dark ? T.cream : T.greenD;
+  const bg = dark ? T.bgD : T.bg;
+  const txt = dark ? T.d1 : T.p1;
 
   return (
     <div style={{ fontFamily: "'DM Sans',sans-serif", background: bg, color: txt, overflowX: "hidden" }}>
       
-      <NBCInvitePopup onNVC={onNVC} dark={dark} />
+      <NBCInvitePopup onNVC={onNVC} />
       <UpdatesSlider dark={dark} />
-      <Hero onDash={onDash} dark={dark} />
+      <Hero onDash={onDash} />
+      <DonorProofSection dark={dark} />
       <Marquee />
-      <KINDCountdown dark={dark} />
+      <KINDCountdown />
       <KINDStrip dark={dark} />
       <AboutSection dark={dark} />
       <ProgramsSection dark={dark} />
       <VideoSection dark={dark} />
-      <ImpactSection onDash={onDash} dark={dark} />
+      <ImpactSection onDash={onDash} />
       <FACESection dark={dark} />
       <PhotoHighlightsStrip dark={dark} />
       <TestimonySection dark={dark} />
-      <CTASection dark={dark} />
-      <Footer dark={dark} />
+      <CTASection />
     </div>
+  );
+}
+
+function DonorProofSection({ dark }) {
+  const bg = dark ? "#060B08" : "#FFFFFF";
+  const card = dark ? "rgba(255,255,255,.03)" : "rgba(11,42,27,.03)";
+  const brd = dark ? "rgba(255,255,255,.09)" : "rgba(22,97,62,.12)";
+  const sub = dark ? "rgba(253,247,236,.72)" : T.p2;
+
+  return (
+    <section style={{ background: bg, padding: "clamp(3.5rem,8vw,5.5rem) 0", borderBottom: `1px solid ${brd}` }}>
+      <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 clamp(1.25rem,5vw,3rem)" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%, 22rem), 1fr))", gap: "1.5rem", alignItems: "center" }}>
+          <div>
+            <div style={{ fontFamily: "'DM Mono',monospace", fontSize: ".72rem", letterSpacing: ".16em", textTransform: "uppercase", color: dark ? "rgba(253,247,236,.55)" : T.p3, marginBottom: ".9rem" }}>
+              Donations that convert to impact
+            </div>
+            <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(2rem,4.4vw,3.2rem)", fontWeight: 900, letterSpacing: "-0.03em", lineHeight: 1.05, marginBottom: ".9rem", color: dark ? T.cream : T.greenD }}>
+              Give in a way that’s<br />
+              <em style={{ fontStyle: "italic", color: T.gold }}>clear, verified, and focused.</em>
+            </h2>
+            <p style={{ color: sub, lineHeight: 1.75, maxWidth: "62ch", marginBottom: "1.25rem" }}>
+              Most donors in Nigeria prefer bank transfer. We made it the default: official account details, designated giving (Education, Feeding, Projects), and a transparency page for verification.
+            </p>
+            <div style={{ display: "flex", gap: ".75rem", flexWrap: "wrap" }}>
+              <Link to="/give#bank" className="gold-btn" style={{ display: "inline-flex", alignItems: "center", gap: ".5rem", padding: ".9em 1.4em", borderRadius: 999, background: T.gold, color: "#fff", fontWeight: 900, textDecoration: "none" }}>
+                Give by bank transfer →
+              </Link>
+              <Link to="/transparency" style={{ display: "inline-flex", alignItems: "center", gap: ".5rem", padding: ".9em 1.2em", borderRadius: 999, border: `1.5px solid ${dark ? "rgba(253,247,236,.25)" : "rgba(22,97,62,.22)"}`, color: dark ? T.cream : T.greenD, fontWeight: 900, textDecoration: "none" }}>
+                Verify & trust →
+              </Link>
+              <Link to="/give#online" style={{ display: "inline-flex", alignItems: "center", gap: ".5rem", padding: ".9em 1.2em", borderRadius: 999, border: `1.5px solid rgba(196,136,44,.35)`, color: T.gold, fontWeight: 900, textDecoration: "none" }}>
+                See Paystack option
+              </Link>
+            </div>
+          </div>
+
+          <div style={{ display: "grid", gap: ".9rem" }}>
+            {[
+              { h: "Education", p: "Books, learning support, scholarships, and child development." },
+              { h: "Feeding", p: "Community meals and welfare support through FACE." },
+              { h: "Projects", p: "Programme logistics and outreach projects that scale impact." },
+              { h: "goDsHub", p: "Infrastructure that makes delivery consistent and reliable." },
+            ].map((x) => (
+              <div key={x.h} style={{ background: card, borderRadius: 18, border: `1px solid ${brd}`, padding: "1.05rem 1.1rem" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", gap: "1rem", alignItems: "baseline" }}>
+                  <div style={{ fontWeight: 950, color: dark ? T.goldL : T.greenD }}>{x.h}</div>
+                  <div style={{ fontFamily: "'DM Mono',monospace", fontSize: ".68rem", letterSpacing: ".14em", textTransform: "uppercase", color: dark ? "rgba(253,247,236,.45)" : T.p3 }}>
+                    Designated giving
+                  </div>
+                </div>
+                <div style={{ marginTop: ".35rem", color: sub, lineHeight: 1.65 }}>{x.p}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -408,8 +400,8 @@ const SLIDES = [
   {
     id: 1,
     tag: "LATEST UPDATE",
-    headline: "KIND Daily — 365 Days,\nNever Missed",
-    body: "2026 closed with 13,350 KIND entries across 359 sessions. Our character flagship ran every single day of the year — shaping the hearts of 639 goDs.",
+    headline: "KIND Daily — Consistency\nThat Shapes Nations",
+    body: "As at 2025, KIND has produced thousands of entries across hundreds of sessions. Our character flagship is built for consistency — shaping the hearts of goDs over time.",
     icon: BookOpen,
     gradient: `linear-gradient(135deg, ${T.greenD} 0%, #060E08 55%, #16613E 100%)`,
     accent: T.goldL,
@@ -417,9 +409,9 @@ const SLIDES = [
   },
   {
     id: 2,
-    tag: "DANIEL FAST 2026",
+    tag: "DANIEL FAST (AS AT 2025)",
     headline: "DF3 Grew 200%.\nThe Culture Deepens.",
-    body: "Daniel Fast Week 3 surged from 212 entries in 2024 to 637 in 2026. Consecration is becoming a defining identity for KidsInspiring Nation.",
+    body: "Consecration is becoming a defining identity for KidsInspiring Nation — a culture of discipline, devotion, and spiritual depth.",
     icon: Flame,
     gradient: `linear-gradient(135deg, ${T.goldD} 0%, #5C3210 60%, ${T.gold} 100%)`,
     accent: T.goldL,
@@ -428,8 +420,8 @@ const SLIDES = [
   {
     id: 3,
     tag: "NATIONAL BUILDERS",
-    headline: "The Challenge\nBegins in 2026.",
-    body: "1,000 Nation Builders. ₦3M in Grand Prizes. 9 months of character, resourcefulness and excellence. Applications are open for the 2026 cohort.",
+    headline: "The Challenge\nIs Open.",
+    body: "Nation Builders. A journey of character, resourcefulness and excellence. Applications are open for the current cohort.",
     icon: Landmark,
     gradient: `linear-gradient(135deg, #1A0E3A 0%, #2D1B69 50%, #0D3D26 100%)`,
     accent: "#A78BFA",
@@ -439,7 +431,7 @@ const SLIDES = [
     id: 4,
     tag: "FACE PROGRAMME",
     headline: "1,952 Meals.\nEvery Sunday.",
-    body: "Week after week, KidsInspiring Nation feeds every child in the community. FACE served 1,952 meals in 2026 — because raising Nations starts with meeting needs.",
+    body: "Week after week, KidsInspiring Nation feeds every child in the community. FACE served 1,952 meals as at 2025 — because raising Nations starts with meeting needs.",
     icon: Utensils,
     gradient: `linear-gradient(135deg, #A83920 0%, #D94F30 60%, #8B2010 100%)`,
     accent: "#FBBF72",
@@ -499,6 +491,7 @@ function UpdatesSlider({ dark }) {
           <img 
             src={slide.photo} 
             alt={slide.headline}
+            loading="lazy"
             style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.65, mixBlendMode: 'overlay', pointerEvents: 'none', transition: 'opacity 0.5s' }}
             onError={(e) => { e.currentTarget.style.opacity = '0'; }}
           />
@@ -556,34 +549,31 @@ function UpdatesSlider({ dark }) {
   );
 }
 
-function KINDCountdown({ dark }) {
-  const [timeLeft, setTimeLeft] = useState({ h: 0, m: 0, s: 0, isLive: false });
+function KINDCountdown() {
+  const calcNext = useCallback(() => {
+    const now = new Date();
+    const watOffset = 1 * 60;
+    const utcMs = now.getTime() + now.getTimezoneOffset() * 60000;
+    const watNow = new Date(utcMs + watOffset * 60000);
+
+    const target = new Date(watNow);
+    target.setHours(20, 0, 0, 0);
+    if (watNow >= target) target.setDate(target.getDate() + 1);
+
+    const diffMs = target - watNow;
+    const totalSec = Math.floor(diffMs / 1000);
+    const h = Math.floor(totalSec / 3600);
+    const m = Math.floor((totalSec % 3600) / 60);
+    const s = totalSec % 60;
+    const isLive = h === 0 && m < 30;
+    return { h, m, s, isLive };
+  }, []);
+  const [timeLeft, setTimeLeft] = useState(() => calcNext());
 
   useEffect(() => {
-    function calcNext() {
-      // WAT = UTC+1. Current time in WAT.
-      const now = new Date();
-      const watOffset = 1 * 60; // minutes from UTC
-      const utcMs = now.getTime() + now.getTimezoneOffset() * 60000;
-      const watNow = new Date(utcMs + watOffset * 60000);
-
-      // Target: next 8pm WAT
-      const target = new Date(watNow);
-      target.setHours(20, 0, 0, 0);
-      if (watNow >= target) target.setDate(target.getDate() + 1);
-
-      const diffMs = target - watNow;
-      const totalSec = Math.floor(diffMs / 1000);
-      const h = Math.floor(totalSec / 3600);
-      const m = Math.floor((totalSec % 3600) / 60);
-      const s = totalSec % 60;
-      const isLive = h === 0 && m < 30;
-      return { h, m, s, isLive };
-    }
-    setTimeLeft(calcNext());
     const id = setInterval(() => setTimeLeft(calcNext()), 1000);
     return () => clearInterval(id);
-  }, []);
+  }, [calcNext]);
 
   const pad = n => String(n).padStart(2, "0");
   const { h, m, s, isLive } = timeLeft;
@@ -645,7 +635,7 @@ function KINDCountdown({ dark }) {
         )}
         {isLive && (
           <div style={{ display: "flex", gap: ".75rem", flexWrap: "wrap" }}>
-            <a href="https://whatsapp.com/channel/0029Va8XnCuGE56c4SMaT41w" target="_blank" rel="noopener" style={{ display: "inline-flex", alignItems: "center", gap: ".5rem", padding: ".7em 1.8em", borderRadius: 999, background: T.gold, color: "#fff", fontWeight: 800, fontSize: ".9rem", boxShadow: `0 6px 24px ${T.gold}60`, textDecoration: "none" }}>
+            <a href={SITE.socials.whatsappChannel} target="_blank" rel="noopener noreferrer" aria-label="Open the official WhatsApp channel in a new tab" style={{ display: "inline-flex", alignItems: "center", gap: ".5rem", padding: ".7em 1.8em", borderRadius: 999, background: T.gold, color: "#fff", fontWeight: 800, fontSize: ".9rem", boxShadow: `0 6px 24px ${T.gold}60`, textDecoration: "none" }}>
               Join Now →
             </a>
           </div>
@@ -656,7 +646,7 @@ function KINDCountdown({ dark }) {
 }
 
 // ─── NBC INVITE POPUP ─────────────────────────────────────────────────────────
-function NBCInvitePopup({ onNVC, dark }) {
+function NBCInvitePopup({ onNVC }) {
   const [show, setShow] = useState(false);
   useEffect(() => {
     const seen = sessionStorage.getItem("kin_nbc_popup_seen");
@@ -712,7 +702,7 @@ function NBCInvitePopup({ onNVC, dark }) {
               {/* Badge */}
               <div style={{ display: "inline-flex", alignItems: "center", gap: ".5rem", background: `${T.gold}22`, border: `1px solid ${T.gold}55`, borderRadius: 999, padding: ".35em 1em", marginBottom: "1.5rem" }}>
                 <span style={{ width: 7, height: 7, borderRadius: "50%", background: T.goldL, animation: "pulse 1.5s ease-in-out infinite", display: "block" }} />
-                <span style={{ fontFamily: "'DM Mono',monospace", fontSize: ".68rem", fontWeight: 600, color: T.goldL, letterSpacing: ".1em", textTransform: "uppercase" }}>2026 Cohort Now Open</span>
+                <span style={{ fontFamily: "'DM Mono',monospace", fontSize: ".68rem", fontWeight: 600, color: T.goldL, letterSpacing: ".1em", textTransform: "uppercase" }}>Cohort Now Open</span>
               </div>
 
               <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(1.8rem,5vw,2.6rem)", fontWeight: 900, color: T.cream, lineHeight: 1.05, letterSpacing: "-0.03em", marginBottom: ".75rem" }}>
@@ -762,8 +752,24 @@ function SiteNav({ dark, onGive }) {
   const navigate = useNavigate();
   const location = useLocation();
   const goTo = (path) => {
-    navigate(path);
-    window.scrollTo(0, 0);
+    if (path.startsWith("#")) {
+      const targetId = path.slice(1);
+      const scrollToTarget = () => {
+        const el = document.getElementById(targetId);
+        if (!el) return;
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      };
+      if (location.pathname !== "/") {
+        navigate(`/${path}`);
+        window.setTimeout(scrollToTarget, 120);
+      } else {
+        window.history.replaceState(null, "", `/${path}`);
+        scrollToTarget();
+      }
+    } else {
+      navigate(path);
+      window.scrollTo(0, 0);
+    }
     setMob(false);
     setOpenDropdown(null);
   };
@@ -786,32 +792,52 @@ function SiteNav({ dark, onGive }) {
     return () => document.removeEventListener("mousedown", h);
   }, []);
 
-  const navBg = sc ? (dark ? "rgba(5,5,5,.92)" : "rgba(250,250,245,.94)") : "transparent";
-  const navBdr = sc ? `1px solid ${dark ? "rgba(255,255,255,.07)" : "rgba(22,97,62,.09)"}` : "1px solid transparent";
+  // Close dropdown / mobile menu on Escape for keyboard users
+  useEffect(() => {
+    if (!mob && !openDropdown) return undefined;
+    const onKeyDown = (e) => {
+      if (e.key !== "Escape") return;
+      setOpenDropdown(null);
+      if (mob) { setMob(false); setMobSection(null); }
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [mob, openDropdown]);
+
+  const navBg = sc ? (dark ? "rgba(5,5,5,.85)" : "rgba(250,250,245,.85)") : "transparent";
+  const navBdr = sc ? `1px solid ${dark ? "rgba(196,136,44,.15)" : "rgba(22,97,62,.08)"}` : "1px solid transparent";
   const logoC = sc ? (dark ? T.goldL : T.green) : T.cream;
-  const linkC = sc ? (dark ? "rgba(253,247,236,.8)" : T.greenM) : "rgba(253,247,236,.85)";
+  const linkC = sc ? (dark ? "rgba(253,247,236,.85)" : T.greenM) : "rgba(253,247,236,.9)";
+  const currentPath = location.pathname;
 
   const DROPDOWNS = {
     About: [
+      { label: "Kids Inspiring", href: null, action: () => goTo('/kids-inspiring'), icon: "✨", desc: "What the movement means" },
+      { label: "Investing in Kids", href: null, action: () => goTo('/investing-in-kids'), icon: "📚", desc: "Why kids are leverage" },
+      { label: "Transparency", href: null, action: () => goTo('/transparency'), icon: "🛡️", desc: "Trust and verification" },
+      { label: "Privacy", href: null, action: () => goTo('/privacy'), icon: "🔒", desc: "Data and contact privacy" },
+      { label: "FAQ", href: null, action: () => goTo('/faq'), icon: "❓", desc: "Site-wide answers" },
       { label: "Who We Are", href: null, action: () => goTo('/about'), icon: "🌱", desc: "Our mission & story" },
       { label: "goDs Defined", href: null, action: () => goTo('/about'), icon: "👑", desc: "Genius Ordained by Destiny" },
-      { label: "2026 Data", href: null, action: () => goTo('/about'), icon: "📊", desc: "639 goDs, 19,695 entries" },
+      { label: "Impact Data", href: null, action: () => goTo('/about'), icon: "📊", desc: "639 goDs, 19,695 entries" },
       { label: "Photo Gallery", href: null, icon: "📸", desc: "View our memories", action: () => goTo('/gallery') },
       { label: "Contact Us", href: null, icon: "✉️", desc: "Get in touch", action: () => goTo('/contact') },
     ],
     Programs: [
-      { label: "goDs University", href: null, icon: "👑", desc: "Our 44-week flagship", action: () => goTo('/gU') },
-      { label: "KIND · Daily", href: "#programs", icon: "📖", desc: "Devotional · 8pm WAT" },
-      { label: "KINGs Cells", href: "#programs", icon: "👑", desc: "Sunday mentorship · 5pm" },
-      { label: "Daniel Fast", href: "#programs", icon: "🔥", desc: "Annual spiritual programme" },
-      { label: "P119 Academy", href: "#programs", icon: "🧠", desc: "Maths, English & Character" },
-      { label: "FACE · Meals", href: "#programs", icon: "🍽️", desc: "1,952 meals in 2026" },
-      { label: "All Programmes →", href: "#programs", icon: "✨", desc: "View all 14 programmes" },
+      { label: "goDs University", href: null, icon: "👑", desc: "Spirit · Skills · Bible & Academic", action: () => goTo('/gU') },
+      { label: "Nation Builders Corp", href: null, icon: "🇳🇬", desc: "Psalm 119 → nation building", action: () => goTo('/nation-builders') },
+      { label: "Daily Streak", href: null, icon: "📅", desc: "60 seconds every day", action: () => goTo('/daily') },
+      { label: "KIND · Daily", href: null, icon: "📖", desc: "Devotional · 8pm WAT", action: () => goTo('#programs') },
+      { label: "KINGs Cells", href: null, icon: "👑", desc: "Sunday mentorship · 5pm", action: () => goTo('#programs') },
+      { label: "Daniel Fast", href: null, icon: "🔥", desc: "Annual spiritual programme", action: () => goTo('#programs') },
+      { label: "P119 Academy", href: null, icon: "🧠", desc: "Maths, English & Character", action: () => goTo('#programs') },
+      { label: "FACE · Meals", href: null, icon: "🍽️", desc: "1,952 meals (as at 2025)", action: () => goTo('#programs') },
+      { label: "All Programmes →", href: null, icon: "✨", desc: "View all 14 programmes", action: () => goTo('#programs') },
     ],
     Impact: [
-      { label: "Impact Report", href: "#impact", icon: "📈", desc: "2026 results & data" },
+      { label: "Impact Report", href: null, icon: "📈", desc: "Results (as at 2025)", action: () => goTo('#impact') },
       { label: "Live Dashboard", href: null, icon: "⚡", desc: "Real-time stats", action: () => goTo('/dashboard') },
-      { label: "Testimonies", href: "#testimony", icon: "💬", desc: "goD stories" },
+      { label: "Testimonies", href: null, icon: "💬", desc: "goD stories", action: () => goTo('#impact') },
     ],
   };
 
@@ -834,7 +860,7 @@ function SiteNav({ dark, onGive }) {
           {/* Logo with Glassmorphism Shimmering Effect */}
           <button onClick={() => goTo('/')} style={{ display: "flex", alignItems: "center", gap: ".65rem", textDecoration: "none", background: "none", border: "none", padding: 0, cursor: "pointer", textAlign: "left" }}>
             <div className="glass-logo" style={{ width: 42, height: 42, borderRadius: 12, display: "grid", placeItems: "center", flexShrink: 0 }}>
-              <img src="/logo.svg" alt="KidsInspiring Nation" style={{ width: 32, height: 32, objectFit: "contain", position: "relative", zIndex: 2 }} />
+              <img src="/logo.svg" alt="KidsInspiring Nation" loading="lazy" style={{ width: 32, height: 32, objectFit: "contain", position: "relative", zIndex: 2 }} />
             </div>
             <div>
               <div style={{ fontFamily: "'Plus Jakarta Sans',sans-serif", fontSize: ".88rem", fontWeight: 800, color: logoC, letterSpacing: "-0.02em", lineHeight: 1, transition: "color .35s" }}>KidsInspiring Nation</div>
@@ -846,39 +872,49 @@ function SiteNav({ dark, onGive }) {
           <div className="nav-links" style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
 
             {/* Dropdown items */}
-            {Object.entries(DROPDOWNS).map(([key, items]) => (
+            {Object.entries(DROPDOWNS).map(([key, items]) => {
+              const ddId = `nav-dd-${key.toLowerCase()}`;
+              const isOpen = openDropdown === key;
+              return (
               <div key={key} style={{ position: "relative" }}>
                 <button
+                  type="button"
                   onClick={() => toggleDropdown(key)}
-                  style={{ display: "flex", alignItems: "center", gap: ".3rem", padding: ".45rem .75rem", borderRadius: 8, fontSize: ".76rem", fontWeight: 600, letterSpacing: ".04em", textTransform: "uppercase", color: openDropdown === key ? T.goldL : linkC, background: openDropdown === key ? (dark ? "rgba(255,255,255,.07)" : "rgba(22,97,62,.07)") : "transparent", cursor: "pointer", transition: "all .2s", border: "none" }}
-                  onMouseEnter={e => { if (openDropdown !== key) { e.currentTarget.style.color = T.goldL; e.currentTarget.style.background = dark ? "rgba(255,255,255,.05)" : "rgba(22,97,62,.05)"; } }}
-                  onMouseLeave={e => { if (openDropdown !== key) { e.currentTarget.style.color = linkC; e.currentTarget.style.background = "transparent"; } }}
+                  aria-haspopup="menu"
+                  aria-expanded={isOpen}
+                  aria-controls={ddId}
+                  style={{ display: "flex", alignItems: "center", gap: ".3rem", padding: ".45rem .75rem", borderRadius: 8, fontSize: ".76rem", fontWeight: 600, letterSpacing: ".04em", textTransform: "uppercase", color: isOpen ? T.goldL : linkC, background: isOpen ? (dark ? "rgba(255,255,255,.07)" : "rgba(22,97,62,.07)") : "transparent", cursor: "pointer", transition: "all .2s", border: "none" }}
+                  onMouseEnter={e => { if (!isOpen) { e.currentTarget.style.color = T.goldL; e.currentTarget.style.background = dark ? "rgba(255,255,255,.05)" : "rgba(22,97,62,.05)"; } }}
+                  onMouseLeave={e => { if (!isOpen) { e.currentTarget.style.color = linkC; e.currentTarget.style.background = "transparent"; } }}
                 >
                   {key}
-                  <ChevronDown size={12} strokeWidth={2.5} style={{ transition: "transform .25s", transform: openDropdown === key ? "rotate(180deg)" : "none" }} />
+                  <ChevronDown size={12} strokeWidth={2.5} style={{ transition: "transform .25s", transform: isOpen ? "rotate(180deg)" : "none" }} />
                 </button>
 
                 <AnimatePresence>
-                  {openDropdown === key && (
+                  {isOpen && (
                     <motion.div
                       initial={{ opacity: 0, y: -8, scale: .97 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: -6, scale: .97 }}
                       transition={{ duration: .18 }}
+                      id={ddId}
+                      role="menu"
+                      aria-label={`${key} menu`}
                       style={{ position: "absolute", top: "calc(100% + 10px)", left: "50%", transform: "translateX(-50%)", minWidth: 240, background: dropdownSurf, borderRadius: 16, padding: "0.5rem", border: `1px solid ${dropdownBrd}`, boxShadow: dark ? "0 24px 60px rgba(0,0,0,.7), 0 2px 8px rgba(0,0,0,.4)" : "0 20px 50px rgba(10,28,18,.15), 0 2px 6px rgba(0,0,0,.06)", zIndex: 100 }}
                     >
                       {/* Arrow pip */}
                       <div style={{ position: "absolute", top: -6, left: "50%", transform: "translateX(-50%)", width: 12, height: 12, background: dropdownSurf, border: `1px solid ${dropdownBrd}`, borderRadius: 3, rotate: "45deg", borderBottom: "none", borderRight: "none" }} />
                       {items.map(item => (
                         item.action
-                          ? <button key={item.label} onClick={() => { item.action(); setOpenDropdown(null); }} className="nav-dd-item" style={{ width: "100%", display: "flex", alignItems: "center", gap: ".85rem", padding: ".65rem .85rem", borderRadius: 10, background: "transparent", border: "none", cursor: "pointer", textAlign: "left", transition: "background .15s" }}>
+                          ? <button key={item.label} type="button" role="menuitem" onClick={() => { item.action(); setOpenDropdown(null); }} className="nav-dd-item" style={{ width: "100%", display: "flex", alignItems: "center", gap: ".85rem", padding: ".65rem .85rem", borderRadius: 10, background: "transparent", border: "none", cursor: "pointer", textAlign: "left", transition: "background .15s" }}>
                               <span style={{ fontSize: "1rem", flexShrink: 0 }}>{item.icon}</span>
                               <div>
                                 <div style={{ fontSize: ".83rem", fontWeight: 700, color: dark ? T.cream : T.greenD, fontFamily: "'Plus Jakarta Sans',sans-serif" }}>{item.label}</div>
                                 <div style={{ fontSize: ".72rem", color: dark ? T.d2 : T.p2, marginTop: 1 }}>{item.desc}</div>
                               </div>
                             </button>
-                          : <a key={item.label} href={item.href} onClick={() => setOpenDropdown(null)} className="nav-dd-item" style={{ display: "flex", alignItems: "center", gap: ".85rem", padding: ".65rem .85rem", borderRadius: 10, background: "transparent", transition: "background .15s", textDecoration: "none" }}>
+                          : <a key={item.label} role="menuitem" href={item.href} onClick={() => setOpenDropdown(null)} className="nav-dd-item" style={{ display: "flex", alignItems: "center", gap: ".85rem", padding: ".65rem .85rem", borderRadius: 10, background: "transparent", transition: "background .15s", textDecoration: "none" }}>
                               <span style={{ fontSize: "1rem", flexShrink: 0 }}>{item.icon}</span>
                               <div>
                                 <div style={{ fontSize: ".83rem", fontWeight: 700, color: dark ? T.cream : T.greenD, fontFamily: "'Plus Jakarta Sans',sans-serif" }}>{item.label}</div>
@@ -890,16 +926,17 @@ function SiteNav({ dark, onGive }) {
                   )}
                 </AnimatePresence>
               </div>
-            ))}
+            );
+            })}
 
             {/* Give */}
-            <button onClick={() => onGive()} style={{ padding: ".45rem .75rem", borderRadius: 8, fontSize: ".76rem", fontWeight: 600, letterSpacing: ".04em", textTransform: "uppercase", color: linkC, background: "transparent", border: "none", cursor: "pointer", transition: "all .2s" }}
+            <button onClick={() => onGive()} aria-current={currentPath === "/give" ? "page" : undefined} style={{ padding: ".45rem .75rem", borderRadius: 8, fontSize: ".76rem", fontWeight: 600, letterSpacing: ".04em", textTransform: "uppercase", color: linkC, background: "transparent", border: "none", cursor: "pointer", transition: "all .2s" }}
               onMouseEnter={e => { e.currentTarget.style.color = T.goldL; e.currentTarget.style.background = dark ? "rgba(255,255,255,.05)" : "rgba(22,97,62,.05)"; }}
               onMouseLeave={e => { e.currentTarget.style.color = linkC; e.currentTarget.style.background = "transparent"; }}
             >Give</button>
 
             {/* National Builders CTA */}
-            <button onClick={() => goTo('/NBC')} className="nvc-pulse" style={{ display: "flex", alignItems: "center", gap: ".4rem", fontSize: ".76rem", fontWeight: 800, letterSpacing: ".04em", textTransform: "uppercase", color: "#fff", background: `linear-gradient(135deg,${T.gold},${T.goldD})`, padding: ".5rem 1.15rem", borderRadius: 999, cursor: "pointer", border: "none", transition: "all .2s", boxShadow: `0 4px 16px ${T.gold}44` }}
+            <button onClick={() => goTo('/NBC')} aria-current={currentPath === "/NBC" ? "page" : undefined} className="nvc-pulse" style={{ display: "flex", alignItems: "center", gap: ".4rem", fontSize: ".76rem", fontWeight: 800, letterSpacing: ".04em", textTransform: "uppercase", color: "#fff", background: `linear-gradient(135deg,${T.gold},${T.goldD})`, padding: ".5rem 1.15rem", borderRadius: 999, cursor: "pointer", border: "none", transition: "all .2s", boxShadow: `0 4px 16px ${T.gold}44` }}
               onMouseEnter={e => e.currentTarget.style.filter = "brightness(1.12)"}
               onMouseLeave={e => e.currentTarget.style.filter = "none"}
             >
@@ -914,7 +951,15 @@ function SiteNav({ dark, onGive }) {
           </div>
 
           {/* Mobile burger */}
-          <button onClick={() => setMob(!mob)} style={{ display: "none", color: linkC, cursor: "pointer", padding: 4, background: "none", border: "none" }} className="mob-menu">
+          <button
+            type="button"
+            onClick={() => setMob(!mob)}
+            aria-expanded={mob}
+            aria-controls="mobile-nav"
+            aria-label={mob ? "Close menu" : "Open menu"}
+            style={{ display: "none", color: linkC, cursor: "pointer", padding: 4, background: "none", border: "none" }}
+            className="mob-menu"
+          >
             {mob ? <X size={22} strokeWidth={1.5} /> : <Menu size={22} strokeWidth={1.5} />}
           </button>
         </div>
@@ -927,12 +972,16 @@ function SiteNav({ dark, onGive }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            id="mobile-nav"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Site navigation"
             style={{ position: "fixed", inset: 0, zIndex: 1000, background: dark ? "rgba(5,12,8,.98)" : "rgba(250,250,245,.98)", backdropFilter: "blur(20px)", display: "flex", flexDirection: "column", padding: "1.5rem" }}
           >
             {/* Mobile Header */}
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "2rem" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                <img src="/logo.svg" alt="logo" style={{ width: 32, height: 32 }} />
+                <img src="/logo.svg" alt="logo" loading="lazy" style={{ width: 32, height: 32 }} />
                 <span style={{ fontFamily: "Cinzel, serif", fontWeight: 900, fontSize: "1rem", color: dark ? T.goldL : T.green }}>KIN</span>
               </div>
               <button onClick={() => { setMob(false); setMobSection(null); }} style={{ width: 40, height: 40, borderRadius: "50%", background: dark ? "rgba(255,255,255,.05)" : "rgba(0,0,0,.05)", border: "none", display: "grid", placeItems: "center", color: dark ? T.cream : T.greenD }}>
@@ -992,7 +1041,7 @@ function SiteNav({ dark, onGive }) {
                 {/* Prominent Actions */}
                 <div style={{ marginTop: "1rem", paddingTop: "1rem", borderTop: `1px dashed ${dark ? "rgba(255,255,255,.1)" : "rgba(22,97,62,.1)"}`, display: "flex", flexDirection: "column", gap: "0.75rem" }}>
                   <button 
-                    onClick={() => { onNVC(); setMob(false); }}
+                    onClick={() => { goTo("/NBC"); }}
                     style={{ background: `linear-gradient(135deg,${T.gold},${T.goldD})`, padding: "1.1rem", borderRadius: 16, display: "flex", alignItems: "center", justifyContent: "center", gap: "0.75rem", color: "#fff", fontWeight: 800, fontSize: "1.1rem", border: "none", boxShadow: `0 8px 24px ${T.gold}33` }}
                   >
                     <Star size={20} fill="currentColor" /> National Builders
@@ -1021,7 +1070,7 @@ function SiteNav({ dark, onGive }) {
 }
 
 // ─── HERO ─────────────────────────────────────────────────────────────────────
-function Hero({ onDash, dark }) {
+function Hero({ onDash }) {
   return (
     <section style={{ minHeight: "100svh", background: T.greenD, position: "relative", display: "flex", alignItems: "center", overflow: "hidden", paddingTop: "5rem" }}>
       {/* Ambient bg */}
@@ -1036,7 +1085,7 @@ function Hero({ onDash, dark }) {
           {/* Eyebrow */}
           <motion.div variants={{ initial: { opacity: 0, y: 15 }, animate: { opacity: 1, y: 0 } }} style={{ display: "inline-flex", alignItems: "center", gap: "0.75rem", fontSize: "0.76rem", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase", color: T.goldL, marginBottom: "1.75rem" }}>
             <span style={{ width: "2rem", height: "1.5px", background: T.gold, display: "block" }} />
-            goDs Global KidsInspiring · Est. 2026 · IT No. 6980735
+            goDs Global KidsInspiring · Est. 2022 (founded 2017/2018) · IT No. 6980735
           </motion.div>
           {/* Main headline */}
           <motion.h1 variants={{ initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 } }} style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(2.8rem,8vw,5.8rem)", fontWeight: 900, color: T.cream, letterSpacing: "-0.03em", lineHeight: .96, marginBottom: "1.5rem" }}>
@@ -1045,7 +1094,7 @@ function Hero({ onDash, dark }) {
             building <em style={{ fontStyle: "italic", color: T.goldL }}>Nations</em>
           </motion.h1>
           <motion.p variants={{ initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 } }} style={{ fontSize: "clamp(1rem,2.4vw,1.2rem)", color: "rgba(253,247,236,.72)", lineHeight: 1.68, marginBottom: "2rem", maxWidth: "48ch" }}>
-            In 2026, <strong style={{ color: T.goldL, fontWeight: 600 }}>639 goDs</strong> generated <strong style={{ color: T.goldL, fontWeight: 600 }}>19,695 attendance entries</strong> across 14 programmes — 365 events, every single day of the year.
+            As at 2025, <strong style={{ color: T.goldL, fontWeight: 600 }}>639 goDs</strong> generated <strong style={{ color: T.goldL, fontWeight: 600 }}>19,695 attendance entries</strong> across 14 programmes — 365 events, every single day of the year.
           </motion.p>
           {/* CTAs */}
           <motion.div variants={{ initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 } }} className="hero-btns" style={{ display: "flex", gap: ".75rem", alignItems: "center", flexWrap: "wrap" }}>
@@ -1053,7 +1102,7 @@ function Hero({ onDash, dark }) {
               🔥 Join a Programme
             </motion.a>
             <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }} onClick={onDash} className="ghost-btn" style={{ display: "inline-flex", alignItems: "center", gap: ".5rem", padding: ".9em 2.4em", borderRadius: 999, background: "rgba(253,247,236,.07)", color: T.cream, fontWeight: 500, fontSize: "1rem", border: "1.5px solid rgba(253,247,236,.2)", cursor: "pointer" }}>
-              <Activity size={16} strokeWidth={1.5} /> 2026 Live Data
+              <Activity size={16} strokeWidth={1.5} /> Impact (as at 2025)
             </motion.button>
           </motion.div>
           {/* Schedule strip */}
@@ -1109,10 +1158,10 @@ function KINDStrip({ dark }) {
           <span style={{ fontSize: ".82rem", color: "rgba(253,247,236,.65)" }}>KidsInspiring Nation Devotional · Character Flagship</span>
         </div>
         <div style={{ display: "flex", gap: "0.75rem" }}>
-          <a href="https://whatsapp.com/channel/0029Va8XnCuGE56c4SMaT41w" target="_blank" rel="noopener" style={{ display: "inline-flex", alignItems: "center", gap: ".4rem", padding: ".5em 1.2em", borderRadius: 999, background: "rgba(37,211,102,.15)", color: "#25D366", fontWeight: 600, fontSize: ".78rem", border: "1px solid rgba(37,211,102,.3)", transition: "background .2s" }} onMouseEnter={e => e.currentTarget.style.background = "rgba(37,211,102,.25)"} onMouseLeave={e => e.currentTarget.style.background = "rgba(37,211,102,.15)"}>
+          <a href={SITE.socials.whatsappChannel} target="_blank" rel="noopener noreferrer" aria-label="Open the official WhatsApp channel in a new tab" style={{ display: "inline-flex", alignItems: "center", gap: ".4rem", padding: ".5em 1.2em", borderRadius: 999, background: "rgba(37,211,102,.15)", color: "#25D366", fontWeight: 600, fontSize: ".78rem", border: "1px solid rgba(37,211,102,.3)", transition: "background .2s" }} onMouseEnter={e => e.currentTarget.style.background = "rgba(37,211,102,.25)"} onMouseLeave={e => e.currentTarget.style.background = "rgba(37,211,102,.15)"}>
             <MessageCircle size={13} strokeWidth={2} /> WhatsApp Channel
           </a>
-          <a href="https://t.me/KidsInspiring" target="_blank" rel="noopener" style={{ display: "inline-flex", alignItems: "center", gap: ".4rem", padding: ".5em 1.2em", borderRadius: 999, background: "rgba(0,136,204,.15)", color: "#0088CC", fontWeight: 600, fontSize: ".78rem", border: "1px solid rgba(0,136,204,.3)", transition: "background .2s" }} onMouseEnter={e => e.currentTarget.style.background = "rgba(0,136,204,.25)"} onMouseLeave={e => e.currentTarget.style.background = "rgba(0,136,204,.15)"}>
+          <a href={SITE.socials.telegram} target="_blank" rel="noopener noreferrer" aria-label="Open Telegram in a new tab" style={{ display: "inline-flex", alignItems: "center", gap: ".4rem", padding: ".5em 1.2em", borderRadius: 999, background: "rgba(0,136,204,.15)", color: "#0088CC", fontWeight: 600, fontSize: ".78rem", border: "1px solid rgba(0,136,204,.3)", transition: "background .2s" }} onMouseEnter={e => e.currentTarget.style.background = "rgba(0,136,204,.25)"} onMouseLeave={e => e.currentTarget.style.background = "rgba(0,136,204,.15)"}>
             <Send size={13} strokeWidth={2} /> Telegram
           </a>
         </div>
@@ -1141,9 +1190,17 @@ function AboutSection({ dark }) {
             <p className="reveal d2" style={{ fontSize: "1rem", color: txt, lineHeight: 1.72, maxWidth: "58ch", marginBottom: "1.75rem" }}>
               We are a Nigerian NGO running 14 concurrent programmes.
             </p>
+            <div className="reveal d2" style={{ display: "flex", gap: ".9rem", flexWrap: "wrap", marginTop: "-1rem", marginBottom: "1.75rem" }}>
+              <Link to="/kids-inspiring" style={{ fontSize: ".82rem", fontWeight: 800, color: "rgba(253,247,236,.78)", textDecoration: "none", borderBottom: "1px solid rgba(232,185,84,.35)" }}>
+                Kids Inspiring →
+              </Link>
+              <Link to="/investing-in-kids" style={{ fontSize: ".82rem", fontWeight: 800, color: "rgba(253,247,236,.78)", textDecoration: "none", borderBottom: "1px solid rgba(232,185,84,.35)" }}>
+                Investing in Kids →
+              </Link>
+            </div>
             {/* Quick stats */}
             <div className="reveal d3" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: ".75rem", marginBottom: "1.75rem" }}>
-              {[{ n: "639", l: "goDs reached" }, { n: "19,695", l: "Entries 2026" }, { n: "365", l: "Events held" }].map(s => (
+              {[{ n: "639", l: "goDs reached" }, { n: "19,695", l: "Entries (as at 2025)" }, { n: "365", l: "Events held" }].map(s => (
                 <div key={s.l} style={{ background: card, borderRadius: 14, padding: ".9rem .75rem", border: `1px solid rgba(22,97,62,.1)`, textAlign: "center" }}>
                   <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.7rem", fontWeight: 900, color: T.green, letterSpacing: "-0.04em", lineHeight: 1 }}>{s.n}</div>
                   <div style={{ fontSize: ".72rem", color: txt, fontWeight: 500, marginTop: ".2rem" }}>{s.l}</div>
@@ -1154,7 +1211,7 @@ function AboutSection({ dark }) {
               <a href="#join" className="gold-btn" style={{ display: "inline-flex", alignItems: "center", gap: ".5rem", padding: ".8em 2em", borderRadius: 999, background: T.green, color: T.cream, fontWeight: 700, fontSize: ".9rem", fontFamily: "'Plus Jakarta Sans',sans-serif" }}>
                 Become a goD →
               </a>
-              <a href="https://linktr.ee/KidsInspiringNation" target="_blank" rel="noopener" style={{ display: "inline-flex", alignItems: "center", gap: ".5rem", padding: ".8em 1.6em", borderRadius: 999, border: `1.5px solid ${T.gold}`, color: T.gold, fontWeight: 500, fontSize: ".9rem", background: "transparent", transition: "background .2s" }} onMouseEnter={e => e.currentTarget.style.background = "rgba(196,136,44,.08)"} onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
+              <a href={SITE.socials.linktree} target="_blank" rel="noopener noreferrer" aria-label="Open all KidsInspiring Nation links in a new tab" style={{ display: "inline-flex", alignItems: "center", gap: ".5rem", padding: ".8em 1.6em", borderRadius: 999, border: `1.5px solid ${T.gold}`, color: T.gold, fontWeight: 500, fontSize: ".9rem", background: "transparent", transition: "background .2s" }} onMouseEnter={e => e.currentTarget.style.background = "rgba(196,136,44,.08)"} onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
                 <ExternalLink size={14} strokeWidth={1.5} /> All Links
               </a>
             </div>
@@ -1165,12 +1222,12 @@ function AboutSection({ dark }) {
               "Every child is a goD — a Genius Ordained by Destiny."
             </div>
             <div style={{ background: T.green, borderRadius: 24, position: "relative", overflow: "hidden", padding: "2rem", minHeight: "22rem", display: "flex", alignItems: "flex-end" }}>
-              <img src="/photos/Nation_Builders_Program.jpg" alt="Nation Builders" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.5, mixBlendMode: "overlay" }} />
+              <img src="/photos/Nation_Builders_Program.jpg" alt="Nation Builders" loading="lazy" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.5, mixBlendMode: "overlay" }} />
               <div aria-hidden style={{ position: "absolute", top: "-.1em", right: "-.05em", fontSize: "clamp(10rem,30vw,22rem)", color: "transparent", WebkitTextStroke: "1px rgba(232,185,84,.07)", lineHeight: 1, pointerEvents: "none", userSelect: "none", fontFamily: "'Playfair Display',serif", fontStyle: "italic", fontWeight: 900 }}>goD</div>
               <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(13,61,38,.9) 0%,transparent 60%)" }} />
               <div style={{ position: "relative", zIndex: 2 }}>
                 <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(2.8rem,7vw,4.2rem)", fontWeight: 900, color: T.goldL, letterSpacing: "-0.04em", lineHeight: 1 }}>19,695</div>
-                <div style={{ color: "rgba(253,247,236,.8)", fontSize: ".85rem", fontWeight: 500, letterSpacing: ".04em", marginTop: ".25rem" }}>Attendance entries · 2026</div>
+                <div style={{ color: "rgba(253,247,236,.8)", fontSize: ".85rem", fontWeight: 500, letterSpacing: ".04em", marginTop: ".25rem" }}>Attendance entries · as at 2025</div>
                 <div style={{ marginTop: "1rem", display: "flex", gap: "1.5rem", flexWrap: "wrap" }}>
                   {[{ v: "639", l: "goDs" }, { v: "14", l: "Programmes" }, { v: "365", l: "Events" }, { v: "1,952", l: "Meals served" }].map(s => (
                     <div key={s.l}>
@@ -1214,7 +1271,7 @@ function ProgramsSection({ dark }) {
                 {/* Header */}
                 <div style={{ height: "9.5rem", background: p.bg, display: "flex", alignItems: "flex-end", padding: "1.25rem 1.5rem", justifyContent: "space-between", position: "relative", overflow: "hidden" }}>
                   {p.photo && (
-                    <img src={p.photo} alt={p.name} style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", objectFit: "cover", mixBlendMode: "luminosity", opacity: 0.4, zIndex: 0 }} />
+                    <img src={p.photo} alt={p.name} loading="lazy" style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", objectFit: "cover", mixBlendMode: "luminosity", opacity: 0.4, zIndex: 0 }} />
                   )}
                   <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%)", zIndex: 1 }} />
                   <div style={{ position: "relative", zIndex: 2, display: "flex", justifyContent: "space-between", width: "100%", alignItems: "flex-end" }}>
@@ -1224,7 +1281,7 @@ function ProgramsSection({ dark }) {
                         {p.meals ? `${p.meals.toLocaleString()}+` : p.entries?.toLocaleString() || ""}
                       </div>
                       <div style={{ fontSize: ".65rem", color: "rgba(255,255,255,.8)", fontWeight: 600, textTransform: "uppercase", letterSpacing: ".05em", marginTop: ".25rem" }}>
-                        {p.meals ? "meals served" : "entries 2026"}
+                        {p.meals ? "meals served" : "entries (as at 2025)"}
                       </div>
                     </div>
                   </div>
@@ -1276,7 +1333,7 @@ function ProgramsSection({ dark }) {
                       <div style={{ width: 7, height: 7, borderRadius: "50%", background: T.goldL, animation: "pulse 1.5s ease-in-out infinite" }} />
                       <span style={{ fontSize: ".76rem", fontWeight: 600, color: T.cream }}>Join tonight · 8pm WAT</span>
                     </div>
-                    <a href="https://whatsapp.com/channel/0029Va8XnCuGE56c4SMaT41w" target="_blank" rel="noopener" style={{ fontSize: ".7rem", fontWeight: 600, color: T.goldL, display: "flex", alignItems: "center", gap: ".3rem" }}>
+                    <a href={SITE.socials.whatsappChannel} target="_blank" rel="noopener noreferrer" aria-label="Open WhatsApp channel in a new tab" style={{ fontSize: ".7rem", fontWeight: 600, color: T.goldL, display: "flex", alignItems: "center", gap: ".3rem" }}>
                       <MessageCircle size={11} strokeWidth={2} /> WhatsApp
                     </a>
                   </div>
@@ -1317,7 +1374,7 @@ function VideoSection({ dark }) {
             />
           </div>
           <div style={{ display: "flex", justifyContent: "center", marginTop: "1.25rem" }}>
-            <a href="https://youtube.com/@KidsInspiringNation" target="_blank" rel="noopener" style={{ display: "inline-flex", alignItems: "center", gap: ".5rem", padding: ".6em 1.6em", borderRadius: 999, background: "rgba(255,0,0,.1)", color: "#FF0000", fontWeight: 600, fontSize: ".82rem", border: "1px solid rgba(255,0,0,.2)", transition: "background .2s" }} onMouseEnter={e => e.currentTarget.style.background = "rgba(255,0,0,.18)"} onMouseLeave={e => e.currentTarget.style.background = "rgba(255,0,0,.1)"}>
+            <a href={SITE.socials.youtube} target="_blank" rel="noopener noreferrer" aria-label="Open YouTube in a new tab" style={{ display: "inline-flex", alignItems: "center", gap: ".5rem", padding: ".6em 1.6em", borderRadius: 999, background: "rgba(255,0,0,.1)", color: "#FF0000", fontWeight: 600, fontSize: ".82rem", border: "1px solid rgba(255,0,0,.2)", transition: "background .2s" }} onMouseEnter={e => e.currentTarget.style.background = "rgba(255,0,0,.18)"} onMouseLeave={e => e.currentTarget.style.background = "rgba(255,0,0,.1)"}>
               <Youtube size={15} strokeWidth={1.5} /> @KidsInspiringNation
             </a>
           </div>
@@ -1328,19 +1385,19 @@ function VideoSection({ dark }) {
 }
 
 // ─── IMPACT ───────────────────────────────────────────────────────────────────
-function ImpactSection({ onDash, dark }) {
+function ImpactSection({ onDash }) {
   return (
     <section id="impact" style={{ background: T.greenD, padding: "clamp(4rem,10vw,8rem) 0", position: "relative", overflow: "hidden" }}>
       <div aria-hidden style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", fontFamily: "'Playfair Display',serif", fontSize: "clamp(10rem,35vw,48rem)", fontWeight: 900, fontStyle: "italic", lineHeight: 1, color: "transparent", WebkitTextStroke: "1px rgba(196,136,44,.04)", userSelect: "none", pointerEvents: "none", whiteSpace: "nowrap", letterSpacing: "-0.06em" }}>KIN</div>
       <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 clamp(1.25rem,5vw,3rem)", position: "relative", zIndex: 2 }}>
-        <div className="reveal" style={{ fontSize: ".76rem", fontWeight: 500, letterSpacing: ".1em", textTransform: "uppercase", color: T.gold, textAlign: "center", marginBottom: ".75rem" }}>2026 Impact</div>
+        <div className="reveal" style={{ fontSize: ".76rem", fontWeight: 500, letterSpacing: ".1em", textTransform: "uppercase", color: T.gold, textAlign: "center", marginBottom: ".75rem" }}>Impact (as at 2025)</div>
         <h2 className="reveal d1" style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(2rem,5vw,3.2rem)", fontWeight: 900, letterSpacing: "-0.025em", lineHeight: 1.08, color: T.cream, textAlign: "center", maxWidth: "20ch", margin: "0 auto clamp(2.5rem,5vw,4rem)" }}>
           The Numbers Speak for the Nation
         </h2>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,11rem),1fr))", gap: "1rem", marginBottom: "3rem" }}>
           {[
             { n: "19,695", l: "Total\nAttendance Entries", d: "d1" }, { n: "639", l: "Unique\ngoDs", d: "d2" },
-            { n: "365", l: "Events Held\nin 2026", d: "d3" }, { n: "14", l: "Active\nProgrammes", d: "d4" },
+            { n: "365", l: "Events Held\n(as at 2025)", d: "d3" }, { n: "14", l: "Active\nProgrammes", d: "d4" },
             { n: "13,350", l: "KIND Entries\n(Flagship)", d: "d1" }, { n: "301", l: "Peak Day\nJan 25", d: "d2" },
             { n: "+58%", l: "KIND Growth\nQ1 YoY", d: "d3" }, { n: "+200%", l: "DF3 Growth\nvs 2024", d: "d4" },
             { n: "1,952", l: "Meals Served\nby FACE", d: "d1" }, { n: "9", l: "Daniel Fast\nSessions", d: "d2" },
@@ -1357,7 +1414,7 @@ function ImpactSection({ onDash, dark }) {
           <button onClick={onDash} style={{ display: "inline-flex", alignItems: "center", gap: ".6rem", padding: ".85em 2.25em", borderRadius: 999, background: "rgba(196,136,44,.14)", color: T.goldL, fontWeight: 500, fontSize: ".9rem", border: "1px solid rgba(196,136,44,.3)", cursor: "pointer", transition: "background .2s" }}
             onMouseEnter={e => e.currentTarget.style.background = "rgba(196,136,44,.24)"}
             onMouseLeave={e => e.currentTarget.style.background = "rgba(196,136,44,.14)"}>
-            <LayoutDashboard size={15} strokeWidth={1.5} /> Explore Full 2026 Dashboard →
+            <LayoutDashboard size={15} strokeWidth={1.5} /> Explore Full Dashboard →
           </button>
         </div>
       </div>
@@ -1383,7 +1440,7 @@ function FACESection({ dark }) {
               Every Sunday at 3pm, KidsInspiring Nation shows up to feed every child in the community. This is not a charity event — it is an act of love, a declaration that raising <GoDs style={{ color: T.coral }} /> includes meeting their most practical needs.
             </p>
             <div className="reveal d3" style={{ display: "flex", gap: "1.5rem", flexWrap: "wrap", marginBottom: "2rem" }}>
-              {[{ n: "1,952", l: "Meals in 2026" }, { n: "52", l: "Sundays served" }, { n: "3pm", l: "Every Sunday" }].map(s => (
+              {[{ n: "1,952", l: "Meals (as at 2025)" }, { n: "52", l: "Sundays served" }, { n: "3pm", l: "Every Sunday" }].map(s => (
                 <div key={s.l} style={{ textAlign: "center" }}>
                   <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "2rem", fontWeight: 900, color: T.coral, letterSpacing: "-0.04em", lineHeight: 1 }}>{s.n}</div>
                   <div style={{ fontSize: ".72rem", color: dark ? T.d2 : T.p2, fontWeight: 500, marginTop: ".2rem" }}>{s.l}</div>
@@ -1395,7 +1452,7 @@ function FACESection({ dark }) {
             <div aria-hidden style={{ position: "absolute", top: "-.1em", right: "-.05em", fontSize: "8rem", lineHeight: 1, pointerEvents: "none", userSelect: "none", opacity: .12 }}>🍽️</div>
             <div style={{ fontSize: ".76rem", fontWeight: 600, letterSpacing: ".08em", textTransform: "uppercase", color: "rgba(255,255,255,.6)", marginBottom: ".5rem" }}>FACE · Feed A Community Every week</div>
             <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(2.5rem,6vw,3.5rem)", fontWeight: 900, color: "#fff", letterSpacing: "-0.04em", lineHeight: 1, marginBottom: ".5rem" }}>1,952</div>
-            <div style={{ color: "rgba(255,255,255,.8)", fontSize: ".9rem" }}>meals served across 52 Sundays in 2026</div>
+            <div style={{ color: "rgba(255,255,255,.8)", fontSize: ".9rem" }}>meals served across 52 Sundays (as at 2025)</div>
           </div>
         </div>
       </div>
@@ -1471,7 +1528,7 @@ function TestimonySection({ dark }) {
 }
 
 // ─── CTA ──────────────────────────────────────────────────────────────────────
-function CTASection({ dark }) {
+function CTASection() {
   return (
     <section id="join" style={{ background: T.greenD, padding: "clamp(4rem,10vw,8rem) 0", textAlign: "center", position: "relative", overflow: "hidden" }}>
       <div aria-hidden style={{ position: "absolute", bottom: "-.1em", left: "50%", transform: "translateX(-50%)", fontFamily: "'Playfair Display',serif", fontSize: "clamp(12rem,38vw,52rem)", fontWeight: 900, fontStyle: "italic", color: "transparent", WebkitTextStroke: "1px rgba(196,136,44,.04)", pointerEvents: "none", userSelect: "none", lineHeight: 1, whiteSpace: "nowrap" }}>goDs</div>
@@ -1483,17 +1540,17 @@ function CTASection({ dark }) {
           Your Child Belongs <em style={{ fontStyle: "italic", color: T.goldL }}>Here</em>
         </h2>
         <p className="reveal d2" style={{ fontSize: "clamp(1rem,2.5vw,1.15rem)", color: "rgba(253,247,236,.7)", maxWidth: "46ch", margin: "0 auto 2.5rem", lineHeight: 1.7 }}>
-          In 2026, 639 goDs showed up — day after day, programme after programme. The 2026 story is being written. Your child belongs in it.
+          As at 2025, 639 goDs showed up — day after day, programme after programme. The story is being written. Your child belongs in it.
         </p>
         {/* ACTION GRID */}
         <div className="reveal d3" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,200px),1fr))", gap: ".75rem", maxWidth: "700px", margin: "0 auto 2.5rem" }}>
           {[
             { label: "Join KIND Daily", sub: "8pm WAT · Every day", href: "https://whatsapp.com/channel/0029Va8XnCuGE56c4SMaT41w", icon: "📖", color: T.kindC },
-            { label: "Register Your Child", sub: "All programmes", href: `mailto:KidsinspiringNation@gmail.com`, icon: "👑", color: T.kingsC },
-            { label: "Give / Donate", sub: "Support a goD", href: "https://bit.ly/KINgiv", icon: "🙏", color: T.gold },
-            { label: "Partner With Us", sub: "NGO collaboration", href: `mailto:KidsinspiringNation@gmail.com?subject=Partnership`, icon: "🤝", color: T.cstC },
+            { label: "Register Your Child", sub: "All programmes", href: "/contact?subject=child", icon: "👑", color: T.kingsC },
+            { label: "Give / Donate", sub: "Support a goD", href: "/give", icon: "🙏", color: T.gold },
+            { label: "Partner With Us", sub: "NGO collaboration", href: "/contact?subject=partner", icon: "🤝", color: T.cstC },
           ].map(a => (
-            <a key={a.label} href={a.href} target={a.href.startsWith("http") ? "_blank" : undefined} rel="noopener"
+            <a key={a.label} href={a.href} target={a.href.startsWith("http") ? "_blank" : undefined} rel={a.href.startsWith("http") ? "noopener noreferrer" : undefined}
               style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "1.2rem 1rem", borderRadius: 16, background: "rgba(253,247,236,.05)", border: `1px solid rgba(253,247,236,.12)`, transition: "all .2s", textDecoration: "none" }}
               onMouseEnter={e => { e.currentTarget.style.background = "rgba(253,247,236,.1)"; e.currentTarget.style.transform = "translateY(-3px)"; }}
               onMouseLeave={e => { e.currentTarget.style.background = "rgba(253,247,236,.05)"; e.currentTarget.style.transform = ""; }}>
@@ -1504,10 +1561,10 @@ function CTASection({ dark }) {
           ))}
         </div>
         <div className="reveal d4" style={{ display: "flex", flexWrap: "wrap", gap: ".75rem", justifyContent: "center" }}>
-          <a href="https://bit.ly/KINgiv" target="_blank" rel="noopener" className="gold-btn" style={{ display: "inline-flex", alignItems: "center", gap: ".5rem", padding: ".9em 2.5em", borderRadius: 999, background: T.gold, color: "#fff", fontWeight: 700, fontSize: "1rem", fontFamily: "'Plus Jakarta Sans',sans-serif" }}>
+          <a href="/give" className="gold-btn" style={{ display: "inline-flex", alignItems: "center", gap: ".5rem", padding: ".9em 2.5em", borderRadius: 999, background: T.gold, color: "#fff", fontWeight: 700, fontSize: "1rem", fontFamily: "'Plus Jakarta Sans',sans-serif", textDecoration: "none" }}>
             💛 Give to KidsInspiring Nation
           </a>
-          <a href="https://linktr.ee/KidsInspiringNation" target="_blank" rel="noopener" style={{ display: "inline-flex", alignItems: "center", gap: ".5rem", padding: ".9em 2em", borderRadius: 999, background: "rgba(253,247,236,.08)", color: T.cream, fontWeight: 500, fontSize: "1rem", border: "1.5px solid rgba(253,247,236,.2)" }}>
+          <a href={SITE.socials.linktree} target="_blank" rel="noopener noreferrer" aria-label="Open all KidsInspiring Nation links in a new tab" style={{ display: "inline-flex", alignItems: "center", gap: ".5rem", padding: ".9em 2em", borderRadius: 999, background: "rgba(253,247,236,.08)", color: T.cream, fontWeight: 500, fontSize: "1rem", border: "1.5px solid rgba(253,247,236,.2)" }}>
             <ExternalLink size={15} strokeWidth={1.5} /> All Our Links
           </a>
         </div>
@@ -1517,7 +1574,7 @@ function CTASection({ dark }) {
 }
 
 // ─── FOOTER ───────────────────────────────────────────────────────────────────
-function Footer({ dark }) {
+function Footer() {
   return (
     <footer style={{ background: "#060E08", padding: "clamp(2.5rem,6vw,5rem) 0 1.5rem" }}>
       <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 clamp(1.25rem,5vw,3rem)" }}>
@@ -1537,14 +1594,14 @@ function Footer({ dark }) {
             </p>
             {/* Social icons */}
             <div style={{ display: "flex", gap: ".6rem", flexWrap: "wrap" }}>
-              {[
-                { icon: <Youtube size={14} strokeWidth={1.5} />, href: "https://youtube.com/@KidsInspiringNation", label: "YouTube" },
-                { icon: <Instagram size={14} strokeWidth={1.5} />, href: "https://instagram.com/KidsInspiringNation", label: "Instagram" },
-                { icon: <MessageCircle size={14} strokeWidth={1.5} />, href: "https://whatsapp.com/channel/0029Va8XnCuGE56c4SMaT41w", label: "WhatsApp" },
-                { icon: <Send size={14} strokeWidth={1.5} />, href: "https://t.me/KidsInspiring", label: "Telegram" },
-                { icon: <ExternalLink size={14} strokeWidth={1.5} />, href: "https://linktr.ee/KidsInspiringNation", label: "Linktree" },
-              ].map(s => (
-                <a key={s.label} href={s.href} target="_blank" rel="noopener" title={s.label}
+                {[
+                  { icon: <Youtube size={14} strokeWidth={1.5} />, href: SITE.socials.youtube, label: "YouTube" },
+                  { icon: <Instagram size={14} strokeWidth={1.5} />, href: SITE.socials.instagram, label: "Instagram" },
+                  { icon: <MessageCircle size={14} strokeWidth={1.5} />, href: SITE.socials.whatsappChannel, label: "WhatsApp" },
+                  { icon: <Send size={14} strokeWidth={1.5} />, href: SITE.socials.telegram, label: "Telegram" },
+                  { icon: <ExternalLink size={14} strokeWidth={1.5} />, href: SITE.socials.linktree, label: "Linktree" },
+                ].map(s => (
+                <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={`Open ${s.label} in a new tab`} title={s.label}
                   style={{ width: 32, height: 32, borderRadius: 8, background: "rgba(253,247,236,.06)", border: "1px solid rgba(253,247,236,.08)", display: "grid", placeItems: "center", color: "rgba(253,247,236,.5)", transition: "all .2s" }}
                   onMouseEnter={e => { e.currentTarget.style.background = "rgba(253,247,236,.12)"; e.currentTarget.style.color = T.goldL; }}
                   onMouseLeave={e => { e.currentTarget.style.background = "rgba(253,247,236,.06)"; e.currentTarget.style.color = "rgba(253,247,236,.5)"; }}>
@@ -1569,15 +1626,15 @@ function Footer({ dark }) {
             <div style={{ fontSize: ".72rem", fontWeight: 600, letterSpacing: ".08em", textTransform: "uppercase", color: T.gold, marginBottom: ".75rem" }}>Get Involved</div>
             <ul style={{ display: "flex", flexDirection: "column", gap: ".4rem" }}>
               {[
-                { l: "Give / Donate", href: "https://bit.ly/KINgiv" },
-                { l: "Register Your Child", href: "mailto:KidsinspiringNation@gmail.com" },
-                { l: "Partnership", href: "mailto:KidsinspiringNation@gmail.com?subject=Partnership" },
-                { l: "Volunteer (CST)", href: "mailto:KidsinspiringNation@gmail.com?subject=Volunteer" },
+                { l: "Give / Donate", href: "/give" },
+                { l: "Register Your Child", href: "/contact?subject=child" },
+                { l: "Partnership", href: "/contact?subject=partner" },
+                { l: "Volunteer (CST)", href: "/contact?subject=volunteer" },
                 { l: "WhatsApp Channel", href: "https://whatsapp.com/channel/0029Va8XnCuGE56c4SMaT41w" },
                 { l: "Telegram", href: "https://t.me/KidsInspiring" },
                 { l: "All Links (Linktree)", href: "https://linktr.ee/KidsInspiringNation" },
               ].map(l => (
-                <li key={l.l}><a href={l.href} target={l.href.startsWith("http") ? "_blank" : undefined} rel="noopener" style={{ fontSize: ".8rem", color: "rgba(253,247,236,.45)", transition: "color .15s" }} onMouseEnter={e => e.target.style.color = T.goldL} onMouseLeave={e => e.target.style.color = "rgba(253,247,236,.45)"}>{l.l}</a></li>
+                <li key={l.l}><a href={l.href} target={l.href.startsWith("http") ? "_blank" : undefined} rel={l.href.startsWith("http") ? "noopener noreferrer" : undefined} style={{ fontSize: ".8rem", color: "rgba(253,247,236,.45)", transition: "color .15s" }} onMouseEnter={e => e.target.style.color = T.goldL} onMouseLeave={e => e.target.style.color = "rgba(253,247,236,.45)"}>{l.l}</a></li>
               ))}
             </ul>
           </div>
@@ -1587,10 +1644,10 @@ function Footer({ dark }) {
             <div style={{ fontSize: ".72rem", fontWeight: 600, letterSpacing: ".08em", textTransform: "uppercase", color: T.gold, marginBottom: ".75rem" }}>Legal</div>
             <ul style={{ display: "flex", flexDirection: "column", gap: ".4rem" }}>
               {[
-                { l: "Privacy Policy (NDPR)", href: "#privacy" },
-                { l: "Cookie Policy", href: "#cookies" },
-                { l: "Child Safeguarding Policy", href: "#safeguarding" },
-                { l: "NGO Registration", href: "#registration" },
+                { l: "Transparency", href: "/transparency" },
+                { l: "FAQ", href: "/faq" },
+                { l: "Contact", href: "/contact" },
+                { l: "NGO Registration", href: "/about" },
               ].map(l => (
                 <li key={l.l}><a href={l.href} style={{ fontSize: ".8rem", color: "rgba(253,247,236,.45)", transition: "color .15s" }} onMouseEnter={e => e.target.style.color = T.goldL} onMouseLeave={e => e.target.style.color = "rgba(253,247,236,.45)"}>{l.l}</a></li>
               ))}
@@ -1610,7 +1667,7 @@ function Footer({ dark }) {
             { icon: <Youtube size={13} strokeWidth={1.5} />, label: "@KidsInspiringNation", href: "https://youtube.com/@KidsInspiringNation" },
             { icon: <ExternalLink size={13} strokeWidth={1.5} />, label: "linktr.ee/KidsInspiringNation", href: "https://linktr.ee/KidsInspiringNation" },
           ].map(c => (
-            <a key={c.label} href={c.href} target={c.href.startsWith("http") ? "_blank" : undefined} rel="noopener"
+            <a key={c.label} href={c.href} target={c.href.startsWith("http") ? "_blank" : undefined} rel={c.href.startsWith("http") ? "noopener noreferrer" : undefined}
               style={{ display: "flex", alignItems: "center", gap: ".4rem", fontSize: ".76rem", color: "rgba(253,247,236,.5)", transition: "color .15s" }}
               onMouseEnter={e => e.currentTarget.style.color = T.goldL}
               onMouseLeave={e => e.currentTarget.style.color = "rgba(253,247,236,.5)"}>
@@ -1621,7 +1678,7 @@ function Footer({ dark }) {
 
         {/* Bottom */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: ".5rem" }}>
-          <p style={{ fontSize: ".72rem", color: "rgba(253,247,236,.25)" }}>© 2026 goDs Global KidsInspiring · IT No. 6980735 · All rights reserved</p>
+          <p style={{ fontSize: ".72rem", color: "rgba(253,247,236,.25)" }}>© 2025 goDs Global KidsInspiring · IT No. 6980735 · All rights reserved</p>
           <p style={{ fontSize: ".72rem", color: "rgba(253,247,236,.25)" }}>NDPR Compliant · 19,695 entries · 639 goDs · One mission 🇳🇬</p>
         </div>
       </div>
@@ -1658,7 +1715,7 @@ function Dashboard({ onBack, dark, toggleDark }) {
       <aside style={{ width: sideOpen ? 220 : 58, flexShrink: 0, transition: "width .2s ease-out", background: s.surf, borderRight: `1px solid ${s.brd}`, display: "flex", flexDirection: "column", overflow: "hidden" }}>
         <div style={{ padding: "16px 12px", borderBottom: `1px solid ${s.brd}`, display: "flex", alignItems: "center", gap: 9, minHeight: 58 }}>
           <div style={{ width: 30, height: 30, background: T.green, borderRadius: 7, display: "grid", placeItems: "center", color: T.goldL, fontFamily: "'Playfair Display',serif", fontStyle: "italic", fontWeight: 900, fontSize: ".95rem", flexShrink: 0 }}>g</div>
-          {sideOpen && <div><div style={{ fontSize: 12, fontWeight: 700, color: s.p1, fontFamily: "'Plus Jakarta Sans',sans-serif" }}>KIN Dashboard</div><div style={{ fontSize: 10, color: s.p3, fontFamily: "'DM Mono',monospace" }}>2026 Live Data</div></div>}
+          {sideOpen && <div><div style={{ fontSize: 12, fontWeight: 700, color: s.p1, fontFamily: "'Plus Jakarta Sans',sans-serif" }}>KIN Dashboard</div><div style={{ fontSize: 10, color: s.p3, fontFamily: "'DM Mono',monospace" }}>As at 2025</div></div>}
         </div>
         <nav style={{ padding: "10px 6px", flex: 1 }}>
           {NAV.map(({ label, icon: Ic }, i) => {
@@ -1697,7 +1754,7 @@ function Dashboard({ onBack, dark, toggleDark }) {
             </button>
             <div>
               <h1 style={{ fontSize: 14, fontWeight: 700, color: s.p1, fontFamily: "'Plus Jakarta Sans',sans-serif", letterSpacing: "-0.02em" }}>{view}</h1>
-              <p style={{ fontSize: 10, color: s.p3, fontFamily: "'DM Mono',monospace" }}>KidsInspiring Nation · 2026 · 19,695 entries · 639 goDs</p>
+              <p style={{ fontSize: 10, color: s.p3, fontFamily: "'DM Mono',monospace" }}>KidsInspiring Nation · as at 2025 · 19,695 entries · 639 goDs</p>
             </div>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
@@ -1747,7 +1804,9 @@ function KPI({ label, value, deltaLabel, up = true, ctx, delay = 0, spark, raw }
             <AreaChart data={spark} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
               <defs>
                 <linearGradient id={`sp${label}`} x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor={T.green} stopOpacity={.22} /><stop offset="95%" stopColor={T.green} stopOpacity={0} />
+                  <stop offset="0%" stopColor={T.goldL} stopOpacity={.4} />
+                  <stop offset="50%" stopColor={T.green} stopOpacity={.2} />
+                  <stop offset="100%" stopColor={T.green} stopOpacity={0} />
                 </linearGradient>
               </defs>
               <Area type="monotone" dataKey="total" stroke={T.green} strokeWidth={1.5} fill={`url(#sp${label})`} dot={false} />
@@ -1769,7 +1828,7 @@ function OverviewView({ ctx }) {
       <div style={{ marginBottom: 16 }}>
         <div className="dhover" style={{ background: surf, borderRadius: 16, padding: "26px 26px 20px", border: `1px solid ${brd}`, boxShadow: dark ? "none" : "0 1px 2px rgba(0,0,0,.04),0 4px 16px rgba(0,0,0,.04)", display: "grid", gridTemplateColumns: "auto 1fr", gap: 32, alignItems: "center", animation: ready ? "enter 250ms 0ms ease-out both" : "none" }}>
           <div>
-            <div style={{ fontSize: 10, fontWeight: 500, letterSpacing: ".07em", textTransform: "uppercase", color: p3, marginBottom: 6 }}>Total Attendance Entries · 2026</div>
+            <div style={{ fontSize: 10, fontWeight: 500, letterSpacing: ".07em", textTransform: "uppercase", color: p3, marginBottom: 6 }}>Total Attendance Entries · as at 2025</div>
             <div style={{ fontSize: "clamp(42px,5vw,66px)", fontWeight: 300, letterSpacing: "-0.04em", color: p1, lineHeight: 1, fontVariantNumeric: "tabular-nums", fontFamily: "'Plus Jakarta Sans',sans-serif" }}>
               {ctx.hide ? "••,•••" : hero.toLocaleString()}
             </div>
@@ -1781,7 +1840,9 @@ function OverviewView({ ctx }) {
             <AreaChart data={MONTHLY} margin={{ top: 4, right: 4, left: 0, bottom: 0 }}>
               <defs>
                 <linearGradient id="hG" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor={T.green} stopOpacity={.2} /><stop offset="95%" stopColor={T.green} stopOpacity={0} />
+                  <stop offset="0%" stopColor={T.gold} stopOpacity={.3} />
+                  <stop offset="50%" stopColor={T.green} stopOpacity={.1} />
+                  <stop offset="100%" stopColor={T.green} stopOpacity={0} />
                 </linearGradient>
               </defs>
               <CartesianGrid horizontal stroke={dark ? "rgba(255,255,255,.04)" : "rgba(0,0,0,.04)"} vertical={false} />
@@ -1808,7 +1869,7 @@ function OverviewView({ ctx }) {
           <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 16 }}>
             <div>
               <div style={{ fontSize: 13, fontWeight: 600, color: p1, letterSpacing: "-0.02em", fontFamily: "'Plus Jakarta Sans',sans-serif" }}>Monthly Attendance</div>
-              <div style={{ fontSize: 11, color: p2, marginTop: 2 }}>All programmes combined · 2026</div>
+              <div style={{ fontSize: 11, color: p2, marginTop: 2 }}>All programmes combined · as at 2025</div>
             </div>
             <div style={{ display: "flex", gap: 12 }}>
               {[{ c: T.green, l: "Entries" }, { c: T.gold, l: "Avg/session" }].map(s => (
@@ -1865,7 +1926,7 @@ function OverviewView({ ctx }) {
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
         <div className="dhover" style={{ background: surf, borderRadius: 16, padding: 20, border: `1px solid ${brd}`, boxShadow: dark ? "none" : "0 1px 2px rgba(0,0,0,.04),0 4px 16px rgba(0,0,0,.04)", animation: ready ? "enter 250ms 280ms ease-out both" : "none" }}>
           <div style={{ fontSize: 13, fontWeight: 600, color: p1, fontFamily: "'Plus Jakarta Sans',sans-serif", marginBottom: 3 }}>Programme Mix</div>
-          <div style={{ fontSize: 11, color: p2, marginBottom: 14 }}>Entries by programme · 2026</div>
+          <div style={{ fontSize: 11, color: p2, marginBottom: 14 }}>Entries by programme · as at 2025</div>
           <ResponsiveContainer width="100%" height={195}>
             <BarChart data={PROGRAMS.filter(p => p.entries && p.entries > 30)} layout="vertical" margin={{ top: 0, right: 4, left: 0, bottom: 0 }} barSize={12}>
               <CartesianGrid horizontal={false} vertical stroke={dark ? "rgba(255,255,255,.04)" : "rgba(0,0,0,.04)"} />
@@ -1882,7 +1943,7 @@ function OverviewView({ ctx }) {
           <div style={{ fontSize: 13, fontWeight: 600, color: p1, fontFamily: "'Plus Jakarta Sans',sans-serif", marginBottom: 3 }}>KIND · Q1 Growth</div>
           <div style={{ fontSize: 11, color: p2, marginBottom: 14 }}>Avg attendance per session · Q1 YoY</div>
           <ResponsiveContainer width="100%" height={195}>
-            <BarChart data={[{ name: "Q1 2024", val: 83 }, { name: "Q1 2026", val: 131 }]} margin={{ top: 4, right: 4, left: -22, bottom: 0 }} barSize={52}>
+            <BarChart data={[{ name: "Q1 2024", val: 83 }, { name: "Q1 2025", val: 131 }]} margin={{ top: 4, right: 4, left: -22, bottom: 0 }} barSize={52}>
               <CartesianGrid horizontal stroke={dark ? "rgba(255,255,255,.04)" : "rgba(0,0,0,.04)"} vertical={false} />
               <XAxis dataKey="name" tick={{ fontSize: 10, fill: p3, fontFamily: "'DM Mono',monospace" }} axisLine={false} tickLine={false} />
               <YAxis tick={{ fontSize: 10, fill: p3, fontFamily: "'DM Mono',monospace" }} axisLine={false} tickLine={false} />
@@ -1908,7 +1969,7 @@ function ProgrammesView({ ctx }) {
       <div className="dhover" style={{ background: surf, borderRadius: 16, border: `1px solid ${brd}`, boxShadow: dark ? "none" : "0 1px 2px rgba(0,0,0,.04),0 4px 16px rgba(0,0,0,.04)", overflow: "hidden", marginBottom: 16, animation: ready ? "enter 250ms 0ms ease-out both" : "none" }}>
         <div style={{ padding: "14px 18px", borderBottom: `1px solid ${brd}`, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <div>
-            <div style={{ fontSize: 13, fontWeight: 700, color: p1, fontFamily: "'Plus Jakarta Sans',sans-serif" }}>All 8 Programmes · 2026</div>
+            <div style={{ fontSize: 13, fontWeight: 700, color: p1, fontFamily: "'Plus Jakarta Sans',sans-serif" }}>All 8 Programmes · as at 2025</div>
             <div style={{ fontSize: 11, color: p2, marginTop: 2 }}>KidsInspiring Nation · NDPR Data Controller: goDs Global KidsInspiring (IT No. 6980735)</div>
           </div>
         </div>
@@ -1999,7 +2060,7 @@ function ParticipantsView({ ctx }) {
         <div className="dhover" style={{ background: surf, borderRadius: 16, border: `1px solid ${brd}`, boxShadow: dark ? "none" : "0 1px 2px rgba(0,0,0,.04),0 4px 16px rgba(0,0,0,.04)", overflow: "hidden", animation: ready ? "enter 250ms 0ms ease-out both" : "none" }}>
           <div style={{ padding: "14px 18px", borderBottom: `1px solid ${brd}`, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
             <div>
-              <div style={{ fontSize: 13, fontWeight: 700, color: p1, fontFamily: "'Plus Jakarta Sans',sans-serif" }}>gDX Leaders · 2026</div>
+              <div style={{ fontSize: 13, fontWeight: 700, color: p1, fontFamily: "'Plus Jakarta Sans',sans-serif" }}>gDX Leaders · as at 2025</div>
               <div style={{ fontSize: 10, color: p2, marginTop: 2 }}>goDxperience attendance — Sunday 11am</div>
             </div>
             <span className="kinbadge" style={{ background: "rgba(232,185,84,.15)", color: T.goldL }}>gDX</span>
@@ -2025,7 +2086,7 @@ function ParticipantsView({ ctx }) {
         <div className="dhover" style={{ background: surf, borderRadius: 16, border: `1px solid ${brd}`, boxShadow: dark ? "none" : "0 1px 2px rgba(0,0,0,.04),0 4px 16px rgba(0,0,0,.04)", overflow: "hidden", animation: ready ? "enter 250ms 60ms ease-out both" : "none" }}>
           <div style={{ padding: "14px 18px", borderBottom: `1px solid ${brd}`, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
             <div>
-              <div style={{ fontSize: 13, fontWeight: 700, color: p1, fontFamily: "'Plus Jakarta Sans',sans-serif" }}>KIND Champions · H1 2026</div>
+              <div style={{ fontSize: 13, fontWeight: 700, color: p1, fontFamily: "'Plus Jakarta Sans',sans-serif" }}>KIND Champions · as at 2025</div>
               <div style={{ fontSize: 10, color: p2, marginTop: 2 }}>Devotional attendance H1 score — Daily 8pm</div>
             </div>
             <span className="kinbadge" style={{ background: "rgba(22,97,62,.12)", color: T.kindC }}>KIND</span>
@@ -2053,7 +2114,7 @@ function ParticipantsView({ ctx }) {
         <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 16 }}>
           <div>
             <div style={{ fontSize: 13, fontWeight: 700, color: p1, fontFamily: "'Plus Jakarta Sans',sans-serif" }}>KINGs goD Cells — Cohort Breakdown</div>
-            <div style={{ fontSize: 11, color: p2, marginTop: 2 }}>Three cohorts · 43 sessions each · Sundays 5pm · 2026</div>
+            <div style={{ fontSize: 11, color: p2, marginTop: 2 }}>Three cohorts · 43 sessions each · Sundays 5pm · as at 2025</div>
           </div>
           <span className="kinbadge" style={{ background: "rgba(123,45,139,.12)", color: T.kingsC }}>KINGs</span>
         </div>
@@ -2099,7 +2160,7 @@ function DFView({ ctx }) {
               <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 11, fontWeight: 700, color: T.ok }}>{hide ? "••%" : `+${d.pct}%`}</span>
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 14 }}>
-              {[{ l: "2024", v: d.y2024, dim: true }, { l: "2026", v: d.y2026, dim: false }].map(y => (
+              {[{ l: "2024", v: d.y2024, dim: true }, { l: "2025", v: d.y2026, dim: false }].map(y => (
                 <div key={y.l} style={{ textAlign: "center", padding: "10px 6px", borderRadius: 10, background: y.dim ? (dark ? "rgba(255,255,255,.03)" : "rgba(0,0,0,.03)") : (dark ? "rgba(196,136,44,.12)" : "rgba(196,136,44,.06)"), border: y.dim ? "none" : `1px solid rgba(196,136,44,.2)` }}>
                   <div style={{ fontSize: 9, color: p3, letterSpacing: ".06em", textTransform: "uppercase", marginBottom: 4 }}>{y.l}</div>
                   <div style={{ fontSize: 26, fontWeight: 300, color: y.dim ? p2 : T.gold, letterSpacing: "-0.04em", fontFamily: "'Plus Jakarta Sans',sans-serif" }}>{hide ? "•••" : y.v}</div>
@@ -2110,17 +2171,17 @@ function DFView({ ctx }) {
             <div style={{ height: 3, borderRadius: 999, background: dark ? "rgba(255,255,255,.08)" : "rgba(0,0,0,.06)", overflow: "hidden" }}>
               <div style={{ height: "100%", background: T.dfC, borderRadius: 999, width: `${Math.round(d.y2026 / (d.y2026 + d.y2024) * 100)}%` }} />
             </div>
-            <div style={{ fontSize: 9, color: p3, marginTop: 5, fontFamily: "'DM Mono',monospace" }}>2026 share of 2-year combined total</div>
+            <div style={{ fontSize: 9, color: p3, marginTop: 5, fontFamily: "'DM Mono',monospace" }}>2025 share of 2-year combined total</div>
           </div>
         ))}
       </div>
 
       {/* Grouped bar chart */}
       <div className="dhover" style={{ background: surf, borderRadius: 16, padding: 20, border: `1px solid ${brd}`, boxShadow: dark ? "none" : "0 1px 2px rgba(0,0,0,.04),0 4px 16px rgba(0,0,0,.04)", marginBottom: 14, animation: ready ? "enter 250ms 200ms ease-out both" : "none" }}>
-        <div style={{ fontSize: 13, fontWeight: 700, color: p1, fontFamily: "'Plus Jakarta Sans',sans-serif", marginBottom: 3 }}>Daniel Fast · 2024 vs 2026</div>
+        <div style={{ fontSize: 13, fontWeight: 700, color: p1, fontFamily: "'Plus Jakarta Sans',sans-serif", marginBottom: 3 }}>Daniel Fast · 2024 vs 2025</div>
         <div style={{ fontSize: 11, color: p2, marginBottom: 14 }}>Attendance entries per week · year-over-year comparison</div>
         <div style={{ display: "flex", gap: 14, marginBottom: 14 }}>
-          {[{ c: dark ? "rgba(196,136,44,.35)" : T.greenM, l: "2024" }, { c: T.dfC, l: "2026" }].map(s => (
+          {[{ c: dark ? "rgba(196,136,44,.35)" : T.greenM, l: "2024" }, { c: T.dfC, l: "2025" }].map(s => (
             <div key={s.l} style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 10, color: p3 }}>
               <div style={{ width: 8, height: 8, borderRadius: 2, background: s.c }} />{s.l}
             </div>
@@ -2133,7 +2194,7 @@ function DFView({ ctx }) {
             <YAxis tick={{ fontSize: 10, fill: p3, fontFamily: "'DM Mono',monospace" }} axisLine={false} tickLine={false} />
             <Tooltip content={<CustomTooltip dark={dark} />} />
             <Bar dataKey="y2024" name="2024" fill={dark ? "rgba(196,136,44,.3)" : T.greenM} radius={[4, 4, 0, 0]} />
-            <Bar dataKey="y2026" name="2026" fill={T.dfC} radius={[4, 4, 0, 0]} />
+            <Bar dataKey="y2026" name="2025" fill={T.dfC} radius={[4, 4, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </div>
@@ -2144,7 +2205,7 @@ function DFView({ ctx }) {
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,200px),1fr))", gap: 12 }}>
           {[
             { icon: "🔥", t: "DF3 is the defining story", d: "200% growth in DF Week 3 (212→637) shows that goDs who complete earlier weeks deepen their commitment. The fasting culture is compounding." },
-            { icon: "📈", t: "Overall DF momentum", d: "Total DF grew from 743 (2024) to 1,619 (2026) — a 118% increase. Daniel Fast is now a defining identity marker for KidsInspiring Nation." },
+            { icon: "📈", t: "Overall DF momentum", d: "Total DF grew from 743 (2024) to 1,619 (as at 2025) — a 118% increase. Daniel Fast is now a defining identity marker for KidsInspiring Nation." },
             { icon: "✨", t: "Retention driving numbers", d: "DF3 unique participants grew +43%, but entries grew +200% — meaning existing participants attended far more sessions, not just more people attending once." },
           ].map(c => (
             <div key={c.t} style={{ background: dark ? "rgba(196,136,44,.07)" : "rgba(196,136,44,.04)", borderRadius: 10, padding: 14, border: "1px solid rgba(196,136,44,.12)" }}>
@@ -2163,104 +2224,243 @@ function DFView({ ctx }) {
 //  ROOT APP
 // ═══════════════════════════════════════════════════════════════════════════════
 
+// ─── FLOATING CHAT ───────────────────────────────────────────────────────────
+function FloatingChat({ dark }) {
+  const [expanded, setExpanded] = useState(false);
+  
+  const iconMap = {
+    telegram: Send,
+    instagram: Instagram,
+  };
+  const socialLinks = [
+    { key: "telegram", label: "Telegram", href: SITE.socials.telegram, color: "#0088CC" },
+    { key: "whatsapp", label: "WhatsApp", href: SITE.socials.whatsappChat, color: "#25D366" },
+    { key: "instagram", label: "Instagram", href: SITE.socials.instagram, color: "#E4405F" }
+  ];
+
+  return (
+    <div className="kin-fixed-control kin-fixed-control--left" style={{ zIndex: 8500, display: "flex", flexDirection: "column-reverse", gap: 12 }}>
+      <button 
+        onClick={() => setExpanded(!expanded)}
+        aria-expanded={expanded}
+        aria-controls="floating-chat-links"
+        style={{ 
+          height: 52, 
+          padding: "0 20px",
+          borderRadius: "99px", 
+          background: T.green, 
+          color: "#fff", 
+          display: "flex",
+          alignItems: "center",
+          gap: "10px",
+          boxShadow: "0 8px 32px rgba(22,97,62,0.3)", 
+          border: "none", 
+          cursor: "pointer", 
+          transition: "transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), background 0.2s" 
+        }}
+        onMouseEnter={e => e.currentTarget.style.transform = "scale(1.05)"}
+        onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
+        id="floating-chat-toggle"
+      >
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={expanded ? "close" : "chat"}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.2 }}
+            style={{ display: "flex", alignItems: "center", gap: 8 }}
+          >
+            {expanded ? (
+              <>
+                <X size={18} strokeWidth={2.5} />
+                <span style={{ fontSize: "14px", fontWeight: 700, letterSpacing: "0.02em" }}>Close</span>
+              </>
+            ) : (
+              <>
+                <MessageCircle size={18} />
+                <span style={{ fontSize: "14px", fontWeight: 700, letterSpacing: "0.02em" }}>Chat</span>
+              </>
+            )}
+          </motion.div>
+        </AnimatePresence>
+      </button>
+
+      <AnimatePresence>
+        {expanded && (
+          <motion.div 
+            initial={{ opacity: 0, x: -10, y: 10, scale: 0.9 }}
+            animate={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+            exit={{ opacity: 0, x: -10, y: 10, scale: 0.9 }}
+            id="floating-chat-links"
+            style={{ display: "flex", flexDirection: "column", gap: 10, paddingLeft: 4 }}
+          >
+            {socialLinks.map((s, i) => (
+              <motion.a
+                key={s.label}
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Open ${s.label} in a new tab`}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0, transition: { delay: i * 0.05 } }}
+                style={{ 
+                  height: 44, 
+                  padding: "0 16px 0 12px",
+                  borderRadius: "99px", 
+                  background: dark ? "rgba(28,28,30,0.95)" : "rgba(255,255,255,1)", 
+                  border: `1px solid ${dark ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.1)"}`, 
+                  backdropFilter: "blur(12px)", 
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 10,
+                  color: s.color, 
+                  boxShadow: "0 4px 16px rgba(0,0,0,0.12)", 
+                  textDecoration: "none" 
+                }}
+                whileHover={{ scale: 1.05, x: 6 }}
+                title={s.label}
+              >
+                {s.key === "whatsapp" ? <MessageCircle size={18} strokeWidth={2.5} /> : (() => {
+                  const Icon = iconMap[s.key];
+                  return <Icon size={18} strokeWidth={2.5} />;
+                })()}
+                <span style={{ fontSize: "12px", fontWeight: 600, color: dark ? T.cream : T.greenD }}>{s.label}</span>
+              </motion.a>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+function RouteFrame({ children, meta, paddingTop = "80px", fullHeight = false }) {
+  usePageMeta(meta);
+  return (
+    <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} style={fullHeight ? { height: "100vh" } : undefined}>
+      {paddingTop ? <div style={{ paddingTop }}>{children}</div> : children}
+    </motion.div>
+  );
+}
+
+function NotFoundPage({ dark }) {
+  usePageMeta(ROUTE_META.fallback);
+  return (
+    <div style={{ minHeight: "100vh", display: "grid", placeItems: "center", padding: "7rem 1.5rem 2rem", textAlign: "center", background: dark ? T.bgD : T.bg, color: dark ? T.cream : T.greenD }}>
+      <div style={{ maxWidth: 520 }}>
+        <div style={{ fontSize: "0.85rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: T.gold, marginBottom: "1rem" }}>404</div>
+        <h1 style={{ fontSize: "clamp(2.5rem, 7vw, 4rem)", marginBottom: "1rem" }}>This page has moved or does not exist.</h1>
+        <p style={{ color: dark ? T.d2 : T.p2, lineHeight: 1.7, marginBottom: "1.5rem" }}>
+          Try returning to the homepage or opening one of the main programme pages from the navigation.
+        </p>
+        <Link to="/" className="gold-btn" style={{ display: "inline-flex", alignItems: "center", gap: ".5rem", padding: ".9em 2em", borderRadius: 999, background: T.gold, color: "#fff", fontWeight: 700 }}>
+          Back to Home <ChevronRight size={16} />
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+function SiteBottomBar({ dark }) {
+  return (
+    <footer style={{ background: "#060E08", borderTop: "1px solid rgba(253,247,236,.06)", padding: "2rem 0" }}>
+      <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 clamp(1.25rem,5vw,3rem)" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem", alignItems: "center", textAlign: "center" }}>
+          
+          {/* Trust & Legal Strip */}
+          <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap", justifyContent: "center", fontSize: ".82rem", color: "rgba(253,247,236,.45)" }}>
+            <div style={{ fontWeight: 800, color: T.goldL }}>{SITE.registrationId}</div>
+            <span style={{ width: 1, height: 12, background: "rgba(253,247,236,0.15)" }} />
+            <Link to="/privacy" style={{ color: "inherit", textDecoration: "none", fontWeight: 600 }}>Privacy Policy</Link>
+            <span style={{ width: 1, height: 12, background: "rgba(253,247,236,0.15)" }} />
+            <Link to="/transparency" style={{ color: "inherit", textDecoration: "none", fontWeight: 600 }}>Transparency</Link>
+            <span style={{ width: 1, height: 12, background: "rgba(253,247,236,0.15)" }} />
+            <span style={{ fontStyle: "italic" }}>#JesusChristisOurJOY</span>
+          </div>
+
+          {/* Credits */}
+          <div style={{ display: "flex", alignItems: "center", gap: ".5rem", fontSize: ".85rem", color: "rgba(253,247,236,.35)" }}>
+            <span>© {new Date().getFullYear()} {SITE.legalName}</span>
+            <span>·</span>
+            <span>Designed with JOY by</span>
+            <a
+              href="https://arkbuilders.com.ng"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: T.goldL, fontWeight: 800, textDecoration: "none" }}
+            >
+              ArkBuilders
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
 export default function App() {
   const [dark, setDark] = useState(false);
-  const [givingOpen, setGivingOpen] = useState(false);
   const toggleDark = useCallback(() => setDark(d => !d), []);
   const location = useLocation();
   const navigate = useNavigate();
+  const onGive = useCallback(() => navigate("/give"), [navigate]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location]);
 
+  useEffect(() => {
+    if (!location.hash) return;
+    const id = location.hash.replace("#", "");
+    const timer = window.setTimeout(() => {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 120);
+    return () => window.clearTimeout(timer);
+  }, [location.pathname, location.hash]);
+
+  useEffect(() => {
+    initAnalytics();
+  }, []);
+
   return (
     <div style={{ background: dark ? "#0A1C12" : "#FAFAF5", color: dark ? T.cream : T.greenD, minHeight: "100vh" }}>
-      <SiteNav dark={dark} onGive={() => setGivingOpen(true)} />
+      <SiteNav dark={dark} onGive={onGive} />
       
       <AnimatePresence mode="wait">
+        <Suspense fallback={<div style={{ minHeight: "100vh", display: "grid", placeItems: "center", color: dark ? T.cream : T.greenD }}>Loading...</div>}>
         <Routes location={location} key={location.pathname}>
-          <Route path="/" element={
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-              <Website dark={dark} />
-            </motion.div>
-          } />
-          <Route path="/gU" element={
-            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }}>
-              <div style={{ paddingTop: "80px" }}>
-                <GodsUniversity dark={dark} />
-              </div>
-            </motion.div>
-          } />
-          <Route path="/NBC" element={
-            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }}>
-              <div style={{ paddingTop: "80px" }}>
-                <NVC dark={dark} />
-              </div>
-            </motion.div>
-          } />
+          <Route path="/" element={<RouteFrame meta={ROUTE_META.home} paddingTop=""><Website dark={dark} /></RouteFrame>} />
+          <Route path="/kids-inspiring" element={<RouteFrame meta={ROUTE_META.kidsInspiring}><KidsInspiringLanding dark={dark} /></RouteFrame>} />
+          <Route path="/investing-in-kids" element={<RouteFrame meta={ROUTE_META.investingInKids}><InvestingInKidsLanding dark={dark} /></RouteFrame>} />
+          <Route path="/nation-builders" element={<RouteFrame meta={ROUTE_META.nationBuilders}><NationBuildersCorp dark={dark} /></RouteFrame>} />
+          <Route path="/daily" element={<RouteFrame meta={ROUTE_META.daily}><Daily dark={dark} /></RouteFrame>} />
+          <Route path="/gU" element={<RouteFrame meta={ROUTE_META.godsUniversity}><GodsUniversity dark={dark} /></RouteFrame>} />
+          <Route path="/NBC" element={<RouteFrame meta={ROUTE_META.nbc}><NVC dark={dark} /></RouteFrame>} />
           <Route path="/nbc" element={<Navigate to="/NBC" replace />} />
-          <Route path="/NBC/register" element={
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-              <div style={{ paddingTop: "80px" }}>
-                <NBCRegister dark={dark} />
-              </div>
-            </motion.div>
-          } />
-          <Route path="/dashboard" element={
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} style={{ height: "100vh" }}>
-              <Dashboard onBack={() => navigate(-1)} dark={dark} toggleDark={toggleDark} />
-            </motion.div>
-          } />
-          <Route path="/about" element={
-            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }}>
-              <div style={{ paddingTop: "80px" }}>
-                <About dark={dark} />
-              </div>
-            </motion.div>
-          } />
-          <Route path="/contact" element={
-            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }}>
-              <div style={{ paddingTop: "80px" }}>
-                <Contact dark={dark} />
-              </div>
-            </motion.div>
-          } />
-          <Route path="/gallery" element={
-            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }}>
-              <div style={{ paddingTop: "80px" }}>
-                <Gallery dark={dark} />
-              </div>
-            </motion.div>
-          } />
+          <Route path="/NBC/register" element={<RouteFrame meta={ROUTE_META.nbcRegister}><NBCRegister /></RouteFrame>} />
+          <Route path="/give" element={<RouteFrame meta={ROUTE_META.give}><Giving dark={dark} /></RouteFrame>} />
+          <Route path="/donate" element={<Navigate to="/give" replace />} />
+          <Route path="/support" element={<Navigate to="/give" replace />} />
+          <Route path="/giving" element={<Navigate to="/give" replace />} />
+          <Route path="/transparency" element={<RouteFrame meta={ROUTE_META.transparency}><Transparency dark={dark} /></RouteFrame>} />
+          <Route path="/faq" element={<RouteFrame meta={ROUTE_META.faq}><FAQ dark={dark} /></RouteFrame>} />
+          <Route path="/privacy" element={<RouteFrame meta={ROUTE_META.privacy}><Privacy dark={dark} /></RouteFrame>} />
+          <Route path="/dashboard" element={<RouteFrame meta={ROUTE_META.home} paddingTop="" fullHeight><Dashboard onBack={() => navigate(-1)} dark={dark} toggleDark={toggleDark} /></RouteFrame>} />
+          <Route path="/about" element={<RouteFrame meta={ROUTE_META.about}><About dark={dark} /></RouteFrame>} />
+          <Route path="/contact" element={<RouteFrame meta={ROUTE_META.contact}><Contact dark={dark} /></RouteFrame>} />
+          <Route path="/gallery" element={<RouteFrame meta={ROUTE_META.gallery}><Gallery dark={dark} /></RouteFrame>} />
+          <Route path="*" element={<NotFoundPage dark={dark} />} />
         </Routes>
+        </Suspense>
       </AnimatePresence>
 
-      <AnimatePresence>
-        {givingOpen && (
-          <motion.div 
-            initial={{ opacity: 0 }} 
-            animate={{ opacity: 1 }} 
-            exit={{ opacity: 0 }}
-            style={{ position: "fixed", inset: 0, zIndex: 9000, background: dark ? "rgba(5,12,8,.98)" : "rgba(250,250,245,.98)", overflowY: "auto" }}
-          >
-            <div style={{ paddingTop: "80px" }}>
-              <Giving dark={dark} />
-            </div>
-            <button 
-              onClick={() => setGivingOpen(false)}
-              style={{ position: "fixed", top: 20, right: 20, zIndex: 9001, width: 44, height: 44, borderRadius: "50%", background: dark ? "#1C1C1E" : "#fff", border: `1px solid ${dark ? "rgba(255,255,255,.1)" : "rgba(0,0,0,.08)"}`, display: "grid", placeItems: "center", color: dark ? T.goldL : T.greenD }}
-            >
-              <X size={20} />
-            </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <SiteBottomBar dark={dark} />
 
+      <FloatingChat dark={dark} />
       <DarkToggle dark={dark} toggle={toggleDark} />
       <CookieBanner dark={dark} />
     </div>
   );
 }
-
-

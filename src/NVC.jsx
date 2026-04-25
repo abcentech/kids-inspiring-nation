@@ -1,51 +1,39 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     Home, ChevronRight, Target, Users, Award, BookOpen,
-    MessageCircle, Send, Star, Trophy, Zap, Globe,
+    MessageCircle, Send, Star, Trophy,
     Activity, Play, Download, Clock, Image as ImageIcon, ChevronLeft,
     Mail, User, Phone, MapPin, Lightbulb, ArrowRight, ChevronDown
 } from 'lucide-react';
-
-// ─── DESIGN TOKENS (Shared with KIN Main) ───────────────────────────────────
-const T = {
-    green: "#16613E", greenD: "#0D3D26", greenM: "#2C4A35",
-    gold: "#C4882C", goldL: "#E8B954", goldD: "#9A6620",
-    coral: "#D94F30", cream: "#FDF7EC", warmBg: "#F5EFE3",
-    ok: "#34C759", warn: "#FF9F0A", err: "#FF3B30", info: "#0071E3",
-    // Dark mode specific
-    bgD: "#050505", srfD: "#1C1C1E", brdD: "rgba(255,255,255,.08)",
-    d1: "#F5F5F7", d2: "#98989D", d3: "#636366",
-};
-
-const GoDs = ({ style = {} }) => (
-    <span style={{ fontFamily: "'Playfair Display',serif", fontStyle: "italic", ...style }}>
-        <span style={{ fontWeight: 900 }}>g</span>
-        <span style={{ fontWeight: 900, color: "inherit" }}>oDs</span>
-    </span>
-);
+import { ROUTE_META, T } from './siteConfig.js';
+import { usePageMeta } from './usePageMeta.js';
 
 const FAQItem = ({ faq, idx, s }) => {
     const [open, setOpen] = useState(false);
     return (
         <motion.div 
-            initial={{ opacity: 0, scale: 0.98, y: 15 }} 
-            whileInView={{ opacity: 1, scale: 1, y: 0 }} 
-            transition={{ delay: idx * 0.05 }} 
-            viewport={{ once: true }}
+            initial={{ opacity: 0, y: 30 }} 
+            whileInView={{ opacity: 1, y: 0 }} 
+            transition={{ 
+                delay: idx * 0.1, 
+                duration: 0.6,
+                ease: [0.22, 1, 0.36, 1]
+            }} 
+            viewport={{ once: true, margin: "-50px" }}
             onClick={() => setOpen(!open)}
             style={{ 
                 background: s.surf, 
-                padding: "1.75rem 2rem", 
-                borderRadius: "20px", 
-                border: `1px solid ${open ? '#E8B954' : s.brd}`, 
-                boxShadow: open ? "0 20px 40px rgba(232,185,84,0.12)" : "0 10px 30px rgba(0,0,0,0.02)", 
+                padding: "2rem", 
+                borderRadius: "24px", 
+                border: `1px solid ${open ? T.gold : s.brd}`, 
+                boxShadow: open ? `0 20px 50px ${T.gold}15` : "0 4px 20px rgba(0,0,0,0.02)", 
                 cursor: "pointer",
-                transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+                transition: "all 0.5s cubic-bezier(0.22, 1, 0.36, 1)",
                 position: "relative",
                 overflow: "hidden"
             }}
-            whileHover={{ y: -4, boxShadow: "0 15px 35px rgba(0,0,0,0.05)" }}
+            whileHover={{ y: -5, borderColor: T.gold + "66", boxShadow: "0 12px 30px rgba(0,0,0,0.04)" }}
         >
             {open && (
                 <motion.div 
@@ -90,6 +78,7 @@ const FAQItem = ({ faq, idx, s }) => {
 };
 
 export default function NVC({ dark }) {
+    usePageMeta(ROUTE_META.nbc);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
 
@@ -123,10 +112,10 @@ export default function NVC({ dark }) {
 
 
     const s = dark
-        ? { bg: T.bgD, surf: T.srfD, brd: T.brdD, txt: T.d1, sub: T.d2, card: "rgba(255,255,255,.03)" }
-        : { bg: "#FAFAF5", surf: "#FFFFFF", brd: "rgba(22,97,62,.09)", txt: T.greenD, sub: T.greenM, card: "#fff" };
+        ? { bg: T.bgD, surf: T.srfD, brd: T.brdD, txt: T.d1, sub: T.d2, card: "rgba(255,255,255,.02)" }
+        : { bg: T.cream, surf: "#FFFFFF", brd: "rgba(10,42,27,.05)", txt: T.green, sub: T.greenM, card: "#fff" };
 
-    const navBg = scrolled ? (dark ? "rgba(10,10,10,.85)" : "rgba(253,247,236,.92)") : "transparent";
+    const navBg = scrolled ? (dark ? "rgba(5,14,10,.85)" : "rgba(250,249,246,.92)") : "transparent";
     const navBdr = scrolled ? `1px solid ${s.brd}` : "1px solid transparent";
     const navTxt = scrolled ? (dark ? T.goldL : T.green) : T.cream;
 
@@ -160,19 +149,35 @@ export default function NVC({ dark }) {
 
             {/* Hero Section */}
             <section style={{ minHeight: "100svh", background: T.greenD, position: "relative", display: "flex", alignItems: "center", overflow: "hidden", padding: "8rem 0" }}>
-                <div style={{ position: "absolute", inset: 0, opacity: 0.8, background: `radial-gradient(ellipse 80% 70% at 85% 40%,${T.green}40 0%,transparent 60%), linear-gradient(135deg,#050505 0%,#0D3D26 70%,#16613E 100%)` }} />
-                <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 2 }} style={{ position: "absolute", right: "-2vw", bottom: "10vh", fontSize: "25vw", fontWeight: 900, color: "transparent", WebkitTextStroke: "1.5px rgba(232,185,84,.06)", fontFamily: "'Playfair Display',serif", fontStyle: "italic", userSelect: "none", pointerEvents: "none" }}>NBC</motion.div>
+                <div style={{ 
+                    position: "absolute", 
+                    inset: 0, 
+                    opacity: 0.95, 
+                    background: `
+                        radial-gradient(circle at 20% 30%, ${T.gold}15 0%, transparent 40%),
+                        radial-gradient(circle at 80% 70%, ${T.green}40 0%, transparent 50%),
+                        linear-gradient(135deg, ${T.greenD} 0%, ${T.greenM} 50%, ${T.greenD} 100%)
+                    ` 
+                }} />
+                <motion.div 
+                    initial={{ opacity: 0, scale: 0.9 }} 
+                    animate={{ opacity: 1, scale: 1 }} 
+                    transition={{ duration: 2.5, ease: "easeOut" }} 
+                    style={{ position: "absolute", right: "-5vw", bottom: "5vh", fontSize: "32vw", fontWeight: 900, color: "transparent", WebkitTextStroke: `1.5px ${T.gold}12`, fontFamily: "'Playfair Display',serif", fontStyle: "italic", userSelect: "none", pointerEvents: "none", opacity: 0.6 }}
+                >
+                    NBC
+                </motion.div>
 
                 <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 2rem", position: "relative", zIndex: 2, width: "100%" }}>
                     <motion.div initial="initial" animate="animate" variants={stagger} style={{ maxWidth: "56rem" }}>
-                        <motion.div variants={fadeIn} style={{ fontSize: "0.8rem", fontWeight: 600, letterSpacing: "0.2em", textTransform: "uppercase", color: T.goldL, marginBottom: "1.5rem", display: "flex", alignItems: "center", gap: "1rem" }}>
+                        <motion.div variants={fadeIn} style={{ fontSize: "0.85rem", fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: T.goldL, marginBottom: "1.5rem", display: "flex", alignItems: "center", gap: "1rem" }}>
                             <span style={{ width: 45, height: 2, background: T.gold }} /> 🇳🇬 National Builders Challenge
                         </motion.div>
-                        <motion.h1 variants={fadeIn} style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(3rem, 9vw, 6rem)", fontWeight: 900, color: T.cream, lineHeight: 0.9, letterSpacing: "-0.04em", marginBottom: "2rem" }}>
+                        <motion.h1 variants={fadeIn} style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(3.2rem, 9.5vw, 6.5rem)", fontWeight: 900, color: T.cream, lineHeight: 0.85, letterSpacing: "-0.05em", marginBottom: "2rem" }}>
                             Build the Nigeria <br />
                             You Want To <em style={{ fontStyle: "italic", color: T.goldL }}>See</em>.
                         </motion.h1>
-                        <motion.p variants={fadeIn} style={{ fontSize: "clamp(1.1rem, 2.5vw, 1.4rem)", color: "rgba(253,247,236,.75)", lineHeight: 1.6, marginBottom: "3rem", maxWidth: "42ch" }}>
+                        <motion.p variants={fadeIn} style={{ fontSize: "clamp(1.1rem, 2.2vw, 1.35rem)", color: "rgba(250,249,246,.8)", lineHeight: 1.6, marginBottom: "3.5rem", maxWidth: "44ch", fontWeight: 400 }}>
                             A 9-month masterclass in resourcefulness. Join 1,000 young visionaries solving real community problems through character and grit.
                         </motion.p>
 
@@ -180,7 +185,7 @@ export default function NVC({ dark }) {
                             <motion.a whileHover={{ scale: 1.05, filter: "brightness(1.1)" }} whileTap={{ scale: 0.98 }} href="#register" style={{ padding: "1.2rem 3.2rem", borderRadius: 999, background: T.gold, color: "#fff", fontWeight: 800, fontSize: "1.15rem", boxShadow: `0 15px 40px ${T.gold}50` }}>Start Your Legacy</motion.a>
                             <div style={{ background: "rgba(253,247,236,.06)", padding: "1rem 2rem", borderRadius: 999, border: "1px solid rgba(253,247,236,.2)", backdropFilter: "blur(10px)", display: "flex", alignItems: "center", gap: "0.75rem" }}>
                                 <div style={{ width: 10, height: 10, background: T.ok, borderRadius: "50%", animation: "pulse 2s infinite" }} />
-                                <span style={{ color: T.cream, fontWeight: 700 }}>2026 Cohort Open</span>
+                                <span style={{ color: T.cream, fontWeight: 700 }}>2025 Cohort Open</span>
                             </div>
                         </motion.div>
                     </motion.div>
@@ -405,7 +410,7 @@ export default function NVC({ dark }) {
                         <div className="timeline-line" style={{ position: "absolute", left: "50%", top: 0, bottom: 0, width: "2px", background: 'rgba(232,185,84,0.3)', transform: "translateX(-50%)" }} />
                         
                         {[
-                            { m: "April", t: "2026 Cohort Registration Opens", d: "Applications open nationwide for all young visionaries." },
+                            { m: "April", t: "2025 Cohort Registration Opens", d: "Applications open nationwide for all young visionaries." },
                             { m: "July", t: "Evaluation on Community Projects", d: "Mid-point reviews of actual impact data from local solution implementations." },
                             { m: "October", t: "Preliminary Submission", d: "Builders submit their completed Impact Reports and metrics for initial grading." },
                             { m: "December", t: "Grand Finale", d: "Elite Recognition event where the most impactful projects receive their awards." }
@@ -444,6 +449,12 @@ export default function NVC({ dark }) {
                     <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ textAlign: "center", marginBottom: "4rem" }}>
                         <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "2.8rem", fontWeight: 900, color: s.txt }}>Frequently Asked Questions</h2>
                         <p style={{ color: s.sub, fontSize: "1.1rem", marginTop: "0.5rem" }}>Everything you need to know about the Nation Builders Challenge.</p>
+                        <p style={{ marginTop: "0.9rem", fontSize: "1rem", color: s.sub }}>
+                            Read the origin story:{" "}
+                            <a href="/nation-builders" style={{ color: T.goldL, fontWeight: 900, textDecoration: "none" }}>
+                                Psalm 119 → Nation Builders Corp
+                            </a>
+                        </p>
                     </motion.div>
                     
                     <div style={{ 
@@ -503,7 +514,7 @@ export default function NVC({ dark }) {
 
                         {/* Registration CTA — full form is at /NBC/register */}
                         <div style={{ textAlign: "center" }}>
-                            <div style={{ fontSize: "0.85rem", fontWeight: 800, color: T.gold, textTransform: "uppercase", letterSpacing: "0.15em", marginBottom: "0.75rem" }}>2026 Cohort · Limited Spots</div>
+                            <div style={{ fontSize: "0.85rem", fontWeight: 800, color: T.gold, textTransform: "uppercase", letterSpacing: "0.15em", marginBottom: "0.75rem" }}>2025 Cohort · Limited Spots</div>
                             <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(2rem,5vw,2.8rem)", fontWeight: 900, color: s.txt, marginBottom: "1.25rem", lineHeight: 1.2 }}>
                                 Ready to Build Nigeria?
                             </h3>
@@ -527,7 +538,7 @@ export default function NVC({ dark }) {
                                 >
                                     🚀 Start Registration Now
                                 </a>
-                                <a href="https://chat.whatsapp.com/LhdmEpKXoXgDgtEj73WVqz?mode=gi_t" target="_blank" rel="noopener" style={{
+                                <a href="https://chat.whatsapp.com/LhdmEpKXoXgDgtEj73WVqz?mode=gi_t" target="_blank" rel="noopener noreferrer" aria-label="Open the NBC WhatsApp community in a new tab" style={{
                                     display: "inline-flex", alignItems: "center", gap: "0.5rem",
                                     padding: "0.85rem 2rem", borderRadius: "999px",
                                     border: `2px solid ${T.green}`, color: s.txt,
@@ -558,24 +569,6 @@ export default function NVC({ dark }) {
                     </div>
                 </div>
             </section>
-
-            {/* Footer */}
-            <footer style={{ background: dark ? "#000" : T.greenD, padding: "6rem 0", color: T.cream }}>
-                <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 2rem", textAlign: "center" }}>
-                    <div style={{ fontSize: "1.5rem", fontWeight: 900, fontFamily: "'Playfair Display',serif", marginBottom: "1rem" }}>Building a New Nigeria.</div>
-                    <div style={{ color: T.goldL, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", fontSize: "0.8rem", marginBottom: "3rem" }}>Raising Nation Builders</div>
-
-                    <div style={{ display: "flex", justifyContent: "center", gap: "2rem", marginBottom: "3rem" }}>
-                        <MessageCircle size={20} className="hover:text-gold transition-colors" />
-                        <Globe size={20} className="hover:text-gold transition-colors" />
-                        <Zap size={20} className="hover:text-gold transition-colors" />
-                    </div>
-
-                    <div style={{ opacity: 0.4, fontSize: "0.75rem" }}>
-                        &copy; 2026 KidsInspiring Nation · IT No. 6980735
-                    </div>
-                </div>
-            </footer>
 
             <style>{`
         @keyframes pulse { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.1); } 100% { opacity: 1; transform: scale(1); } }

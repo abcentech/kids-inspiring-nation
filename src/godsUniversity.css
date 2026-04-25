@@ -1,0 +1,199 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap');
+
+.gu-page {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+.gu-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 5vw;
+  position: relative;
+  z-index: 1;
+}
+
+.gu-section { padding: 100px 0; }
+
+.gu-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(232,196,67,.08);
+  border: 1px solid rgba(232,196,67,.2);
+  border-radius: 100px;
+  padding: 6px 18px;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.gu-sec-label {
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.gu-sec-title {
+  font-family: Cinzel, serif;
+  font-size: clamp(30px, 4.5vw, 52px);
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+
+.gu-sec-sub {
+  font-size: 16px;
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 60px;
+  line-height: 1.8;
+}
+
+.gu-btn-gold {
+  padding: 14px 32px;
+  border-radius: 24px;
+  font-weight: 800;
+  font-size: 15px;
+  transition: all .25s;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+}
+
+.gu-btn-gold:hover,
+.gu-btn-gold:focus-visible {
+  transform: translateY(-3px);
+}
+
+.gu-btn-outline {
+  border: 2px solid rgba(232,196,67,.35);
+  padding: 14px 32px;
+  border-radius: 24px;
+  font-weight: 700;
+  font-size: 15px;
+  transition: all .25s;
+  backdrop-filter: blur(4px);
+  text-decoration: none;
+  display: inline-block;
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.gu-btn-outline:hover,
+.gu-btn-outline:focus-visible {
+  background: rgba(232,196,67,.12);
+}
+
+.gu-hero-crown {
+  font-size: 72px;
+  display: block;
+  margin-bottom: 20px;
+  animation: gu-float 4s ease-in-out infinite;
+}
+
+@keyframes gu-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes gu-bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(6px); }
+}
+
+.gu-stat-block {
+  flex: 1;
+  min-width: 120px;
+  padding: 20px 16px;
+  text-align: center;
+  border-right: 1px solid rgba(255,255,255,.08);
+}
+
+.gu-stat-block:last-child { border-right: none; }
+
+.gu-about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+.gu-pathways-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+
+.gu-pathway-card {
+  border-radius: 20px;
+  padding: 36px 28px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: all .3s;
+}
+
+.gu-pathway-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity .3s;
+  background: linear-gradient(135deg, rgba(232,196,67,.04), transparent);
+}
+
+.gu-pathway-card:hover::after,
+.gu-pathway-card:focus-within::after {
+  opacity: 1;
+}
+
+.gu-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+  position: relative;
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.gu-step-col { text-align: center; padding: 0 16px; position: relative; }
+
+.gu-step-col::after {
+  content: '';
+  position: absolute;
+  top: 26px;
+  left: calc(50% + 26px);
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(232,196,67,.2), transparent);
+}
+
+.gu-step-col:last-child::after { display: none; }
+
+.gu-gpa-grid { display: grid; grid-template-columns: 280px 1fr; gap: 60px; align-items: start; }
+.gu-portal-features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 32px; }
+.gu-testimonies-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+
+@media (max-width: 960px) {
+  .gu-about-grid { grid-template-columns: 1fr; }
+  .gu-about-visual { order: -1; }
+  .gu-pathways-grid { grid-template-columns: 1fr; }
+  .gu-pathway-card { text-align: left; }
+  .gu-pw-ic { display: inline; margin-right: 12px; font-size: 32px; }
+  .gu-pw-name { display: inline; }
+  .gu-pw-ages { position: static; display: inline-block; margin-bottom: 12px; }
+  .gu-steps-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .gu-step-col::after { display: none; }
+  .gu-gpa-grid { grid-template-columns: 1fr; }
+  .gu-gpa-demo { max-width: 300px; margin: 0 auto; }
+  .gu-portal-features { grid-template-columns: 1fr 1fr; }
+  .gu-testimonies-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+  .gu-steps-grid { grid-template-columns: 1fr; }
+  .gu-portal-features { grid-template-columns: 1fr; }
+  .gu-ds-cats-grid { grid-template-columns: repeat(3, 1fr) !important; }
+  .gu-stat-block { min-width: 100px; padding: 16px 12px; }
+}

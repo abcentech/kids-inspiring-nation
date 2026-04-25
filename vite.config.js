@@ -9,4 +9,19 @@ export default defineConfig({
     tailwindcss(),
   ],
   base: '/',
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            if (id.includes('react-router')) return 'router'
+            if (id.includes('framer-motion')) return 'motion'
+            if (id.includes('recharts')) return 'charts'
+            if (id.includes('lucide-react')) return 'icons'
+            return 'vendor'
+          }
+        },
+      },
+    },
+  },
 })
