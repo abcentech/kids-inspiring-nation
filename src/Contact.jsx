@@ -49,42 +49,27 @@
   ──────────────────────────────────────────────────────
 */
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Mail, MessageCircle, Send, ExternalLink, Youtube, Instagram, CheckCircle2, AlertCircle, Loader } from "lucide-react";
+import { useLocation } from "react-router-dom";
+import { CONTACT_SUBJECTS, ROUTE_META, SITE, SOCIAL_LINKS, T } from "./siteConfig.js";
+import { usePageMeta } from "./usePageMeta.js";
+import { submitJsonForm } from "./formSubmit.js";
 
-// ─── GOOGLE SCRIPT URL — Replace with your deployed Apps Script URL ──────────
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID_HERE/exec";
-
-// ─── DESIGN TOKENS ────────────────────────────────────────────────────────────
-const T = {
-  green: "#16613E", greenD: "#0D3D26", greenM: "#2C4A35",
-  gold: "#C4882C", goldL: "#E8B954", goldD: "#9A6620",
-  coral: "#D94F30", cream: "#FDF7EC", warmBg: "#F5EFE3",
-  p1: "#1D1D1F", p2: "#6E6E73", p3: "#AEAEB2",
-  ok: "#34C759", err: "#FF3B30",
+const GOOGLE_SCRIPT_URL = import.meta.env.VITE_CONTACT_FORM_URL || "";
+const SOCIAL_ICONS = {
+  "whatsapp-channel": MessageCircle,
+  telegram: Send,
+  youtube: Youtube,
+  instagram: Instagram,
+  linktree: ExternalLink,
 };
-
-const SUBJECTS = [
-  { value: "join", label: "Join a Programme", icon: "👑" },
-  { value: "child", label: "Register a Child", icon: "🌱" },
-  { value: "donate", label: "Give / Donate", icon: "💛" },
-  { value: "partner", label: "Partner / Collaborate", icon: "🤝" },
-  { value: "volunteer", label: "Volunteer (CST)", icon: "🕊️" },
-  { value: "media", label: "Media / Press", icon: "🎥" },
-  { value: "general", label: "General Enquiry", icon: "💬" },
-];
-
-const SOCIALS = [
-  { label: "WhatsApp Channel", href: "https://whatsapp.com/channel/0029Va8XnCuGE56c4SMaT41w", icon: MessageCircle, color: "#25D366", bg: "rgba(37,211,102,.1)" },
-  { label: "Telegram", href: "https://t.me/KidsInspiring", icon: Send, color: "#0088CC", bg: "rgba(0,136,204,.1)" },
-  { label: "YouTube", href: "https://youtube.com/@KidsInspiringNation", icon: Youtube, color: "#FF0000", bg: "rgba(255,0,0,.08)" },
-  { label: "Instagram", href: "https://instagram.com/KidsInspiringNation", icon: Instagram, color: "#E4405F", bg: "rgba(228,64,95,.1)" },
-  { label: "Linktree", href: "https://linktr.ee/KidsInspiringNation", icon: ExternalLink, color: T.gold, bg: "rgba(196,136,44,.1)" },
-];
 
 // ─── MAIN CONTACT PAGE ────────────────────────────────────────────────────────
 export default function Contact({ dark }) {
+  usePageMeta(ROUTE_META.contact);
+  const location = useLocation();
   const bg     = dark ? "#0A1C12" : "#FAFAF5";
   const card   = dark ? "#0E1A12" : "#fff";
   const txt    = dark ? T.cream   : T.greenD;
@@ -95,6 +80,16 @@ export default function Contact({ dark }) {
   const [form, setForm]         = useState({ name: "", email: "", phone: "", subject: "general", message: "" });
   const [status, setStatus]     = useState("idle"); // idle | submitting | success | error
   const [touched, setTouched]   = useState({});
+  const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const subject = params.get("subject");
+    if (!subject) return;
+    const allowed = new Set(CONTACT_SUBJECTS.map(s => s.value));
+    if (!allowed.has(subject)) return;
+    setForm(f => ({ ...f, subject }));
+  }, [location.search]);
 
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
   const touch = k => setTouched(t => ({ ...t, [k]: true }));
@@ -110,17 +105,18 @@ export default function Contact({ dark }) {
     e.preventDefault();
     if (!canSubmit) { setTouched({ name: true, email: true, message: true }); return; }
     setStatus("submitting");
+    setErrorMessage("");
     try {
-      await fetch(GOOGLE_SCRIPT_URL, {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, type: "contact_form", timestamp: new Date().toISOString() }),
-      });
+      await submitJsonForm(
+        GOOGLE_SCRIPT_URL,
+        { ...form, type: "contact_form", timestamp: new Date().toISOString() },
+        "Contact form"
+      );
       setStatus("success");
       setForm({ name: "", email: "", phone: "", subject: "general", message: "" });
       setTouched({});
-    } catch {
+    } catch (error) {
+      setErrorMessage(error.message || "Something went wrong. Please try emailing us directly.");
       setStatus("error");
     }
   };
@@ -197,7 +193,7 @@ export default function Contact({ dark }) {
                           How can we help? *
                         </label>
                         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 9rem), 1fr))", gap: ".5rem" }}>
-                          {SUBJECTS.map(s => (
+                          {CONTACT_SUBJECTS.map(s => (
                             <button key={s.value} type="button" onClick={() => set("subject", s.value)}
                               style={{
                                 padding: ".55rem .7rem",
@@ -281,13 +277,14 @@ export default function Contact({ dark }) {
                       {status === "error" && (
                         <div style={{ display: "flex", alignItems: "center", gap: ".6rem", padding: ".75rem 1rem", borderRadius: 10, background: "rgba(255,59,48,.08)", border: "1px solid rgba(255,59,48,.2)" }}>
                           <AlertCircle size={16} color={T.err} strokeWidth={2} />
-                          <span style={{ fontSize: ".83rem", color: T.err }}>Something went wrong. Please try emailing us directly.</span>
+                          <span style={{ fontSize: ".83rem", color: T.err }}>{errorMessage}</span>
                         </div>
                       )}
 
                       <button
                         type="submit"
-                        disabled={status === "submitting"}
+                        disabled={!canSubmit}
+                        aria-disabled={!canSubmit}
                         style={{
                           padding: ".9em 2.4em",
                           borderRadius: 999,
@@ -296,7 +293,7 @@ export default function Contact({ dark }) {
                           fontWeight: 700,
                           fontSize: "1rem",
                           border: "none",
-                          cursor: canSubmit ? "pointer" : "default",
+                          cursor: canSubmit ? "pointer" : "not-allowed",
                           fontFamily: "'Plus Jakarta Sans',sans-serif",
                           transition: "all .2s",
                           display: "flex",
@@ -313,10 +310,9 @@ export default function Contact({ dark }) {
                           ? <><Loader size={16} strokeWidth={2} style={{ animation: "spin 1s linear infinite" }} /> Sending...</>
                           : "Send Message →"}
                       </button>
-                      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
 
                       <p style={{ fontSize: ".72rem", color: dark ? "rgba(253,247,236,.35)" : T.p3, textAlign: "center", lineHeight: 1.5 }}>
-                        Your message is stored securely in our Google Sheets database and used solely for responding to your enquiry. NDPR compliant.
+                        Your message is used solely to respond to your enquiry and should only show success after our form endpoint confirms receipt.
                       </p>
                     </motion.form>
                   )}
@@ -333,7 +329,7 @@ export default function Contact({ dark }) {
                   Direct Contact
                 </h3>
                 <div style={{ display: "flex", flexDirection: "column", gap: ".75rem" }}>
-                  <a href="mailto:KidsinspiringNation@gmail.com"
+                  <a href={`mailto:${SITE.email}`}
                     style={{ display: "flex", alignItems: "center", gap: ".85rem", padding: ".9rem 1rem", borderRadius: 14, background: dark ? "rgba(255,255,255,.04)" : "rgba(22,97,62,.04)", border: `1px solid ${brd}`, textDecoration: "none", transition: "background .15s" }}
                     onMouseEnter={e => e.currentTarget.style.background = dark ? "rgba(255,255,255,.08)" : "rgba(22,97,62,.08)"}
                     onMouseLeave={e => e.currentTarget.style.background = dark ? "rgba(255,255,255,.04)" : "rgba(22,97,62,.04)"}>
@@ -342,11 +338,11 @@ export default function Contact({ dark }) {
                     </div>
                     <div>
                       <div style={{ fontSize: ".82rem", fontWeight: 600, color: dark ? T.cream : T.greenD }}>Email Us</div>
-                      <div style={{ fontSize: ".75rem", color: sub }}>KidsinspiringNation@gmail.com</div>
+                      <div style={{ fontSize: ".75rem", color: sub }}>{SITE.email}</div>
                     </div>
                   </a>
 
-                  <a href="https://whatsapp.com/channel/0029Va8XnCuGE56c4SMaT41w" target="_blank" rel="noopener"
+                  <a href={SITE.socials.whatsappChannel} target="_blank" rel="noopener noreferrer" aria-label="Open the official KidsInspiring Nation WhatsApp channel in a new tab"
                     style={{ display: "flex", alignItems: "center", gap: ".85rem", padding: ".9rem 1rem", borderRadius: 14, background: dark ? "rgba(255,255,255,.04)" : "rgba(37,211,102,.04)", border: `1px solid ${brd}`, textDecoration: "none", transition: "background .15s" }}
                     onMouseEnter={e => e.currentTarget.style.background = dark ? "rgba(255,255,255,.08)" : "rgba(37,211,102,.09)"}
                     onMouseLeave={e => e.currentTarget.style.background = dark ? "rgba(255,255,255,.04)" : "rgba(37,211,102,.04)"}>
@@ -367,24 +363,26 @@ export default function Contact({ dark }) {
                   Follow Us
                 </h3>
                 <div style={{ display: "flex", flexDirection: "column", gap: ".6rem" }}>
-                  {SOCIALS.map(s => (
-                    <a key={s.label} href={s.href} target="_blank" rel="noopener"
+                  {SOCIAL_LINKS.map(s => {
+                    const Icon = SOCIAL_ICONS[s.key];
+                    return (
+                    <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={`Open ${s.label} in a new tab`}
                       style={{ display: "flex", alignItems: "center", gap: ".75rem", padding: ".7rem .9rem", borderRadius: 12, background: dark ? "rgba(255,255,255,.03)" : s.bg, border: `1px solid ${brd}`, textDecoration: "none", transition: "all .2s" }}
                       onMouseEnter={e => e.currentTarget.style.background = dark ? "rgba(255,255,255,.07)" : s.bg.replace(".1", ".18").replace(".08", ".14")}
                       onMouseLeave={e => e.currentTarget.style.background = dark ? "rgba(255,255,255,.03)" : s.bg}>
-                      <s.icon size={16} strokeWidth={1.5} color={s.color} />
+                      <Icon size={16} strokeWidth={1.5} color={s.color} />
                       <span style={{ fontSize: ".85rem", fontWeight: 500, color: dark ? T.cream : T.greenD }}>{s.label}</span>
                       <ExternalLink size={11} strokeWidth={1.5} style={{ marginLeft: "auto", color: sub }} />
                     </a>
-                  ))}
+                  )})}
                 </div>
               </div>
 
               {/* NGO Details */}
               <div style={{ background: T.greenD, borderRadius: 24, padding: "1.75rem" }}>
                 <div style={{ fontSize: ".7rem", fontWeight: 600, letterSpacing: ".08em", textTransform: "uppercase", color: "rgba(253,247,236,.45)", marginBottom: "1rem" }}>NGO Registration</div>
-                <div style={{ fontFamily: "'Plus Jakarta Sans',sans-serif", fontSize: "1rem", fontWeight: 700, color: T.cream, marginBottom: ".2rem" }}>goDs Global KidsInspiring</div>
-                <div style={{ fontFamily: "'DM Mono',monospace", fontSize: ".85rem", color: T.goldL, marginBottom: ".75rem" }}>IT No. 6980735</div>
+                <div style={{ fontFamily: "'Plus Jakarta Sans',sans-serif", fontSize: "1rem", fontWeight: 700, color: T.cream, marginBottom: ".2rem" }}>{SITE.legalName}</div>
+                <div style={{ fontFamily: "'DM Mono',monospace", fontSize: ".85rem", color: T.goldL, marginBottom: ".75rem" }}>{SITE.registrationId}</div>
                 <p style={{ fontSize: ".8rem", color: "rgba(253,247,236,.5)", lineHeight: 1.65 }}>
                   Registered Nigerian NGO. NDPR compliant. All data processed in accordance with the Nigeria Data Protection Regulation 2019.
                 </p>

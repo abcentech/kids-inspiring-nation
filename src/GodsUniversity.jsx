@@ -1,172 +1,94 @@
-import React, { useEffect } from "react";
-import { motion } from "framer-motion";
-import { ArrowLeft } from "lucide-react";
-
-// Design Tokens (Matching App.jsx)
-const T = {
-  green: "#16613E", greenD: "#0D3D26", greenM: "#2C4A35",
-  gold: "#C4882C", goldL: "#E8B954", goldD: "#9A6620",
-  coral: "#D94F30", cream: "#FDF7EC", warmBg: "#F5EFE3",
-  // Base dark theme colors from original HTML
-  htmlDark: "#080D1E", htmlDark2: "#0D1530", htmlDark3: "#111A35",
-  htmlCard: "#161F35", htmlCard2: "#1B2840", htmlCard3: "#20304A",
-  htmlText: "#F0F4FF", htmlText2: "#94A3B8", htmlText3: "#4A6080",
-};
-
-const gUStyles = `
-  /* Fonts */
-  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap');
-
-  .gu-page {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
-  
-  .gu-container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 5vw;
-    position: relative;
-    z-index: 1;
-  }
-  
-  .gu-section { padding: 100px 0; }
-
-  .gu-eyebrow {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(232,196,67,.08); border: 1px solid rgba(232,196,67,.2);
-    border-radius: 100px; padding: 6px 18px; font-size: 11px; letter-spacing: 3px;
-    color: ${T.goldL}; text-transform: uppercase; font-weight: 700; margin-bottom: 20px;
-  }
-  .gu-sec-label {
-    font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
-    color: ${T.goldL}; font-weight: 700; text-align: center; margin-bottom: 12px;
-  }
-  .gu-sec-title {
-    font-family: Cinzel, serif; font-size: clamp(30px, 4.5vw, 52px); font-weight: 700;
-    text-align: center; line-height: 1.1; margin-bottom: 16px;
-  }
-  .gu-sec-sub {
-    font-size: 16px; color: ${T.htmlText2}; text-align: center; max-width: 600px;
-    margin: 0 auto 60px; line-height: 1.8;
-  }
-
-  /* Actions */
-  .gu-btn-gold {
-    background: linear-gradient(135deg, #C9A835, #E8C443, #F6DC74); color: ${T.htmlDark};
-    padding: 14px 32px; border-radius: 24px; font-weight: 800; font-size: 15px;
-    box-shadow: 0 8px 32px rgba(232,196,67,.3); transition: all .25s; text-decoration: none;
-    display: inline-block; cursor: pointer; border: none; font-family: inherit;
-  }
-  .gu-btn-gold:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(232,196,67,.4); }
-  
-  .gu-btn-outline {
-    border: 2px solid rgba(232,196,67,.35); color: ${T.goldL};
-    padding: 14px 32px; border-radius: 24px; font-weight: 700; font-size: 15px;
-    transition: all .25s; backdrop-filter: blur(4px); text-decoration: none;
-    display: inline-block; background: transparent; cursor: pointer; font-family: inherit;
-  }
-  .gu-btn-outline:hover { background: rgba(232,196,67,.12); border-color: ${T.goldL}; }
-
-  /* Hero */
-  .gu-hero-crown {
-    font-size: 72px; display: block; margin-bottom: 20px;
-    animation: gu-float 4s ease-in-out infinite; filter: drop-shadow(0 0 30px rgba(232,196,67,.5));
-  }
-  @keyframes gu-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-  
-  @keyframes gu-bounce { 
-    0%, 100% { transform: translateX(-50%) translateY(0); }
-    50% { transform: translateX(-50%) translateY(6px); }
-  }
-
-  /* Components */
-  .gu-stat-block { flex: 1; min-width: 120px; padding: 20px 16px; text-align: center; border-right: 1px solid rgba(255,255,255,.08); }
-  .gu-stat-block:last-child { border-right: none; }
-  
-  .gu-about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
-  .gu-pathways-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-  
-  .gu-pathway-card {
-    background: ${T.htmlCard}; border: 1px solid rgba(255,255,255,.08); border-radius: 20px;
-    padding: 36px 28px; text-align: center; position: relative; overflow: hidden;
-    transition: all .3s;
-  }
-  .gu-pathway-card::after {
-    content: ''; position: absolute; inset: 0; opacity: 0; transition: opacity .3s;
-    background: linear-gradient(135deg, rgba(232,196,67,.04), transparent);
-  }
-  .gu-pathway-card:hover { transform: translateY(-6px); border-color: rgba(232,196,67,.2); box-shadow: 0 20px 60px rgba(0,0,0,.5); }
-  .gu-pathway-card:hover::after { opacity: 1; }
-
-  .gu-steps-grid {
-    display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; position: relative; max-width: 980px; margin: 0 auto;
-  }
-  .gu-step-col { text-align: center; padding: 0 16px; position: relative; }
-  .gu-step-col::after {
-    content: ''; position: absolute; top: 26px; left: calc(50% + 26px); right: 0;
-    height: 1px; background: linear-gradient(90deg, rgba(232,196,67,.2), transparent);
-  }
-  .gu-step-col:last-child::after { display: none; }
-  
-  .gu-gpa-grid { display: grid; grid-template-columns: 280px 1fr; gap: 60px; align-items: start; }
-  
-  .gu-portal-features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 32px; }
-  .gu-testimonies-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-
-  /* Responsive Adjustments */
-  @media(max-width: 960px) {
-    .gu-about-grid { grid-template-columns: 1fr; }
-    .gu-about-visual { order: -1; }
-    .gu-pathways-grid { grid-template-columns: 1fr; }
-    .gu-pathway-card { text-align: left; }
-    .gu-pw-ic { display: inline; margin-right: 12px; font-size: 32px; }
-    .gu-pw-name { display: inline; }
-    .gu-pw-ages { position: static; display: inline-block; margin-bottom: 12px; }
-    .gu-steps-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
-    .gu-step-col::after { display: none; }
-    .gu-gpa-grid { grid-template-columns: 1fr; }
-    .gu-gpa-demo { max-width: 300px; margin: 0 auto; }
-    .gu-portal-features { grid-template-columns: 1fr 1fr; }
-    .gu-testimonies-grid { grid-template-columns: 1fr; }
-  }
-  
-  @media(max-width: 600px) {
-    .gu-steps-grid { grid-template-columns: 1fr; }
-    .gu-portal-features { grid-template-columns: 1fr; }
-    .gu-ds-cats-grid { grid-template-columns: repeat(3, 1fr) !important; }
-    .gu-stat-block { min-width: 100px; padding: 16px 12px; }
-  }
-`;
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowLeft, ChevronDown } from "lucide-react";
+import "./godsUniversity.css";
+import { T } from "./siteConfig.js";
 
 export default function GodsUniversity({ dark }) {
-  // Using dark mode prop to gently alter the mostly dark theme
   const bg = dark ? "#050508" : T.htmlDark;
   const altBg = dark ? "#0A0D15" : T.htmlDark2;
   const textColor = T.htmlText;
 
-  useEffect(() => {
-    // Inject Custom CSS
-    const styleEl = document.createElement("style");
-    styleEl.innerHTML = gUStyles;
-    document.head.appendChild(styleEl);
-    return () => { document.head.removeChild(styleEl); };
-  }, []);
+  const [tab, setTab] = useState("spirit");
+  const [openFaq, setOpenFaq] = useState(null);
+  const [formData, setFormData] = useState({ parentName: "", childName: "", level: "", subject: "", phone: "" });
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [formError, setFormError] = useState(false);
 
-  const containerVars = {
-    animate: { transition: { staggerChildren: 0.1 } }
-  };
+  const containerVars = { animate: { transition: { staggerChildren: 0.1 } } };
   const itemVars = {
     initial: { opacity: 0, y: 20 },
     whileInView: { opacity: 1, y: 0, transition: { duration: 0.6 } },
     viewport: { once: true, margin: "-50px" }
   };
 
-  // Links as specified
   const REGISTER_LINK = "https://docs.google.com/forms/d/e/1FAIpQLSdGHVOsyZBTq6ko-MdLCJtZV88CtqSmhDhJphMDONJceCm3DA/viewform";
   const PROSPECTUS_LINK = "https://www.canva.com/design/DAGbhF8ek5o/uFhNtEH_Z_q3l051t543ZQ/view?utm_content=DAGbhF8ek5o&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=he877c76682";
-  const PORTAL_LINK = "https://abcentech.github.io/gU/";
+  const PORTAL_LINK = "/gu/index.html";
+  const PAYSTACK_LINK = "https://paystack.shop/kidsinspiring";
+  const WHATSAPP_FREE = "https://wa.me/2348122673417?text=I%20am%20interested%20in%20the%20free%20academic%20mentoring%20for%20my%20child.";
+  const FORM_EMAIL = "KidsInspiringOperations@gmail.com";
+
+  const handleFormSubmit = async e => {
+    e.preventDefault(); setFormError(false);
+    try {
+      const res = await fetch(`https://formsubmit.co/ajax/${FORM_EMAIL}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({ _subject: "📚 New Academic Mentoring Interest — KIN", "Parent Name": formData.parentName, "Child Name": formData.childName, "School Level": formData.level, "Subject Focus": formData.subject, "WhatsApp": formData.phone }),
+      });
+      if (res.ok) setFormSubmitted(true); else setFormError(true);
+    } catch { setFormError(true); }
+  };
+
+  const SPIRIT_FAQ = [
+    { q: "How much does the Spirit pathway cost?", a: "The Spirit pathway is ₦30,000 per month (subscription) or ₦250,000 per single session. The monthly subscription offers the best value for families committed to consistent spiritual growth." },
+    { q: "What is goDs University Spirit pathway?", a: "It is a structured, 44-week spiritual curriculum for children aged 5–18 combining daily Bible reading, live weekly classes, instructor mentorship, and measurable accountability through our gPA scoring system." },
+    { q: "Is this the same as Sunday school?", a: "No. goDs University is a full academic programme with enrolled pathways, weekly gPA scores, parent reports, and a dedicated portal. It is intentional, tracked, and consistent — not casual." },
+    { q: "What are the three Bible pathways?", a: "Bible Basics (Ages 5–10) — story-based introduction to the whole Bible. New Testament (Ages 10–15) — systematic read-through from the Gospels to the Epistles. Old Testament (Ages 12–18) — deep engagement from Genesis through the Prophets." },
+    { q: "How is gPA calculated?", a: "gPA stands for goD Points Average. Five habits are scored each week: Weekly Report, Time Sheet, Pathway (Bible chapters), Activity, and Attendance. Each is scored 0, 0.5, or 1 — the average becomes the weekly gPA score." },
+    { q: "What is the Parent Portal?", a: "The Parent Portal is a dedicated login where parents see their child's weekly gPA score, instructor notes, a specific home action to reinforce learning, and term-wide progress — every single week." },
+    { q: "How long is one full session?", a: "One session runs 44 weeks, with weekly live classes every Saturday. Children submit written reflections and a signed time sheet before each class." },
+    { q: "What does my child need to do each week?", a: "Read their assigned Bible chapters daily (target: 300+ minutes/week), submit a written weekly reflection, complete a signed time sheet, and attend Saturday class live online." },
+    { q: "How do I enrol my child?", a: "Click the 'Enrol a Genius' button to fill the registration form, or review the Prospectus to understand the programme before enrolling. You can also access the Parent Portal directly for returning families." },
+  ];
+
+  const SKILLS_FAQ = [
+    { q: "How much does gU Skills mentoring cost?", a: "Academic mentoring is ₦7,000 per month. This subscription ensures consistent progress and includes weekly sessions and monthly reports." },
+    { q: "How often are sessions held?", a: "Sessions are held weekly, at an agreed time between you and your child's mentor. Monthly subscribers receive sessions every week throughout the month." },
+    { q: "When do I receive my child's progress report?", a: "Monthly progress reports are sent directly to parents with subject scores, mentor observations, and one specific home action." },
+    { q: "What is free mentoring and how does my child qualify?", a: "Families whose total termly school fees are below ₦70,000 qualify for free academic mentoring. Reach out on WhatsApp and we will guide you through the process." },
+    { q: "Who are the mentors?", a: "Our mentors are Covenant Servants of KidsInspiring Nation and volunteer professionals who are people of excellence in their respective fields — verified, trained, and accountable to KIN's values." },
+    { q: "Can I cancel my subscription?", a: "Yes. Contact us on WhatsApp within 24 hours. We kindly ask for at least one week's notice before the next billing date." },
+    { q: "Are sessions online or in-person?", a: "Sessions are conducted online for maximum accessibility, regardless of where you are located." },
+    { q: "How is mentoring different from tutoring?", a: "Mentoring focuses on study habits, mindset, subject understanding, values, and character. Tutoring (coming soon) will focus on intensive, exam-specific preparation." },
+  ];
+
+  function GUFaqSection({ items, openFaq, setOpenFaq }) {
+    return (
+      <div style={{ display: "grid", gap: 10, marginTop: 32 }}>
+        {items.map((item, i) => (
+          <motion.div key={i} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: i * 0.05 }}
+            style={{ background: T.htmlCard, border: `1px solid ${openFaq === i ? "rgba(232,196,67,.3)" : "rgba(255,255,255,.08)"}`, borderRadius: 14, overflow: "hidden", transition: "border .2s" }}>
+            <button onClick={() => setOpenFaq(openFaq === i ? null : i)} style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, padding: "18px 20px", background: "none", border: "none", cursor: "pointer", textAlign: "left" }}>
+              <span style={{ fontSize: 14, fontWeight: 600, color: openFaq === i ? T.goldL : T.htmlText, lineHeight: 1.4 }}>{item.q}</span>
+              <ChevronDown size={16} color={T.htmlText3} style={{ flexShrink: 0, transform: openFaq === i ? "rotate(180deg)" : "none", transition: "transform .25s" }} />
+            </button>
+            <AnimatePresence>
+              {openFaq === i && (
+                <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25 }}
+                  style={{ overflow: "hidden" }}>
+                  <div style={{ padding: "0 20px 18px", fontSize: 13, color: T.htmlText2, lineHeight: 1.75, borderTop: "1px solid rgba(255,255,255,.06)", paddingTop: 14 }}>
+                    {item.a}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div className="gu-page" style={{ background: bg, color: textColor, minHeight: "100vh" }}>
@@ -195,9 +117,9 @@ export default function GodsUniversity({ dark }) {
           </motion.p>
 
           <motion.div variants={itemVars} style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap", marginBottom: 70 }}>
-            <a href={REGISTER_LINK} target="_blank" rel="noopener" className="gu-btn-gold">Enrol a Genius →</a>
-            <a href={PROSPECTUS_LINK} target="_blank" rel="noopener" className="gu-btn-outline">Prospectus</a>
-            <a href={PORTAL_LINK} target="_blank" rel="noopener" className="gu-btn-outline">Parent Portal →</a>
+            <a href={REGISTER_LINK} target="_blank" rel="noopener noreferrer" className="gu-btn-gold">Enrol a Genius →</a>
+            <a href={PROSPECTUS_LINK} target="_blank" rel="noopener noreferrer" className="gu-btn-outline">Prospectus</a>
+            <a href={PORTAL_LINK} target="_blank" rel="noopener noreferrer" className="gu-btn-outline">Parent Portal →</a>
           </motion.div>
 
           <motion.div variants={itemVars} style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", border: "1px solid rgba(255,255,255,.08)", borderRadius: 20, overflow: "hidden", background: "rgba(22,31,53,.6)", backdropFilter: "blur(10px)", maxWidth: 600, margin: "0 auto" }}>
@@ -215,6 +137,34 @@ export default function GodsUniversity({ dark }) {
           </motion.div>
         </motion.div>
       </section>
+
+      {/* ── Pathway Selector ───────────────────────────────────────── */}
+      <section style={{ background: altBg, padding: "3rem 0", borderTop: "1px solid rgba(255,255,255,.06)", borderBottom: "1px solid rgba(255,255,255,.06)" }}>
+        <div className="gu-container" style={{ textAlign: "center" }}>
+          <p className="gu-sec-label">Choose Your Pathway</p>
+          <h2 style={{ fontFamily: "Cinzel, serif", fontSize: "clamp(20px, 3vw, 30px)", fontWeight: 700, color: T.htmlText, marginBottom: 8 }}>Spirit · Skills · For Service</h2>
+          <p style={{ fontSize: 14, color: T.htmlText2, maxWidth: 500, margin: "0 auto 28px", lineHeight: 1.7 }}>goDs University raises the whole child. Choose the pathway your child needs most right now — or pursue both.</p>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, maxWidth: 620, margin: "0 auto" }}>
+            {[
+              { key: "spirit", icon: "👑", title: "Spirit", sub: "Bible Literacy & Spiritual Formation", desc: "44-week structured curriculum · 3 pathways · gPA scoring · Parent Portal" },
+              { key: "skills", icon: "🧠", title: "Skills", sub: "Academic Excellence & Mental Capacity", desc: "Weekly sessions · Monthly reports · Grades 1–16" },
+            ].map(p => (
+              <motion.button key={p.key} onClick={() => setTab(p.key)} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
+                style={{ background: tab === p.key ? "rgba(232,196,67,.08)" : T.htmlCard, border: `2px solid ${tab === p.key ? "rgba(232,196,67,.45)" : "rgba(255,255,255,.08)"}`, borderRadius: 20, padding: "26px 18px", cursor: "pointer", textAlign: "center", transition: "all .25s", position: "relative", overflow: "hidden", boxShadow: tab === p.key ? "0 0 0 1px rgba(232,196,67,.12), 0 8px 32px rgba(232,196,67,.07)" : "none" }}>
+                {tab === p.key && <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg, transparent, #E8C443, transparent)" }} />}
+                <div style={{ fontSize: 36, marginBottom: 10 }}>{p.icon}</div>
+                <div style={{ fontFamily: "Cinzel, serif", fontSize: 16, fontWeight: 700, color: tab === p.key ? T.goldL : T.htmlText, marginBottom: 3 }}>{p.title}</div>
+                <div style={{ fontSize: 10, color: T.goldL, letterSpacing: 2, textTransform: "uppercase", marginBottom: 8 }}>{p.sub}</div>
+                <div style={{ fontSize: 11, color: T.htmlText3, lineHeight: 1.6 }}>{p.desc}</div>
+              </motion.button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <AnimatePresence mode="wait">
+        {tab === "spirit" && (
+          <motion.div key="spirit" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.4 }}>
 
       {/* About Section */}
       <section className="gu-section gu-container">
@@ -465,7 +415,7 @@ export default function GodsUniversity({ dark }) {
               <div style={{ background: "rgba(8,13,30,.8)", padding: "12px 18px", borderBottom: "1px solid rgba(255,255,255,.08)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                   <span style={{ fontFamily: "Cinzel, serif", fontSize: 13, fontWeight: 700 }}>gU · Portal v7</span>
-                  <span style={{ background: "rgba(232,196,67,.12)", border: "1px solid rgba(232,196,67,.25)", borderRadius: 5, padding: "3px 9px", fontSize: 10, color: T.goldL, fontWeight: 700 }}>Wk 6 · 2026</span>
+                  <span style={{ background: "rgba(232,196,67,.12)", border: "1px solid rgba(232,196,67,.25)", borderRadius: 5, padding: "3px 9px", fontSize: 10, color: T.goldL, fontWeight: 700 }}>Wk 6 · 2025</span>
                   <span style={{ background: "rgba(20,184,166,.1)", border: "1px solid rgba(20,184,166,.25)", borderRadius: 5, padding: "3px 9px", fontSize: 10, color: "#14B981", fontWeight: 700 }}>● Live</span>
                 </div>
                 <span style={{ fontSize: 11, color: T.htmlText3 }}>Olohi Iyoko · gOEI</span>
@@ -536,7 +486,7 @@ export default function GodsUniversity({ dark }) {
           </div>
           
           <div style={{ textAlign: "center", marginTop: 40 }}>
-            <a href={PORTAL_LINK} target="_blank" rel="noopener" className="gu-btn-gold">Access Parent Portal →</a>
+            <a href={PORTAL_LINK} target="_blank" rel="noopener noreferrer" className="gu-btn-gold">Access Parent Portal →</a>
           </div>
         </div>
       </section>
@@ -552,15 +502,15 @@ export default function GodsUniversity({ dark }) {
             {[
               {
                 q: "My daughter used to need reminders every day. Now she picks up her Bible before I even ask. The consistency of goDs University has completely changed our home rhythm.",
-                av: "A", n: "Parent of Olohi", r: "Old Testament Pathway · Session 2026"
+                av: "A", n: "Parent of Olohi", r: "Old Testament Pathway · Session 2025"
               },
               {
                 q: "Watching my son explain a parable to his younger sibling with such confidence — that is the fruit. goDs University builds knowledge and character at the same time.",
-                av: "M", n: "Parent of Samuel", r: "Old Testament Pathway · Session 2026"
+                av: "M", n: "Parent of Samuel", r: "Old Testament Pathway · Session 2025"
               },
               {
                 q: "The Parent Portal changed everything. I know exactly what she read, what the instructor said, and what to reinforce at home each week. I feel genuinely involved now.",
-                av: "T", n: "Parent of Talia", r: "New Testament Pathway · Session 2026"
+                av: "T", n: "Parent of Talia", r: "New Testament Pathway · Session 2025"
               }
             ].map((t, i) => (
               <motion.div 
@@ -592,6 +542,57 @@ export default function GodsUniversity({ dark }) {
         </div>
       </section>
 
+      {/* Spirit Pricing */}
+      <section className="gu-section" style={{ background: altBg }}>
+        <div className="gu-container">
+          <p className="gu-sec-label">Subscription</p>
+          <h2 className="gu-sec-title" style={{ color: T.htmlText }}>Simple, Honest Pricing</h2>
+          <p className="gu-sec-sub">One clear plan. No hidden fees. Cancel anytime. Excellence at every level.</p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 20, maxWidth: 780, margin: "0 auto 28px" }}>
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
+              style={{ background: "rgba(232,196,67,.06)", border: "2px solid rgba(232,196,67,.4)", borderRadius: 24, padding: 32, position: "relative", overflow: "hidden", boxShadow: "0 0 0 1px rgba(232,196,67,.1), 0 12px 40px rgba(232,196,67,.06)" }}>
+              <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg, transparent, #E8C443, transparent)" }} />
+              <div style={{ display: "inline-block", background: "rgba(232,196,67,.15)", border: "1px solid rgba(232,196,67,.3)", borderRadius: 6, padding: "4px 12px", fontSize: 11, color: T.goldL, fontWeight: 700, letterSpacing: 1, marginBottom: 16 }}>BEST VALUE ✦</div>
+              <div style={{ fontFamily: "Cinzel, serif", fontSize: 22, fontWeight: 700, color: T.htmlText, marginBottom: 8 }}>Monthly Subscription</div>
+              <div style={{ fontFamily: "Cinzel, serif", fontSize: 42, fontWeight: 900, color: T.goldL, lineHeight: 1, marginBottom: 4 }}>₦30,000</div>
+              <div style={{ fontSize: 12, color: T.htmlText3, marginBottom: 24 }}>per month · weekly classes included</div>
+              {["Weekly live classes", "Pathway assigned", "Weekly report scoring", "Parent portal access", "Character & values integration", "gPA tracking"].map(f => (
+                <div key={f} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
+                  <span style={{ color: "#14B981", fontSize: 14, fontWeight: 700, flexShrink: 0 }}>✓</span>
+                  <span style={{ fontSize: 13, color: T.htmlText2 }}>{f}</span>
+                </div>
+              ))}
+              <a href={REGISTER_LINK} target="_blank" rel="noopener noreferrer" className="gu-btn-gold" style={{ display: "block", textAlign: "center", marginTop: 24 }}>Subscribe Now →</a>
+            </motion.div>
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.15 }}
+              style={{ background: T.htmlCard, border: "2px solid rgba(232,196,67,.2)", borderRadius: 24, padding: 32, position: "relative", overflow: "hidden" }}>
+              <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg, transparent, rgba(232,196,67,.4), transparent)" }} />
+              <div style={{ display: "inline-block", background: "rgba(232,196,67,.08)", border: "1px solid rgba(232,196,67,.2)", borderRadius: 6, padding: "4px 12px", fontSize: 11, color: T.goldL, fontWeight: 700, letterSpacing: 1, marginBottom: 16 }}>PER SESSION</div>
+              <div style={{ fontFamily: "Cinzel, serif", fontSize: 22, fontWeight: 700, color: T.htmlText, marginBottom: 8 }}>Single Session</div>
+              <div style={{ fontFamily: "Cinzel, serif", fontSize: 42, fontWeight: 900, color: T.goldL, lineHeight: 1, marginBottom: 4 }}>₦250,000</div>
+              <div style={{ fontSize: 12, color: T.htmlText3, marginBottom: 24 }}>per session · pay as you go</div>
+              {["One focused session", "No commitment required", "Same instructor quality", "Ideal for assessments", "Subject-specific focus"].map(f => (
+                <div key={f} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
+                  <span style={{ color: T.goldL, fontSize: 14, fontWeight: 700, flexShrink: 0 }}>✓</span>
+                  <span style={{ fontSize: 13, color: T.htmlText2 }}>{f}</span>
+                </div>
+              ))}
+              <a href={REGISTER_LINK} target="_blank" rel="noopener noreferrer" className="gu-btn-outline" style={{ display: "block", textAlign: "center", marginTop: 24 }}>Book a Session →</a>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Spirit FAQ */}
+      <section className="gu-section" style={{ background: bg }}>
+        <div className="gu-container" style={{ maxWidth: 720 }}>
+          <p className="gu-sec-label">Questions</p>
+          <h2 className="gu-sec-title" style={{ color: T.htmlText }}>Frequently Asked</h2>
+          <p className="gu-sec-sub">Everything you need to know about the goDs University Spirit pathway — pathways, gPA, the Portal, and how to enrol.</p>
+          <GUFaqSection items={SPIRIT_FAQ} openFaq={openFaq} setOpenFaq={setOpenFaq} />
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="gu-section" style={{ textAlign: "center", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: 600, height: 400, background: "radial-gradient(ellipse, rgba(232,196,67,.07), transparent 70%)", pointerEvents: "none" }} />
@@ -603,8 +604,8 @@ export default function GodsUniversity({ dark }) {
           </p>
           
           <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap", marginBottom: 48 }}>
-            <a href={REGISTER_LINK} target="_blank" rel="noopener" className="gu-btn-gold">Enrol a Genius</a>
-            <a href={PORTAL_LINK} target="_blank" rel="noopener" className="gu-btn-outline">Parent Portal →</a>
+            <a href={REGISTER_LINK} target="_blank" rel="noopener noreferrer" className="gu-btn-gold">Enrol a Genius</a>
+            <a href={PORTAL_LINK} target="_blank" rel="noopener noreferrer" className="gu-btn-outline">Parent Portal →</a>
           </div>
 
           <p style={{ fontFamily: "Lora, serif", fontStyle: "italic", fontSize: 14, color: T.htmlText3, lineHeight: 1.8, maxWidth: 500, margin: "0 auto" }}>
@@ -613,6 +614,261 @@ export default function GodsUniversity({ dark }) {
           </p>
         </div>
       </section>
+          </motion.div>
+        )}
+
+        {tab === "skills" && (
+          <motion.div key="skills" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.4 }}>
+
+            {/* Skills Hero */}
+            <section className="gu-section" style={{ textAlign: "center", position: "relative", overflow: "hidden" }}>
+              <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", width: 600, height: 400, background: "radial-gradient(ellipse, rgba(232,196,67,.06), transparent 70%)", pointerEvents: "none" }} />
+              <div className="gu-container" style={{ position: "relative", zIndex: 1 }}>
+                <p className="gu-sec-label">Skills Pathway</p>
+                <h2 className="gu-sec-title" style={{ color: T.htmlText }}>Academic Excellence,<br />God's Way</h2>
+                <p className="gu-sec-sub">"Do you see someone skilled in their work? They will serve before kings." — Proverbs 22:29<br /><br />Every child is called to excellence — not just in spirit, but in mind. We pair your child with a dedicated mentor who combines subject mastery with godly character.</p>
+                <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap", margin: "32px 0 36px" }}>
+                  <a href={PAYSTACK_LINK} target="_blank" rel="noopener noreferrer" className="gu-btn-gold">Subscribe — ₦7,000/mo →</a>
+                  <a href={WHATSAPP_FREE} target="_blank" rel="noopener noreferrer" className="gu-btn-outline">Check Free Eligibility</a>
+                </div>
+                <div style={{ display: "flex", justifyContent: "center", border: "1px solid rgba(255,255,255,.08)", borderRadius: 20, overflow: "hidden", background: "rgba(22,31,53,.6)", backdropFilter: "blur(10px)", maxWidth: 560, margin: "0 auto" }}>
+                  {[{ n: "₦7,000", l: "Per Month" }, { n: "Weekly", l: "Sessions" }, { n: "Monthly", l: "Reports" }, { n: "Gr 1–16", l: "All Levels" }].map(s => (
+                    <div key={s.l} className="gu-stat-block">
+                      <div style={{ fontFamily: "Cinzel, serif", fontSize: 20, fontWeight: 900, color: T.goldL }}>{s.n}</div>
+                      <div style={{ fontSize: 11, color: T.htmlText3, letterSpacing: 1, marginTop: 3 }}>{s.l}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            {/* Student Levels */}
+            <section className="gu-section" style={{ background: altBg }}>
+              <div className="gu-container">
+                <p className="gu-sec-label">Who We Mentor</p>
+                <h2 className="gu-sec-title" style={{ color: T.htmlText }}>All School Levels</h2>
+                <p className="gu-sec-sub">Whether your child is just starting primary school or preparing for university, we have a mentor matched to their level and goals.</p>
+                <div className="gu-pathways-grid">
+                  {[
+                    { lv: "Primary", grades: "Grades 1–6", ic: "📖", desc: "Building strong foundations — reading comprehension, numeracy, basic science, and the study habits that set children up for life.", tags: ["English Language", "Mathematics", "Basic Science", "Social Studies", "Civic Education"] },
+                    { lv: "Secondary", grades: "Grades 7–11", ic: "✝️", desc: "Navigating secondary school with confidence — subject mastery, exam strategies, and the character to perform under pressure.", tags: ["English", "Mathematics", "Sciences", "Economics", "Literature"] },
+                    { lv: "Tertiary / A-Level", grades: "Grades 12–16", ic: "📜", desc: "University entry preparation, advanced subject mastery, research skills, and the excellence mindset that sets nation builders apart.", tags: ["University Prep", "Advanced Sciences", "Study Skills", "Research Methods", "All Subjects"] },
+                  ].map((lv, i) => (
+                    <motion.div key={lv.lv} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.6, delay: i * 0.15 }} className="gu-pathway-card">
+                      <div className="gu-pw-ages" style={{ position: "absolute", top: 18, right: 18, fontSize: 11, color: T.htmlText3, background: T.htmlCard2, border: "1px solid rgba(255,255,255,.08)", borderRadius: 8, padding: "4px 10px", fontWeight: 600 }}>{lv.grades}</div>
+                      <span style={{ fontSize: 52, display: "block", marginBottom: 20 }}>{lv.ic}</span>
+                      <div style={{ fontFamily: "Cinzel, serif", fontSize: 22, fontWeight: 700, color: T.goldL, marginBottom: 14 }}>{lv.lv}</div>
+                      <p style={{ fontSize: 14, color: T.htmlText2, lineHeight: 1.75, margin: "0 0 22px 0" }}>{lv.desc}</p>
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: 6, justifyContent: "center" }}>
+                        {lv.tags.map(t => <span key={t} style={{ background: "rgba(232,196,67,.07)", border: "1px solid rgba(232,196,67,.15)", borderRadius: 6, padding: "4px 10px", fontSize: 11, color: T.htmlText3 }}>{t}</span>)}
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            {/* REMAINING SECTIONS PLACEHOLDER */}
+
+            {/* How It Works */}
+            <section className="gu-section">
+              <div className="gu-container">
+                <p className="gu-sec-label">The Process</p>
+                <h2 className="gu-sec-title" style={{ color: T.htmlText }}>How It Works</h2>
+                <p className="gu-sec-sub">Five simple steps — from sign-up to measurable academic improvement, built on consistency, character, and care.</p>
+                <div className="gu-steps-grid">
+                  {[
+                    { n: 1, t: "Register", d: "Fill the interest form below or subscribe directly on Paystack. We confirm enrolment within 24 hours." },
+                    { n: 2, t: "Assessment", d: "Your mentor assesses your child's current level, learning gaps, and academic goals in a short introductory session." },
+                    { n: 3, t: "Matched", d: "Your child is matched with a mentor who excels in their subject area and embodies KIN's values of character, faith, and service." },
+                    { n: 4, t: "Weekly Sessions", d: "Live, structured online sessions every week at an agreed time — accessible from anywhere." },
+                    { n: 5, t: "Monthly Report", d: "Parents receive a detailed monthly report with subject scores, mentor observations, and one specific action to reinforce at home." },
+                  ].map((s, i) => (
+                    <motion.div key={s.n} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.6, delay: i * 0.1 }} className="gu-step-col">
+                      <div style={{ width: 52, height: 52, borderRadius: "50%", background: T.goldL, color: T.htmlDark, fontFamily: "Cinzel, serif", fontSize: 18, fontWeight: 900, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 18px", boxShadow: "0 4px 20px rgba(232,196,67,.35)" }}>{s.n}</div>
+                      <div style={{ fontFamily: "Cinzel, serif", fontSize: 13, fontWeight: 700, color: T.htmlText, marginBottom: 8 }}>{s.t}</div>
+                      <p style={{ fontSize: 12, color: T.htmlText3, lineHeight: 1.6 }}>{s.d}</p>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            {/* Pricing */}
+            <section className="gu-section" style={{ background: altBg }}>
+              <div className="gu-container">
+                <p className="gu-sec-label">Subscription</p>
+                <h2 className="gu-sec-title" style={{ color: T.htmlText }}>Simple, Honest Pricing</h2>
+                <p className="gu-sec-sub">One clear plan. No hidden fees. Cancel anytime. Excellence at every level.</p>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 20, maxWidth: 680, margin: "0 auto 28px" }}>
+                  <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
+                    style={{ background: "rgba(232,196,67,.06)", border: "2px solid rgba(232,196,67,.4)", borderRadius: 24, padding: 32, position: "relative", overflow: "hidden", boxShadow: "0 0 0 1px rgba(232,196,67,.1), 0 12px 40px rgba(232,196,67,.06)" }}>
+                    <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg, transparent, #E8C443, transparent)" }} />
+                    <div style={{ display: "inline-block", background: "rgba(232,196,67,.15)", border: "1px solid rgba(232,196,67,.3)", borderRadius: 6, padding: "4px 12px", fontSize: 11, color: T.goldL, fontWeight: 700, letterSpacing: 1, marginBottom: 16 }}>ACTIVE ✦</div>
+                    <div style={{ fontFamily: "Cinzel, serif", fontSize: 22, fontWeight: 700, color: T.htmlText, marginBottom: 8 }}>Academic Mentoring</div>
+                    <div style={{ fontFamily: "Cinzel, serif", fontSize: 42, fontWeight: 900, color: T.goldL, lineHeight: 1, marginBottom: 4 }}>₦7,000</div>
+                    <div style={{ fontSize: 12, color: T.htmlText3, marginBottom: 24 }}>per month</div>
+                    {["Weekly live sessions", "Subject-specific mentoring", "Monthly progress report", "Mentor notes & parent update", "Character & values integration", "Grades 1–16 · All levels"].map(f => (
+                      <div key={f} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
+                        <span style={{ color: "#14B981", fontSize: 14, fontWeight: 700, flexShrink: 0 }}>✓</span>
+                        <span style={{ fontSize: 13, color: T.htmlText2 }}>{f}</span>
+                      </div>
+                    ))}
+                    <a href={PAYSTACK_LINK} target="_blank" rel="noopener noreferrer" className="gu-btn-gold" style={{ display: "block", textAlign: "center", marginTop: 24 }}>Subscribe Now →</a>
+                  </motion.div>
+                  <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.15 }}
+                    style={{ background: T.htmlCard, border: "2px solid rgba(255,255,255,.06)", borderRadius: 24, padding: 32, position: "relative", opacity: 0.65 }}>
+                    <div style={{ display: "inline-block", background: "rgba(74,96,128,.2)", border: "1px solid rgba(74,96,128,.3)", borderRadius: 6, padding: "4px 12px", fontSize: 11, color: T.htmlText3, fontWeight: 700, letterSpacing: 1, marginBottom: 16 }}>COMING SOON 🔜</div>
+                    <div style={{ fontFamily: "Cinzel, serif", fontSize: 22, fontWeight: 700, color: T.htmlText3, marginBottom: 8 }}>Tutoring</div>
+                    <div style={{ fontFamily: "Cinzel, serif", fontSize: 42, fontWeight: 900, color: T.htmlText3, lineHeight: 1, marginBottom: 4 }}>TBD</div>
+                    <div style={{ fontSize: 12, color: T.htmlText3, marginBottom: 24 }}>per month</div>
+                    {["1-on-1 intensive sessions", "Exam-specific preparation", "Grade-targeted curriculum", "Weekly performance tracking", "Subject deep-dives"].map(f => (
+                      <div key={f} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
+                        <span style={{ color: T.htmlText3, fontSize: 14, flexShrink: 0 }}>○</span>
+                        <span style={{ fontSize: 13, color: T.htmlText3 }}>{f}</span>
+                      </div>
+                    ))}
+                    <div style={{ textAlign: "center", marginTop: 24, padding: "13px 28px", borderRadius: 999, background: "rgba(255,255,255,.04)", color: T.htmlText3, fontSize: 14, fontWeight: 600, border: "1px solid rgba(255,255,255,.08)" }}>Notify me when available</div>
+                  </motion.div>
+                </div>
+                <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}
+                  style={{ background: "rgba(20,185,129,.06)", border: "1px solid rgba(20,185,129,.25)", borderRadius: 18, padding: "22px 28px", maxWidth: 680, margin: "0 auto", display: "flex", alignItems: "center", gap: 20, flexWrap: "wrap" }}>
+                  <div style={{ fontSize: 32, flexShrink: 0 }}>🌱</div>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontFamily: "Cinzel, serif", fontSize: 14, fontWeight: 700, color: "#14B981", marginBottom: 4 }}>Free Mentoring — For Qualifying Families</div>
+                    <p style={{ fontSize: 13, color: T.htmlText2, lineHeight: 1.65, margin: 0 }}>If your family's total termly school fees are below <strong style={{ color: T.htmlText }}>₦70,000</strong>, your child qualifies for <strong style={{ color: "#14B981" }}>free academic mentoring</strong>. No child should be left behind because of finances.</p>
+                  </div>
+                  <a href={WHATSAPP_FREE} target="_blank" rel="noopener noreferrer"
+                    style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "10px 20px", borderRadius: 999, background: "rgba(20,185,129,.15)", border: "1px solid rgba(20,185,129,.35)", color: "#14B981", fontWeight: 700, fontSize: 13, textDecoration: "none", flexShrink: 0, transition: "all .2s" }}
+                    onMouseEnter={e => e.currentTarget.style.background = "rgba(20,185,129,.25)"}
+                    onMouseLeave={e => e.currentTarget.style.background = "rgba(20,185,129,.15)"}>
+                    Check Eligibility →
+                  </a>
+                </motion.div>
+              </div>
+            </section>
+
+            {/* MENTORS + TESTIMONIALS + FORM + FAQ PLACEHOLDER */}
+
+            {/* Who Are Our Mentors */}
+            <section className="gu-section">
+              <div className="gu-container">
+                <p className="gu-sec-label">Our People</p>
+                <h2 className="gu-sec-title" style={{ color: T.htmlText }}>Who Are Our Mentors?</h2>
+                <p className="gu-sec-sub">Every mentor is a person of excellence in their field — verified, trained, and fully accountable to KIN's values of character, faith, and service.</p>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 16, marginTop: 36 }}>
+                  {[
+                    { ic: "🕊️", t: "Covenant Servants", d: "Trained KIN volunteers committed to character, faith, and service — the backbone of everything we do." },
+                    { ic: "🏆", t: "People of Excellence", d: "Volunteer professionals who have attained excellence in their academic and professional fields, giving back through mentorship." },
+                    { ic: "✅", t: "Vetted & Accountable", d: "Every mentor is screened, trained, and accountable to KIN leadership. Parents can trust who is with their child." },
+                    { ic: "💛", t: "Values-Driven", d: "More than subject experts — our mentors integrate godly character, discipline, and purpose into every session." },
+                  ].map((m, i) => (
+                    <motion.div key={m.t} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: i * 0.1 }}
+                      style={{ background: T.htmlCard, border: "1px solid rgba(255,255,255,.08)", borderRadius: 16, padding: "24px 18px", textAlign: "center", transition: "all .25s" }}
+                      onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(232,196,67,.2)"; e.currentTarget.style.transform = "translateY(-3px)"; }}
+                      onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,.08)"; e.currentTarget.style.transform = "translateY(0)"; }}>
+                      <div style={{ fontSize: 30, marginBottom: 10 }}>{m.ic}</div>
+                      <div style={{ fontFamily: "Cinzel, serif", fontSize: 12, fontWeight: 700, color: T.goldL, marginBottom: 7 }}>{m.t}</div>
+                      <p style={{ fontSize: 12, color: T.htmlText3, lineHeight: 1.65, margin: 0 }}>{m.d}</p>
+                    </motion.div>
+                  ))}
+                </div>
+                <div style={{ borderLeft: `3px solid ${T.goldL}`, padding: "14px 20px", background: "rgba(232,196,67,.08)", borderRadius: "0 12px 12px 0", margin: "32px 0 0" }}>
+                  <p style={{ fontFamily: "Lora, serif", fontStyle: "italic", fontSize: 14, color: T.htmlText2, margin: 0 }}>"As iron sharpens iron, so one person sharpens another."</p>
+                  <cite style={{ display: "block", fontSize: 11, color: T.htmlText3, fontStyle: "normal", letterSpacing: 1, marginTop: 6 }}>— PROVERBS 27:17</cite>
+                </div>
+              </div>
+            </section>
+
+            {/* Interest Form */}
+            <section className="gu-section" style={{ background: altBg }}>
+              <div className="gu-container" style={{ maxWidth: 640 }}>
+                <p className="gu-sec-label">Register Interest</p>
+                <h2 className="gu-sec-title" style={{ color: T.htmlText }}>Get Started Today</h2>
+                <p className="gu-sec-sub">Fill in your details below and our team will reach out within 24 hours to complete your child's enrolment.</p>
+                {formSubmitted ? (
+                  <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} style={{ background: "rgba(20,185,129,.08)", border: "1px solid rgba(20,185,129,.3)", borderRadius: 20, padding: "40px 32px", textAlign: "center" }}>
+                    <div style={{ fontSize: 48, marginBottom: 16 }}>✅</div>
+                    <div style={{ fontFamily: "Cinzel, serif", fontSize: 20, fontWeight: 700, color: "#14B981", marginBottom: 8 }}>Interest Registered!</div>
+                    <p style={{ fontSize: 14, color: T.htmlText2, lineHeight: 1.7 }}>Thank you! Our team will contact you on WhatsApp within 24 hours to complete enrolment.</p>
+                  </motion.div>
+                ) : (
+                  <form onSubmit={handleFormSubmit} style={{ display: "grid", gap: 16 }}>
+                    {[
+                      { name: "parentName", label: "Parent / Guardian Name", type: "text", placeholder: "Your full name" },
+                      { name: "childName", label: "Child's Name", type: "text", placeholder: "Your child's full name" },
+                      { name: "phone", label: "WhatsApp Number", type: "tel", placeholder: "+234 800 000 0000" },
+                    ].map(f => (
+                      <div key={f.name}>
+                        <label style={{ display: "block", fontSize: 12, fontWeight: 600, color: T.htmlText2, marginBottom: 6, letterSpacing: 0.5 }}>{f.label}</label>
+                        <input name={f.name} type={f.type} placeholder={f.placeholder} required value={formData[f.name]}
+                          onChange={e => setFormData(p => ({ ...p, [e.target.name]: e.target.value }))}
+                          style={{ width: "100%", background: T.htmlCard, border: "1px solid rgba(255,255,255,.12)", borderRadius: 10, padding: "12px 16px", fontSize: 14, color: T.htmlText, outline: "none", boxSizing: "border-box", transition: "border .2s" }}
+                          onFocus={e => e.currentTarget.style.border = "1px solid rgba(232,196,67,.4)"}
+                          onBlur={e => e.currentTarget.style.border = "1px solid rgba(255,255,255,.12)"} />
+                      </div>
+                    ))}
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+                      <div>
+                        <label style={{ display: "block", fontSize: 12, fontWeight: 600, color: T.htmlText2, marginBottom: 6 }}>School Level</label>
+                        <select name="level" required value={formData.level} onChange={e => setFormData(p => ({ ...p, level: e.target.value }))}
+                          style={{ width: "100%", background: T.htmlCard, border: "1px solid rgba(255,255,255,.12)", borderRadius: 10, padding: "12px 16px", fontSize: 14, color: T.htmlText, outline: "none", boxSizing: "border-box" }}>
+                          <option value="">Select level</option>
+                          <option value="Primary (Grades 1–6)">Primary (Grades 1–6)</option>
+                          <option value="Secondary (Grades 7–11)">Secondary (Grades 7–11)</option>
+                          <option value="Tertiary / A-Level (Grades 12–16)">Tertiary / A-Level (Grades 12–16)</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label style={{ display: "block", fontSize: 12, fontWeight: 600, color: T.htmlText2, marginBottom: 6 }}>Subject Focus</label>
+                        <select name="subject" required value={formData.subject} onChange={e => setFormData(p => ({ ...p, subject: e.target.value }))}
+                          style={{ width: "100%", background: T.htmlCard, border: "1px solid rgba(255,255,255,.12)", borderRadius: 10, padding: "12px 16px", fontSize: 14, color: T.htmlText, outline: "none", boxSizing: "border-box" }}>
+                          <option value="">Select subject</option>
+                          <option value="Mathematics">Mathematics</option>
+                          <option value="English Language">English Language</option>
+                          <option value="Sciences">Sciences</option>
+                          <option value="Multiple Subjects">Multiple Subjects</option>
+                          <option value="Other">Other</option>
+                        </select>
+                      </div>
+                    </div>
+                    {formError && <p style={{ fontSize: 12, color: "#F87171", margin: 0 }}>Something went wrong. Please try again or reach out on WhatsApp.</p>}
+                    <button type="submit" className="gu-btn-gold" style={{ border: "none", cursor: "pointer", marginTop: 4 }}>Submit Interest →</button>
+                    <p style={{ fontSize: 11, color: T.htmlText3, textAlign: "center", margin: 0 }}>Or subscribe directly: <a href={PAYSTACK_LINK} target="_blank" rel="noopener noreferrer" style={{ color: T.goldL }}>paystack.shop/kidsinspiring</a></p>
+                  </form>
+                )}
+              </div>
+            </section>
+
+            {/* FAQ */}
+            <section className="gu-section">
+              <div className="gu-container" style={{ maxWidth: 720 }}>
+                <p className="gu-sec-label">Questions</p>
+                <h2 className="gu-sec-title" style={{ color: T.htmlText }}>Frequently Asked</h2>
+                <p className="gu-sec-sub">Everything you need to know about gU Skills — pricing, sessions, mentors, reports, and how to get started.</p>
+                <GUFaqSection items={SKILLS_FAQ} openFaq={openFaq} setOpenFaq={setOpenFaq} />
+              </div>
+            </section>
+
+            {/* Skills CTA */}
+            <section className="gu-section" style={{ textAlign: "center", position: "relative", overflow: "hidden" }}>
+              <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", width: 600, height: 400, background: "radial-gradient(ellipse, rgba(232,196,67,.07), transparent 70%)", pointerEvents: "none" }} />
+              <div className="gu-container" style={{ position: "relative", zIndex: 1 }}>
+                <h2 style={{ fontFamily: "Cinzel, serif", fontSize: "clamp(28px, 4vw, 50px)", fontWeight: 900, marginBottom: 16, lineHeight: 1.1 }}>Ready to Unlock<br />Your Child's Potential?</h2>
+                <p style={{ fontSize: 16, color: T.htmlText2, maxWidth: 500, margin: "0 auto 36px", lineHeight: 1.85 }}>Join families who trust KidsInspiring Nation to raise academically excellent, godly children — one weekly session at a time.</p>
+                <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap", marginBottom: 40 }}>
+                  <a href={PAYSTACK_LINK} target="_blank" rel="noopener noreferrer" className="gu-btn-gold">Subscribe — ₦7,000/mo →</a>
+                  <a href={WHATSAPP_FREE} target="_blank" rel="noopener noreferrer" className="gu-btn-outline">Check Free Eligibility</a>
+                </div>
+                <p style={{ fontFamily: "Lora, serif", fontStyle: "italic", fontSize: 14, color: T.htmlText3, lineHeight: 1.8, maxWidth: 480, margin: "0 auto" }}>
+                  "Do you see someone skilled in their work? They will serve before kings; they will not serve before officials of low rank."
+                  <cite style={{ display: "block", fontSize: 11, letterSpacing: 2, color: T.htmlText3, marginTop: 6, fontStyle: "normal" }}>— PROVERBS 22:29</cite>
+                </p>
+              </div>
+            </section>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

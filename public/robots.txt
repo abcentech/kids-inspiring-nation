@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kidsinspiringnation.org/sitemap.xml
+
