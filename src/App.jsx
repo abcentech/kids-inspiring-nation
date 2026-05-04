@@ -73,7 +73,7 @@ const PROGRAMS = [
     entries: 13350, sessions: 359, unique: 276, pct: 67.8,
     schedule: "Daily · 8pm WAT",
     tagline: "Our Character Flagship — holds every single day of the year",
-    desc: "A daily devotional shaping the character of every goD. It is the heartbeat of KIN.",
+    desc: "A daily devotional shaping the character of every goD (genius). It is the heartbeat of KIN.",
     bg: `linear-gradient(135deg,${T.green},${T.greenD})`,
     photo: "/photos/KIN_programs.jpg",
     cta: true, // has JOIN CTA
@@ -84,8 +84,8 @@ const PROGRAMS = [
     pillar: "Service", icon: "👑", fill: T.kingsC,
     entries: 1718, sessions: 129, unique: 224, pct: 8.7,
     schedule: "Sundays · 5pm WAT",
-    tagline: "Senior goDs mentor junior goDs in communal cells",
-    desc: "A structured mentorship community where senior goDs pour into juniors.",
+    tagline: "Senior goDs (geniuses) mentor junior goDs (geniuses) in communal cells",
+    desc: "A structured mentorship community where senior goDs (geniuses) pour into juniors.",
     bg: `linear-gradient(135deg,#7B2D8B,#4A1B55)`,
     photo: "/photos/Community_impact.jpg",
     sub: [{ label: "KINGs 001", entries: 616, unique: 69 }, { label: "KINGs 002", entries: 864, unique: 123 }, { label: "KINGs 003", entries: 238, unique: 32 }],
@@ -125,13 +125,27 @@ const PROGRAMS = [
     photo: "/photos/P119_Academy.jpg",
   },
   {
+    code: "gU", name: "goDs University",
+    full: "goDs University — Spirit & Skills Formation",
+    pillar: "Spirit + Skills", icon: "🎓", fill: T.gold,
+    entries: null, sessions: 44, unique: null, pct: null,
+    displayValue: "2",
+    displayLabel: "dimensions",
+    footerStats: [{ l: "Pathways", v: 2 }, { l: "Weeks", v: 44 }],
+    schedule: "Ongoing · two dimensions",
+    tagline: "Spirit formation and academic excellence in one funnel",
+    desc: "goDs University forms children in Spirit and sharpens them in Skills for service.",
+    bg: `linear-gradient(135deg,${T.goldD},${T.green})`,
+    photo: "/photos/Skills_Development.jpg",
+  },
+  {
     code: "FACE", name: "Feed A Community",
     full: "FACE — Feed A Community Every week",
     pillar: "Service", icon: "🍽️", fill: T.faceC,
     entries: null, sessions: 52, unique: null, pct: null,
     meals: 1952,
     schedule: "Sundays · 3pm WAT",
-    tagline: "1,952 meals served (as at 2025)",
+    tagline: "1,952 meals served in 2025",
     desc: "KidsInspiring Nation feeds every child in the community, meeting their practical needs.",
     bg: `linear-gradient(135deg,${T.coral},#A83920)`,
     photo: "/photos/FACE_Feed_A_Community_EveryWeek.jpg",
@@ -238,10 +252,13 @@ const CustomTooltip = ({ active, payload, label, dark }) => {
 };
 
 // goDs branding helper
-const GoDs = ({ style = {} }) => (
+const GoDs = ({ style = {}, suffixStyle = {} }) => (
   <span style={{ fontFamily: "'Playfair Display',serif", fontStyle: "italic", ...style }}>
     <span style={{ fontWeight: 900 }}>g</span>
     <span style={{ fontWeight: 900, color: "inherit" }}>oDs</span>
+    <span style={{ fontFamily: "'Plus Jakarta Sans',sans-serif", fontStyle: "normal", fontSize: "0.42em", fontWeight: 700, letterSpacing: "0.02em", color: "inherit", opacity: 0.92, ...suffixStyle }}>
+      {" "}(geniuses)
+    </span>
   </span>
 );
 
@@ -266,7 +283,7 @@ function CookieBanner({ dark }) {
             <div style={{ fontSize: 13, fontWeight: 600, color: txt, marginBottom: 4, fontFamily: "'Plus Jakarta Sans',sans-serif" }}>We value your privacy</div>
             <p style={{ fontSize: 11, color: sub, lineHeight: 1.55 }}>
               KidsInspiring Nation uses cookies to improve your experience on this website, in compliance with the <strong>Nigeria Data Protection Regulation (NDPR) 2019</strong>. We collect anonymised usage data to improve our programmes and website. We do not sell your data.
-              {expanded && (<span> Your data is processed by goDs Global KidsInspiring (IT No. 6980735) as the Data Controller. You have the right to access, correct or delete your data at any time by contacting KidsinspiringNation@gmail.com.</span>)}
+              {expanded && (<span> Your data is processed by KidsInspiring Nation as the Data Controller. You have the right to access, correct or delete your data at any time by contacting KidsinspiringNation@gmail.com.</span>)}
             </p>
             <button onClick={() => setExpanded(!expanded)} style={{ fontSize: 11, color: T.gold, fontWeight: 500, marginTop: 4, cursor: "pointer", background: "none", border: "none", padding: 0 }}>
               {expanded ? "Show less ▲" : "Learn more ▼"}
@@ -430,8 +447,8 @@ const SLIDES = [
   {
     id: 4,
     tag: "FACE PROGRAMME",
-    headline: "1,952 Meals.\nEvery Sunday.",
-    body: "Week after week, KidsInspiring Nation feeds every child in the community. FACE served 1,952 meals as at 2025 — because raising Nations starts with meeting needs.",
+    headline: "1,952 Meals Served\nin 2025.",
+    body: "Week after week, KidsInspiring Nation feeds every child in the community. FACE served 1,952 meals in 2025 — because raising Nations starts with meeting needs.",
     icon: Utensils,
     gradient: `linear-gradient(135deg, #A83920 0%, #D94F30 60%, #8B2010 100%)`,
     accent: "#FBBF72",
@@ -441,7 +458,7 @@ const SLIDES = [
     id: 5,
     tag: "KINGS CELLS",
     headline: "3 Cohorts.\n224 Unique goDs.",
-    body: "KINGs 001, 002, and 003 ran all year, building mentorship chains from senior to junior goDs. Sunday at 5pm — the cells that shape the nation-builders of tomorrow.",
+    body: "KINGs 001, 002, and 003 ran all year, building mentorship chains from senior to junior goDs (geniuses). Sunday at 5pm — the cells that shape the nation-builders of tomorrow.",
     icon: Crown,
     gradient: `linear-gradient(135deg, #4A1B55 0%, #7B2D8B 60%, #2D0A3A 100%)`,
     accent: "#D8B4FE",
@@ -804,11 +821,16 @@ function SiteNav({ dark, onGive }) {
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [mob, openDropdown]);
 
+  const currentPath = location.pathname;
+  const isHomeHero = currentPath === "/" && !sc;
+  const useLightNavText = dark || isHomeHero;
   const navBg = sc ? (dark ? "rgba(5,5,5,.85)" : "rgba(250,250,245,.85)") : "transparent";
   const navBdr = sc ? `1px solid ${dark ? "rgba(196,136,44,.15)" : "rgba(22,97,62,.08)"}` : "1px solid transparent";
-  const logoC = sc ? (dark ? T.goldL : T.green) : T.cream;
-  const linkC = sc ? (dark ? "rgba(253,247,236,.85)" : T.greenM) : "rgba(253,247,236,.9)";
-  const currentPath = location.pathname;
+  const logoC = useLightNavText ? T.cream : T.green;
+  const linkC = useLightNavText ? "rgba(253,247,236,.9)" : T.greenM;
+  const brandSubC = useLightNavText
+    ? (dark ? T.d3 : "rgba(253,247,236,.52)")
+    : T.p3;
 
   const DROPDOWNS = {
     About: [
@@ -845,6 +867,11 @@ function SiteNav({ dark, onGive }) {
 
   const dropdownSurf = dark ? "rgba(12,20,14,.97)" : "rgba(255,255,255,.98)";
   const dropdownBrd = dark ? "rgba(255,255,255,.08)" : "rgba(22,97,62,.1)";
+  const shellBg = sc
+    ? (dark ? "rgba(6,16,10,.9)" : "rgba(255,252,246,.92)")
+    : (dark ? "rgba(4,14,9,.86)" : "rgba(255,252,246,.88)");
+  const shellBdr = dark ? "rgba(196,136,44,.14)" : "rgba(22,97,62,.1)";
+  const utilityBg = dark ? "rgba(255,255,255,.045)" : "rgba(22,97,62,.05)";
 
   return (
     <>
@@ -852,24 +879,91 @@ function SiteNav({ dark, onGive }) {
         @keyframes nvc-glow { 0% { box-shadow: 0 0 0 0 rgba(196,136,44,0.5); } 70% { box-shadow: 0 0 0 12px rgba(196,136,44,0); } 100% { box-shadow: 0 0 0 0 rgba(196,136,44,0); } }
         .nvc-pulse { animation: nvc-glow 2.2s infinite; }
         .nav-dd-item:hover { background: ${dark ? "rgba(255,255,255,.06)" : "rgba(22,97,62,.05)"} !important; }
-        @media(max-width:900px){.nav-links{display:none!important}.mob-menu{display:flex!important}}
+        .nav-shell {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 1.25rem;
+          padding: 0.7rem 1rem;
+          border-radius: 999px;
+          border: 1px solid ${shellBdr};
+          background: ${shellBg};
+          box-shadow: ${dark ? "0 18px 40px rgba(0,0,0,.22)" : "0 18px 40px rgba(9,34,20,.08)"};
+        }
+        .nav-brand-meta {
+          display: flex;
+          flex-direction: column;
+          min-width: 0;
+        }
+        .nav-links {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.35rem;
+          flex: 1 1 auto;
+          min-width: 0;
+        }
+        .nav-primary {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.25rem;
+          min-width: 0;
+          flex: 1 1 auto;
+        }
+        .nav-actions {
+          display: flex;
+          align-items: center;
+          gap: 0.55rem;
+          flex-shrink: 0;
+        }
+        .nav-give {
+          background: ${utilityBg};
+          border: 1px solid ${dark ? "rgba(255,255,255,.08)" : "rgba(22,97,62,.08)"};
+        }
+        .nav-divider {
+          width: 1px;
+          height: 26px;
+          background: ${dark ? "rgba(255,255,255,.08)" : "rgba(22,97,62,.12)"};
+          flex-shrink: 0;
+        }
+        @media(max-width:1380px){
+          .nav-brand-meta small { display:none; }
+          .nav-shell { gap: 1rem; }
+        }
+        @media(max-width:1240px){
+          .nav-links{display:none!important}
+          .mob-menu{display:flex!important}
+          .nav-shell{
+            padding: 0.75rem 0.95rem;
+            border-radius: 20px;
+          }
+        }
+        @media(max-width:640px){
+          .nav-shell{
+            padding: 0.65rem 0.8rem;
+            gap: 0.75rem;
+          }
+        }
       `}</style>
       <nav ref={navRef} style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 500, padding: ".7rem 0", transition: "all .35s ease-out", background: navBg, backdropFilter: sc ? "blur(22px)" : "none", WebkitBackdropFilter: sc ? "blur(22px)" : "none", borderBottom: navBdr }}>
-        <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 clamp(1.25rem,5vw,3rem)", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "1.5rem" }}>
+        <div style={{ maxWidth: "78rem", margin: "0 auto", padding: "0 clamp(1rem,4vw,2.5rem)" }}>
+          <div className="nav-shell">
 
           {/* Logo with Glassmorphism Shimmering Effect */}
-          <button onClick={() => goTo('/')} style={{ display: "flex", alignItems: "center", gap: ".65rem", textDecoration: "none", background: "none", border: "none", padding: 0, cursor: "pointer", textAlign: "left" }}>
+          <button onClick={() => goTo('/')} style={{ display: "flex", alignItems: "center", gap: ".65rem", textDecoration: "none", background: "none", border: "none", padding: 0, cursor: "pointer", textAlign: "left", flexShrink: 0, minWidth: 0 }}>
             <div className="glass-logo" style={{ width: 42, height: 42, borderRadius: 12, display: "grid", placeItems: "center", flexShrink: 0 }}>
-              <img src="/logo.svg" alt="KidsInspiring Nation" loading="lazy" style={{ width: 32, height: 32, objectFit: "contain", position: "relative", zIndex: 2 }} />
+              <img src="/logo.svg" alt="KidsInspiring Nation" fetchPriority="high" style={{ width: 32, height: 32, objectFit: "contain", position: "relative", zIndex: 2 }} />
             </div>
-            <div>
-              <div style={{ fontFamily: "'Plus Jakarta Sans',sans-serif", fontSize: ".88rem", fontWeight: 800, color: logoC, letterSpacing: "-0.02em", lineHeight: 1, transition: "color .35s" }}>KidsInspiring Nation</div>
-              <div style={{ fontFamily: "'DM Mono',monospace", fontSize: ".58rem", color: sc ? (dark ? T.d3 : T.p3) : "rgba(253,247,236,.38)", letterSpacing: ".08em", textTransform: "uppercase", transition: "color .35s" }}>goDs Global KidsInspiring</div>
+            <div className="nav-brand-meta">
+              <div style={{ fontFamily: "'Plus Jakarta Sans',sans-serif", fontSize: ".92rem", fontWeight: 800, color: logoC, letterSpacing: "-0.02em", lineHeight: 1.05, transition: "color .35s", whiteSpace: "nowrap" }}>KidsInspiring Nation</div>
+              <small style={{ fontFamily: "'DM Mono',monospace", fontSize: ".58rem", color: brandSubC, letterSpacing: ".08em", textTransform: "uppercase", transition: "color .35s", whiteSpace: "nowrap" }}>Raising children with divine purpose</small>
             </div>
           </button>
 
           {/* Links */}
-          <div className="nav-links" style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
+          <div className="nav-links">
+            <div className="nav-primary">
 
             {/* Dropdown items */}
             {Object.entries(DROPDOWNS).map(([key, items]) => {
@@ -883,7 +977,7 @@ function SiteNav({ dark, onGive }) {
                   aria-haspopup="menu"
                   aria-expanded={isOpen}
                   aria-controls={ddId}
-                  style={{ display: "flex", alignItems: "center", gap: ".3rem", padding: ".45rem .75rem", borderRadius: 8, fontSize: ".76rem", fontWeight: 600, letterSpacing: ".04em", textTransform: "uppercase", color: isOpen ? T.goldL : linkC, background: isOpen ? (dark ? "rgba(255,255,255,.07)" : "rgba(22,97,62,.07)") : "transparent", cursor: "pointer", transition: "all .2s", border: "none" }}
+                  style={{ display: "flex", alignItems: "center", gap: ".3rem", padding: ".52rem .78rem", borderRadius: 10, fontSize: ".75rem", fontWeight: 700, letterSpacing: ".06em", textTransform: "uppercase", color: isOpen ? T.goldL : linkC, background: isOpen ? (dark ? "rgba(255,255,255,.07)" : "rgba(22,97,62,.07)") : "transparent", cursor: "pointer", transition: "all .2s", border: "none", whiteSpace: "nowrap" }}
                   onMouseEnter={e => { if (!isOpen) { e.currentTarget.style.color = T.goldL; e.currentTarget.style.background = dark ? "rgba(255,255,255,.05)" : "rgba(22,97,62,.05)"; } }}
                   onMouseLeave={e => { if (!isOpen) { e.currentTarget.style.color = linkC; e.currentTarget.style.background = "transparent"; } }}
                 >
@@ -929,14 +1023,18 @@ function SiteNav({ dark, onGive }) {
             );
             })}
 
-            {/* Give */}
-            <button onClick={() => onGive()} aria-current={currentPath === "/give" ? "page" : undefined} style={{ padding: ".45rem .75rem", borderRadius: 8, fontSize: ".76rem", fontWeight: 600, letterSpacing: ".04em", textTransform: "uppercase", color: linkC, background: "transparent", border: "none", cursor: "pointer", transition: "all .2s" }}
-              onMouseEnter={e => { e.currentTarget.style.color = T.goldL; e.currentTarget.style.background = dark ? "rgba(255,255,255,.05)" : "rgba(22,97,62,.05)"; }}
-              onMouseLeave={e => { e.currentTarget.style.color = linkC; e.currentTarget.style.background = "transparent"; }}
+            </div>
+
+            <div className="nav-actions">
+            <button onClick={() => onGive()} aria-current={currentPath === "/give" ? "page" : undefined} className="nav-give" style={{ padding: ".52rem .82rem", borderRadius: 999, fontSize: ".72rem", fontWeight: 700, letterSpacing: ".05em", textTransform: "uppercase", color: linkC, cursor: "pointer", transition: "all .2s", flexShrink: 0, whiteSpace: "nowrap" }}
+              onMouseEnter={e => { e.currentTarget.style.color = T.goldL; e.currentTarget.style.background = dark ? "rgba(255,255,255,.07)" : "rgba(22,97,62,.08)"; }}
+              onMouseLeave={e => { e.currentTarget.style.color = linkC; e.currentTarget.style.background = utilityBg; }}
             >Give</button>
 
+            <div className="nav-divider" />
+
             {/* National Builders CTA */}
-            <button onClick={() => goTo('/NBC')} aria-current={currentPath === "/NBC" ? "page" : undefined} className="nvc-pulse" style={{ display: "flex", alignItems: "center", gap: ".4rem", fontSize: ".76rem", fontWeight: 800, letterSpacing: ".04em", textTransform: "uppercase", color: "#fff", background: `linear-gradient(135deg,${T.gold},${T.goldD})`, padding: ".5rem 1.15rem", borderRadius: 999, cursor: "pointer", border: "none", transition: "all .2s", boxShadow: `0 4px 16px ${T.gold}44` }}
+            <button onClick={() => goTo('/NBC')} aria-current={currentPath === "/NBC" ? "page" : undefined} className="nvc-pulse" style={{ display: "flex", alignItems: "center", gap: ".45rem", fontSize: ".74rem", fontWeight: 800, letterSpacing: ".05em", textTransform: "uppercase", color: "#fff", background: `linear-gradient(135deg,${T.gold},${T.goldD})`, padding: ".64rem 1rem", borderRadius: 999, cursor: "pointer", border: "none", transition: "all .2s", boxShadow: `0 10px 26px ${T.gold}30`, flexShrink: 0, whiteSpace: "nowrap" }}
               onMouseEnter={e => e.currentTarget.style.filter = "brightness(1.12)"}
               onMouseLeave={e => e.currentTarget.style.filter = "none"}
             >
@@ -944,10 +1042,11 @@ function SiteNav({ dark, onGive }) {
             </button>
 
             {/* Join */}
-            <button onClick={() => goTo('#join')} style={{ display: "inline-flex", alignItems: "center", padding: ".5em 1.3em", borderRadius: 999, background: T.green, color: "#fff", fontWeight: 700, fontSize: ".76rem", letterSpacing: ".02em", transition: "filter .2s ease-out", boxShadow: `0 4px 14px ${T.green}44` }}
+            <button onClick={() => goTo('#join')} style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", minWidth: 88, padding: ".64rem 1rem", borderRadius: 999, background: T.green, color: "#fff", fontWeight: 700, fontSize: ".78rem", letterSpacing: ".02em", transition: "filter .2s ease-out", boxShadow: `0 10px 24px ${T.green}26`, flexShrink: 0, whiteSpace: "nowrap", border: "none" }}
               onMouseEnter={e => e.currentTarget.style.filter = "brightness(.88)"}
               onMouseLeave={e => e.currentTarget.style.filter = "none"}
             >Join</button>
+            </div>
           </div>
 
           {/* Mobile burger */}
@@ -962,6 +1061,7 @@ function SiteNav({ dark, onGive }) {
           >
             {mob ? <X size={22} strokeWidth={1.5} /> : <Menu size={22} strokeWidth={1.5} />}
           </button>
+          </div>
         </div>
       </nav>
 
@@ -981,7 +1081,7 @@ function SiteNav({ dark, onGive }) {
             {/* Mobile Header */}
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "2rem" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                <img src="/logo.svg" alt="logo" loading="lazy" style={{ width: 32, height: 32 }} />
+                <img src="/logo.svg" alt="logo" fetchPriority="high" style={{ width: 32, height: 32 }} />
                 <span style={{ fontFamily: "Cinzel, serif", fontWeight: 900, fontSize: "1rem", color: dark ? T.goldL : T.green }}>KIN</span>
               </div>
               <button onClick={() => { setMob(false); setMobSection(null); }} style={{ width: 40, height: 40, borderRadius: "50%", background: dark ? "rgba(255,255,255,.05)" : "rgba(0,0,0,.05)", border: "none", display: "grid", placeItems: "center", color: dark ? T.cream : T.greenD }}>
@@ -1060,7 +1160,7 @@ function SiteNav({ dark, onGive }) {
             
             {/* Mobile Footer */}
             <div style={{ marginTop: "1rem", textAlign: "center" }}>
-              <div style={{ fontSize: "0.65rem", color: dark ? T.d3 : T.p3, letterSpacing: "0.05em", textTransform: "uppercase" }}>Raising goDs · building Nations</div>
+              <div style={{ fontSize: "0.65rem", color: dark ? T.d3 : T.p3, letterSpacing: "0.05em", textTransform: "uppercase" }}>Raising goDs (geniuses) · building Nations</div>
             </div>
           </motion.div>
         )}
@@ -1077,7 +1177,7 @@ function Hero({ onDash }) {
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 2 }} style={{ position: "absolute", inset: 0, pointerEvents: "none", background: `radial-gradient(ellipse 80% 65% at 12% 50%,${T.green}60 0%,transparent 58%),radial-gradient(ellipse 55% 75% at 88% 10%,${T.gold}22 0%,transparent 52%),linear-gradient(140deg,#060E08 0%,#0D3D26 55%,#16613E 100%)` }} />
       {/* Ghost goDs watermark */}
       <motion.div initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1.5, delay: 0.5 }} aria-hidden style={{ position: "absolute", right: "-0.08em", top: "50%", fontSize: "clamp(14rem,40vw,58rem)", lineHeight: 1, color: "transparent", WebkitTextStroke: "1px rgba(196,136,44,.06)", userSelect: "none", pointerEvents: "none", fontFamily: "'Playfair Display',serif", fontStyle: "italic", fontWeight: 900, animation: "floatStar 9s ease-in-out infinite" }}>
-        goDs
+        goDs (geniuses)
       </motion.div>
 
       <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 clamp(1.25rem,5vw,3rem)", position: "relative", zIndex: 2, width: "100%" }}>
@@ -1085,16 +1185,16 @@ function Hero({ onDash }) {
           {/* Eyebrow */}
           <motion.div variants={{ initial: { opacity: 0, y: 15 }, animate: { opacity: 1, y: 0 } }} style={{ display: "inline-flex", alignItems: "center", gap: "0.75rem", fontSize: "0.76rem", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase", color: T.goldL, marginBottom: "1.75rem" }}>
             <span style={{ width: "2rem", height: "1.5px", background: T.gold, display: "block" }} />
-            goDs Global KidsInspiring · Est. 2022 (founded 2017/2018) · IT No. 6980735
+            KidsInspiring Nation · character, spirit, skills and service
           </motion.div>
           {/* Main headline */}
           <motion.h1 variants={{ initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 } }} style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(2.8rem,8vw,5.8rem)", fontWeight: 900, color: T.cream, letterSpacing: "-0.03em", lineHeight: .96, marginBottom: "1.5rem" }}>
-            Raising <em style={{ fontStyle: "italic", color: T.goldL }}>goDs</em><br />
+            Raising <em style={{ fontStyle: "italic", color: T.goldL }}>goDs (geniuses)</em><br />
             <span style={{ fontWeight: 700, fontSize: "0.72em", color: "rgba(253,247,236,.85)" }}>Geniuses with divine purpose —</span><br />
             building <em style={{ fontStyle: "italic", color: T.goldL }}>Nations</em>
           </motion.h1>
           <motion.p variants={{ initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 } }} style={{ fontSize: "clamp(1rem,2.4vw,1.2rem)", color: "rgba(253,247,236,.72)", lineHeight: 1.68, marginBottom: "2rem", maxWidth: "48ch" }}>
-            As at 2025, <strong style={{ color: T.goldL, fontWeight: 600 }}>639 goDs</strong> generated <strong style={{ color: T.goldL, fontWeight: 600 }}>19,695 attendance entries</strong> across 14 programmes — 365 events, every single day of the year.
+            As at 2025, <strong style={{ color: T.goldL, fontWeight: 600 }}>639 goDs (geniuses)</strong> generated <strong style={{ color: T.goldL, fontWeight: 600 }}>19,695 attendance entries</strong> across 14 programmes — 365 events, every single day of the year.
           </motion.p>
           {/* CTAs */}
           <motion.div variants={{ initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 } }} className="hero-btns" style={{ display: "flex", gap: ".75rem", alignItems: "center", flexWrap: "wrap" }}>
@@ -1130,7 +1230,7 @@ function Hero({ onDash }) {
 
 // ─── MARQUEE ──────────────────────────────────────────────────────────────────
 function Marquee() {
-  const words = ["KIND · Daily", "gDX · Sundays", "KINGs", "P119 Academy", "Daniel Fast", "FACE · Sundays", "TJC Concert", "goDs", "Nation Builders", "Spirit", "Skills", "Service", "Character"];
+  const words = ["KIND · Daily", "gDX · Sundays", "KINGs", "P119 Academy", "goDs University", "Daniel Fast", "FACE · Sundays", "TJC Concert", "goDs (geniuses)", "Nation Builders", "Spirit", "Skills", "Service", "Character"];
   return (
     <div style={{ background: T.gold, padding: ".7rem 0", overflow: "hidden" }} aria-hidden>
       <div style={{ display: "flex", gap: "2.5rem", animation: "marqueeL 30s linear infinite", width: "max-content" }}>
@@ -1200,7 +1300,7 @@ function AboutSection({ dark }) {
             </div>
             {/* Quick stats */}
             <div className="reveal d3" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: ".75rem", marginBottom: "1.75rem" }}>
-              {[{ n: "639", l: "goDs reached" }, { n: "19,695", l: "Entries (as at 2025)" }, { n: "365", l: "Events held" }].map(s => (
+              {[{ n: "639", l: "goDs (geniuses) reached" }, { n: "19,695", l: "Entries (as at 2025)" }, { n: "365", l: "Events held" }].map(s => (
                 <div key={s.l} style={{ background: card, borderRadius: 14, padding: ".9rem .75rem", border: `1px solid rgba(22,97,62,.1)`, textAlign: "center" }}>
                   <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.7rem", fontWeight: 900, color: T.green, letterSpacing: "-0.04em", lineHeight: 1 }}>{s.n}</div>
                   <div style={{ fontSize: ".72rem", color: txt, fontWeight: 500, marginTop: ".2rem" }}>{s.l}</div>
@@ -1209,7 +1309,7 @@ function AboutSection({ dark }) {
             </div>
             <div className="reveal d3" style={{ display: "flex", gap: ".75rem", flexWrap: "wrap" }}>
               <a href="#join" className="gold-btn" style={{ display: "inline-flex", alignItems: "center", gap: ".5rem", padding: ".8em 2em", borderRadius: 999, background: T.green, color: T.cream, fontWeight: 700, fontSize: ".9rem", fontFamily: "'Plus Jakarta Sans',sans-serif" }}>
-                Become a goD →
+                Become a goD (genius) →
               </a>
               <a href={SITE.socials.linktree} target="_blank" rel="noopener noreferrer" aria-label="Open all KidsInspiring Nation links in a new tab" style={{ display: "inline-flex", alignItems: "center", gap: ".5rem", padding: ".8em 1.6em", borderRadius: 999, border: `1.5px solid ${T.gold}`, color: T.gold, fontWeight: 500, fontSize: ".9rem", background: "transparent", transition: "background .2s" }} onMouseEnter={e => e.currentTarget.style.background = "rgba(196,136,44,.08)"} onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
                 <ExternalLink size={14} strokeWidth={1.5} /> All Links
@@ -1219,7 +1319,7 @@ function AboutSection({ dark }) {
           {/* Visual card */}
           <div className="reveal d2">
             <div style={{ background: T.gold, color: "#fff", borderRadius: 16, padding: "1.25rem 1.75rem", marginBottom: "1.25rem", fontFamily: "'Playfair Display',serif", fontSize: "1.35rem", fontStyle: "italic", fontWeight: 700, lineHeight: 1.3, boxShadow: "0 8px 32px rgba(196,136,44,.3)" }}>
-              "Every child is a goD — a Genius Ordained by Destiny."
+              "Every child is a goD (genius) — a Genius Ordained by Destiny."
             </div>
             <div style={{ background: T.green, borderRadius: 24, position: "relative", overflow: "hidden", padding: "2rem", minHeight: "22rem", display: "flex", alignItems: "flex-end" }}>
               <img src="/photos/Nation_Builders_Program.jpg" alt="Nation Builders" loading="lazy" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.5, mixBlendMode: "overlay" }} />
@@ -1229,7 +1329,7 @@ function AboutSection({ dark }) {
                 <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(2.8rem,7vw,4.2rem)", fontWeight: 900, color: T.goldL, letterSpacing: "-0.04em", lineHeight: 1 }}>19,695</div>
                 <div style={{ color: "rgba(253,247,236,.8)", fontSize: ".85rem", fontWeight: 500, letterSpacing: ".04em", marginTop: ".25rem" }}>Attendance entries · as at 2025</div>
                 <div style={{ marginTop: "1rem", display: "flex", gap: "1.5rem", flexWrap: "wrap" }}>
-                  {[{ v: "639", l: "goDs" }, { v: "14", l: "Programmes" }, { v: "365", l: "Events" }, { v: "1,952", l: "Meals served" }].map(s => (
+                  {[{ v: "639", l: "goDs (geniuses)" }, { v: "14", l: "Programmes" }, { v: "365", l: "Events" }, { v: "1,952", l: "Meals served in 2025" }].map(s => (
                     <div key={s.l}>
                       <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.3rem", fontWeight: 900, color: T.goldL, lineHeight: 1 }}>{s.v}</div>
                       <div style={{ fontSize: ".68rem", color: "rgba(253,247,236,.5)", fontWeight: 500, letterSpacing: ".04em" }}>{s.l}</div>
@@ -1262,10 +1362,12 @@ function ProgramsSection({ dark }) {
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,18rem),1fr))", gap: "1.2rem" }}>
           {PROGRAMS.map((p, i) => {
-            const delays = ["d1", "d2", "d3", "d1", "d2", "d3", "d1", "d2"];
             const isOpen = active === p.code;
+            const heroValue = p.displayValue ?? (p.meals ? `${p.meals.toLocaleString()}+` : p.entries?.toLocaleString() || "—");
+            const heroLabel = p.displayLabel ?? (p.meals ? "meals served" : "entries (as at 2025)");
+            const footerStats = p.footerStats ?? [{ l: "Sessions", v: p.sessions }, { l: "Unique", v: p.unique || (p.meals ? "—" : "—") }];
             return (
-              <article key={p.code} className={`chover reveal ${delays[i]}`}
+              <article key={p.code} className="chover"
                 style={{ background: card, borderRadius: 22, overflow: "hidden", border: `1px solid ${dark ? "rgba(255,255,255,.06)" : "rgba(22,97,62,.09)"}`, boxShadow: dark ? "0 2px 12px rgba(0,0,0,.4)" : "0 2px 8px rgba(10,28,18,.05)", display: "flex", flexDirection: "column", cursor: "pointer" }}
                 onClick={() => setActive(isOpen ? null : p.code)}>
                 {/* Header */}
@@ -1278,10 +1380,10 @@ function ProgramsSection({ dark }) {
                     <span style={{ fontSize: "2.8rem", lineHeight: 1, filter: "drop-shadow(0 4px 12px rgba(0,0,0,0.3))" }}>{p.icon}</span>
                     <div style={{ textAlign: "right", textShadow: "0 2px 8px rgba(0,0,0,0.5)" }}>
                       <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.8rem", fontWeight: 900, color: "rgba(255,255,255,.95)", letterSpacing: "-0.04em", lineHeight: 1 }}>
-                        {p.meals ? `${p.meals.toLocaleString()}+` : p.entries?.toLocaleString() || ""}
+                        {heroValue}
                       </div>
                       <div style={{ fontSize: ".65rem", color: "rgba(255,255,255,.8)", fontWeight: 600, textTransform: "uppercase", letterSpacing: ".05em", marginTop: ".25rem" }}>
-                        {p.meals ? "meals served" : "entries (as at 2025)"}
+                        {heroLabel}
                       </div>
                     </div>
                   </div>
@@ -1316,7 +1418,7 @@ function ProgramsSection({ dark }) {
                   {/* Footer */}
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "1rem", paddingTop: ".75rem", borderTop: `1px solid ${dark ? "rgba(255,255,255,.06)" : "rgba(22,97,62,.1)"}` }}>
                     <div style={{ display: "flex", gap: "1rem" }}>
-                      {[{ l: "Sessions", v: p.sessions }, { l: "Unique", v: p.unique || (p.meals ? "—" : "—") }].map(m => (
+                      {footerStats.map(m => (
                         <div key={m.l}>
                           <div style={{ fontSize: ".64rem", textTransform: "uppercase", letterSpacing: ".05em", color: T.p3 }}>{m.l}</div>
                           <div style={{ fontFamily: "'DM Mono',monospace", fontSize: ".88rem", fontWeight: 600, color: dark ? T.cream : T.greenD }}>{m.v}</div>
@@ -1359,7 +1461,7 @@ function VideoSection({ dark }) {
             Watch KidsInspiring Nation
           </h2>
           <p style={{ fontSize: "1rem", color: dark ? "rgba(253,247,236,.6)" : T.greenM, marginTop: ".5rem", maxWidth: "40ch", margin: ".5rem auto 0" }}>
-            A glimpse into life as a goD — our programmes, our people, our purpose.
+            A glimpse into life as a goD (genius) — our programmes, our people, our purpose.
           </p>
         </div>
         <div className="reveal d1" style={{ maxWidth: "800px", margin: "0 auto" }}>
@@ -1490,8 +1592,8 @@ function TestimonySection({ dark }) {
     <section style={{ background: bg, padding: "clamp(4rem,10vw,8rem) 0" }}>
       <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 clamp(1.25rem,5vw,3rem)" }}>
         <div className="reveal" style={{ textAlign: "center", marginBottom: "clamp(2rem,5vw,3rem)" }}>
-          <div style={{ fontSize: ".76rem", fontWeight: 500, letterSpacing: ".1em", textTransform: "uppercase", color: T.gold, marginBottom: ".75rem" }}>Voices of goDs</div>
-          <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(2rem,5vw,3rem)", fontWeight: 900, letterSpacing: "-0.025em", color: dark ? T.cream : T.greenD }}>What the goDs Are Saying</h2>
+          <div style={{ fontSize: ".76rem", fontWeight: 500, letterSpacing: ".1em", textTransform: "uppercase", color: T.gold, marginBottom: ".75rem" }}>Voices of goDs (geniuses)</div>
+          <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(2rem,5vw,3rem)", fontWeight: 900, letterSpacing: "-0.025em", color: dark ? T.cream : T.greenD }}>What the goDs (geniuses) Are Saying</h2>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,18rem),1fr))", gap: "1.2rem" }}>
           {[
@@ -1534,21 +1636,20 @@ function CTASection() {
       <div aria-hidden style={{ position: "absolute", bottom: "-.1em", left: "50%", transform: "translateX(-50%)", fontFamily: "'Playfair Display',serif", fontSize: "clamp(12rem,38vw,52rem)", fontWeight: 900, fontStyle: "italic", color: "transparent", WebkitTextStroke: "1px rgba(196,136,44,.04)", pointerEvents: "none", userSelect: "none", lineHeight: 1, whiteSpace: "nowrap" }}>goDs</div>
       <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 clamp(1.25rem,5vw,3rem)", position: "relative", zIndex: 2 }}>
         <div className="reveal" style={{ display: "inline-block", background: "rgba(196,136,44,.15)", border: "1px solid rgba(196,136,44,.3)", color: T.goldL, fontSize: ".76rem", letterSpacing: ".1em", textTransform: "uppercase", padding: ".4em 1.2em", borderRadius: 999, fontWeight: 500, marginBottom: "1.5rem" }}>
-          Raise a goD · Build a Nation
+          Raise a goD (genius) · Build a Nation
         </div>
         <h2 className="reveal d1" style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(2.8rem,7vw,5.5rem)", fontWeight: 900, letterSpacing: "-0.04em", color: T.cream, maxWidth: "14ch", margin: "0 auto 1.25rem", lineHeight: .95 }}>
           Your Child Belongs <em style={{ fontStyle: "italic", color: T.goldL }}>Here</em>
         </h2>
         <p className="reveal d2" style={{ fontSize: "clamp(1rem,2.5vw,1.15rem)", color: "rgba(253,247,236,.7)", maxWidth: "46ch", margin: "0 auto 2.5rem", lineHeight: 1.7 }}>
-          As at 2025, 639 goDs showed up — day after day, programme after programme. The story is being written. Your child belongs in it.
+          As at 2025, 639 goDs (geniuses) showed up — day after day, programme after programme. The story is being written. Your child belongs in it.
         </p>
         {/* ACTION GRID */}
         <div className="reveal d3" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,200px),1fr))", gap: ".75rem", maxWidth: "700px", margin: "0 auto 2.5rem" }}>
           {[
             { label: "Join KIND Daily", sub: "8pm WAT · Every day", href: "https://whatsapp.com/channel/0029Va8XnCuGE56c4SMaT41w", icon: "📖", color: T.kindC },
             { label: "Register Your Child", sub: "All programmes", href: "/contact?subject=child", icon: "👑", color: T.kingsC },
-            { label: "Give / Donate", sub: "Support a goD", href: "/give", icon: "🙏", color: T.gold },
-            { label: "Partner With Us", sub: "NGO collaboration", href: "/contact?subject=partner", icon: "🤝", color: T.cstC },
+            { label: "Give / Partner", sub: "Support a child", href: "/give", icon: "🙏", color: T.gold },
           ].map(a => (
             <a key={a.label} href={a.href} target={a.href.startsWith("http") ? "_blank" : undefined} rel={a.href.startsWith("http") ? "noopener noreferrer" : undefined}
               style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "1.2rem 1rem", borderRadius: 16, background: "rgba(253,247,236,.05)", border: `1px solid rgba(253,247,236,.12)`, transition: "all .2s", textDecoration: "none" }}
@@ -1586,7 +1687,7 @@ function Footer() {
               <div style={{ width: 34, height: 34, background: T.green, borderRadius: 8, display: "grid", placeItems: "center", color: T.goldL, fontSize: "1rem", fontWeight: 900, flexShrink: 0, fontFamily: "'Playfair Display',serif", fontStyle: "italic" }}>g</div>
               <div>
                 <div style={{ fontFamily: "'Plus Jakarta Sans',sans-serif", fontSize: ".88rem", fontWeight: 700, color: T.cream }}>KidsInspiring Nation</div>
-                <div style={{ fontSize: ".65rem", color: "rgba(253,247,236,.35)", fontFamily: "'DM Mono',monospace", letterSpacing: ".04em" }}>goDs Global KidsInspiring</div>
+                <div style={{ fontSize: ".65rem", color: "rgba(253,247,236,.35)", fontFamily: "'DM Mono',monospace", letterSpacing: ".04em" }}>Character · Spirit · Skills · Service</div>
               </div>
             </div>
             <p style={{ fontSize: ".8rem", color: "rgba(253,247,236,.4)", lineHeight: 1.68, maxWidth: "32ch", marginBottom: "1rem" }}>
@@ -1615,7 +1716,7 @@ function Footer() {
           <div>
             <div style={{ fontSize: ".72rem", fontWeight: 600, letterSpacing: ".08em", textTransform: "uppercase", color: T.gold, marginBottom: ".75rem" }}>Programmes</div>
             <ul style={{ display: "flex", flexDirection: "column", gap: ".4rem" }}>
-              {["KIND (Daily 8pm)", "gDX (Sun 11am)", "KINGs (Sun 5pm)", "P119 Academy (Fri 5pm)", "Daniel Fast", "FACE (Sun 3pm)", "TJC Concert", "CST"].map(l => (
+              {["KIND (Daily 8pm)", "gDX (Sun 11am)", "KINGs (Sun 5pm)", "P119 Academy (Fri 5pm)", "goDs University", "Daniel Fast", "FACE (Sun 3pm)", "TJC Concert", "CST"].map(l => (
                 <li key={l}><a href="#programs" style={{ fontSize: ".8rem", color: "rgba(253,247,236,.45)", transition: "color .15s" }} onMouseEnter={e => e.target.style.color = T.goldL} onMouseLeave={e => e.target.style.color = "rgba(253,247,236,.45)"}>{l}</a></li>
               ))}
             </ul>
@@ -1626,9 +1727,8 @@ function Footer() {
             <div style={{ fontSize: ".72rem", fontWeight: 600, letterSpacing: ".08em", textTransform: "uppercase", color: T.gold, marginBottom: ".75rem" }}>Get Involved</div>
             <ul style={{ display: "flex", flexDirection: "column", gap: ".4rem" }}>
               {[
-                { l: "Give / Donate", href: "/give" },
+                { l: "Give / Partner", href: "/give" },
                 { l: "Register Your Child", href: "/contact?subject=child" },
-                { l: "Partnership", href: "/contact?subject=partner" },
                 { l: "Volunteer (CST)", href: "/contact?subject=volunteer" },
                 { l: "WhatsApp Channel", href: "https://whatsapp.com/channel/0029Va8XnCuGE56c4SMaT41w" },
                 { l: "Telegram", href: "https://t.me/KidsInspiring" },
@@ -1653,9 +1753,9 @@ function Footer() {
               ))}
             </ul>
             <div style={{ marginTop: "1rem", padding: "1rem", borderRadius: 10, background: "rgba(253,247,236,.04)", border: "1px solid rgba(253,247,236,.07)" }}>
-              <div style={{ fontSize: ".68rem", fontWeight: 600, letterSpacing: ".06em", textTransform: "uppercase", color: "rgba(253,247,236,.35)", marginBottom: ".4rem" }}>NGO Registration</div>
-              <div style={{ fontFamily: "'DM Mono',monospace", fontSize: ".76rem", color: "rgba(253,247,236,.55)" }}>goDs Global KidsInspiring</div>
-              <div style={{ fontFamily: "'DM Mono',monospace", fontSize: ".76rem", color: T.goldL }}>IT No. 6980735</div>
+              <div style={{ fontSize: ".68rem", fontWeight: 600, letterSpacing: ".06em", textTransform: "uppercase", color: "rgba(253,247,236,.35)", marginBottom: ".4rem" }}>At a glance</div>
+              <div style={{ fontFamily: "'DM Mono',monospace", fontSize: ".76rem", color: "rgba(253,247,236,.55)" }}>14 programmes · 19,695 entries</div>
+              <div style={{ fontFamily: "'DM Mono',monospace", fontSize: ".76rem", color: T.goldL }}>639 goDs (geniuses) · 1,952 meals in 2025</div>
             </div>
           </div>
         </div>
@@ -1678,8 +1778,8 @@ function Footer() {
 
         {/* Bottom */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: ".5rem" }}>
-          <p style={{ fontSize: ".72rem", color: "rgba(253,247,236,.25)" }}>© 2025 goDs Global KidsInspiring · IT No. 6980735 · All rights reserved</p>
-          <p style={{ fontSize: ".72rem", color: "rgba(253,247,236,.25)" }}>NDPR Compliant · 19,695 entries · 639 goDs · One mission 🇳🇬</p>
+          <p style={{ fontSize: ".72rem", color: "rgba(253,247,236,.25)" }}>© 2025 KidsInspiring Nation · All rights reserved</p>
+          <p style={{ fontSize: ".72rem", color: "rgba(253,247,236,.25)" }}>NDPR Compliant · 19,695 entries · 639 goDs (geniuses) · One mission 🇳🇬</p>
         </div>
       </div>
     </footer>
@@ -1970,7 +2070,7 @@ function ProgrammesView({ ctx }) {
         <div style={{ padding: "14px 18px", borderBottom: `1px solid ${brd}`, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <div>
             <div style={{ fontSize: 13, fontWeight: 700, color: p1, fontFamily: "'Plus Jakarta Sans',sans-serif" }}>All 8 Programmes · as at 2025</div>
-            <div style={{ fontSize: 11, color: p2, marginTop: 2 }}>KidsInspiring Nation · NDPR Data Controller: goDs Global KidsInspiring (IT No. 6980735)</div>
+            <div style={{ fontSize: 11, color: p2, marginTop: 2 }}>KidsInspiring Nation · NDPR Data Controller</div>
           </div>
         </div>
         <div style={{ overflowX: "auto" }}>
