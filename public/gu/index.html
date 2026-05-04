@@ -2270,10 +2270,9 @@ function checkSupabase() {
     .then(function(rows) {
       if (Array.isArray(rows) && rows.length >= 0) {
         USE_SUPABASE = true;
-        console.log('Supabase connected ✓ (' + rows.length + ' students visible)');
       }
     })
-    .catch(function() { console.log('Supabase unreachable - using embedded data'); });
+    .catch(function() {});
 }
 
 /* ═══ DATA (REMOVED FROM REPO) ═══

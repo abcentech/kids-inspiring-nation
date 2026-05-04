@@ -11,7 +11,7 @@ export default function GodsUniversity({ dark }) {
 
   const [tab, setTab] = useState("spirit");
   const [openFaq, setOpenFaq] = useState(null);
-  const [formData, setFormData] = useState({ parentName: "", childName: "", level: "", subject: "", phone: "" });
+  const [formData, setFormData] = useState({ parentName: "", childName: "", email: "", level: "", subject: "", phone: "", enrolledStatus: "" });
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formError, setFormError] = useState(false);
 
@@ -28,6 +28,54 @@ export default function GodsUniversity({ dark }) {
   const PAYSTACK_LINK = "https://paystack.shop/kidsinspiring";
   const WHATSAPP_FREE = "https://wa.me/2348122673417?text=I%20am%20interested%20in%20the%20free%20academic%20mentoring%20for%20my%20child.";
   const FORM_EMAIL = "KidsInspiringOperations@gmail.com";
+  const heroVerse = "\"As for these four children, God gave them knowledge and skill in all learning and wisdom.\"";
+  const heroVerseRef = "— Daniel 1:17";
+  const heroCopy = "goDs University develops the whole child through two complementary dimensions: Spirit for inner formation and Skills for outward excellence, so every child can grow into wise national service.";
+  const heroEyebrow = "Spirit Formation · Skill Development · National Service";
+  const heroStats = [
+    { n: "2", l: "Dimensions" },
+    { n: "1", l: "Shared Mission" },
+    { n: "Weekly", l: "Live Formation" },
+    { n: "Service", l: "End Goal" }
+  ];
+  const focusSignals = {
+    spirit: ["Prayer", "Word Study", "Miracles", "Anointing", "Character", "Discipleship"],
+    skills: ["Formulas", "Laws", "Words", "Logic", "Research", "Mastery"]
+  };
+  const focusConfig = {
+    spirit: {
+      ctaPrimary: "Choose Your Focus",
+      ctaTarget: "gu-pathway-selector",
+      ctaSecondary: "See How It Works",
+      secondaryTarget: "gu-spirit-process",
+      glow: "radial-gradient(circle at 50% 20%, rgba(232,196,67,.2), transparent 62%)",
+      stats: [
+        { n: "44", l: "Weeks" },
+        { n: "3", l: "Bible Pathways" },
+        { n: "300+", l: "Min/Week Target" },
+        { n: "gPA", l: "Weekly Accountability" }
+      ]
+    },
+    skills: {
+      ctaPrimary: "Choose Your Focus",
+      ctaTarget: "gu-pathway-selector",
+      ctaSecondary: "See How It Works",
+      secondaryTarget: "gu-skills-process",
+      glow: "radial-gradient(circle at 50% 20%, rgba(83,148,255,.22), transparent 62%)",
+      stats: [
+        { n: "Weekly", l: "Live Sessions" },
+        { n: "Monthly", l: "Parent Reports" },
+        { n: "Gr 1–16", l: "All Levels" },
+        { n: "₦7,000", l: "Per Month" }
+      ]
+    }
+  };
+
+  const scrollToSection = id => {
+    if (typeof window === "undefined") return;
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   const handleFormSubmit = async e => {
     e.preventDefault(); setFormError(false);
@@ -35,7 +83,16 @@ export default function GodsUniversity({ dark }) {
       const res = await fetch(`https://formsubmit.co/ajax/${FORM_EMAIL}`, {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({ _subject: "📚 New Academic Mentoring Interest — KIN", "Parent Name": formData.parentName, "Child Name": formData.childName, "School Level": formData.level, "Subject Focus": formData.subject, "WhatsApp": formData.phone }),
+        body: JSON.stringify({
+          _subject: "📚 New Academic Mentoring Interest — KIN",
+          "Parent Name": formData.parentName,
+          "Child Name": formData.childName,
+          "Email Address": formData.email,
+          "School Level": formData.level,
+          "Subject Focus": formData.subject,
+          "WhatsApp": formData.phone,
+          "Already Enrolled at gU?": formData.enrolledStatus
+        }),
       });
       if (res.ok) setFormSubmitted(true); else setFormError(true);
     } catch { setFormError(true); }
@@ -50,13 +107,13 @@ export default function GodsUniversity({ dark }) {
     { q: "What is the Parent Portal?", a: "The Parent Portal is a dedicated login where parents see their child's weekly gPA score, instructor notes, a specific home action to reinforce learning, and term-wide progress — every single week." },
     { q: "How long is one full session?", a: "One session runs 44 weeks, with weekly live classes every Saturday. Children submit written reflections and a signed time sheet before each class." },
     { q: "What does my child need to do each week?", a: "Read their assigned Bible chapters daily (target: 300+ minutes/week), submit a written weekly reflection, complete a signed time sheet, and attend Saturday class live online." },
-    { q: "How do I enrol my child?", a: "Click the 'Enrol a Genius' button to fill the registration form, or review the Prospectus to understand the programme before enrolling. You can also access the Parent Portal directly for returning families." },
+    { q: "How do I enrol my child?", a: "Open the Spirit section and choose Enrol, Prospectus, or Parent Portal depending on whether you are joining, reviewing details, or returning as an existing family." },
   ];
 
   const SKILLS_FAQ = [
     { q: "How much does gU Skills mentoring cost?", a: "Academic mentoring is ₦7,000 per month. This subscription ensures consistent progress and includes weekly sessions and monthly reports." },
     { q: "How often are sessions held?", a: "Sessions are held weekly, at an agreed time between you and your child's mentor. Monthly subscribers receive sessions every week throughout the month." },
-    { q: "When do I receive my child's progress report?", a: "Monthly progress reports are sent directly to parents with subject scores, mentor observations, and one specific home action." },
+    { q: "When do I receive my child's progress report?", a: "Monthly progress reports are sent directly to parents with mentor observations, growth notes, and one specific home action to reinforce progress." },
     { q: "What is free mentoring and how does my child qualify?", a: "Families whose total termly school fees are below ₦70,000 qualify for free academic mentoring. Reach out on WhatsApp and we will guide you through the process." },
     { q: "Who are the mentors?", a: "Our mentors are Covenant Servants of KidsInspiring Nation and volunteer professionals who are people of excellence in their respective fields — verified, trained, and accountable to KIN's values." },
     { q: "Can I cancel my subscription?", a: "Yes. Contact us on WhatsApp within 24 hours. We kindly ask for at least one week's notice before the next billing date." },
@@ -96,19 +153,25 @@ export default function GodsUniversity({ dark }) {
       {/* Hero Section */}
       <section style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", padding: "120px 5vw 80px", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", top: "20%", left: "50%", transform: "translateX(-50%)", width: 800, height: 600, background: "radial-gradient(ellipse, rgba(232,196,67,.06) 0%, transparent 70%)", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", inset: 0, background: focusConfig[tab].glow, pointerEvents: "none", transition: "background .35s ease" }} />
         
         <motion.div initial="initial" animate="whileInView" variants={containerVars} style={{ position: "relative", zIndex: 1, maxWidth: 800, margin: "0 auto" }}>
-          <motion.span variants={itemVars} className="gu-hero-crown">👑</motion.span>
+          <motion.span variants={itemVars} className={`gu-hero-crown gu-hero-sigil gu-hero-sigil-${tab}`}>{tab === "spirit" ? "✦" : "∑"}</motion.span>
           <motion.h1 variants={itemVars} style={{ fontFamily: "Cinzel, serif", fontWeight: 900, lineHeight: 1, marginBottom: 10 }}>
-            <span style={{ fontSize: "clamp(72px, 14vw, 140px)", display: "block", background: "linear-gradient(135deg, #8A6F1A 0%, #E8C443 40%, #F6DC74 60%, #E8C443 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>goDs</span>
+            <span style={{ fontSize: "clamp(72px, 14vw, 140px)", display: "block", lineHeight: 0.92 }}>
+              <span style={{ color: "#E8C443" }}>go</span>
+              <span style={{ background: "linear-gradient(135deg, #8A6F1A 0%, #E8C443 40%, #F6DC74 60%, #E8C443 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", textShadow: "0 10px 30px rgba(232,196,67,.14)" }}>D</span>
+              <span style={{ color: "#E8C443" }}>s</span>
+            </span>
             <span style={{ fontSize: "clamp(20px, 4vw, 38px)", display: "block", letterSpacing: 8, color: T.htmlText2 }}>University</span>
           </motion.h1>
           
           <motion.p variants={itemVars} style={{ fontFamily: "Lora, serif", fontStyle: "italic", fontSize: "clamp(16px, 2vw, 20px)", color: T.htmlText2, margin: "24px 0 8px", lineHeight: 1.6 }}>
-            "And Jesus grew in wisdom and stature, and in favour with God and man."
+            {heroVerse}
+            <cite style={{ display: "block", fontSize: 11, letterSpacing: 2, color: T.htmlText3, marginTop: 8, fontStyle: "normal", textTransform: "uppercase" }}>{heroVerseRef}</cite>
           </motion.p>
           
-          <motion.p variants={itemVars} style={{ fontSize: 12, letterSpacing: 5, textTransform: "uppercase", color: T.goldL, marginBottom: 44, display: "flex", alignItems: "center", justifyContent: "center", gap: 16 }}>
+          <motion.p variants={itemVars} style={{ fontSize: 12, letterSpacing: 5, textTransform: "uppercase", color: T.goldL, marginBottom: 14, display: "flex", alignItems: "center", justifyContent: "center", gap: 16 }}>
             <span>In Spirit</span>
             <span style={{ width: 4, height: 4, borderRadius: "50%", background: T.goldL, opacity: 0.5 }}></span>
             <span>By Skills</span>
@@ -116,19 +179,27 @@ export default function GodsUniversity({ dark }) {
             <span>For Service</span>
           </motion.p>
 
+          <motion.p variants={itemVars} style={{ fontSize: 14, color: T.htmlText2, maxWidth: 560, margin: "0 auto 20px", lineHeight: 1.8 }}>
+            {heroCopy}
+          </motion.p>
+
+          <motion.p variants={itemVars} style={{ fontSize: 11, letterSpacing: 3, textTransform: "uppercase", color: T.goldL, marginBottom: 28 }}>
+            {heroEyebrow}
+          </motion.p>
+
+          <motion.div variants={itemVars} className="gu-focus-ribbon">
+            {focusSignals[tab].map(signal => (
+              <span key={signal} className={`gu-focus-pill gu-focus-pill-${tab}`}>{signal}</span>
+            ))}
+          </motion.div>
+
           <motion.div variants={itemVars} style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap", marginBottom: 70 }}>
-            <a href={REGISTER_LINK} target="_blank" rel="noopener noreferrer" className="gu-btn-gold">Enrol a Genius →</a>
-            <a href={PROSPECTUS_LINK} target="_blank" rel="noopener noreferrer" className="gu-btn-outline">Prospectus</a>
-            <a href={PORTAL_LINK} target="_blank" rel="noopener noreferrer" className="gu-btn-outline">Parent Portal →</a>
+            <button type="button" onClick={() => scrollToSection(focusConfig[tab].ctaTarget)} className="gu-btn-gold">{focusConfig[tab].ctaPrimary} →</button>
+            <button type="button" onClick={() => scrollToSection(focusConfig[tab].secondaryTarget)} className="gu-btn-outline">{focusConfig[tab].ctaSecondary}</button>
           </motion.div>
 
           <motion.div variants={itemVars} style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", border: "1px solid rgba(255,255,255,.08)", borderRadius: 20, overflow: "hidden", background: "rgba(22,31,53,.6)", backdropFilter: "blur(10px)", maxWidth: 600, margin: "0 auto" }}>
-            {[
-              { n: "36+", l: "Nation Builders" },
-              { n: "44", l: "Weeks" },
-              { n: "3", l: "Pathways" },
-              { n: "300+", l: "Min/Week Target" }
-            ].map(stat => (
+            {heroStats.map(stat => (
               <div key={stat.l} className="gu-stat-block">
                 <div style={{ fontFamily: "Cinzel, serif", fontSize: 28, fontWeight: 900, color: T.goldL }}>{stat.n}</div>
                 <div style={{ fontSize: 11, color: T.htmlText3, letterSpacing: 1, marginTop: 3 }}>{stat.l}</div>
@@ -139,23 +210,51 @@ export default function GodsUniversity({ dark }) {
       </section>
 
       {/* ── Pathway Selector ───────────────────────────────────────── */}
-      <section style={{ background: altBg, padding: "3rem 0", borderTop: "1px solid rgba(255,255,255,.06)", borderBottom: "1px solid rgba(255,255,255,.06)" }}>
+      <section id="gu-pathway-selector" style={{ background: altBg, padding: "3rem 0", borderTop: "1px solid rgba(255,255,255,.06)", borderBottom: "1px solid rgba(255,255,255,.06)" }}>
         <div className="gu-container" style={{ textAlign: "center" }}>
-          <p className="gu-sec-label">Choose Your Pathway</p>
-          <h2 style={{ fontFamily: "Cinzel, serif", fontSize: "clamp(20px, 3vw, 30px)", fontWeight: 700, color: T.htmlText, marginBottom: 8 }}>Spirit · Skills · For Service</h2>
-          <p style={{ fontSize: 14, color: T.htmlText2, maxWidth: 500, margin: "0 auto 28px", lineHeight: 1.7 }}>goDs University raises the whole child. Choose the pathway your child needs most right now — or pursue both.</p>
+          <p className="gu-sec-label">Choose Your Focus</p>
+          <h2 style={{ fontFamily: "Cinzel, serif", fontSize: "clamp(20px, 3vw, 30px)", fontWeight: 700, color: T.htmlText, marginBottom: 8 }}>Spirit or Skills</h2>
+          <p style={{ fontSize: 14, color: T.htmlText2, maxWidth: 680, margin: "0 auto 28px", lineHeight: 1.7 }}>Start with the dimension your child needs most right now. Spirit strengthens inner formation. Skills strengthens academic excellence. Both serve the same larger mission of raising wise, disciplined nation builders.</p>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, maxWidth: 620, margin: "0 auto" }}>
             {[
-              { key: "spirit", icon: "👑", title: "Spirit", sub: "Bible Literacy & Spiritual Formation", desc: "44-week structured curriculum · 3 pathways · gPA scoring · Parent Portal" },
-              { key: "skills", icon: "🧠", title: "Skills", sub: "Academic Excellence & Mental Capacity", desc: "Weekly sessions · Monthly reports · Grades 1–16" },
+              { key: "spirit", icon: "🕊️", title: "Spirit", sub: "Bible Literacy & Spiritual Formation", desc: "44-week structured curriculum · 3 pathways · gPA scoring · Parent Portal" },
+              { key: "skills", icon: "🧠", title: "Skills", sub: "Academic Excellence & Mental Capacity", desc: "Weekly sessions · Mentor guidance · Monthly parent reports" },
             ].map(p => (
-              <motion.button key={p.key} onClick={() => setTab(p.key)} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-                style={{ background: tab === p.key ? "rgba(232,196,67,.08)" : T.htmlCard, border: `2px solid ${tab === p.key ? "rgba(232,196,67,.45)" : "rgba(255,255,255,.08)"}`, borderRadius: 20, padding: "26px 18px", cursor: "pointer", textAlign: "center", transition: "all .25s", position: "relative", overflow: "hidden", boxShadow: tab === p.key ? "0 0 0 1px rgba(232,196,67,.12), 0 8px 32px rgba(232,196,67,.07)" : "none" }}>
-                {tab === p.key && <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg, transparent, #E8C443, transparent)" }} />}
+              <motion.button
+                key={p.key}
+                type="button"
+                whileHover={{ scale: 1.02 }}
+                onClick={() => setTab(p.key)}
+                style={{
+                  background: T.htmlCard,
+                  border: tab === p.key ? `2px solid ${T.goldL}` : "2px solid rgba(255,255,255,.08)",
+                  borderRadius: 20,
+                  padding: "26px 18px",
+                  textAlign: "center",
+                  transition: "all .25s",
+                  position: "relative",
+                  overflow: "hidden",
+                  cursor: "pointer",
+                  boxShadow: tab === p.key ? "0 16px 40px rgba(232,196,67,.14)" : "none",
+                  backdropFilter: "blur(18px)",
+                  WebkitBackdropFilter: "blur(18px)"
+                }}
+              >
+                {tab === p.key && (
+                  <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(232,196,67,.08), transparent 50%)", pointerEvents: "none" }} />
+                )}
                 <div style={{ fontSize: 36, marginBottom: 10 }}>{p.icon}</div>
-                <div style={{ fontFamily: "Cinzel, serif", fontSize: 16, fontWeight: 700, color: tab === p.key ? T.goldL : T.htmlText, marginBottom: 3 }}>{p.title}</div>
+                <div style={{ fontFamily: "Cinzel, serif", fontSize: 16, fontWeight: 700, color: T.goldL, marginBottom: 3 }}>{p.title}</div>
                 <div style={{ fontSize: 10, color: T.goldL, letterSpacing: 2, textTransform: "uppercase", marginBottom: 8 }}>{p.sub}</div>
                 <div style={{ fontSize: 11, color: T.htmlText3, lineHeight: 1.6 }}>{p.desc}</div>
+                <div className="gu-card-tags">
+                  {(p.key === "spirit" ? ["Prayer", "Word", "Miracles"] : ["Formulas", "Laws", "Words"]).map(tag => (
+                    <span key={tag} className={`gu-focus-pill gu-focus-pill-${p.key}`}>{tag}</span>
+                  ))}
+                </div>
+                <div style={{ marginTop: 16, fontSize: 10, letterSpacing: 2, textTransform: "uppercase", color: tab === p.key ? T.goldL : T.htmlText3, fontWeight: 700 }}>
+                  {tab === p.key ? "Current Focus" : "Select Focus"}
+                </div>
               </motion.button>
             ))}
           </div>
@@ -214,6 +313,11 @@ export default function GodsUniversity({ dark }) {
             <p style={{ color: T.htmlText2, fontSize: 15, marginBottom: 18 }}>
               It is not a Sunday school. It is a full academic programme where children are enrolled in a specific Bible pathway, tracked weekly with our gPA scoring system, and supported by parents through a dedicated portal.
             </p>
+            <div style={{ display: "flex", gap: 14, flexWrap: "wrap", margin: "24px 0 18px" }}>
+              <a href={REGISTER_LINK} target="_blank" rel="noopener noreferrer" className="gu-btn-gold">Enrol a Genius →</a>
+              <a href={PROSPECTUS_LINK} target="_blank" rel="noopener noreferrer" className="gu-btn-outline">Prospectus</a>
+              <a href={PORTAL_LINK} target="_blank" rel="noopener noreferrer" className="gu-btn-outline">Parent Portal →</a>
+            </div>
             <div style={{ borderLeft: `3px solid ${T.goldL}`, padding: "14px 20px", background: "rgba(232,196,67,.12)", borderRadius: "0 12px 12px 0", margin: "24px 0" }}>
               <p style={{ fontFamily: "Lora, serif", fontStyle: "italic", fontSize: 14, color: T.htmlText2, margin: 0 }}>
                 "Train up a child in the way he should go; even when he is old he will not depart from it."
@@ -283,7 +387,7 @@ export default function GodsUniversity({ dark }) {
       </section>
 
       {/* How It Works */}
-      <section className="gu-section">
+      <section id="gu-spirit-process" className="gu-section">
         <div className="gu-container">
           <p className="gu-sec-label">The Process</p>
           <h2 className="gu-sec-title" style={{ color: T.htmlText }}>How It Works</h2>
@@ -628,7 +732,7 @@ export default function GodsUniversity({ dark }) {
                 <h2 className="gu-sec-title" style={{ color: T.htmlText }}>Academic Excellence,<br />God's Way</h2>
                 <p className="gu-sec-sub">"Do you see someone skilled in their work? They will serve before kings." — Proverbs 22:29<br /><br />Every child is called to excellence — not just in spirit, but in mind. We pair your child with a dedicated mentor who combines subject mastery with godly character.</p>
                 <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap", margin: "32px 0 36px" }}>
-                  <a href={PAYSTACK_LINK} target="_blank" rel="noopener noreferrer" className="gu-btn-gold">Subscribe — ₦7,000/mo →</a>
+                  <a href={PAYSTACK_LINK} target="_blank" rel="noopener noreferrer" className="gu-btn-gold">Subscribe Directly — ₦7,000/mo →</a>
                   <a href={WHATSAPP_FREE} target="_blank" rel="noopener noreferrer" className="gu-btn-outline">Check Free Eligibility</a>
                 </div>
                 <div style={{ display: "flex", justifyContent: "center", border: "1px solid rgba(255,255,255,.08)", borderRadius: 20, overflow: "hidden", background: "rgba(22,31,53,.6)", backdropFilter: "blur(10px)", maxWidth: 560, margin: "0 auto" }}>
@@ -671,18 +775,18 @@ export default function GodsUniversity({ dark }) {
             {/* REMAINING SECTIONS PLACEHOLDER */}
 
             {/* How It Works */}
-            <section className="gu-section">
+            <section id="gu-skills-process" className="gu-section">
               <div className="gu-container">
                 <p className="gu-sec-label">The Process</p>
                 <h2 className="gu-sec-title" style={{ color: T.htmlText }}>How It Works</h2>
                 <p className="gu-sec-sub">Five simple steps — from sign-up to measurable academic improvement, built on consistency, character, and care.</p>
                 <div className="gu-steps-grid">
                   {[
-                    { n: 1, t: "Register", d: "Fill the interest form below or subscribe directly on Paystack. We confirm enrolment within 24 hours." },
+                    { n: 1, t: "Register", d: "Choose Subscribe Directly or fill the interest form below. We confirm enrolment within 24 hours." },
                     { n: 2, t: "Assessment", d: "Your mentor assesses your child's current level, learning gaps, and academic goals in a short introductory session." },
-                    { n: 3, t: "Matched", d: "Your child is matched with a mentor who excels in their subject area and embodies KIN's values of character, faith, and service." },
+                    { n: 3, t: "Matched", d: "Your child is matched with a mentor who excels in their subject area and models faith, excellence, and service." },
                     { n: 4, t: "Weekly Sessions", d: "Live, structured online sessions every week at an agreed time — accessible from anywhere." },
-                    { n: 5, t: "Monthly Report", d: "Parents receive a detailed monthly report with subject scores, mentor observations, and one specific action to reinforce at home." },
+                    { n: 5, t: "Monthly Report", d: "Parents receive a detailed monthly report with mentor observations, growth notes, and one specific action to reinforce at home." },
                   ].map((s, i) => (
                     <motion.div key={s.n} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.6, delay: i * 0.1 }} className="gu-step-col">
                       <div style={{ width: 52, height: 52, borderRadius: "50%", background: T.goldL, color: T.htmlDark, fontFamily: "Cinzel, serif", fontSize: 18, fontWeight: 900, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 18px", boxShadow: "0 4px 20px rgba(232,196,67,.35)" }}>{s.n}</div>
@@ -714,7 +818,7 @@ export default function GodsUniversity({ dark }) {
                         <span style={{ fontSize: 13, color: T.htmlText2 }}>{f}</span>
                       </div>
                     ))}
-                    <a href={PAYSTACK_LINK} target="_blank" rel="noopener noreferrer" className="gu-btn-gold" style={{ display: "block", textAlign: "center", marginTop: 24 }}>Subscribe Now →</a>
+                    <a href={PAYSTACK_LINK} target="_blank" rel="noopener noreferrer" className="gu-btn-gold" style={{ display: "block", textAlign: "center", marginTop: 24 }}>Subscribe Directly →</a>
                   </motion.div>
                   <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.15 }}
                     style={{ background: T.htmlCard, border: "2px solid rgba(255,255,255,.06)", borderRadius: 24, padding: 32, position: "relative", opacity: 0.65 }}>
@@ -797,6 +901,7 @@ export default function GodsUniversity({ dark }) {
                     {[
                       { name: "parentName", label: "Parent / Guardian Name", type: "text", placeholder: "Your full name" },
                       { name: "childName", label: "Child's Name", type: "text", placeholder: "Your child's full name" },
+                      { name: "email", label: "Email Address", type: "email", placeholder: "you@example.com" },
                       { name: "phone", label: "WhatsApp Number", type: "tel", placeholder: "+234 800 000 0000" },
                     ].map(f => (
                       <div key={f.name}>
@@ -810,6 +915,15 @@ export default function GodsUniversity({ dark }) {
                     ))}
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
                       <div>
+                        <label style={{ display: "block", fontSize: 12, fontWeight: 600, color: T.htmlText2, marginBottom: 6 }}>Is your child already enrolled at gU?</label>
+                        <select name="enrolledStatus" required value={formData.enrolledStatus} onChange={e => setFormData(p => ({ ...p, enrolledStatus: e.target.value }))}
+                          style={{ width: "100%", background: T.htmlCard, border: "1px solid rgba(255,255,255,.12)", borderRadius: 10, padding: "12px 16px", fontSize: 14, color: T.htmlText, outline: "none", boxSizing: "border-box" }}>
+                          <option value="">Select status</option>
+                          <option value="Yes">Yes</option>
+                          <option value="No">No</option>
+                        </select>
+                      </div>
+                      <div>
                         <label style={{ display: "block", fontSize: 12, fontWeight: 600, color: T.htmlText2, marginBottom: 6 }}>School Level</label>
                         <select name="level" required value={formData.level} onChange={e => setFormData(p => ({ ...p, level: e.target.value }))}
                           style={{ width: "100%", background: T.htmlCard, border: "1px solid rgba(255,255,255,.12)", borderRadius: 10, padding: "12px 16px", fontSize: 14, color: T.htmlText, outline: "none", boxSizing: "border-box" }}>
@@ -819,7 +933,7 @@ export default function GodsUniversity({ dark }) {
                           <option value="Tertiary / A-Level (Grades 12–16)">Tertiary / A-Level (Grades 12–16)</option>
                         </select>
                       </div>
-                      <div>
+                      <div style={{ gridColumn: "1 / -1" }}>
                         <label style={{ display: "block", fontSize: 12, fontWeight: 600, color: T.htmlText2, marginBottom: 6 }}>Subject Focus</label>
                         <select name="subject" required value={formData.subject} onChange={e => setFormData(p => ({ ...p, subject: e.target.value }))}
                           style={{ width: "100%", background: T.htmlCard, border: "1px solid rgba(255,255,255,.12)", borderRadius: 10, padding: "12px 16px", fontSize: 14, color: T.htmlText, outline: "none", boxSizing: "border-box" }}>
@@ -834,7 +948,7 @@ export default function GodsUniversity({ dark }) {
                     </div>
                     {formError && <p style={{ fontSize: 12, color: "#F87171", margin: 0 }}>Something went wrong. Please try again or reach out on WhatsApp.</p>}
                     <button type="submit" className="gu-btn-gold" style={{ border: "none", cursor: "pointer", marginTop: 4 }}>Submit Interest →</button>
-                    <p style={{ fontSize: 11, color: T.htmlText3, textAlign: "center", margin: 0 }}>Or subscribe directly: <a href={PAYSTACK_LINK} target="_blank" rel="noopener noreferrer" style={{ color: T.goldL }}>paystack.shop/kidsinspiring</a></p>
+                    <a href={PAYSTACK_LINK} target="_blank" rel="noopener noreferrer" className="gu-btn-outline" style={{ textAlign: "center" }}>Subscribe Directly →</a>
                   </form>
                 )}
               </div>
@@ -857,7 +971,7 @@ export default function GodsUniversity({ dark }) {
                 <h2 style={{ fontFamily: "Cinzel, serif", fontSize: "clamp(28px, 4vw, 50px)", fontWeight: 900, marginBottom: 16, lineHeight: 1.1 }}>Ready to Unlock<br />Your Child's Potential?</h2>
                 <p style={{ fontSize: 16, color: T.htmlText2, maxWidth: 500, margin: "0 auto 36px", lineHeight: 1.85 }}>Join families who trust KidsInspiring Nation to raise academically excellent, godly children — one weekly session at a time.</p>
                 <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap", marginBottom: 40 }}>
-                  <a href={PAYSTACK_LINK} target="_blank" rel="noopener noreferrer" className="gu-btn-gold">Subscribe — ₦7,000/mo →</a>
+                  <a href={PAYSTACK_LINK} target="_blank" rel="noopener noreferrer" className="gu-btn-gold">Subscribe Directly — ₦7,000/mo →</a>
                   <a href={WHATSAPP_FREE} target="_blank" rel="noopener noreferrer" className="gu-btn-outline">Check Free Eligibility</a>
                 </div>
                 <p style={{ fontFamily: "Lora, serif", fontStyle: "italic", fontSize: 14, color: T.htmlText3, lineHeight: 1.8, maxWidth: 480, margin: "0 auto" }}>
