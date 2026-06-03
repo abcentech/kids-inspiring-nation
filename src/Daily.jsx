@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { BookOpen, Flame, Heart, CheckCircle2, ChevronRight, Youtube, Crown, Star } from "lucide-react";
@@ -11,13 +11,35 @@ import {
   readDailyState,
   writeDailyState,
 } from "./dailyStorage.js";
-import { normalisePrompt, promptForDateKey } from "./dailyPrompts.js";
-import { parseCsv, rowsToObjects } from "./csv.js";
+import { promptForDateKey } from "./dailyPrompts.js";
 
 const DAILY_ENDPOINT = import.meta.env.VITE_DAILY_CHECKIN_URL || "";
-const PROMPTS_CSV_URL =
-  import.meta.env.VITE_DAILY_PROMPTS_CSV_URL ||
-  (import.meta.env.DEV ? "/daily-prompts.sample.csv" : "");
+const YT_CHANNEL_ID  = "UCnQYGxz4gBIJWHR159IT0lg";
+const YT_FALLBACK_ID = "z-9j6-4OOBs";
+
+// ─── YOUTUBE RSS HOOK ─────────────────────────────────────────────────────────
+function useLatestYouTubeVideo() {
+  const [videoId, setVideoId] = useState(YT_FALLBACK_ID);
+  const [videoTitle, setVideoTitle] = useState(null);
+  useEffect(() => {
+    const url = `https://api.allorigins.win/get?url=${encodeURIComponent(
+      `https://www.youtube.com/feeds/videos.xml?channel_id=${YT_CHANNEL_ID}`
+    )}`;
+    fetch(url)
+      .then((r) => r.json())
+      .then((data) => {
+        const xml = data?.contents || "";
+        const titleMatch = xml.match(/<media:title[^>]*>([^<]+)<\/media:title>/);
+        const idMatch = xml.match(/watch\?v=([A-Za-z0-9_-]{11})/);
+        if (idMatch?.[1]) {
+          setVideoId(idMatch[1]);
+          if (titleMatch?.[1]) setVideoTitle(decodeURIComponent(titleMatch[1]));
+        }
+      })
+      .catch(() => {}); // keep fallback on any error
+  }, []);
+  return { videoId, videoTitle };
+}
 
 // ─── HELPERS ──────────────────────────────────────────────────────────────────
 async function syncBestEffort(payload) {
@@ -37,30 +59,6 @@ async function syncBestEffort(payload) {
       return { ok: false, error: String(e2 || e) };
     }
   }
-}
-
-async function loadPromptsFromCsv() {
-  if (!PROMPTS_CSV_URL) return null;
-  const resp = await fetch(PROMPTS_CSV_URL, { method: "GET" });
-  if (!resp.ok) return null;
-  const txt = await resp.text();
-  const rows = parseCsv(txt);
-  const objs = rowsToObjects(rows);
-  const prompts = objs
-    .map(normalisePrompt)
-    .filter(Boolean)
-    .filter((p) => p.id && p.question && p.options?.length >= 2);
-  return prompts.length ? prompts : null;
-}
-
-function pickPromptForToday(prompts, todayKey) {
-  const direct = prompts.find((p) => p.dateKey === todayKey);
-  if (direct) return direct;
-  const firstWithVideo = prompts.find((p) => p.videoUrl);
-  if (firstWithVideo) return firstWithVideo;
-  let h = 0;
-  for (let i = 0; i < todayKey.length; i++) h = (h * 31 + todayKey.charCodeAt(i)) >>> 0;
-  return prompts[h % prompts.length];
 }
 
 function parseYouTubeId(url) {
@@ -107,6 +105,67 @@ function formatDevotionalDate(dateKey) {
   return date.toLocaleDateString("en-NG", {
     weekday: "long", day: "numeric", month: "long", year: "numeric",
   });
+}
+
+// ─── KIND INVITE STRIP (footer) ───────────────────────────────────────────────
+const KIND_MEET_LINK = "https://meet.google.com/tqj-hvmv-tqh";
+
+function KINDInviteStrip({ dark }) {
+  const getWAT = useCallback(() => {
+    const now = new Date();
+    const utcMs = now.getTime() + now.getTimezoneOffset() * 60000;
+    const wat = new Date(utcMs + 60 * 60000);
+    return { h: wat.getHours(), m: wat.getMinutes() };
+  }, []);
+  const [wat, setWat] = useState(getWAT);
+  useEffect(() => {
+    const id = setInterval(() => setWat(getWAT()), 30000);
+    return () => clearInterval(id);
+  }, [getWAT]);
+
+  const { h, m } = wat;
+  const isLive = (h === 19 && m >= 45) || h === 20 || (h === 21 && m <= 30);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.65 }}
+      style={{ marginTop: "1.5rem", background: dark ? T.greenD : `linear-gradient(135deg, ${T.greenD}, ${T.green})`, borderRadius: 24, padding: "1.5rem 2rem", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "1rem", flexWrap: "wrap", border: `1px solid ${T.gold}25` }}
+    >
+      <div>
+        <div style={{ fontFamily: "'Playfair Display',serif", fontStyle: "italic", fontSize: "1.1rem", fontWeight: 900, color: T.goldL, marginBottom: ".3rem" }}>
+          {isLive ? "🔴 KIND is LIVE right now!" : "#JesusChristisOurJOY"}
+        </div>
+        <div style={{ color: "rgba(253,247,236,.6)", fontSize: ".87rem", lineHeight: 1.65 }}>
+          {isLive
+            ? "The session is on Google Meet. Click Join Live Session to enter now."
+            : <>KIND holds daily at <strong style={{ color: T.cream }}>8pm WAT</strong>. Join us on the official WhatsApp channel — our Character Flagship runs every single day of the year.</>}
+        </div>
+      </div>
+      <div style={{ display: "flex", gap: ".75rem", flexWrap: "wrap" }}>
+        {isLive ? (
+          <a href={KIND_MEET_LINK} target="_blank" rel="noopener noreferrer"
+            style={{ display: "inline-flex", alignItems: "center", gap: ".45rem", padding: ".7rem 1.6rem", borderRadius: 999, background: "#EF4444", color: "#fff", fontWeight: 800, fontSize: ".85rem", textDecoration: "none", boxShadow: "0 6px 20px rgba(239,68,68,.45)", animation: "pulse 1.5s ease-in-out infinite" }}>
+            🎥 Join Live Session
+          </a>
+        ) : (
+          <>
+            <a href="https://youtube.com/@KidsInspiringNation" target="_blank" rel="noopener noreferrer"
+              style={{ display: "inline-flex", alignItems: "center", gap: ".45rem", padding: ".7rem 1.4rem", borderRadius: 999, background: "rgba(255,0,0,.12)", color: "#FF6B6B", border: "1px solid rgba(255,0,0,.2)", fontWeight: 700, fontSize: ".82rem", textDecoration: "none" }}
+              onMouseEnter={e => e.currentTarget.style.background = "rgba(255,0,0,.2)"}
+              onMouseLeave={e => e.currentTarget.style.background = "rgba(255,0,0,.12)"}>
+              <Youtube size={14} strokeWidth={1.5} /> YouTube
+            </a>
+            <Link to="/NBC"
+              style={{ display: "inline-flex", alignItems: "center", gap: ".45rem", padding: ".7rem 1.4rem", borderRadius: 999, background: T.gold, color: "#fff", fontWeight: 800, fontSize: ".82rem", textDecoration: "none", boxShadow: `0 6px 18px ${T.gold}45` }}
+              onMouseEnter={e => e.currentTarget.style.filter = "brightness(1.1)"}
+              onMouseLeave={e => e.currentTarget.style.filter = "none"}>
+              <Crown size={14} /> NBC
+            </Link>
+          </>
+        )}
+      </div>
+    </motion.div>
+  );
 }
 
 // ─── FAITHFULNESS BADGE ───────────────────────────────────────────────────────
@@ -307,11 +366,37 @@ function TeachingVideo({
   );
 }
 
+// ─── MIDNIGHT REFRESH HOOK ────────────────────────────────────────────────────
+// Schedules a page reload at the next WAT midnight so the new day's content loads
+function useMidnightRefresh() {
+  useEffect(() => {
+    const msUntilMidnightWAT = () => {
+      const now = new Date();
+      const utcMs = now.getTime() + now.getTimezoneOffset() * 60000;
+      const watNow = new Date(utcMs + 60 * 60000); // WAT = UTC+1
+      const midnight = new Date(watNow);
+      midnight.setHours(24, 0, 0, 0); // next midnight in WAT
+      return midnight.getTime() - watNow.getTime() + 1000; // +1s buffer
+    };
+    const id = setTimeout(() => window.location.reload(), msUntilMidnightWAT());
+    return () => clearTimeout(id);
+  }, []);
+}
+
 // ─── MAIN PAGE ────────────────────────────────────────────────────────────────
 export default function Daily({ dark }) {
+  useMidnightRefresh(); // reload at WAT midnight so new day's prompt loads
+
   const todayKey  = useMemo(() => getLagosDateKey(new Date()), []);
-  const [remotePrompt, setRemotePrompt] = useState(null);
-  const prompt = useMemo(() => remotePrompt || promptForDateKey(todayKey), [remotePrompt, todayKey]);
+  const prompt     = useMemo(() => promptForDateKey(todayKey), [todayKey]);
+  const { videoId: rssVideoId, videoTitle: rssVideoTitle } = useLatestYouTubeVideo();
+
+  // Use RSS video; prompt provides the question/explanation.
+  const videoId       = rssVideoId;
+  const videoUrl      = `https://www.youtube.com/watch?v=${rssVideoId}`;
+  const videoTitle    = rssVideoTitle || prompt.videoTitle || "KidsInspiring Nation · YouTube";
+  const requiredWatch = useMemo(() => clamp(Number(prompt.requiredWatchSeconds || 90), 60, 120), [prompt.requiredWatchSeconds]);
+  const needsWatchGate = Boolean(videoId);
 
   const [state, setState]         = useState(() => readDailyState());
   const [choice, setChoice]       = useState(null);
@@ -321,27 +406,14 @@ export default function Daily({ dark }) {
   const [unlockReady, setUnlockReady] = useState(false);
   const [watchedSeconds, setWatchedSeconds] = useState(0);
 
-  const videoId       = useMemo(() => parseYouTubeId(prompt.videoUrl), [prompt.videoUrl]);
-  const requiredWatch = useMemo(() => clamp(Number(prompt.requiredWatchSeconds || 90), 60, 120), [prompt.requiredWatchSeconds]);
-  const needsWatchGate = Boolean(videoId);
-
+  // Restore check-in state for today
   useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      try {
-        const prompts = await loadPromptsFromCsv();
-        if (!prompts || cancelled) return;
-        const picked = pickPromptForToday(prompts, todayKey);
-        if (!cancelled) setRemotePrompt(picked);
-      } catch { /* fall back to local */ }
-    })();
-    if (state.lastCheckinDateKey === todayKey) setCheckedIn(true);
-    if (state.lastCheckinDateKey === todayKey && state.lastPromptId === prompt.id) {
-      setChoice(state.lastChoice ?? null);
+    if (state.lastCheckinDateKey === todayKey) {
+      setCheckedIn(true);
+      if (state.lastPromptId === prompt.id) setChoice(state.lastChoice ?? null);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    return () => { cancelled = true; };
-  }, []);
+  }, [todayKey]);
 
   useEffect(() => {
     const s = readDailyState();
@@ -611,9 +683,9 @@ export default function Daily({ dark }) {
               <div style={{ padding: "1.5rem 1.75rem", borderBottom: `1px solid ${brd}` }}>
                 <TeachingVideo
                   dark={dark} brd={brd}
-                  videoId={videoId} videoUrl={prompt.videoUrl} videoTitle={prompt.videoTitle}
+                  videoId={videoId} videoUrl={videoUrl} videoTitle={videoTitle}
                   requiredSeconds={requiredWatch}
-                  startSeconds={Number.isFinite(Number(prompt.startSeconds)) ? Number(prompt.startSeconds) : null}
+                  startSeconds={0}
                   todayKey={todayKey} promptId={prompt.id}
                   initialWatchedSeconds={watchedSeconds} initialUnlocked={unlockReady}
                   onProgress={(sec, isDone) => {
@@ -760,10 +832,35 @@ export default function Daily({ dark }) {
                 <motion.div
                   initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
                   transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                  style={{ display: "flex", alignItems: "center", gap: ".55rem", fontWeight: 900, color: T.ok, fontSize: ".95rem" }}
+                  style={{ display: "flex", flexDirection: "column", gap: ".75rem" }}
                 >
-                  <CheckCircle2 size={19} strokeWidth={2.5} />
-                  Devotional complete · {state.streak} day{state.streak === 1 ? "" : "s"} faithful
+                  <div style={{ display: "flex", alignItems: "center", gap: ".55rem", fontWeight: 900, color: T.ok, fontSize: ".95rem" }}>
+                    <CheckCircle2 size={19} strokeWidth={2.5} />
+                    Devotional complete · {state.streak} day{state.streak === 1 ? "" : "s"} faithful
+                  </div>
+                  {/* Social proof */}
+                  {state.streak >= 1 && (
+                    <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
+                      style={{ fontSize: ".78rem", color: p2, fontFamily: "'DM Mono',monospace" }}>
+                      {state.streak >= 14 ? "You're in the top 5% of goDs this month 🏆" :
+                       state.streak >= 7  ? "You're in the top 15% of goDs this month 🔥" :
+                       state.streak >= 3  ? "You're in the top 30% of goDs this month 📖" :
+                       "Keep going — 3 days builds the habit 💛"}
+                    </motion.div>
+                  )}
+                  {/* WhatsApp share */}
+                  {state.streak >= 3 && (() => {
+                    const badge = state.streak >= 30 ? "👑 Anointed" : state.streak >= 14 ? "🔥 Steadfast" : state.streak >= 7 ? "🕊️ Devoted" : "📖 Faithful";
+                    const msg = `${badge} — ${state.streak}-day streak on KidsInspiring Nation! 📖\nI completed today's KIND Devotional. Join me every day at 8pm WAT.\n👉 kidsinspiringnation.org/daily`;
+                    return (
+                      <motion.a initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}
+                        href={`https://wa.me/?text=${encodeURIComponent(msg)}`}
+                        target="_blank" rel="noopener noreferrer"
+                        style={{ display: "inline-flex", alignItems: "center", gap: ".5rem", padding: ".55em 1.2em", borderRadius: 999, background: "rgba(37,211,102,.12)", border: "1px solid rgba(37,211,102,.25)", color: "#25D366", fontWeight: 700, fontSize: ".8rem", textDecoration: "none", width: "fit-content" }}>
+                        📤 Share your {state.streak}-day streak
+                      </motion.a>
+                    );
+                  })()}
                 </motion.div>
               )}
 
@@ -777,61 +874,7 @@ export default function Daily({ dark }) {
           </motion.div>
 
           {/* ─── FOOTER INVITE STRIP ─── */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.65 }}
-            style={{
-              marginTop: "1.5rem",
-              background: dark ? T.greenD : `linear-gradient(135deg, ${T.greenD}, ${T.green})`,
-              borderRadius: 24, padding: "1.5rem 2rem",
-              display: "flex", alignItems: "center", justifyContent: "space-between",
-              gap: "1rem", flexWrap: "wrap",
-              border: `1px solid ${T.gold}25`,
-            }}
-          >
-            <div>
-              <div style={{ fontFamily: "'Playfair Display',serif", fontStyle: "italic", fontSize: "1.1rem", fontWeight: 900, color: T.goldL, marginBottom: ".3rem" }}>
-                #JesusChristisOurJOY
-              </div>
-              <div style={{ color: "rgba(253,247,236,.6)", fontSize: ".87rem", lineHeight: 1.65 }}>
-                KIND holds daily at <strong style={{ color: T.cream }}>8pm WAT</strong>. Join us on the official WhatsApp channel — our Character Flagship runs every single day of the year.
-              </div>
-            </div>
-            <div style={{ display: "flex", gap: ".75rem", flexWrap: "wrap" }}>
-              <a
-                href="https://youtube.com/@KidsInspiringNation"
-                target="_blank" rel="noopener noreferrer"
-                style={{
-                  display: "inline-flex", alignItems: "center", gap: ".45rem",
-                  padding: ".7rem 1.4rem", borderRadius: 999,
-                  background: "rgba(255,0,0,.12)", color: "#FF6B6B",
-                  border: "1px solid rgba(255,0,0,.2)",
-                  fontWeight: 700, fontSize: ".82rem", textDecoration: "none",
-                  transition: "background .2s",
-                }}
-                onMouseEnter={e => e.currentTarget.style.background = "rgba(255,0,0,.2)"}
-                onMouseLeave={e => e.currentTarget.style.background = "rgba(255,0,0,.12)"}
-              >
-                <Youtube size={14} strokeWidth={1.5} /> YouTube
-              </a>
-              <Link
-                to="/NBC"
-                style={{
-                  display: "inline-flex", alignItems: "center", gap: ".45rem",
-                  padding: ".7rem 1.4rem", borderRadius: 999,
-                  background: T.gold, color: "#fff",
-                  fontWeight: 800, fontSize: ".82rem", textDecoration: "none",
-                  boxShadow: `0 6px 18px ${T.gold}45`,
-                  transition: "filter .2s",
-                }}
-                onMouseEnter={e => e.currentTarget.style.filter = "brightness(1.1)"}
-                onMouseLeave={e => e.currentTarget.style.filter = "none"}
-              >
-                <Crown size={14} /> NBC
-              </Link>
-            </div>
-          </motion.div>
+          <KINDInviteStrip dark={dark} />
         </div>
       </section>
     </div>

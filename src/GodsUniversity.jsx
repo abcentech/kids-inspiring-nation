@@ -25,8 +25,7 @@ export default function GodsUniversity({ dark }) {
   const REGISTER_LINK = "https://docs.google.com/forms/d/e/1FAIpQLSdGHVOsyZBTq6ko-MdLCJtZV88CtqSmhDhJphMDONJceCm3DA/viewform";
   const PROSPECTUS_LINK = "https://www.canva.com/design/DAGbhF8ek5o/uFhNtEH_Z_q3l051t543ZQ/view?utm_content=DAGbhF8ek5o&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=he877c76682";
   const PORTAL_LINK = "/gu/index.html";
-  const PAYSTACK_LINK = "https://paystack.shop/kidsinspiring";
-  const WHATSAPP_FREE = "https://wa.me/2348122673417?text=I%20am%20interested%20in%20the%20free%20academic%20mentoring%20for%20my%20child.";
+  const WHATSAPP_ENQUIRY = "https://wa.me/2348122673417?text=I%20am%20interested%20in%20enrolling%20my%20child%20in%20goDs%20University.";
   const FORM_EMAIL = "KidsInspiringOperations@gmail.com";
   const heroVerse = "\"As for these four children, God gave them knowledge and skill in all learning and wisdom.\"";
   const heroVerseRef = "— Daniel 1:17";
@@ -66,7 +65,7 @@ export default function GodsUniversity({ dark }) {
         { n: "Weekly", l: "Live Sessions" },
         { n: "Monthly", l: "Parent Reports" },
         { n: "Gr 1–16", l: "All Levels" },
-        { n: "₦7,000", l: "Per Month" }
+        { n: "Contact", l: "Us to Start" }
       ]
     }
   };
@@ -99,7 +98,7 @@ export default function GodsUniversity({ dark }) {
   };
 
   const SPIRIT_FAQ = [
-    { q: "How much does the Spirit pathway cost?", a: "The Spirit pathway is ₦30,000 per month (subscription) or ₦250,000 per single session. The monthly subscription offers the best value for families committed to consistent spiritual growth." },
+    { q: "Is there a cost to join the Spirit pathway?", a: "Please reach out to us directly on WhatsApp or via our Contact page and our team will walk you through everything — including any participation details for your child's enrolment." },
     { q: "What is goDs University Spirit pathway?", a: "It is a structured, 44-week spiritual curriculum for children aged 5–18 combining daily Bible reading, live weekly classes, instructor mentorship, and measurable accountability through our gPA scoring system." },
     { q: "Is this the same as Sunday school?", a: "No. goDs University is a full academic programme with enrolled pathways, weekly gPA scores, parent reports, and a dedicated portal. It is intentional, tracked, and consistent — not casual." },
     { q: "What are the three Bible pathways?", a: "Bible Basics (Ages 5–10) — story-based introduction to the whole Bible. New Testament (Ages 10–15) — systematic read-through from the Gospels to the Epistles. Old Testament (Ages 12–18) — deep engagement from Genesis through the Prophets." },
@@ -111,12 +110,11 @@ export default function GodsUniversity({ dark }) {
   ];
 
   const SKILLS_FAQ = [
-    { q: "How much does gU Skills mentoring cost?", a: "Academic mentoring is ₦7,000 per month. This subscription ensures consistent progress and includes weekly sessions and monthly reports." },
-    { q: "How often are sessions held?", a: "Sessions are held weekly, at an agreed time between you and your child's mentor. Monthly subscribers receive sessions every week throughout the month." },
+    { q: "How do I find out about enrolment for gU Skills mentoring?", a: "Reach out to us on WhatsApp or fill in the interest form below and our team will get back to you within 24 hours with everything you need to know about getting started." },
+    { q: "How often are sessions held?", a: "Sessions are held weekly, at an agreed time between you and your child's mentor." },
     { q: "When do I receive my child's progress report?", a: "Monthly progress reports are sent directly to parents with mentor observations, growth notes, and one specific home action to reinforce progress." },
-    { q: "What is free mentoring and how does my child qualify?", a: "Families whose total termly school fees are below ₦70,000 qualify for free academic mentoring. Reach out on WhatsApp and we will guide you through the process." },
+    { q: "How do I enrol my child for mentoring?", a: "Fill in the interest form below or reach out to us directly on WhatsApp. Our team will guide you through the enrolment process and answer any questions you have." },
     { q: "Who are the mentors?", a: "Our mentors are Covenant Servants of KidsInspiring Nation and volunteer professionals who are people of excellence in their respective fields — verified, trained, and accountable to KIN's values." },
-    { q: "Can I cancel my subscription?", a: "Yes. Contact us on WhatsApp within 24 hours. We kindly ask for at least one week's notice before the next billing date." },
     { q: "Are sessions online or in-person?", a: "Sessions are conducted online for maximum accessibility, regardless of where you are located." },
     { q: "How is mentoring different from tutoring?", a: "Mentoring focuses on study habits, mindset, subject understanding, values, and character. Tutoring (coming soon) will focus on intensive, exam-specific preparation." },
   ];
@@ -646,47 +644,6 @@ export default function GodsUniversity({ dark }) {
         </div>
       </section>
 
-      {/* Spirit Pricing */}
-      <section className="gu-section" style={{ background: altBg }}>
-        <div className="gu-container">
-          <p className="gu-sec-label">Subscription</p>
-          <h2 className="gu-sec-title" style={{ color: T.htmlText }}>Simple, Honest Pricing</h2>
-          <p className="gu-sec-sub">One clear plan. No hidden fees. Cancel anytime. Excellence at every level.</p>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 20, maxWidth: 780, margin: "0 auto 28px" }}>
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
-              style={{ background: "rgba(232,196,67,.06)", border: "2px solid rgba(232,196,67,.4)", borderRadius: 24, padding: 32, position: "relative", overflow: "hidden", boxShadow: "0 0 0 1px rgba(232,196,67,.1), 0 12px 40px rgba(232,196,67,.06)" }}>
-              <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg, transparent, #E8C443, transparent)" }} />
-              <div style={{ display: "inline-block", background: "rgba(232,196,67,.15)", border: "1px solid rgba(232,196,67,.3)", borderRadius: 6, padding: "4px 12px", fontSize: 11, color: T.goldL, fontWeight: 700, letterSpacing: 1, marginBottom: 16 }}>BEST VALUE ✦</div>
-              <div style={{ fontFamily: "Cinzel, serif", fontSize: 22, fontWeight: 700, color: T.htmlText, marginBottom: 8 }}>Monthly Subscription</div>
-              <div style={{ fontFamily: "Cinzel, serif", fontSize: 42, fontWeight: 900, color: T.goldL, lineHeight: 1, marginBottom: 4 }}>₦30,000</div>
-              <div style={{ fontSize: 12, color: T.htmlText3, marginBottom: 24 }}>per month · weekly classes included</div>
-              {["Weekly live classes", "Pathway assigned", "Weekly report scoring", "Parent portal access", "Character & values integration", "gPA tracking"].map(f => (
-                <div key={f} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
-                  <span style={{ color: "#14B981", fontSize: 14, fontWeight: 700, flexShrink: 0 }}>✓</span>
-                  <span style={{ fontSize: 13, color: T.htmlText2 }}>{f}</span>
-                </div>
-              ))}
-              <a href={REGISTER_LINK} target="_blank" rel="noopener noreferrer" className="gu-btn-gold" style={{ display: "block", textAlign: "center", marginTop: 24 }}>Subscribe Now →</a>
-            </motion.div>
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.15 }}
-              style={{ background: T.htmlCard, border: "2px solid rgba(232,196,67,.2)", borderRadius: 24, padding: 32, position: "relative", overflow: "hidden" }}>
-              <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg, transparent, rgba(232,196,67,.4), transparent)" }} />
-              <div style={{ display: "inline-block", background: "rgba(232,196,67,.08)", border: "1px solid rgba(232,196,67,.2)", borderRadius: 6, padding: "4px 12px", fontSize: 11, color: T.goldL, fontWeight: 700, letterSpacing: 1, marginBottom: 16 }}>PER SESSION</div>
-              <div style={{ fontFamily: "Cinzel, serif", fontSize: 22, fontWeight: 700, color: T.htmlText, marginBottom: 8 }}>Single Session</div>
-              <div style={{ fontFamily: "Cinzel, serif", fontSize: 42, fontWeight: 900, color: T.goldL, lineHeight: 1, marginBottom: 4 }}>₦250,000</div>
-              <div style={{ fontSize: 12, color: T.htmlText3, marginBottom: 24 }}>per session · pay as you go</div>
-              {["One focused session", "No commitment required", "Same instructor quality", "Ideal for assessments", "Subject-specific focus"].map(f => (
-                <div key={f} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
-                  <span style={{ color: T.goldL, fontSize: 14, fontWeight: 700, flexShrink: 0 }}>✓</span>
-                  <span style={{ fontSize: 13, color: T.htmlText2 }}>{f}</span>
-                </div>
-              ))}
-              <a href={REGISTER_LINK} target="_blank" rel="noopener noreferrer" className="gu-btn-outline" style={{ display: "block", textAlign: "center", marginTop: 24 }}>Book a Session →</a>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
       {/* Spirit FAQ */}
       <section className="gu-section" style={{ background: bg }}>
         <div className="gu-container" style={{ maxWidth: 720 }}>
@@ -732,11 +689,11 @@ export default function GodsUniversity({ dark }) {
                 <h2 className="gu-sec-title" style={{ color: T.htmlText }}>Academic Excellence,<br />God's Way</h2>
                 <p className="gu-sec-sub">"Do you see someone skilled in their work? They will serve before kings." — Proverbs 22:29<br /><br />Every child is called to excellence — not just in spirit, but in mind. We pair your child with a dedicated mentor who combines subject mastery with godly character.</p>
                 <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap", margin: "32px 0 36px" }}>
-                  <a href={PAYSTACK_LINK} target="_blank" rel="noopener noreferrer" className="gu-btn-gold">Subscribe Directly — ₦7,000/mo →</a>
-                  <a href={WHATSAPP_FREE} target="_blank" rel="noopener noreferrer" className="gu-btn-outline">Check Free Eligibility</a>
+                  <a href={WHATSAPP_ENQUIRY} target="_blank" rel="noopener noreferrer" className="gu-btn-gold">Enquire Now →</a>
+                  <a href={WHATSAPP_ENQUIRY} target="_blank" rel="noopener noreferrer" className="gu-btn-outline">Talk to Our Team</a>
                 </div>
                 <div style={{ display: "flex", justifyContent: "center", border: "1px solid rgba(255,255,255,.08)", borderRadius: 20, overflow: "hidden", background: "rgba(22,31,53,.6)", backdropFilter: "blur(10px)", maxWidth: 560, margin: "0 auto" }}>
-                  {[{ n: "₦7,000", l: "Per Month" }, { n: "Weekly", l: "Sessions" }, { n: "Monthly", l: "Reports" }, { n: "Gr 1–16", l: "All Levels" }].map(s => (
+                  {[{ n: "Weekly", l: "Sessions" }, { n: "Monthly", l: "Reports" }, { n: "Gr 1–16", l: "All Levels" }, { n: "Contact", l: "Us to Start" }].map(s => (
                     <div key={s.l} className="gu-stat-block">
                       <div style={{ fontFamily: "Cinzel, serif", fontSize: 20, fontWeight: 900, color: T.goldL }}>{s.n}</div>
                       <div style={{ fontSize: 11, color: T.htmlText3, letterSpacing: 1, marginTop: 3 }}>{s.l}</div>
@@ -782,7 +739,7 @@ export default function GodsUniversity({ dark }) {
                 <p className="gu-sec-sub">Five simple steps — from sign-up to measurable academic improvement, built on consistency, character, and care.</p>
                 <div className="gu-steps-grid">
                   {[
-                    { n: 1, t: "Register", d: "Choose Subscribe Directly or fill the interest form below. We confirm enrolment within 24 hours." },
+                    { n: 1, t: "Register", d: "Click Enquire Now or fill the interest form below. We confirm enrolment within 24 hours." },
                     { n: 2, t: "Assessment", d: "Your mentor assesses your child's current level, learning gaps, and academic goals in a short introductory session." },
                     { n: 3, t: "Matched", d: "Your child is matched with a mentor who excels in their subject area and models faith, excellence, and service." },
                     { n: 4, t: "Weekly Sessions", d: "Live, structured online sessions every week at an agreed time — accessible from anywhere." },
@@ -795,60 +752,6 @@ export default function GodsUniversity({ dark }) {
                     </motion.div>
                   ))}
                 </div>
-              </div>
-            </section>
-
-            {/* Pricing */}
-            <section className="gu-section" style={{ background: altBg }}>
-              <div className="gu-container">
-                <p className="gu-sec-label">Subscription</p>
-                <h2 className="gu-sec-title" style={{ color: T.htmlText }}>Simple, Honest Pricing</h2>
-                <p className="gu-sec-sub">One clear plan. No hidden fees. Cancel anytime. Excellence at every level.</p>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 20, maxWidth: 680, margin: "0 auto 28px" }}>
-                  <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
-                    style={{ background: "rgba(232,196,67,.06)", border: "2px solid rgba(232,196,67,.4)", borderRadius: 24, padding: 32, position: "relative", overflow: "hidden", boxShadow: "0 0 0 1px rgba(232,196,67,.1), 0 12px 40px rgba(232,196,67,.06)" }}>
-                    <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg, transparent, #E8C443, transparent)" }} />
-                    <div style={{ display: "inline-block", background: "rgba(232,196,67,.15)", border: "1px solid rgba(232,196,67,.3)", borderRadius: 6, padding: "4px 12px", fontSize: 11, color: T.goldL, fontWeight: 700, letterSpacing: 1, marginBottom: 16 }}>ACTIVE ✦</div>
-                    <div style={{ fontFamily: "Cinzel, serif", fontSize: 22, fontWeight: 700, color: T.htmlText, marginBottom: 8 }}>Academic Mentoring</div>
-                    <div style={{ fontFamily: "Cinzel, serif", fontSize: 42, fontWeight: 900, color: T.goldL, lineHeight: 1, marginBottom: 4 }}>₦7,000</div>
-                    <div style={{ fontSize: 12, color: T.htmlText3, marginBottom: 24 }}>per month</div>
-                    {["Weekly live sessions", "Subject-specific mentoring", "Monthly progress report", "Mentor notes & parent update", "Character & values integration", "Grades 1–16 · All levels"].map(f => (
-                      <div key={f} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
-                        <span style={{ color: "#14B981", fontSize: 14, fontWeight: 700, flexShrink: 0 }}>✓</span>
-                        <span style={{ fontSize: 13, color: T.htmlText2 }}>{f}</span>
-                      </div>
-                    ))}
-                    <a href={PAYSTACK_LINK} target="_blank" rel="noopener noreferrer" className="gu-btn-gold" style={{ display: "block", textAlign: "center", marginTop: 24 }}>Subscribe Directly →</a>
-                  </motion.div>
-                  <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.15 }}
-                    style={{ background: T.htmlCard, border: "2px solid rgba(255,255,255,.06)", borderRadius: 24, padding: 32, position: "relative", opacity: 0.65 }}>
-                    <div style={{ display: "inline-block", background: "rgba(74,96,128,.2)", border: "1px solid rgba(74,96,128,.3)", borderRadius: 6, padding: "4px 12px", fontSize: 11, color: T.htmlText3, fontWeight: 700, letterSpacing: 1, marginBottom: 16 }}>COMING SOON 🔜</div>
-                    <div style={{ fontFamily: "Cinzel, serif", fontSize: 22, fontWeight: 700, color: T.htmlText3, marginBottom: 8 }}>Tutoring</div>
-                    <div style={{ fontFamily: "Cinzel, serif", fontSize: 42, fontWeight: 900, color: T.htmlText3, lineHeight: 1, marginBottom: 4 }}>TBD</div>
-                    <div style={{ fontSize: 12, color: T.htmlText3, marginBottom: 24 }}>per month</div>
-                    {["1-on-1 intensive sessions", "Exam-specific preparation", "Grade-targeted curriculum", "Weekly performance tracking", "Subject deep-dives"].map(f => (
-                      <div key={f} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
-                        <span style={{ color: T.htmlText3, fontSize: 14, flexShrink: 0 }}>○</span>
-                        <span style={{ fontSize: 13, color: T.htmlText3 }}>{f}</span>
-                      </div>
-                    ))}
-                    <div style={{ textAlign: "center", marginTop: 24, padding: "13px 28px", borderRadius: 999, background: "rgba(255,255,255,.04)", color: T.htmlText3, fontSize: 14, fontWeight: 600, border: "1px solid rgba(255,255,255,.08)" }}>Notify me when available</div>
-                  </motion.div>
-                </div>
-                <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}
-                  style={{ background: "rgba(20,185,129,.06)", border: "1px solid rgba(20,185,129,.25)", borderRadius: 18, padding: "22px 28px", maxWidth: 680, margin: "0 auto", display: "flex", alignItems: "center", gap: 20, flexWrap: "wrap" }}>
-                  <div style={{ fontSize: 32, flexShrink: 0 }}>🌱</div>
-                  <div style={{ flex: 1 }}>
-                    <div style={{ fontFamily: "Cinzel, serif", fontSize: 14, fontWeight: 700, color: "#14B981", marginBottom: 4 }}>Free Mentoring — For Qualifying Families</div>
-                    <p style={{ fontSize: 13, color: T.htmlText2, lineHeight: 1.65, margin: 0 }}>If your family's total termly school fees are below <strong style={{ color: T.htmlText }}>₦70,000</strong>, your child qualifies for <strong style={{ color: "#14B981" }}>free academic mentoring</strong>. No child should be left behind because of finances.</p>
-                  </div>
-                  <a href={WHATSAPP_FREE} target="_blank" rel="noopener noreferrer"
-                    style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "10px 20px", borderRadius: 999, background: "rgba(20,185,129,.15)", border: "1px solid rgba(20,185,129,.35)", color: "#14B981", fontWeight: 700, fontSize: 13, textDecoration: "none", flexShrink: 0, transition: "all .2s" }}
-                    onMouseEnter={e => e.currentTarget.style.background = "rgba(20,185,129,.25)"}
-                    onMouseLeave={e => e.currentTarget.style.background = "rgba(20,185,129,.15)"}>
-                    Check Eligibility →
-                  </a>
-                </motion.div>
               </div>
             </section>
 
@@ -948,7 +851,7 @@ export default function GodsUniversity({ dark }) {
                     </div>
                     {formError && <p style={{ fontSize: 12, color: "#F87171", margin: 0 }}>Something went wrong. Please try again or reach out on WhatsApp.</p>}
                     <button type="submit" className="gu-btn-gold" style={{ border: "none", cursor: "pointer", marginTop: 4 }}>Submit Interest →</button>
-                    <a href={PAYSTACK_LINK} target="_blank" rel="noopener noreferrer" className="gu-btn-outline" style={{ textAlign: "center" }}>Subscribe Directly →</a>
+                    <a href={WHATSAPP_ENQUIRY} target="_blank" rel="noopener noreferrer" className="gu-btn-outline" style={{ textAlign: "center" }}>Enquire Now →</a>
                   </form>
                 )}
               </div>
@@ -959,7 +862,7 @@ export default function GodsUniversity({ dark }) {
               <div className="gu-container" style={{ maxWidth: 720 }}>
                 <p className="gu-sec-label">Questions</p>
                 <h2 className="gu-sec-title" style={{ color: T.htmlText }}>Frequently Asked</h2>
-                <p className="gu-sec-sub">Everything you need to know about gU Skills — pricing, sessions, mentors, reports, and how to get started.</p>
+                <p className="gu-sec-sub">Everything you need to know about gU Skills — sessions, mentors, reports, and how to get started.</p>
                 <GUFaqSection items={SKILLS_FAQ} openFaq={openFaq} setOpenFaq={setOpenFaq} />
               </div>
             </section>
@@ -971,8 +874,8 @@ export default function GodsUniversity({ dark }) {
                 <h2 style={{ fontFamily: "Cinzel, serif", fontSize: "clamp(28px, 4vw, 50px)", fontWeight: 900, marginBottom: 16, lineHeight: 1.1 }}>Ready to Unlock<br />Your Child's Potential?</h2>
                 <p style={{ fontSize: 16, color: T.htmlText2, maxWidth: 500, margin: "0 auto 36px", lineHeight: 1.85 }}>Join families who trust KidsInspiring Nation to raise academically excellent, godly children — one weekly session at a time.</p>
                 <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap", marginBottom: 40 }}>
-                  <a href={PAYSTACK_LINK} target="_blank" rel="noopener noreferrer" className="gu-btn-gold">Subscribe Directly — ₦7,000/mo →</a>
-                  <a href={WHATSAPP_FREE} target="_blank" rel="noopener noreferrer" className="gu-btn-outline">Check Free Eligibility</a>
+                  <a href={WHATSAPP_ENQUIRY} target="_blank" rel="noopener noreferrer" className="gu-btn-gold">Enquire Now →</a>
+                  <a href={WHATSAPP_ENQUIRY} target="_blank" rel="noopener noreferrer" className="gu-btn-outline">Talk to Our Team</a>
                 </div>
                 <p style={{ fontFamily: "Lora, serif", fontStyle: "italic", fontSize: 14, color: T.htmlText3, lineHeight: 1.8, maxWidth: 480, margin: "0 auto" }}>
                   "Do you see someone skilled in their work? They will serve before kings; they will not serve before officials of low rank."
