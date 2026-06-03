@@ -79,7 +79,8 @@ textarea:focus-visible {
   z-index: 8500;
 }
 
-.kin-fixed-control--left { left: 24px; bottom: 24px; }
+/* Both fixed controls on the right — chat stacked above dark toggle */
+.kin-fixed-control--left  { right: 24px; bottom: 80px; left: unset; }
 .kin-fixed-control--right { right: 24px; bottom: 24px; }
 .kin-cookie-banner {
   position: fixed;
@@ -91,11 +92,17 @@ textarea:focus-visible {
   z-index: 9999;
 }
 
+@media (max-width: 640px) {
+  .slider-icon-display { display: none !important; }
+}
+
+/* Hide Chat label on small screens — icon only */
 @media (max-width: 768px) {
   .nav-links { display: none; }
   .hero-btns { flex-wrap: wrap; }
-  .kin-fixed-control--left { left: 16px; bottom: 86px; }
-  .kin-fixed-control--right { right: 16px; bottom: 86px; }
+  .kin-fixed-control--left  { right: 16px; bottom: 76px; left: unset; }
+  .kin-fixed-control--right { right: 16px; bottom: 16px; }
+  .kin-chat-label { display: none; }
   .kin-cookie-banner {
     bottom: 16px;
     width: min(560px, calc(100vw - 20px));

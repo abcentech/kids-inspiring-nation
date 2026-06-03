@@ -314,7 +314,7 @@ export const ROUTE_META = {
   },
   godsUniversity: {
     title: `goDs University — ${SITE.name}`,
-    description: "goDs University: choose the Spirit pathway (44-week Bible curriculum, gPA scoring, Parent Portal) or the Skills pathway (Academic Mentoring — ₦7,000/month, weekly sessions, monthly reports, Grades 1–16). Raising the whole child.",
+    description: "goDs University: choose the Spirit pathway (44-week Bible curriculum, gPA scoring, Parent Portal) or the Skills pathway (Academic Mentoring — weekly sessions, monthly reports, Grades 1–16). Raising the whole child.",
     canonicalPath: "/gU",
     image: "/photos/Community_impact.jpg",
   },
