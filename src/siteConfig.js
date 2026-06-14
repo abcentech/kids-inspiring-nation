@@ -52,6 +52,9 @@ export const SITE = {
   foundedYears: "2017/2018",
   infoAsAtYear: 2025,
   siteUrl: "https://kidsinspiringnation.org",
+  // Brevo (Sendinblue) hosted subscription form action URL, e.g. https://xxxx.sibforms.com/serve/MUIF...
+  // Set VITE_BREVO_FORM_URL in your .env to enable email capture. Falls back to WhatsApp join if empty.
+  brevoFormUrl: import.meta.env.VITE_BREVO_FORM_URL || "",
   email: "KidsinspiringNation@gmail.com",
   operationsEmail: "KidsInspiringOperations@gmail.com",
   phone: "+234 812 267 3417",
@@ -122,11 +125,11 @@ export const SOCIAL_LINKS = [
 
 export const ROUTE_META = {
   home: {
-    title: `${SITE.name} — ${SITE.tagline}`,
+    title: `${SITE.name} — Raising children of character, purpose & skill`,
     description:
-      "KidsInspiring Nation is a Nigerian NGO raising Geniuses with Divine Purpose through character, service, faith, and nation building.",
+      "A Nigerian NGO raising the next generation through character, faith and skill. 639 children, 14 programmes, and a free daily devotion at 8pm WAT. Join the movement building Nigeria's nation builders.",
     canonicalPath: "/",
-    image: "/logo.png",
+    image: "/photos/og-default.jpg",
   },
   kidsInspiring: {
     title: `Kids Inspiring Nigeria — ${SITE.name}`,
@@ -153,7 +156,7 @@ export const ROUTE_META = {
     title: `Daily Streak — ${SITE.name}`,
     description: "A 60-second daily prompt to build a Nation Builder streak: integrity, service, discipline, excellence.",
     canonicalPath: "/daily",
-    image: "/logo.png",
+    image: "/photos/og-default.jpg",
   },
   about: {
     title: `About — ${SITE.name}`,
@@ -165,7 +168,7 @@ export const ROUTE_META = {
     title: `Give — ${SITE.name}`,
     description: "Give to KidsInspiring Nation and fund programmes raising children to build Nigeria.",
     canonicalPath: "/give",
-    image: "/logo.png",
+    image: "/photos/og-default.jpg",
     jsonLd: [
       {
         "@context": "https://schema.org",
@@ -221,7 +224,7 @@ export const ROUTE_META = {
     title: `FAQ — ${SITE.name}`,
     description: "Answers to common questions about KidsInspiring Nation: giving, programmes, participation, and partnerships.",
     canonicalPath: "/faq",
-    image: "/logo.png",
+    image: "/photos/og-default.jpg",
     jsonLd: {
       "@context": "https://schema.org",
       "@type": "FAQPage",
@@ -273,7 +276,7 @@ export const ROUTE_META = {
     title: `Transparency — ${SITE.name}`,
     description: "How KidsInspiring Nation verifies official channels and handles donor trust and accountability.",
     canonicalPath: "/transparency",
-    image: "/logo.png",
+    image: "/photos/og-default.jpg",
     jsonLd: {
       "@context": "https://schema.org",
       "@type": "WebPage",
@@ -286,13 +289,13 @@ export const ROUTE_META = {
     title: `Privacy Policy — ${SITE.name}`,
     description: "How KidsInspiring Nation handles contact information, cookies, analytics, submissions, and donor privacy.",
     canonicalPath: "/privacy",
-    image: "/logo.png",
+    image: "/photos/og-default.jpg",
   },
   contact: {
     title: `Contact — ${SITE.name}`,
     description: "Get in touch with KidsInspiring Nation for programmes, partnerships, giving, or volunteer opportunities.",
     canonicalPath: "/contact",
-    image: "/logo.png",
+    image: "/photos/og-default.jpg",
   },
   gallery: {
     title: `Gallery — ${SITE.name}`,
@@ -322,7 +325,7 @@ export const ROUTE_META = {
     title: `Page Not Found — ${SITE.name}`,
     description: "The page you are looking for could not be found.",
     canonicalPath: "/404",
-    image: "/logo.png",
+    image: "/photos/og-default.jpg",
     robots: "noindex, nofollow",
   },
 };

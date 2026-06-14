@@ -36,6 +36,7 @@ import { usePageMeta } from "./usePageMeta.js";
 import { initAnalytics } from "./analytics.js";
 import { PROGRAMS } from "./impactData.js";
 import Dashboard from "./Dashboard.jsx";
+import GrowthWidgets, { ShareRow, DailyStreakFeature } from "./engagement/GrowthWidgets.jsx";
 
 const NVC = lazy(() => import("./NVC.jsx"));
 const NBCRegister = lazy(() => import("./NBCRegister.jsx"));
@@ -67,14 +68,11 @@ function useReveal() {
   }, []);
 }
 
-// goDs branding helper
+// Brand helper — renders "geniuses" (the public-facing word for the children we raise)
+// eslint-disable-next-line no-unused-vars
 const GoDs = ({ style = {}, suffixStyle = {} }) => (
-  <span style={{ fontFamily: "'Playfair Display',serif", fontStyle: "italic", ...style }}>
-    <span style={{ fontWeight: 900 }}>g</span>
-    <span style={{ fontWeight: 900, color: "inherit" }}>oDs</span>
-    <span style={{ fontFamily: "'Plus Jakarta Sans',sans-serif", fontStyle: "normal", fontSize: "0.42em", fontWeight: 700, letterSpacing: "0.02em", color: "inherit", opacity: 0.92, ...suffixStyle }}>
-      {" "}(geniuses)
-    </span>
+  <span style={{ fontFamily: "'Playfair Display',serif", fontStyle: "italic", fontWeight: 900, ...style }}>
+    geniuses
   </span>
 );
 
@@ -161,14 +159,34 @@ function Website({ dark }) {
       <KINDCountdown />
       <KINDStrip dark={dark} />
       <AboutSection dark={dark} />
+      <DailyStreakFeature dark={dark} />
       <ProgramsTeaser dark={dark} />
       <VideoSection dark={dark} />
       <ImpactSection onDash={onDash} />
       <FACESection dark={dark} />
       <PhotoHighlightsStrip dark={dark} />
       <TestimonySection dark={dark} />
+      <ShareSection dark={dark} />
       <CTASection />
     </div>
+  );
+}
+
+function ShareSection({ dark }) {
+  const bg = dark ? "#060B08" : "#FFFFFF";
+  const sub = dark ? "rgba(253,247,236,.7)" : T.p2;
+  return (
+    <section style={{ background: bg, padding: "clamp(2.75rem,6vw,4rem) clamp(1.25rem,5vw,3rem)" }}>
+      <div style={{ maxWidth: "52rem", margin: "0 auto", textAlign: "center" }}>
+        <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(1.6rem,4vw,2.4rem)", fontWeight: 900, letterSpacing: "-0.02em", color: dark ? T.cream : T.greenD, marginBottom: ".7rem" }}>
+          Know a parent who needs this?
+        </h2>
+        <p style={{ color: sub, lineHeight: 1.7, maxWidth: "54ch", margin: "0 auto 1.6rem" }}>
+          Every share helps another child start their day with character, purpose and faith. It takes one tap.
+        </p>
+        <ShareRow dark={dark} />
+      </div>
+    </section>
   );
 }
 
@@ -236,7 +254,7 @@ const SLIDES = [
     id: 1,
     tag: "LATEST UPDATE",
     headline: "KIND Daily — Consistency\nThat Shapes Nations",
-    body: "As at 2025, KIND has produced thousands of entries across hundreds of sessions. Our character flagship is built for consistency — shaping the hearts of goDs over time.",
+    body: "As at 2025, KIND has produced thousands of entries across hundreds of sessions. Our character flagship is built for consistency — shaping the hearts of geniuses over time.",
     icon: BookOpen,
     gradient: `linear-gradient(135deg, ${T.greenD} 0%, #060E08 55%, #16613E 100%)`,
     accent: T.goldL,
@@ -275,8 +293,8 @@ const SLIDES = [
   {
     id: 5,
     tag: "KINGS CELLS",
-    headline: "3 Cohorts.\n224 Unique goDs.",
-    body: "KINGs 001, 002, and 003 ran all year, building mentorship chains from senior to junior goDs (geniuses). Sunday at 5pm — the cells that shape the nation-builders of tomorrow.",
+    headline: "3 Cohorts.\n224 Unique geniuses.",
+    body: "KINGs 001, 002, and 003 ran all year, building mentorship chains from senior to junior geniuses. Sunday at 5pm — the cells that shape the nation-builders of tomorrow.",
     icon: Crown,
     gradient: `linear-gradient(135deg, #4A1B55 0%, #7B2D8B 60%, #2D0A3A 100%)`,
     accent: "#D8B4FE",
@@ -422,7 +440,7 @@ function KINDLiveTicker({ dark }) {
           <span style={{ fontSize: "1.1rem" }}>📖</span>
           <span style={{ fontSize: ".88rem", color: "rgba(253,247,236,.75)", fontFamily: "'DM Sans',sans-serif" }}>
             <strong style={{ color: T.goldL, fontFamily: "'DM Mono',monospace", fontSize: "1rem" }}>639</strong>
-            {" "}geniuses (goDs) joined KIND last year
+            {" "}geniuses joined KIND last year
           </span>
           {isLiveNow && (
             <>
@@ -602,7 +620,7 @@ function NBCInvitePopup({ onNVC }) {
                 Build the Nigeria<br /><em style={{ fontStyle: "italic", color: T.goldL }}>You Want to See.</em>
               </h2>
               <p style={{ fontSize: ".95rem", color: "rgba(253,247,236,.7)", lineHeight: 1.7, marginBottom: "2rem", maxWidth: "40ch" }}>
-                The National Builders Challenge is a 9-month masterclass in character, resourcefulness, and nation-building — open to goDs aged 7–17.
+                The National Builders Challenge is a 9-month masterclass in character, resourcefulness, and nation-building — open to geniuses aged 7–17.
               </p>
 
               {/* Stats row */}
@@ -710,32 +728,23 @@ function SiteNav({ dark, onGive }) {
 
   const DROPDOWNS = {
     About: [
+      { label: "Who We Are", href: null, action: () => goTo('/about'), icon: "🌱", desc: "Our mission, story & 3 pillars" },
       { label: "Kids Inspiring", href: null, action: () => goTo('/kids-inspiring'), icon: "✨", desc: "What the movement means" },
-      { label: "Investing in Kids", href: null, action: () => goTo('/investing-in-kids'), icon: "📚", desc: "Why kids are leverage" },
-      { label: "Transparency", href: null, action: () => goTo('/transparency'), icon: "🛡️", desc: "Trust and verification" },
-      { label: "Privacy", href: null, action: () => goTo('/privacy'), icon: "🔒", desc: "Data and contact privacy" },
-      { label: "FAQ", href: null, action: () => goTo('/faq'), icon: "❓", desc: "Site-wide answers" },
-      { label: "Who We Are", href: null, action: () => goTo('/about'), icon: "🌱", desc: "Our mission & story" },
-      { label: "goDs Defined", href: null, action: () => goTo('/about'), icon: "👑", desc: "Genius Ordained by Destiny" },
-      { label: "Impact Data", href: null, action: () => goTo('/about'), icon: "📊", desc: "639 goDs, 19,695 entries" },
+      { label: "Investing in Kids", href: null, action: () => goTo('/investing-in-kids'), icon: "📚", desc: "Why children are leverage" },
       { label: "Photo Gallery", href: null, icon: "📸", desc: "View our memories", action: () => goTo('/gallery') },
+      { label: "Transparency", href: null, action: () => goTo('/transparency'), icon: "🛡️", desc: "Trust and verification" },
+      { label: "FAQ", href: null, action: () => goTo('/faq'), icon: "❓", desc: "Site-wide answers" },
       { label: "Contact Us", href: null, icon: "✉️", desc: "Get in touch", action: () => goTo('/contact') },
     ],
     Programs: [
       { label: "goDs University", href: null, icon: "👑", desc: "Spirit · Skills · Bible & Academic", action: () => goTo('/gU') },
-      { label: "Nation Builders Corp", href: null, icon: "🇳🇬", desc: "Psalm 119 → nation building", action: () => goTo('/nation-builders') },
+      { label: "Nation Builders Corp", href: null, icon: "🇳🇬", desc: "Psalm 119 → community impact", action: () => goTo('/nation-builders') },
       { label: "Daily Streak", href: null, icon: "📅", desc: "60 seconds every day", action: () => goTo('/daily') },
-      { label: "KIND · Daily", href: null, icon: "📖", desc: "Devotional · 8pm WAT", action: () => goTo('#programs') },
-      { label: "KINGs Cells", href: null, icon: "👑", desc: "Sunday mentorship · 5pm", action: () => goTo('#programs') },
-      { label: "Daniel Fast", href: null, icon: "🔥", desc: "Annual spiritual programme", action: () => goTo('#programs') },
-      { label: "P119 Academy", href: null, icon: "🧠", desc: "Maths, English & Character", action: () => goTo('#programs') },
-      { label: "FACE · Meals", href: null, icon: "🍽️", desc: "1,952 meals (as at 2025)", action: () => goTo('#programs') },
-      { label: "All Programmes →", href: null, icon: "✨", desc: "View all 14 programmes", action: () => goTo('#programs') },
+      { label: "Explore All", href: null, icon: "✨", desc: "View our 14 active programmes", action: () => goTo('#programs') },
     ],
     Impact: [
-      { label: "Impact Report", href: null, icon: "📈", desc: "Results (as at 2025)", action: () => goTo('#impact') },
-      { label: "Live Dashboard", href: null, icon: "⚡", desc: "Real-time stats", action: () => goTo('/dashboard') },
-      { label: "Testimonies", href: null, icon: "💬", desc: "goD stories", action: () => goTo('#impact') },
+      { label: "Live Dashboard", href: null, icon: "⚡", desc: "Real-time statistics & trends", action: () => goTo('/dashboard') },
+      { label: "Impact Report", href: null, icon: "📈", desc: "Key results (as at 2025)", action: () => goTo('#impact') },
     ],
   };
 
@@ -1036,7 +1045,7 @@ function SiteNav({ dark, onGive }) {
             
             {/* Mobile Footer */}
             <div style={{ marginTop: "1rem", textAlign: "center" }}>
-              <div style={{ fontSize: "0.65rem", color: dark ? T.d3 : T.p3, letterSpacing: "0.05em", textTransform: "uppercase" }}>Raising goDs (geniuses) · building Nations</div>
+              <div style={{ fontSize: "0.65rem", color: dark ? T.d3 : T.p3, letterSpacing: "0.05em", textTransform: "uppercase" }}>Raising geniuses · building Nations</div>
             </div>
           </motion.div>
         )}
@@ -1053,7 +1062,7 @@ function Hero({ onDash }) {
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 2 }} style={{ position: "absolute", inset: 0, pointerEvents: "none", background: `radial-gradient(ellipse 80% 65% at 12% 50%,${T.green}60 0%,transparent 58%),radial-gradient(ellipse 55% 75% at 88% 10%,${T.gold}22 0%,transparent 52%),linear-gradient(140deg,#060E08 0%,#0D3D26 55%,#16613E 100%)` }} />
       {/* Ghost goDs watermark */}
       <motion.div initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1.5, delay: 0.5 }} aria-hidden style={{ position: "absolute", right: "-0.08em", top: "50%", fontSize: "clamp(14rem,40vw,58rem)", lineHeight: 1, color: "transparent", WebkitTextStroke: "1px rgba(196,136,44,.06)", userSelect: "none", pointerEvents: "none", fontFamily: "'Playfair Display',serif", fontStyle: "italic", fontWeight: 900, animation: "floatStar 9s ease-in-out infinite" }}>
-        goDs (geniuses)
+        geniuses
       </motion.div>
 
       <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 clamp(1.25rem,5vw,3rem)", position: "relative", zIndex: 2, width: "100%" }}>
@@ -1069,7 +1078,7 @@ function Hero({ onDash }) {
             was born to <em style={{ fontStyle: "italic", color: T.goldL }}>build a Nation?</em>
           </motion.h1>
           <motion.p variants={{ initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 } }} style={{ fontSize: "clamp(1rem,2.4vw,1.2rem)", color: "rgba(253,247,236,.72)", lineHeight: 1.68, marginBottom: "2rem", maxWidth: "48ch" }}>
-            Most children are entertained. A <strong style={{ color: T.goldL }}>goD (genius)</strong> is <em>formed</em> — in character, spirit, and skills — every single day of the year. 14 programmes. One mission.
+            Most children are entertained. A <strong style={{ color: T.goldL }}>genius</strong> is <em>formed</em> — in character, spirit, and skills — every single day of the year. 14 programmes. One mission.
           </motion.p>
           {/* Single dominant CTA */}
           <motion.div variants={{ initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 } }} className="hero-btns" style={{ display: "flex", gap: ".75rem", alignItems: "center", flexWrap: "wrap" }}>
@@ -1120,7 +1129,7 @@ function ParentQuoteStrip({ dark }) {
             </p>
             <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
               <div>
-                <div style={{ fontSize: ".82rem", fontWeight: 600, color: dark ? T.d1 : T.greenD }}>Parent of a goD</div>
+                <div style={{ fontSize: ".82rem", fontWeight: 600, color: dark ? T.d1 : T.greenD }}>Parent of a genius</div>
                 <div style={{ fontSize: ".72rem", color: dark ? T.d2 : T.p2, fontFamily: "'DM Mono',monospace", letterSpacing: ".04em" }}>KidsInspiring Nation Family</div>
               </div>
               <div style={{ display: "flex", gap: "3px" }}>
@@ -1136,7 +1145,7 @@ function ParentQuoteStrip({ dark }) {
 
 // ─── MARQUEE ──────────────────────────────────────────────────────────────────
 function Marquee() {
-  const words = ["KIND · Daily", "gDX · Sundays", "KINGs", "P119 Academy", "goDs University", "Daniel Fast", "FACE · Sundays", "TJC Concert", "goDs (geniuses)", "Nation Builders", "Spirit", "Skills", "Service", "Character"];
+  const words = ["KIND · Daily", "gDX · Sundays", "KINGs", "P119 Academy", "goDs University", "Daniel Fast", "FACE · Sundays", "TJC Concert", "geniuses", "Nation Builders", "Spirit", "Skills", "Service", "Character"];
   return (
     <div style={{ background: T.gold, padding: ".7rem 0", overflow: "hidden" }} aria-hidden>
       <div style={{ display: "flex", gap: "2.5rem", animation: "marqueeL 30s linear infinite", width: "max-content" }}>
@@ -1216,7 +1225,7 @@ function AboutSection({ dark }) {
             </div>
             <div className="reveal d3" style={{ display: "flex", gap: ".75rem", flexWrap: "wrap" }}>
               <a href="#join" className="gold-btn" style={{ display: "inline-flex", alignItems: "center", gap: ".5rem", padding: ".8em 2em", borderRadius: 999, background: T.green, color: T.cream, fontWeight: 700, fontSize: ".9rem", fontFamily: "'Plus Jakarta Sans',sans-serif" }}>
-                Become a goD (genius) →
+                Become a genius →
               </a>
               <a href={SITE.socials.linktree} target="_blank" rel="noopener noreferrer" aria-label="Open all KidsInspiring Nation links in a new tab" style={{ display: "inline-flex", alignItems: "center", gap: ".5rem", padding: ".8em 1.6em", borderRadius: 999, border: `1.5px solid ${T.gold}`, color: T.gold, fontWeight: 500, fontSize: ".9rem", background: "transparent", transition: "background .2s" }} onMouseEnter={e => e.currentTarget.style.background = "rgba(196,136,44,.08)"} onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
                 <ExternalLink size={14} strokeWidth={1.5} /> All Links
@@ -1226,17 +1235,17 @@ function AboutSection({ dark }) {
           {/* Visual card */}
           <div className="reveal d2">
             <div style={{ background: T.gold, color: "#fff", borderRadius: 16, padding: "1.25rem 1.75rem", marginBottom: "1.25rem", fontFamily: "'Playfair Display',serif", fontSize: "1.35rem", fontStyle: "italic", fontWeight: 700, lineHeight: 1.3, boxShadow: "0 8px 32px rgba(196,136,44,.3)" }}>
-              "Every child is a goD (genius) — a Genius Ordained by Destiny."
+              "Every child is a genius — a Genius Ordained by Destiny."
             </div>
             <div style={{ background: T.green, borderRadius: 24, position: "relative", overflow: "hidden", padding: "2rem", minHeight: "22rem", display: "flex", alignItems: "flex-end" }}>
               <img src="/photos/Nation_Builders_Program.jpg" alt="Nation Builders" loading="lazy" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.5, mixBlendMode: "overlay" }} />
-              <div aria-hidden style={{ position: "absolute", top: "-.1em", right: "-.05em", fontSize: "clamp(10rem,30vw,22rem)", color: "transparent", WebkitTextStroke: "1px rgba(232,185,84,.07)", lineHeight: 1, pointerEvents: "none", userSelect: "none", fontFamily: "'Playfair Display',serif", fontStyle: "italic", fontWeight: 900 }}>goD</div>
+              <div aria-hidden style={{ position: "absolute", top: "-.1em", right: "-.05em", fontSize: "clamp(10rem,30vw,22rem)", color: "transparent", WebkitTextStroke: "1px rgba(232,185,84,.07)", lineHeight: 1, pointerEvents: "none", userSelect: "none", fontFamily: "'Playfair Display',serif", fontStyle: "italic", fontWeight: 900 }}>genius</div>
               <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(13,61,38,.9) 0%,transparent 60%)" }} />
               <div style={{ position: "relative", zIndex: 2 }}>
                 <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(2.8rem,7vw,4.2rem)", fontWeight: 900, color: T.goldL, letterSpacing: "-0.04em", lineHeight: 1 }}>19,695</div>
                 <div style={{ color: "rgba(253,247,236,.8)", fontSize: ".85rem", fontWeight: 500, letterSpacing: ".04em", marginTop: ".25rem" }}>Attendance entries · as at 2025</div>
                 <div style={{ marginTop: "1rem", display: "flex", gap: "1.5rem", flexWrap: "wrap" }}>
-                  {[{ v: "639", l: "goDs (geniuses)" }, { v: "14", l: "Programmes" }, { v: "365", l: "Events" }, { v: "1,952", l: "Meals served in 2025" }].map(s => (
+                  {[{ v: "639", l: "geniuses" }, { v: "14", l: "Programmes" }, { v: "365", l: "Events" }, { v: "1,952", l: "Meals served in 2025" }].map(s => (
                     <div key={s.l}>
                       <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.3rem", fontWeight: 900, color: T.goldL, lineHeight: 1 }}>{s.v}</div>
                       <div style={{ fontSize: ".68rem", color: "rgba(253,247,236,.5)", fontWeight: 500, letterSpacing: ".04em" }}>{s.l}</div>
@@ -1273,7 +1282,7 @@ function ProgramsTeaser({ dark }) {
         <div className="reveal" style={{ textAlign: "center", marginBottom: "clamp(2rem,4vw,2.5rem)" }}>
           <div style={{ fontSize: ".76rem", fontWeight: 500, letterSpacing: ".1em", textTransform: "uppercase", color: T.gold, marginBottom: ".6rem" }}>14 Active Programmes</div>
           <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(1.9rem,4.5vw,2.8rem)", fontWeight: 900, letterSpacing: "-0.025em", color: dark ? T.cream : T.greenD, lineHeight: 1.1 }}>
-            Built for <em style={{ fontStyle: "italic", color: T.goldL }}>goDs (geniuses)</em>,<br />Proven by the Data
+            Built for <em style={{ fontStyle: "italic", color: T.goldL }}>geniuses</em>,<br />Proven by the Data
           </h2>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,11rem),1fr))", gap: ".75rem", marginBottom: "2rem" }}>
@@ -1441,7 +1450,7 @@ function VideoSection({ dark }) {
             Watch KidsInspiring Nation
           </h2>
           <p style={{ fontSize: "1rem", color: dark ? "rgba(253,247,236,.6)" : T.greenM, marginTop: ".5rem", maxWidth: "40ch", margin: ".5rem auto 0" }}>
-            A glimpse into life as a goD (genius) — our programmes, our people, our purpose.
+            A glimpse into life as a genius — our programmes, our people, our purpose.
           </p>
         </div>
         <div className="reveal d1" style={{ maxWidth: "800px", margin: "0 auto" }}>
@@ -1479,7 +1488,7 @@ function ImpactSection({ onDash }) {
         </h2>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,11rem),1fr))", gap: "1rem", marginBottom: "3rem" }}>
           {[
-            { n: "19,695", l: "Total\nAttendance Entries", d: "d1" }, { n: "639", l: "Unique\ngoDs", d: "d2" },
+            { n: "19,695", l: "Total\nAttendance Entries", d: "d1" }, { n: "639", l: "Unique\ngeniuses", d: "d2" },
             { n: "365", l: "Events Held\n(as at 2025)", d: "d3" }, { n: "14", l: "Active\nProgrammes", d: "d4" },
             { n: "13,350", l: "KIND Entries\n(Flagship)", d: "d1" }, { n: "301", l: "Peak Day\nJan 25", d: "d2" },
             { n: "+58%", l: "KIND Growth\nQ1 YoY", d: "d3" }, { n: "+200%", l: "DF3 Growth\nvs 2024", d: "d4" },
@@ -1573,22 +1582,22 @@ function TestimonySection({ dark }) {
     <section style={{ background: bg, padding: "clamp(4rem,10vw,8rem) 0" }}>
       <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 clamp(1.25rem,5vw,3rem)" }}>
         <div className="reveal" style={{ textAlign: "center", marginBottom: "clamp(2rem,5vw,3rem)" }}>
-          <div style={{ fontSize: ".76rem", fontWeight: 500, letterSpacing: ".1em", textTransform: "uppercase", color: T.gold, marginBottom: ".75rem" }}>Voices of goDs (geniuses)</div>
-          <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(2rem,5vw,3rem)", fontWeight: 900, letterSpacing: "-0.025em", color: dark ? T.cream : T.greenD }}>What the goDs (geniuses) Are Saying</h2>
+          <div style={{ fontSize: ".76rem", fontWeight: 500, letterSpacing: ".1em", textTransform: "uppercase", color: T.gold, marginBottom: ".75rem" }}>Voices of geniuses</div>
+          <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(2rem,5vw,3rem)", fontWeight: 900, letterSpacing: "-0.025em", color: dark ? T.cream : T.greenD }}>What the geniuses Are Saying</h2>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,18rem),1fr))", gap: "1.2rem" }}>
           {[
             {
-              q: "A special moment for me at KIN is when I became a goD — it was the best day of my life because I had accomplished the Psalm 119 challenge after 2 years.",
-              name: "Kossy Okunno", role: "goD · P119 Academy", init: "KO", bg: T.green, real: true,
+              q: "A special moment for me at KIN is when I became a genius — it was the best day of my life because I had accomplished the Psalm 119 challenge after 2 years.",
+              name: "Kossy Okunno", role: "genius · P119 Academy", init: "KO", bg: T.green, real: true,
             },
             {
               q: "KIND changed how I start every day. 8pm is now sacred in our home. My children look forward to it — it's become the heartbeat of our family's evening.",
-              name: "Parent of a goD", role: "KidsInspiring Nation Family", init: "P", bg: T.gold, real: false,
+              name: "Parent of a genius", role: "KidsInspiring Nation Family", init: "P", bg: T.gold, real: false,
             },
             {
               q: "KINGs 002 is not just a mentorship group — it is family. The seniors pour into us every Sunday with such intentionality. I leave every session different.",
-              name: "goD · KINGs 002", role: "Sunday Mentorship Cell", init: "K2", bg: T.kingsC, real: false,
+              name: "genius · KINGs 002", role: "Sunday Mentorship Cell", init: "K2", bg: T.kingsC, real: false,
             },
           ].map((q, i) => (
             <div key={i} className={`reveal ${["d1", "d2", "d3"][i]}`} style={{ background: card, borderRadius: 20, padding: "2rem", border: `1px solid ${dark ? "rgba(255,255,255,.06)" : "rgba(22,97,62,.09)"}`, boxShadow: dark ? "0 2px 12px rgba(0,0,0,.3)" : "0 2px 8px rgba(10,28,18,.05)", transition: "transform .2s,box-shadow .2s" }} onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = dark ? "0 12px 40px rgba(0,0,0,.4)" : "0 12px 40px rgba(10,28,18,.14)"; }} onMouseLeave={e => { e.currentTarget.style.transform = ""; e.currentTarget.style.boxShadow = ""; }}>
@@ -1614,16 +1623,16 @@ function TestimonySection({ dark }) {
 function CTASection() {
   return (
     <section id="join" style={{ background: T.greenD, padding: "clamp(4rem,10vw,8rem) 0", textAlign: "center", position: "relative", overflow: "hidden" }}>
-      <div aria-hidden style={{ position: "absolute", bottom: "-.1em", left: "50%", transform: "translateX(-50%)", fontFamily: "'Playfair Display',serif", fontSize: "clamp(12rem,38vw,52rem)", fontWeight: 900, fontStyle: "italic", color: "transparent", WebkitTextStroke: "1px rgba(196,136,44,.04)", pointerEvents: "none", userSelect: "none", lineHeight: 1, whiteSpace: "nowrap" }}>goDs</div>
+      <div aria-hidden style={{ position: "absolute", bottom: "-.1em", left: "50%", transform: "translateX(-50%)", fontFamily: "'Playfair Display',serif", fontSize: "clamp(12rem,38vw,52rem)", fontWeight: 900, fontStyle: "italic", color: "transparent", WebkitTextStroke: "1px rgba(196,136,44,.04)", pointerEvents: "none", userSelect: "none", lineHeight: 1, whiteSpace: "nowrap" }}>geniuses</div>
       <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 clamp(1.25rem,5vw,3rem)", position: "relative", zIndex: 2 }}>
         <div className="reveal" style={{ display: "inline-block", background: "rgba(196,136,44,.15)", border: "1px solid rgba(196,136,44,.3)", color: T.goldL, fontSize: ".76rem", letterSpacing: ".1em", textTransform: "uppercase", padding: ".4em 1.2em", borderRadius: 999, fontWeight: 500, marginBottom: "1.5rem" }}>
-          Raise a goD (genius) · Build a Nation
+          Raise a genius · Build a Nation
         </div>
         <h2 className="reveal d1" style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(2.8rem,7vw,5.5rem)", fontWeight: 900, letterSpacing: "-0.04em", color: T.cream, maxWidth: "14ch", margin: "0 auto 1.25rem", lineHeight: .95 }}>
           Your Child Belongs <em style={{ fontStyle: "italic", color: T.goldL }}>Here</em>
         </h2>
         <p className="reveal d2" style={{ fontSize: "clamp(1rem,2.5vw,1.15rem)", color: "rgba(253,247,236,.7)", maxWidth: "46ch", margin: "0 auto 2.5rem", lineHeight: 1.7 }}>
-          As at 2025, 639 goDs (geniuses) showed up — day after day, programme after programme. The story is being written. Your child belongs in it.
+          As at 2025, 639 geniuses showed up — day after day, programme after programme. The story is being written. Your child belongs in it.
         </p>
         {/* ACTION GRID */}
         <div className="reveal d3" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,200px),1fr))", gap: ".75rem", maxWidth: "700px", margin: "0 auto 2.5rem" }}>
@@ -1736,7 +1745,7 @@ function Footer() {
             <div style={{ marginTop: "1rem", padding: "1rem", borderRadius: 10, background: "rgba(253,247,236,.04)", border: "1px solid rgba(253,247,236,.07)" }}>
               <div style={{ fontSize: ".68rem", fontWeight: 600, letterSpacing: ".06em", textTransform: "uppercase", color: "rgba(253,247,236,.35)", marginBottom: ".4rem" }}>At a glance</div>
               <div style={{ fontFamily: "'DM Mono',monospace", fontSize: ".76rem", color: "rgba(253,247,236,.55)" }}>14 programmes · 19,695 entries</div>
-              <div style={{ fontFamily: "'DM Mono',monospace", fontSize: ".76rem", color: T.goldL }}>639 goDs (geniuses) · 1,952 meals in 2025</div>
+              <div style={{ fontFamily: "'DM Mono',monospace", fontSize: ".76rem", color: T.goldL }}>639 geniuses · 1,952 meals in 2025</div>
             </div>
           </div>
         </div>
@@ -1760,7 +1769,7 @@ function Footer() {
         {/* Bottom */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: ".5rem" }}>
           <p style={{ fontSize: ".72rem", color: "rgba(253,247,236,.25)" }}>© 2025 KidsInspiring Nation · All rights reserved</p>
-          <p style={{ fontSize: ".72rem", color: "rgba(253,247,236,.25)" }}>NDPR Compliant · 19,695 entries · 639 goDs (geniuses) · One mission 🇳🇬</p>
+          <p style={{ fontSize: ".72rem", color: "rgba(253,247,236,.25)" }}>NDPR Compliant · 19,695 entries · 639 geniuses · One mission 🇳🇬</p>
         </div>
       </div>
     </footer>
@@ -2007,6 +2016,7 @@ export default function App() {
 
       <FloatingChat dark={dark} />
       <DarkToggle dark={dark} toggle={toggleDark} />
+      <GrowthWidgets dark={dark} />
       <CookieBanner dark={dark} />
     </div>
   );
