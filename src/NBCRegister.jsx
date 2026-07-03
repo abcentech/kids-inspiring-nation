@@ -349,7 +349,7 @@ export default function NBCRegister() {
                             padding: '0.4rem 1.2rem', fontSize: '0.8rem', fontWeight: 800,
                             color: T.goldL, textTransform: 'uppercase', letterSpacing: '0.15em',
                             marginBottom: '1.25rem',
-                        }}>2025 Cohort · Limited Spots</div>
+                        }}>New Cycle · July → July</div>
                         <h1 style={{
                             fontFamily: "'Playfair Display', serif", fontSize: 'clamp(2rem, 5vw, 3rem)',
                             fontWeight: 900, color: 'white', marginBottom: '0.75rem', lineHeight: 1.2,

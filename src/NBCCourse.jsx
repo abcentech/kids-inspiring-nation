@@ -1,0 +1,305 @@
+import { useState, useEffect, useMemo } from "react";
+import { motion } from "framer-motion";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import {
+  BookOpen, Clock, Download, ArrowLeft, ArrowRight, CheckCircle2,
+  Flame, Award, Home, ChevronRight,
+} from "lucide-react";
+import { ROUTE_META, SITE, T } from "./siteConfig.js";
+import { usePageMeta } from "./usePageMeta.js";
+import { ShareRow } from "./engagement/GrowthWidgets.jsx";
+import Certificate from "./nbc/Certificate.jsx";
+import { trackEvent } from "./analytics.js";
+import { NBC_MODULES, PDF_BASE, getModule } from "./nbcCourse.js";
+import {
+  readProgress, isLessonComplete, markLessonComplete, moduleProgress,
+  overallProgress, earnedBadges, nextModule, builderStreak,
+} from "./nbcProgress.js";
+
+const COURSE_URL = `${SITE.siteUrl}/nbc/course`;
+
+function theme(dark) {
+  return dark
+    ? { bg: T.bgD, surf: T.srfD, brd: T.brdD, txt: T.d1, sub: T.d2 }
+    : { bg: T.cream, surf: "#FFFFFF", brd: "rgba(11,42,27,.06)", txt: T.green, sub: T.greenM };
+}
+
+function ProgressBar({ pct, s }) {
+  return (
+    <div style={{ height: 8, borderRadius: 999, background: s.brd, overflow: "hidden" }}>
+      <motion.div
+        initial={{ width: 0 }}
+        animate={{ width: `${pct}%` }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        style={{ height: "100%", background: `linear-gradient(90deg, ${T.gold}, ${T.goldL})` }}
+      />
+    </div>
+  );
+}
+
+function StreakChip({ s }) {
+  const { streak } = builderStreak();
+  return (
+    <Link to="/daily" style={{ textDecoration: "none" }}>
+      <span style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "6px 12px", borderRadius: 999, background: "rgba(197,160,55,.14)", color: T.goldD, fontWeight: 800, fontSize: ".8rem" }}>
+        <Flame size={15} /> {streak > 0 ? `${streak}-day Builder Streak` : "Start your streak"}
+      </span>
+    </Link>
+  );
+}
+
+/* ── Course index ──────────────────────────────────────────────── */
+function CourseIndex({ dark }) {
+  usePageMeta(ROUTE_META.nbcCourse);
+  const s = theme(dark);
+  const [state, setState] = useState(readProgress);
+  useEffect(() => { setState(readProgress()); }, []);
+
+  const overall = overallProgress(state);
+  const badges = earnedBadges(state);
+  const resume = nextModule(state);
+
+  return (
+    <div style={{ fontFamily: "'DM Sans',sans-serif", background: s.bg, color: s.txt, minHeight: "100vh", paddingBottom: "4rem" }}>
+      {/* Hero */}
+      <section style={{ background: T.greenD, color: T.cream, padding: "clamp(3.5rem,8vw,6rem) 1.25rem 3rem" }}>
+        <div style={{ maxWidth: "60rem", margin: "0 auto" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: ".8rem", opacity: .75, marginBottom: "1rem" }}>
+            <Link to="/NBC" style={{ color: T.goldL, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 4 }}><Home size={13} /> NBC</Link>
+            <ChevronRight size={13} /> <span>Course</span>
+          </div>
+          <div style={{ display: "inline-flex", alignItems: "center", gap: 8, color: T.goldL, fontWeight: 800, letterSpacing: ".12em", textTransform: "uppercase", fontSize: ".78rem", marginBottom: ".9rem" }}>
+            <BookOpen size={16} /> The Nation Builders Course
+          </div>
+          <h1 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(2.2rem,7vw,3.6rem)", fontWeight: 900, lineHeight: 1.05, margin: "0 0 1rem" }}>
+            Learn to build a nation.<br />In a few minutes a day.
+          </h1>
+          <p style={{ fontSize: "1.05rem", color: "rgba(250,249,246,.8)", maxWidth: "48ch", lineHeight: 1.6, marginBottom: "1.75rem" }}>
+            Short, free lessons anyone can take — and share with the world. No PDFs to wade through: just the ideas that turn a young person into a Nation Builder.
+          </p>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", alignItems: "center" }}>
+            {resume ? (
+              <Link to={`/nbc/course/${resume.slug}`} style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "1rem 2rem", borderRadius: 999, background: T.gold, color: "#14532d", fontWeight: 800, textDecoration: "none" }}>
+                {overall.done > 0 ? "Continue where you left off" : "Start the course"} <ArrowRight size={17} />
+              </Link>
+            ) : (
+              <span style={{ padding: "1rem 2rem", borderRadius: 999, background: "rgba(255,255,255,.1)", fontWeight: 800 }}>🎉 Course complete!</span>
+            )}
+            <StreakChip s={s} />
+          </div>
+
+          {/* Overall progress */}
+          <div style={{ marginTop: "2rem", maxWidth: "34rem" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", fontSize: ".8rem", opacity: .8, marginBottom: 6 }}>
+              <span>Your progress</span><span>{overall.pct}% · {badges.length}/{NBC_MODULES.length} badges</span>
+            </div>
+            <ProgressBar pct={overall.pct} s={{ brd: "rgba(255,255,255,.14)" }} />
+          </div>
+        </div>
+      </section>
+
+      {/* Module grid */}
+      <section style={{ maxWidth: "68rem", margin: "0 auto", padding: "3rem 1.25rem 0" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 300px), 1fr))", gap: "1.25rem" }}>
+          {NBC_MODULES.map((m, i) => {
+            const mp = moduleProgress(m.slug, state);
+            return (
+              <motion.div key={m.slug} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.04 }}
+                style={{ background: s.surf, border: `1px solid ${mp.complete ? T.gold : s.brd}`, borderRadius: 22, padding: "1.5rem", display: "flex", flexDirection: "column" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: ".75rem" }}>
+                  <span style={{ fontSize: "2rem" }}>{m.emoji}</span>
+                  {mp.complete
+                    ? <span style={{ display: "inline-flex", alignItems: "center", gap: 4, color: T.ok, fontWeight: 800, fontSize: ".78rem" }}><Award size={15} /> Badge</span>
+                    : <span style={{ display: "inline-flex", alignItems: "center", gap: 4, color: s.sub, fontSize: ".78rem" }}><Clock size={13} /> {m.minutes} min</span>}
+                </div>
+                <h3 style={{ fontSize: "1.15rem", fontWeight: 800, margin: "0 0 .4rem" }}>{m.title}</h3>
+                <p style={{ fontSize: ".9rem", color: s.sub, lineHeight: 1.5, flex: 1, marginBottom: "1rem" }}>{m.summary}</p>
+                {mp.done > 0 && <div style={{ marginBottom: ".9rem" }}><ProgressBar pct={mp.pct} s={s} /></div>}
+                <div style={{ display: "flex", gap: ".5rem", flexWrap: "wrap" }}>
+                  <Link to={`/nbc/course/${m.slug}`} style={{ flex: 1, textAlign: "center", padding: ".7rem 1rem", borderRadius: 999, background: mp.complete ? "transparent" : T.green, color: mp.complete ? s.txt : "#fff", border: mp.complete ? `1.5px solid ${s.brd}` : "none", fontWeight: 700, fontSize: ".85rem", textDecoration: "none" }}>
+                    {mp.complete ? "Review" : mp.done > 0 ? "Resume" : "Start"}
+                  </Link>
+                  {m.pdf && (
+                    <a href={`${PDF_BASE}${m.pdf}`} download aria-label={`Download ${m.title} PDF`} style={{ padding: ".7rem", borderRadius: 999, background: "rgba(197,160,55,.12)", color: T.goldD, display: "grid", placeItems: "center" }}>
+                      <Download size={16} />
+                    </a>
+                  )}
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+
+        {/* Certificate on full completion */}
+        {overall.pct === 100 && (
+          <div style={{ marginTop: "3rem" }}>
+            <Certificate achievement="has completed the Nation Builders Course" eventName="course_complete" />
+          </div>
+        )}
+
+        {/* Share the course */}
+        <div style={{ marginTop: "3rem", padding: "2rem", borderRadius: 24, background: s.surf, border: `1px solid ${s.brd}`, textAlign: "center" }}>
+          <h3 style={{ fontSize: "1.3rem", fontWeight: 800, margin: "0 0 .5rem" }}>Share nation building with the world</h3>
+          <p style={{ color: s.sub, marginBottom: "1.25rem" }}>Send this free course to a young person who should be a Nation Builder.</p>
+          <ShareRow dark={dark} url={COURSE_URL} text="Take the free Nation Builders Course — learn to build the Nigeria you want to see 🇳🇬" />
+        </div>
+      </section>
+    </div>
+  );
+}
+
+/* ── Lesson view ───────────────────────────────────────────────── */
+function LessonView({ dark, mod }) {
+  const s = theme(dark);
+  const navigate = useNavigate();
+  const [state, setState] = useState(readProgress);
+  const idx = useMemo(() => NBC_MODULES.findIndex((m) => m.slug === mod.slug), [mod.slug]);
+  const prev = idx > 0 ? NBC_MODULES[idx - 1] : null;
+  const next = idx < NBC_MODULES.length - 1 ? NBC_MODULES[idx + 1] : null;
+
+  usePageMeta({
+    title: `${mod.title} — Nation Builders Course`,
+    description: mod.summary,
+    canonicalPath: `/nbc/course/${mod.slug}`,
+    image: ROUTE_META.nbcCourse.image,
+  });
+
+  useEffect(() => { setState(readProgress()); window.scrollTo(0, 0); }, [mod.slug]);
+
+  const complete = (i) => {
+    const next = markLessonComplete(mod.slug, i);
+    setState(next);
+    trackEvent("nbc_lesson_complete", { module: mod.slug, lesson: i });
+    if (moduleProgress(mod.slug, next).complete) trackEvent("nbc_module_complete", { module: mod.slug });
+  };
+  const mp = moduleProgress(mod.slug, state);
+  const lessonUrl = `${SITE.siteUrl}/nbc/course/${mod.slug}`;
+
+  return (
+    <div style={{ fontFamily: "'DM Sans',sans-serif", background: s.bg, color: s.txt, minHeight: "100vh", paddingBottom: "4rem" }}>
+      <section style={{ background: T.greenD, color: T.cream, padding: "clamp(3rem,7vw,4.5rem) 1.25rem 2.5rem" }}>
+        <div style={{ maxWidth: "44rem", margin: "0 auto" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: ".8rem", opacity: .75, marginBottom: "1rem", flexWrap: "wrap" }}>
+            <Link to="/nbc/course" style={{ color: T.goldL, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 4 }}><ArrowLeft size={13} /> All lessons</Link>
+            <ChevronRight size={13} /> <span>{mod.title}</span>
+          </div>
+          <div style={{ fontSize: "2.4rem", marginBottom: ".5rem" }}>{mod.emoji}</div>
+          <h1 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(1.9rem,6vw,3rem)", fontWeight: 900, lineHeight: 1.1, margin: "0 0 .75rem" }}>{mod.title}</h1>
+          <p style={{ color: "rgba(250,249,246,.8)", lineHeight: 1.6, marginBottom: "1.25rem" }}>{mod.summary}</p>
+          <div style={{ maxWidth: "26rem" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", fontSize: ".78rem", opacity: .8, marginBottom: 6 }}>
+              <span><Clock size={12} /> {mod.minutes} min</span><span>{mp.done}/{mp.total} done</span>
+            </div>
+            <ProgressBar pct={mp.pct} s={{ brd: "rgba(255,255,255,.14)" }} />
+          </div>
+        </div>
+      </section>
+
+      <section style={{ maxWidth: "44rem", margin: "0 auto", padding: "2.5rem 1.25rem 0", display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+        {mod.lessons.map((l, i) => {
+          const done = isLessonComplete(mod.slug, i, state);
+          return (
+            <LessonCard key={i} lesson={l} done={done} onComplete={() => complete(i)} s={s} n={i + 1} />
+          );
+        })}
+
+        {mp.complete && (
+          <motion.div initial={{ opacity: 0, scale: .96 }} animate={{ opacity: 1, scale: 1 }} style={{ padding: "1.75rem", borderRadius: 22, background: "rgba(45,158,83,.1)", border: `1px solid ${T.ok}40`, textAlign: "center" }}>
+            <Award size={34} color={T.ok} />
+            <h3 style={{ fontSize: "1.2rem", fontWeight: 800, margin: ".5rem 0" }}>Badge earned: {mod.title} 🏅</h3>
+            <p style={{ color: s.sub }}>You finished this module. Keep the momentum going.</p>
+          </motion.div>
+        )}
+
+        {/* Per-module PDF */}
+        {mod.pdf && (
+          <a href={`${PDF_BASE}${mod.pdf}`} download style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8, padding: ".9rem 1.5rem", borderRadius: 999, border: `1.5px solid ${s.brd}`, color: s.txt, fontWeight: 700, textDecoration: "none", background: s.surf }}>
+            <Download size={16} /> Download this module as a PDF (offline)
+          </a>
+        )}
+
+        {/* Share */}
+        <div style={{ padding: "1.5rem", borderRadius: 22, background: s.surf, border: `1px solid ${s.brd}`, textAlign: "center" }}>
+          <p style={{ fontWeight: 800, marginBottom: ".9rem" }}>Share this lesson</p>
+          <ShareRow dark={dark} url={lessonUrl} text={`${mod.title} — a lesson from the free Nation Builders Course 🇳🇬`} />
+        </div>
+
+        {/* Prev / Next */}
+        <div style={{ display: "flex", justifyContent: "space-between", gap: "1rem", flexWrap: "wrap" }}>
+          {prev
+            ? <Link to={`/nbc/course/${prev.slug}`} style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: ".85rem 1.4rem", borderRadius: 999, border: `1.5px solid ${s.brd}`, color: s.txt, textDecoration: "none", fontWeight: 700 }}><ArrowLeft size={16} /> {prev.title}</Link>
+            : <span />}
+          {next
+            ? <Link to={`/nbc/course/${next.slug}`} style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: ".85rem 1.4rem", borderRadius: 999, background: T.green, color: "#fff", textDecoration: "none", fontWeight: 700 }}>{next.title} <ArrowRight size={16} /></Link>
+            : <button onClick={() => navigate("/nbc/course")} style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: ".85rem 1.4rem", borderRadius: 999, background: T.gold, color: "#14532d", border: "none", fontWeight: 800, cursor: "pointer" }}>Back to all lessons <ArrowRight size={16} /></button>}
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function LessonCard({ lesson, done, onComplete, s, n }) {
+  const [choice, setChoice] = useState(null);
+  const hasCheck = Boolean(lesson.check);
+  const correct = hasCheck && choice === lesson.check.answer;
+  return (
+    <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+      style={{ background: s.surf, border: `1px solid ${done ? T.gold : s.brd}`, borderRadius: 22, padding: "1.75rem" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: ".75rem" }}>
+        <span style={{ width: 28, height: 28, borderRadius: 999, background: done ? T.ok : "rgba(197,160,55,.15)", color: done ? "#fff" : T.goldD, display: "grid", placeItems: "center", fontWeight: 800, fontSize: ".85rem", flexShrink: 0 }}>
+          {done ? <CheckCircle2 size={16} /> : n}
+        </span>
+        <h3 style={{ fontSize: "1.2rem", fontWeight: 800, margin: 0 }}>{lesson.heading}</h3>
+      </div>
+      <p style={{ color: s.sub, lineHeight: 1.7, margin: "0 0 1rem" }}>{lesson.body}</p>
+      <div style={{ padding: ".85rem 1.1rem", borderRadius: 14, background: "rgba(197,160,55,.1)", color: T.goldD, fontWeight: 700, fontSize: ".92rem", marginBottom: hasCheck ? "1.25rem" : 0 }}>
+        💡 {lesson.takeaway}
+      </div>
+
+      {hasCheck && (
+        <div style={{ marginBottom: "1.25rem" }}>
+          <p style={{ fontWeight: 800, margin: "0 0 .6rem" }}>{lesson.check.q}</p>
+          <div style={{ display: "flex", flexDirection: "column", gap: ".5rem" }}>
+            {lesson.check.options.map((opt, oi) => {
+              const picked = choice === oi;
+              const showRight = choice !== null && oi === lesson.check.answer;
+              const showWrong = picked && oi !== lesson.check.answer;
+              return (
+                <button key={oi} onClick={() => setChoice(oi)}
+                  style={{ textAlign: "left", padding: ".8rem 1rem", borderRadius: 12, cursor: "pointer", fontWeight: 600, fontSize: ".9rem",
+                    background: showRight ? "rgba(45,158,83,.12)" : showWrong ? "rgba(217,79,48,.1)" : s.bg,
+                    border: `1.5px solid ${showRight ? T.ok : showWrong ? T.err : s.brd}`, color: s.txt }}>
+                  {opt} {showRight && "✓"}{showWrong && "— try again"}
+                </button>
+              );
+            })}
+          </div>
+          {choice !== null && !correct && <p style={{ fontSize: ".82rem", color: s.sub, marginTop: ".5rem" }}>Not quite — pick the answer that fits a Nation Builder.</p>}
+        </div>
+      )}
+
+      {!done ? (
+        <button onClick={onComplete} disabled={hasCheck && !correct}
+          style={{ padding: ".8rem 1.6rem", borderRadius: 999, border: "none", fontWeight: 800, fontSize: ".9rem",
+            cursor: hasCheck && !correct ? "not-allowed" : "pointer",
+            background: hasCheck && !correct ? s.brd : T.green, color: hasCheck && !correct ? s.sub : "#fff" }}>
+          {hasCheck && !correct ? "Answer to continue" : "Mark complete"}
+        </button>
+      ) : (
+        <span style={{ display: "inline-flex", alignItems: "center", gap: 6, color: T.ok, fontWeight: 800, fontSize: ".9rem" }}>
+          <CheckCircle2 size={17} /> Completed
+        </span>
+      )}
+    </motion.div>
+  );
+}
+
+/* ── Router entry ──────────────────────────────────────────────── */
+export default function NBCCourse({ dark }) {
+  const { slug } = useParams();
+  if (slug) {
+    const mod = getModule(slug);
+    if (mod) return <LessonView dark={dark} mod={mod} />;
+  }
+  return <CourseIndex dark={dark} />;
+}

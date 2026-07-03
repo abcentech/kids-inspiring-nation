@@ -40,6 +40,8 @@ import GrowthWidgets, { ShareRow, DailyStreakFeature } from "./engagement/Growth
 
 const NVC = lazy(() => import("./NVC.jsx"));
 const NBCRegister = lazy(() => import("./NBCRegister.jsx"));
+const NBCCourse = lazy(() => import("./NBCCourse.jsx"));
+const NBCFund = lazy(() => import("./NBCFund.jsx"));
 const Giving = lazy(() => import("./Giving.jsx"));
 const Gallery = lazy(() => import("./Gallery.jsx"));
 const GodsUniversity = lazy(() => import("./GodsUniversity.jsx"));
@@ -1996,6 +1998,9 @@ export default function App() {
           <Route path="/NBC" element={<RouteFrame meta={ROUTE_META.nbc}><NVC dark={dark} /></RouteFrame>} />
           <Route path="/nbc" element={<Navigate to="/NBC" replace />} />
           <Route path="/NBC/register" element={<RouteFrame meta={ROUTE_META.nbcRegister}><NBCRegister /></RouteFrame>} />
+          <Route path="/nbc/course" element={<RouteFrame meta={ROUTE_META.nbcCourse} paddingTop=""><NBCCourse dark={dark} /></RouteFrame>} />
+          <Route path="/nbc/course/:slug" element={<RouteFrame meta={ROUTE_META.nbcCourse} paddingTop=""><NBCCourse dark={dark} /></RouteFrame>} />
+          <Route path="/nbc/fund" element={<RouteFrame meta={ROUTE_META.nbcFund} paddingTop=""><NBCFund dark={dark} /></RouteFrame>} />
           <Route path="/give" element={<RouteFrame meta={ROUTE_META.give}><Giving dark={dark} /></RouteFrame>} />
           <Route path="/donate" element={<Navigate to="/give" replace />} />
           <Route path="/support" element={<Navigate to="/give" replace />} />
