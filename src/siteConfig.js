@@ -67,6 +67,11 @@ export const SITE = {
     instagram: "https://instagram.com/KidsInspiringNation",
     linktree: "https://linktr.ee/KidsInspiringNation",
   },
+  // Nation Builders Corp's own social presence (distinct from the KIN accounts).
+  nbcSocials: {
+    instagram: "https://instagram.com/nationbuilderscorp",
+    youtube: "https://youtube.com/@NationBuildersCorp",
+  },
 };
 
 export const DONATION_DETAILS = {
@@ -79,6 +84,8 @@ export const CONTACT_SUBJECTS = [
   { value: "join", label: "Join a Programme", icon: "👑" },
   { value: "child", label: "Register a Child", icon: "🌱" },
   { value: "donate", label: "Give / Donate", icon: "💛" },
+  { value: "fund-nbc", label: "Fund a Nation Builder", icon: "🏗️" },
+  { value: "club", label: "Start a Nation Builders Club", icon: "🏫" },
   { value: "partner", label: "Partner / Collaborate", icon: "🤝" },
   { value: "volunteer", label: "Volunteer (CST)", icon: "🕊️" },
   { value: "media", label: "Media / Press", icon: "🎥" },
@@ -304,16 +311,51 @@ export const ROUTE_META = {
     image: "/photos/KINevents.jpg",
   },
   nbc: {
-    title: `National Builders Challenge — ${SITE.name}`,
-    description: "Join the National Builders Challenge and help build the Nigeria you want to see.",
+    title: `Nation Builders Corp — ${SITE.name}`,
+    description: "Don't wait for the nation — build it. Join a movement of young Nigerians solving real community problems. Get your Builder ID in 30 seconds.",
     canonicalPath: "/NBC",
-    image: "/photos/NBC_Main_og.jpg",
+    image: "/photos/nbc-og.png",
   },
   nbcRegister: {
     title: `NBC Registration — ${SITE.name}`,
     description: "Register for the National Builders Challenge and submit your project idea.",
     canonicalPath: "/NBC/register",
     image: "/photos/Join_the_NBC_challenge.jpg",
+  },
+  nbcCourse: {
+    title: `The Nation Builders Course — ${SITE.name}`,
+    description: "Free, bite-sized lessons anyone can take and share: learn the character, values, and skills of a Nation Builder and build the Nigeria you want to see.",
+    canonicalPath: "/nbc/course",
+    image: "/photos/nbc-og.png",
+  },
+  nbcFund: {
+    title: `Fund Nation Building — ${SITE.name}`,
+    description: "Invest in the Nation Builders Corp: fund school clubs, a free national course, and a movement of young Nigerians solving real community problems.",
+    canonicalPath: "/nbc/fund",
+    image: "/photos/nbc-og.png",
+    jsonLd: [
+      {
+        "@context": "https://schema.org",
+        "@type": "NGO",
+        name: SITE.name,
+        alternateName: SITE.legalName,
+        url: SITE.siteUrl,
+        email: SITE.email,
+        telephone: SITE.phone,
+        identifier: SITE.registrationId,
+        sameAs: Object.values(SITE.socials),
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "DonateAction",
+        name: "Fund the Nation Builders Corp",
+        recipient: {
+          "@type": "NGO",
+          name: SITE.name,
+          url: "https://kidsinspiringnation.org/nbc/fund",
+        },
+      },
+    ],
   },
   godsUniversity: {
     title: `goDs University — ${SITE.name}`,
