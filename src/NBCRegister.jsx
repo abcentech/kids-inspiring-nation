@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { ROUTE_META, SITE, T } from './siteConfig.js';
 import { usePageMeta } from './usePageMeta.js';
 import { submitUrlEncodedForm } from './formSubmit.js';
+import { hubConfigured, submitToHub } from './formHub.js';
 
 const SCRIPT_URL = import.meta.env.VITE_NBC_FORM_URL || "";
 
@@ -285,7 +286,11 @@ export default function NBCRegister() {
         };
 
         try {
-            await submitUrlEncodedForm(SCRIPT_URL, payload, 'NBC registration');
+            if (hubConfigured()) {
+                await submitToHub('registration', payload, 'NBC registration');
+            } else {
+                await submitUrlEncodedForm(SCRIPT_URL, payload, 'NBC registration');
+            }
 
             setRefLink(`https://nbc.kidsinspiringnation.org/NBC?ref=${nbcId}`);
             setUserId(nbcId);

@@ -6,6 +6,7 @@ import { submitJsonForm } from "../../formSubmit.js";
 import { trackEvent } from "../../analytics.js";
 import { C } from "../nbcBrand.js";
 import { referralFields } from "../referral.js";
+import { notifyHub } from "../../formHub.js";
 import { surfaces } from "./hubKit.jsx";
 
 const ENDPOINT = "https://formsubmit.co/ajax/" + SITE.operationsEmail;
@@ -30,6 +31,7 @@ export default function ClubRequestForm({ dark }) {
         Phone: f.phone || "—", "Interested students": f.students || "—",
         ...referralFields(),
       }, "club-request");
+      notifyHub("club-request", { School: f.school, Contact: f.contact, Role: f.role, Email: f.email, Phone: f.phone, Students: f.students, ...referralFields() });
       trackEvent("nbc_club_request", { role: f.role });
       setStatus("done");
     } catch {
