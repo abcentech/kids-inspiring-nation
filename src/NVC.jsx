@@ -9,10 +9,12 @@ import { ROUTE_META, T, SITE } from './siteConfig.js';
 import { usePageMeta } from './usePageMeta.js';
 import { NBC_MODULES } from './nbcCourse.js';
 import NBCEmblem from './nbc/NBCEmblem.jsx';
+import Crest3D from './nbc/three/Crest3D.jsx';
 import BuilderID from './nbc/BuilderID.jsx';
 import NationalLedger from './nbc/NationalLedger.jsx';
 import WallOfBuilders from './nbc/WallOfBuilders.jsx';
 import { NBC, PILLARS, CALENDAR, C } from './nbc/nbcBrand.js';
+import GalleryStrip from './nbc/GalleryStrip.jsx';
 
 /* Subtle film grain for depth. */
 const GRAIN = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E";
@@ -48,7 +50,7 @@ const INITIATIVES = [
     { Icon: School, t: "Nation Builders Club", d: "A chapter of builders in every school, led by a teacher-advisor — meeting through the terms and running projects together.", href: "/nbc/course/start-a-club", cta: "Start a club" },
     { Icon: BookOpen, t: "The Course", d: "Free, bite-sized lessons anyone can take and share with the world. Earn Builder Badges and keep your streak.", href: "/nbc/course", cta: "Take the course" },
     { Icon: Wrench, t: "Community Projects", d: "Every builder solves one real local problem — with creativity and grit, not cash — and logs the impact each month.", href: "#join", cta: "Start a project" },
-    { Icon: Flame, t: "Daily Streak", d: "A 60-second daily prompt that compounds character. Keep your streak and watch it grow across the year.", href: "/daily", cta: "Build your streak" },
+    { Icon: Flame, t: "Weekly Streak", d: "Check in once a week to keep your Builder Streak alive. Thirteen weeks completes a term — a habit that compounds character across the year.", href: "/nbc/students#streak", cta: "Build your streak" },
     { Icon: Mic, t: "December Conference", d: "The nation's builders gather to learn, connect, and showcase the year's work so far.", href: "#journey", cta: "See the year" },
     { Icon: Trophy, t: "July Grand Finale", d: "The session culminates as the most impactful builders are honoured by the nation and awarded.", href: "#recognition", cta: "See the prizes" },
 ];
@@ -94,44 +96,11 @@ export default function NVC({ dark }) {
         <div style={{ fontFamily: "'DM Sans',sans-serif", background: s.bg, color: s.txt, overflowX: "hidden" }}>
             <div aria-hidden style={{ position: "fixed", inset: 0, backgroundImage: `url("${GRAIN}")`, opacity: dark ? 0.05 : 0.03, pointerEvents: "none", zIndex: 1, mixBlendMode: "overlay" }} />
 
-            {/* Nav */}
-            <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, padding: ".7rem 0", background: navBg, backdropFilter: navSolid ? "blur(20px)" : "none", borderBottom: `1px solid ${navSolid ? s.brd : "transparent"}`, transition: "all .35s" }}>
-                <div style={{ maxWidth: "78rem", margin: "0 auto", padding: "0 clamp(1.25rem,4vw,2.5rem)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                    <a href="#top" style={{ display: "flex", alignItems: "center", gap: ".6rem", textDecoration: "none" }}>
-                        <NBCEmblem size={38} ring={false} id="nav" />
-                        <span style={{ fontWeight: 800, fontSize: ".92rem", color: navTxt, fontFamily: "'Plus Jakarta Sans',sans-serif", letterSpacing: "-.01em" }}>Nation Builders Corp</span>
-                    </a>
-                    <div className="hidden md:flex" style={{ alignItems: "center", gap: "1.6rem" }}>
-                        {NAV.map(([label, href]) => (
-                            <a key={label} href={href} style={{ fontSize: ".76rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".07em", color: navTxt, opacity: .82, textDecoration: "none" }}>{label}</a>
-                        ))}
-                        <a href={SITE.nbcSocials.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" style={{ color: navTxt, opacity: .82 }}><Instagram size={17} /></a>
-                        <a href={SITE.nbcSocials.youtube} target="_blank" rel="noopener noreferrer" aria-label="YouTube" style={{ color: navTxt, opacity: .82 }}><Youtube size={17} /></a>
-                        <a href="#join" style={{ padding: ".55rem 1.5rem", borderRadius: 999, background: C.gold, color: "#14532d", fontWeight: 800, fontSize: ".78rem", textDecoration: "none" }}>Become a Builder</a>
-                    </div>
-                    <button className="md:hidden" onClick={() => setMenu(!menu)} style={{ color: navTxt, background: "none", border: "none", cursor: "pointer" }} aria-label="Menu">
-                        {menu ? <XIcon size={24} /> : <Menu size={24} />}
-                    </button>
-                </div>
-                <AnimatePresence>
-                    {menu && (
-                        <motion.div className="md:hidden" initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} style={{ overflow: "hidden" }}>
-                            <div style={{ padding: "1rem 1.5rem 1.5rem", display: "flex", flexDirection: "column", gap: ".9rem" }}>
-                                {NAV.map(([label, href]) => (
-                                    <a key={label} href={href} onClick={() => setMenu(false)} style={{ color: navTxt, fontWeight: 700, textDecoration: "none" }}>{label}</a>
-                                ))}
-                                <a href="#join" onClick={() => setMenu(false)} style={{ padding: ".8rem", borderRadius: 999, background: C.gold, color: "#14532d", fontWeight: 800, textAlign: "center", textDecoration: "none" }}>Become a Builder</a>
-                            </div>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
-            </nav>
-
             {/* Hero */}
             <section id="top" style={{ minHeight: "100svh", background: C.greenD, position: "relative", display: "flex", alignItems: "center", overflow: "hidden", padding: "7rem 0 4rem" }}>
                 <div aria-hidden style={{ position: "absolute", inset: 0, background: `radial-gradient(circle at 18% 28%, ${C.gold}18 0%, transparent 42%), radial-gradient(circle at 82% 75%, ${C.green}55 0%, transparent 55%), linear-gradient(160deg, ${C.greenD} 0%, ${C.greenM} 55%, ${C.greenD} 100%)` }} />
-                <motion.div aria-hidden style={{ position: "absolute", right: "-4vw", top: "12vh", y: crestY, rotate: crestRotate, opacity: 0.5, zIndex: 1 }}>
-                    <NBCEmblem size={520} glow id="hero" />
+                <motion.div aria-hidden style={{ position: "absolute", right: "-4vw", top: "10vh", y: crestY, opacity: 0.92, zIndex: 1 }}>
+                    <Crest3D size={520} emblemId="hero" />
                 </motion.div>
                 <div aria-hidden style={{ position: "absolute", left: "-3vw", bottom: "-4vh", fontFamily: "'Playfair Display',serif", fontStyle: "italic", fontWeight: 900, fontSize: "34vw", color: "transparent", WebkitTextStroke: `1px ${C.gold}12`, userSelect: "none", lineHeight: .8 }}>NBC</div>
 
@@ -141,6 +110,9 @@ export default function NVC({ dark }) {
                         <h1 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(3rem, 9vw, 6.8rem)", fontWeight: 900, color: C.cream, lineHeight: .88, letterSpacing: "-.045em", margin: "0 0 1.75rem" }}>
                             Don't wait for the nation.<br /><em style={{ fontStyle: "italic", color: C.goldL }}>Build</em> it.
                         </h1>
+                        <p style={{ display: "inline-flex", alignItems: "center", gap: ".7rem", fontFamily: "'Plus Jakarta Sans',sans-serif", fontWeight: 800, letterSpacing: ".08em", textTransform: "uppercase", fontSize: ".82rem", color: C.goldL, margin: "0 0 1.5rem", padding: ".5rem .95rem", border: `1px solid ${C.gold}44`, borderRadius: 999, background: `${C.gold}10` }}>
+                            <span aria-hidden style={{ fontSize: "1rem" }}>🏛️</span> Our mandate — {NBC.mandate}
+                        </p>
                         <p style={{ fontSize: "clamp(1.1rem, 2.2vw, 1.35rem)", color: "rgba(250,249,246,.82)", lineHeight: 1.6, marginBottom: "2.75rem", maxWidth: "46ch" }}>
                             A movement of young Nigerians solving real community problems with character and grit — one school, one project, one year at a time. Become a Nation Builder in 30 seconds.
                         </p>
@@ -189,6 +161,38 @@ export default function NVC({ dark }) {
 
             {/* Wall of Builders */}
             <WallOfBuilders />
+
+            {/* Moments — Nation Builders Corp National Values gallery */}
+            <GalleryStrip dark={dark} />
+
+            {/* Receipts — the proof behind the promise */}
+            <section aria-label="Our track record" style={{ background: dark ? "#080808" : "#FFFFFF", borderBottom: `1px solid ${s.brd}`, padding: "clamp(3rem,7vw,5rem) 0" }}>
+                <div style={{ maxWidth: "78rem", margin: "0 auto", padding: "0 clamp(1.25rem,4vw,2.5rem)" }}>
+                    <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ textAlign: "center", marginBottom: "2.5rem" }}>
+                        <div style={{ display: "flex", justifyContent: "center", marginBottom: ".75rem" }}><Eyebrow center>A movement with receipts</Eyebrow></div>
+                        <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(1.8rem,4.5vw,2.6rem)", fontWeight: 900, color: s.txt, margin: 0 }}>Promises are easy. Here's the proof.</h2>
+                    </motion.div>
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 150px), 1fr))", gap: "1rem", textAlign: "center" }}>
+                        {[
+                            ["639", "children reached", "as at 2025"],
+                            ["365", "events held", "as at 2025"],
+                            ["14", "active programmes", "running year-round"],
+                            ["₦595,119", "top winner's cheque", "2025 Grand Finale"],
+                            ["2017", "building since", `CAC ${SITE.registrationId}`],
+                        ].map(([n, l, sub], i) => (
+                            <motion.div key={l} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.06 }} viewport={{ once: true }}
+                                style={{ background: s.surf, border: `1px solid ${s.brd}`, borderRadius: 20, padding: "1.5rem 1rem" }}>
+                                <div style={{ fontFamily: "'Plus Jakarta Sans',sans-serif", fontSize: "clamp(1.5rem,3vw,2rem)", fontWeight: 900, color: C.goldD, lineHeight: 1 }}>{n}</div>
+                                <div style={{ fontWeight: 800, color: s.txt, fontSize: ".92rem", marginTop: ".5rem" }}>{l}</div>
+                                <div style={{ color: s.sub, fontSize: ".78rem", marginTop: ".2rem" }}>{sub}</div>
+                            </motion.div>
+                        ))}
+                    </div>
+                    <p style={{ textAlign: "center", color: s.sub, fontSize: ".85rem", marginTop: "1.5rem", marginBottom: 0 }}>
+                        Numbers from the KidsInspiring Nation 2025 impact records and the Nation Builders Corp National Values Challenge Grand Finale.
+                    </p>
+                </div>
+            </section>
 
             {/* Mission */}
             <section id="mission" style={{ padding: "clamp(4.5rem,10vw,8rem) 0", background: s.bg }}>
@@ -291,6 +295,35 @@ export default function NVC({ dark }) {
                 </div>
             </section>
 
+            {/* Mandate band */}
+            <section aria-label="Our mandate" style={{ background: C.greenD, color: C.cream, padding: "clamp(3.5rem,8vw,6rem) 0", position: "relative", overflow: "hidden", borderTop: `1px solid ${C.gold}22`, borderBottom: `1px solid ${C.gold}22` }}>
+                <div aria-hidden style={{ position: "absolute", inset: 0, background: `radial-gradient(circle at 50% 120%, ${C.gold}18 0%, transparent 60%)` }} />
+                <div style={{ maxWidth: "56rem", margin: "0 auto", padding: "0 clamp(1.25rem,4vw,2.5rem)", textAlign: "center", position: "relative", zIndex: 2 }}>
+                    <div style={{ marginBottom: "1.25rem", display: "flex", justifyContent: "center" }}><Eyebrow center>Our mandate</Eyebrow></div>
+                    <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+                        style={{ fontFamily: "'Playfair Display',serif", fontWeight: 900, fontSize: "clamp(2rem,6vw,3.6rem)", lineHeight: 1.05, letterSpacing: "-.02em", margin: 0 }}>
+                        In <em style={{ fontStyle: "italic", color: C.goldL }}>7 Decades</em>, Nigeria Will Be Built.
+                    </motion.h2>
+                    <p style={{ color: "rgba(250,249,246,.75)", fontSize: "1.05rem", lineHeight: 1.65, marginTop: "1.5rem", maxWidth: "42rem", marginInline: "auto" }}>
+                        Not in one election cycle. Not by one government. Nation building is a 70-year work of character — carried by generation after generation of young builders. We are the first. {NBC.heritage}.
+                    </p>
+                    <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "1rem", marginTop: "2.25rem" }}>
+                        {[
+                            ["3rd", "most populous nation on Earth by 2050 — Nigeria's projected rank"],
+                            ["~18", "the median age of a Nigerian — this is a nation of children"],
+                        ].map(([n, l]) => (
+                            <div key={n} style={{ display: "flex", alignItems: "center", gap: ".9rem", background: "rgba(255,255,255,.05)", border: `1px solid ${C.gold}33`, borderRadius: 16, padding: ".9rem 1.4rem", maxWidth: "21rem", textAlign: "left" }}>
+                                <span style={{ fontFamily: "'Plus Jakarta Sans',sans-serif", fontSize: "1.7rem", fontWeight: 900, color: C.goldL, flexShrink: 0 }}>{n}</span>
+                                <span style={{ fontSize: ".85rem", color: "rgba(250,249,246,.75)", lineHeight: 1.45 }}>{l}</span>
+                            </div>
+                        ))}
+                    </div>
+                    <p style={{ color: C.goldL, fontFamily: "'Playfair Display',serif", fontStyle: "italic", fontSize: "1.1rem", marginTop: "1.75rem", marginBottom: 0 }}>
+                        Whoever builds Nigeria's children is building a meaningful share of humanity's future.
+                    </p>
+                </div>
+            </section>
+
             {/* Recognition / prizes */}
             <section id="recognition" style={{ padding: "clamp(4.5rem,10vw,8rem) 0", background: s.bg }}>
                 <div style={{ maxWidth: "78rem", margin: "0 auto", padding: "0 clamp(1.25rem,4vw,2.5rem)" }}>
@@ -341,7 +374,7 @@ export default function NVC({ dark }) {
                 <div style={{ maxWidth: "58rem", margin: "0 auto", padding: "0 clamp(1.25rem,4vw,2.5rem)" }}>
                     <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ textAlign: "center", marginBottom: "3rem" }}>
                         <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(1.8rem,5vw,2.8rem)", fontWeight: 900, color: s.txt }}>Questions, answered.</h2>
-                        <p style={{ color: s.sub, marginTop: ".5rem" }}>Read the origin story: <a href="/nation-builders" style={{ color: C.goldD, fontWeight: 800, textDecoration: "none" }}>Psalm 119 → Nation Builders Corp</a></p>
+                        <p style={{ color: s.sub, marginTop: ".5rem" }}>Everything you need to know before you build.</p>
                     </motion.div>
                     <div style={{ display: "flex", flexDirection: "column", gap: ".9rem" }}>
                         {FAQS.map((faq, idx) => <FAQItem key={idx} faq={faq} idx={idx} s={s} />)}
@@ -349,26 +382,6 @@ export default function NVC({ dark }) {
                 </div>
             </section>
 
-            {/* Footer */}
-            <footer style={{ background: C.greenD, color: C.cream, padding: "clamp(3rem,7vw,5rem) 0 3rem", borderTop: `1px solid ${C.gold}20` }}>
-                <div style={{ maxWidth: "78rem", margin: "0 auto", padding: "0 clamp(1.25rem,4vw,2.5rem)", textAlign: "center" }}>
-                    <div style={{ display: "flex", justifyContent: "center", marginBottom: "1rem" }}><NBCEmblem size={72} id="footer" /></div>
-                    <div style={{ fontFamily: "'Playfair Display',serif", fontWeight: 900, fontSize: "1.4rem" }}>Nation Builders Corp</div>
-                    <p style={{ color: "rgba(250,249,246,.6)", marginBottom: "1.5rem", fontStyle: "italic" }}>{NBC.motto}</p>
-                    <div style={{ display: "flex", justifyContent: "center", gap: "1rem", marginBottom: "2rem" }}>
-                        <a href={SITE.nbcSocials.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" style={{ width: 46, height: 46, borderRadius: 999, display: "grid", placeItems: "center", background: "rgba(228,64,95,.15)", color: "#E4405F" }}><Instagram size={20} /></a>
-                        <a href={SITE.nbcSocials.youtube} target="_blank" rel="noopener noreferrer" aria-label="YouTube" style={{ width: 46, height: 46, borderRadius: 999, display: "grid", placeItems: "center", background: "rgba(255,0,0,.12)", color: "#FF4040" }}><Youtube size={20} /></a>
-                    </div>
-                    <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: "1.5rem", fontSize: ".85rem", color: "rgba(250,249,246,.7)" }}>
-                        <a href="#join" style={{ color: "inherit", textDecoration: "none" }}>Become a Builder</a>
-                        <a href="/nbc/course" style={{ color: "inherit", textDecoration: "none" }}>Course</a>
-                        <a href="/nbc/fund" style={{ color: "inherit", textDecoration: "none" }}>Fund</a>
-                        <a href="/NBC/register" style={{ color: "inherit", textDecoration: "none" }}>Register a project</a>
-                        <a href="/nation-builders" style={{ color: "inherit", textDecoration: "none" }}>Our story</a>
-                    </div>
-                    <p style={{ color: "rgba(250,249,246,.4)", fontSize: ".78rem", marginTop: "2rem" }}>A programme of {SITE.name} · {SITE.registrationId}</p>
-                </div>
-            </footer>
 
             <style>{`
                 @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }

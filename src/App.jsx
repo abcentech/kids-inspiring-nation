@@ -33,15 +33,23 @@ import {
 } from "lucide-react";
 import { ROUTE_META, SITE, T } from "./siteConfig.js";
 import { usePageMeta } from "./usePageMeta.js";
+import { useLatestVideo } from "./useLatestVideos.js";
+import { captureReferral } from "./nbc/referral.js";
 import { initAnalytics } from "./analytics.js";
 import { PROGRAMS } from "./impactData.js";
 import Dashboard from "./Dashboard.jsx";
 import GrowthWidgets, { ShareRow, DailyStreakFeature } from "./engagement/GrowthWidgets.jsx";
+import { NBCNav, NBCFooter, NAV_H as NBC_NAV_PAD } from "./nbc/NBCShell.jsx";
+import { C as NBC_C } from "./nbc/nbcBrand.js";
 
 const NVC = lazy(() => import("./NVC.jsx"));
 const NBCRegister = lazy(() => import("./NBCRegister.jsx"));
 const NBCCourse = lazy(() => import("./NBCCourse.jsx"));
 const NBCFund = lazy(() => import("./NBCFund.jsx"));
+const NBCStudents = lazy(() => import("./nbc/hubs/StudentsHub.jsx"));
+const NBCAdvisors = lazy(() => import("./nbc/hubs/AdvisorsHub.jsx"));
+const NBCSchools = lazy(() => import("./nbc/hubs/SchoolsHub.jsx"));
+const NBCTools = lazy(() => import("./nbc/tools/BuilderTools.jsx"));
 const Giving = lazy(() => import("./Giving.jsx"));
 const Gallery = lazy(() => import("./Gallery.jsx"));
 const GodsUniversity = lazy(() => import("./GodsUniversity.jsx"));
@@ -1420,29 +1428,9 @@ function ProgramsSection({ dark }) {
 }
 
 // ─── VIDEO ────────────────────────────────────────────────────────────────────
-const YT_CHANNEL_ID = "UCnQYGxz4gBIJWHR159IT0lg";
-const YT_FALLBACK_ID = "z-9j6-4OOBs"; // latest as of build time
-
-function useLatestYouTubeVideo() {
-  const [videoId, setVideoId] = useState(YT_FALLBACK_ID);
-  useEffect(() => {
-    // YouTube RSS is CORS-blocked in browsers — route through allorigins proxy
-    const rss = `https://www.youtube.com/feeds/videos.xml?channel_id=${YT_CHANNEL_ID}`;
-    fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(rss)}`)
-      .then(r => r.json())
-      .then(data => {
-        const xml = data?.contents || "";
-        const match = xml.match(/<yt:videoId>([^<]+)<\/yt:videoId>/);
-        if (match?.[1]) setVideoId(match[1]);
-      })
-      .catch(() => {}); // silently fall back to hardcoded ID
-  }, []);
-  return videoId;
-}
-
 function VideoSection({ dark }) {
   const bg = dark ? "#0A1C12" : T.cream;
-  const videoId = useLatestYouTubeVideo();
+  const { videoId } = useLatestVideo("kin");
   return (
     <section style={{ background: bg, padding: "clamp(3.5rem,8vw,7rem) 0" }}>
       <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 clamp(1.25rem,5vw,3rem)" }}>
@@ -1980,12 +1968,15 @@ export default function App() {
 
   useEffect(() => {
     initAnalytics();
+    captureReferral();
   }, []);
 
+  const isNBC = location.pathname.toLowerCase().startsWith("/nbc");
+
   return (
-    <div style={{ background: dark ? "#0A1C12" : "#FAFAF5", color: dark ? T.cream : T.greenD, minHeight: "100vh" }}>
-      <SiteNav dark={dark} onGive={onGive} />
-      
+    <div style={{ background: isNBC ? NBC_C.greenD : (dark ? "#0A1C12" : "#FAFAF5"), color: isNBC ? NBC_C.cream : (dark ? T.cream : T.greenD), minHeight: "100vh" }}>
+      {isNBC ? <NBCNav /> : <SiteNav dark={dark} onGive={onGive} />}
+
       <AnimatePresence mode="wait">
         <Suspense fallback={<div style={{ minHeight: "100vh", display: "grid", placeItems: "center", color: dark ? T.cream : T.greenD }}>Loading...</div>}>
         <Routes location={location} key={location.pathname}>
@@ -1995,12 +1986,17 @@ export default function App() {
           <Route path="/nation-builders" element={<RouteFrame meta={ROUTE_META.nationBuilders}><NationBuildersCorp dark={dark} /></RouteFrame>} />
           <Route path="/daily" element={<RouteFrame meta={ROUTE_META.daily}><Daily dark={dark} /></RouteFrame>} />
           <Route path="/gU" element={<RouteFrame meta={ROUTE_META.godsUniversity}><GodsUniversity dark={dark} /></RouteFrame>} />
-          <Route path="/NBC" element={<RouteFrame meta={ROUTE_META.nbc}><NVC dark={dark} /></RouteFrame>} />
+          <Route path="/NBC" element={<RouteFrame meta={ROUTE_META.nbc} paddingTop=""><NVC dark={dark} /></RouteFrame>} />
           <Route path="/nbc" element={<Navigate to="/NBC" replace />} />
-          <Route path="/NBC/register" element={<RouteFrame meta={ROUTE_META.nbcRegister}><NBCRegister /></RouteFrame>} />
+          <Route path="/NBC/register" element={<RouteFrame meta={ROUTE_META.nbcRegister} paddingTop={`${NBC_NAV_PAD}px`}><NBCRegister /></RouteFrame>} />
           <Route path="/nbc/course" element={<RouteFrame meta={ROUTE_META.nbcCourse} paddingTop=""><NBCCourse dark={dark} /></RouteFrame>} />
           <Route path="/nbc/course/:slug" element={<RouteFrame meta={ROUTE_META.nbcCourse} paddingTop=""><NBCCourse dark={dark} /></RouteFrame>} />
           <Route path="/nbc/fund" element={<RouteFrame meta={ROUTE_META.nbcFund} paddingTop=""><NBCFund dark={dark} /></RouteFrame>} />
+          <Route path="/nbc/students" element={<RouteFrame meta={ROUTE_META.nbcStudents} paddingTop=""><NBCStudents dark={dark} /></RouteFrame>} />
+          <Route path="/nbc/advisors" element={<RouteFrame meta={ROUTE_META.nbcAdvisors} paddingTop=""><NBCAdvisors dark={dark} /></RouteFrame>} />
+          <Route path="/nbc/schools" element={<RouteFrame meta={ROUTE_META.nbcSchools} paddingTop=""><NBCSchools dark={dark} /></RouteFrame>} />
+          <Route path="/nbc/tools" element={<RouteFrame meta={ROUTE_META.nbcTools} paddingTop=""><NBCTools dark={dark} /></RouteFrame>} />
+          <Route path="/nbc/tools/:slug" element={<RouteFrame meta={ROUTE_META.nbcTools} paddingTop=""><NBCTools dark={dark} /></RouteFrame>} />
           <Route path="/give" element={<RouteFrame meta={ROUTE_META.give}><Giving dark={dark} /></RouteFrame>} />
           <Route path="/donate" element={<Navigate to="/give" replace />} />
           <Route path="/support" element={<Navigate to="/give" replace />} />
@@ -2017,11 +2013,11 @@ export default function App() {
         </Suspense>
       </AnimatePresence>
 
-      <SiteBottomBar dark={dark} />
+      {isNBC ? <NBCFooter /> : <SiteBottomBar dark={dark} />}
 
-      <FloatingChat dark={dark} />
+      {!isNBC && <FloatingChat dark={dark} />}
       <DarkToggle dark={dark} toggle={toggleDark} />
-      <GrowthWidgets dark={dark} />
+      {!isNBC && <GrowthWidgets dark={dark} />}
       <CookieBanner dark={dark} />
     </div>
   );

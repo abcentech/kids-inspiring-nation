@@ -12,34 +12,9 @@ import {
   writeDailyState,
 } from "./dailyStorage.js";
 import { promptForDateKey } from "./dailyPrompts.js";
+import { useLatestVideo } from "./useLatestVideos.js";
 
 const DAILY_ENDPOINT = import.meta.env.VITE_DAILY_CHECKIN_URL || "";
-const YT_CHANNEL_ID  = "UCnQYGxz4gBIJWHR159IT0lg";
-const YT_FALLBACK_ID = "z-9j6-4OOBs";
-
-// ─── YOUTUBE RSS HOOK ─────────────────────────────────────────────────────────
-function useLatestYouTubeVideo() {
-  const [videoId, setVideoId] = useState(YT_FALLBACK_ID);
-  const [videoTitle, setVideoTitle] = useState(null);
-  useEffect(() => {
-    const url = `https://api.allorigins.win/get?url=${encodeURIComponent(
-      `https://www.youtube.com/feeds/videos.xml?channel_id=${YT_CHANNEL_ID}`
-    )}`;
-    fetch(url)
-      .then((r) => r.json())
-      .then((data) => {
-        const xml = data?.contents || "";
-        const titleMatch = xml.match(/<media:title[^>]*>([^<]+)<\/media:title>/);
-        const idMatch = xml.match(/watch\?v=([A-Za-z0-9_-]{11})/);
-        if (idMatch?.[1]) {
-          setVideoId(idMatch[1]);
-          if (titleMatch?.[1]) setVideoTitle(decodeURIComponent(titleMatch[1]));
-        }
-      })
-      .catch(() => {}); // keep fallback on any error
-  }, []);
-  return { videoId, videoTitle };
-}
 
 // ─── HELPERS ──────────────────────────────────────────────────────────────────
 async function syncBestEffort(payload) {
@@ -389,7 +364,7 @@ export default function Daily({ dark }) {
 
   const todayKey  = useMemo(() => getLagosDateKey(new Date()), []);
   const prompt     = useMemo(() => promptForDateKey(todayKey), [todayKey]);
-  const { videoId: rssVideoId, videoTitle: rssVideoTitle } = useLatestYouTubeVideo();
+  const { videoId: rssVideoId, videoTitle: rssVideoTitle } = useLatestVideo("kin");
 
   // Use RSS video; prompt provides the question/explanation.
   const videoId       = rssVideoId;

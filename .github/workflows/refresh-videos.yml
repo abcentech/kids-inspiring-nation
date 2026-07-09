@@ -1,0 +1,40 @@
+name: Refresh latest YouTube videos
+
+# Keeps public/videos.json in sync with the KIN + NBC YouTube channels so the
+# site always shows the newest uploads. YouTube's RSS feed is CORS-blocked in
+# browsers, so we fetch it here (server-side), commit the result, and the
+# normal deploy workflow publishes it. Runs every 6 hours + on demand.
+
+on:
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-videos
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Fetch latest videos from YouTube RSS
+        run: node scripts/fetch-videos.mjs
+
+      - name: Commit if changed
+        run: |
+          if git diff --quiet public/videos.json; then
+            echo "No new videos — nothing to commit."
+            exit 0
+          fi
+          git config user.name "kin-video-bot"
+          git config user.email "actions@github.com"
+          git add public/videos.json
+          git commit -m "chore(videos): refresh latest YouTube uploads"
+          git push

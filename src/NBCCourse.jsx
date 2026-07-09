@@ -11,9 +11,11 @@ import { ShareRow } from "./engagement/GrowthWidgets.jsx";
 import Certificate from "./nbc/Certificate.jsx";
 import { trackEvent } from "./analytics.js";
 import { NBC_MODULES, PDF_BASE, getModule } from "./nbcCourse.js";
+import InteractiveBlock, { isPassiveBlock } from "./nbc/course/InteractiveBlocks.jsx";
+import WeeklyStreak from "./nbc/WeeklyStreak.jsx";
 import {
   readProgress, isLessonComplete, markLessonComplete, moduleProgress,
-  overallProgress, earnedBadges, nextModule, builderStreak,
+  overallProgress, earnedBadges, nextModule,
 } from "./nbcProgress.js";
 
 const COURSE_URL = `${SITE.siteUrl}/nbc/course`;
@@ -34,17 +36,6 @@ function ProgressBar({ pct, s }) {
         style={{ height: "100%", background: `linear-gradient(90deg, ${T.gold}, ${T.goldL})` }}
       />
     </div>
-  );
-}
-
-function StreakChip({ s }) {
-  const { streak } = builderStreak();
-  return (
-    <Link to="/daily" style={{ textDecoration: "none" }}>
-      <span style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "6px 12px", borderRadius: 999, background: "rgba(197,160,55,.14)", color: T.goldD, fontWeight: 800, fontSize: ".8rem" }}>
-        <Flame size={15} /> {streak > 0 ? `${streak}-day Builder Streak` : "Start your streak"}
-      </span>
-    </Link>
   );
 }
 
@@ -85,7 +76,7 @@ function CourseIndex({ dark }) {
             ) : (
               <span style={{ padding: "1rem 2rem", borderRadius: 999, background: "rgba(255,255,255,.1)", fontWeight: 800 }}>🎉 Course complete!</span>
             )}
-            <StreakChip s={s} />
+            <WeeklyStreak dark={dark} compact />
           </div>
 
           {/* Overall progress */}
@@ -239,9 +230,18 @@ function LessonView({ dark, mod }) {
 }
 
 function LessonCard({ lesson, done, onComplete, s, n }) {
-  const [choice, setChoice] = useState(null);
-  const hasCheck = Boolean(lesson.check);
-  const correct = hasCheck && choice === lesson.check.answer;
+  const blocks = lesson.interactions || [];
+  // Every non-passive block (chart is informational) must be engaged with
+  // before the lesson can be marked complete.
+  const requiredIdx = useMemo(
+    () => blocks.map((b, i) => (isPassiveBlock(b.type) ? null : i)).filter((i) => i !== null),
+    [lesson]
+  );
+  const [solved, setSolved] = useState(() => new Set());
+  const markSolved = (i) => setSolved((prev) => (prev.has(i) ? prev : new Set(prev).add(i)));
+  const allSolved = requiredIdx.every((i) => solved.has(i));
+  const gated = requiredIdx.length > 0 && !allSolved && !done;
+
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
       style={{ background: s.surf, border: `1px solid ${done ? T.gold : s.brd}`, borderRadius: 22, padding: "1.75rem" }}>
@@ -252,38 +252,24 @@ function LessonCard({ lesson, done, onComplete, s, n }) {
         <h3 style={{ fontSize: "1.2rem", fontWeight: 800, margin: 0 }}>{lesson.heading}</h3>
       </div>
       <p style={{ color: s.sub, lineHeight: 1.7, margin: "0 0 1rem" }}>{lesson.body}</p>
-      <div style={{ padding: ".85rem 1.1rem", borderRadius: 14, background: "rgba(197,160,55,.1)", color: T.goldD, fontWeight: 700, fontSize: ".92rem", marginBottom: hasCheck ? "1.25rem" : 0 }}>
+      <div style={{ padding: ".85rem 1.1rem", borderRadius: 14, background: "rgba(197,160,55,.1)", color: T.goldD, fontWeight: 700, fontSize: ".92rem" }}>
         💡 {lesson.takeaway}
       </div>
 
-      {hasCheck && (
-        <div style={{ marginBottom: "1.25rem" }}>
-          <p style={{ fontWeight: 800, margin: "0 0 .6rem" }}>{lesson.check.q}</p>
-          <div style={{ display: "flex", flexDirection: "column", gap: ".5rem" }}>
-            {lesson.check.options.map((opt, oi) => {
-              const picked = choice === oi;
-              const showRight = choice !== null && oi === lesson.check.answer;
-              const showWrong = picked && oi !== lesson.check.answer;
-              return (
-                <button key={oi} onClick={() => setChoice(oi)}
-                  style={{ textAlign: "left", padding: ".8rem 1rem", borderRadius: 12, cursor: "pointer", fontWeight: 600, fontSize: ".9rem",
-                    background: showRight ? "rgba(45,158,83,.12)" : showWrong ? "rgba(217,79,48,.1)" : s.bg,
-                    border: `1.5px solid ${showRight ? T.ok : showWrong ? T.err : s.brd}`, color: s.txt }}>
-                  {opt} {showRight && "✓"}{showWrong && "— try again"}
-                </button>
-              );
-            })}
-          </div>
-          {choice !== null && !correct && <p style={{ fontSize: ".82rem", color: s.sub, marginTop: ".5rem" }}>Not quite — pick the answer that fits a Nation Builder.</p>}
+      {blocks.length > 0 && (
+        <div style={{ display: "flex", flexDirection: "column", gap: "1rem", margin: "1.25rem 0" }}>
+          {blocks.map((b, i) => (
+            <InteractiveBlock key={i} block={b} s={s} onSolved={() => markSolved(i)} />
+          ))}
         </div>
       )}
 
       {!done ? (
-        <button onClick={onComplete} disabled={hasCheck && !correct}
+        <button onClick={onComplete} disabled={gated}
           style={{ padding: ".8rem 1.6rem", borderRadius: 999, border: "none", fontWeight: 800, fontSize: ".9rem",
-            cursor: hasCheck && !correct ? "not-allowed" : "pointer",
-            background: hasCheck && !correct ? s.brd : T.green, color: hasCheck && !correct ? s.sub : "#fff" }}>
-          {hasCheck && !correct ? "Answer to continue" : "Mark complete"}
+            cursor: gated ? "not-allowed" : "pointer",
+            background: gated ? s.brd : T.green, color: gated ? s.sub : "#fff" }}>
+          {gated ? "Complete the activity above to continue" : "Mark complete"}
         </button>
       ) : (
         <span style={{ display: "inline-flex", alignItems: "center", gap: 6, color: T.ok, fontWeight: 800, fontSize: ".9rem" }}>
