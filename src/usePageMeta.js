@@ -17,7 +17,11 @@ export function usePageMeta(meta = ROUTE_META.home) {
     const resolvedTitle = meta.title || ROUTE_META.home.title;
     const resolvedDescription = meta.description || ROUTE_META.home.description;
     const image = meta.image || ROUTE_META.home.image;
-    const canonicalPath = meta.canonicalPath || "/";
+    // GitHub Pages serves routes as directories (/NBC → 301 → /NBC/), so the
+    // trailing-slash form is the URL that actually returns 200 — canonicals
+    // and the sitemap both point there to keep Google's signals unambiguous.
+    let canonicalPath = meta.canonicalPath || "/";
+    if (!canonicalPath.endsWith("/")) canonicalPath += "/";
     const canonicalUrl = new URL(canonicalPath, SITE.siteUrl).toString();
     const imageUrl = new URL(image, SITE.siteUrl).toString();
 
