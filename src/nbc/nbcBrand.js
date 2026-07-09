@@ -10,6 +10,10 @@ export const NBC = {
   name: "Nation Builders Corp",
   short: "NBC",
   motto: "Build the nation you want to see.",
+  // The long-horizon mandate — sprinkled across the site as our rallying line.
+  mandate: "In 7 Decades, Nigeria Will Be Built.",
+  mandateShort: "In 7 decades, a nation built.",
+  heritage: "Nation Builders Corp · National Values",
   oath: "the Builder's Oath",
   // The civic pledge every new builder takes.
   pledge: [

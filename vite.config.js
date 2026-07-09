@@ -18,6 +18,9 @@ export default defineConfig({
             if (id.includes('framer-motion')) return 'motion'
             if (id.includes('recharts')) return 'charts'
             if (id.includes('lucide-react')) return 'icons'
+            // Keep three.js in its own chunk so it ships ONLY with the lazy
+            // WebGL crest (Crest3D) — never in the eager vendor bundle.
+            if (id.includes('/three/') || id.includes('@react-three')) return 'three'
             return 'vendor'
           }
         },

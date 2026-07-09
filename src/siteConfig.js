@@ -357,6 +357,30 @@ export const ROUTE_META = {
       },
     ],
   },
+  nbcTools: {
+    title: `Builder Tools — Nation Builders Corp`,
+    description: "Every Nation Builders workbook as a fillable, interactive on-site tool: Values Commitment, Project Planner, Monthly Impact Log, Impact Report Builder and the Mentor Checklist — with charts, autosave and export.",
+    canonicalPath: "/nbc/tools",
+    image: "/photos/nbc-og.png",
+  },
+  nbcStudents: {
+    title: `For Students — Nation Builders Corp`,
+    description: "Your builder journey: get your Builder ID, take the free course, launch a community project, track your impact, and win recognition at the July Grand Finale.",
+    canonicalPath: "/nbc/students",
+    image: "/photos/nbc-og.png",
+  },
+  nbcAdvisors: {
+    title: `For Advisors — Nation Builders Corp`,
+    description: "Guide young Nation Builders. Everything a teacher or mentor needs to run a school club, coach projects, and review impact — with a downloadable Advisor Pack.",
+    canonicalPath: "/nbc/advisors",
+    image: "/photos/nbc-og.png",
+  },
+  nbcSchools: {
+    title: `For Schools — Nation Builders Corp`,
+    description: "Start a Nation Builders Club in your school in four steps. Give your students a nationwide stage for character, service, and real community impact.",
+    canonicalPath: "/nbc/schools",
+    image: "/photos/nbc-og.png",
+  },
   godsUniversity: {
     title: `goDs University — ${SITE.name}`,
     description: "goDs University: choose the Spirit pathway (44-week Bible curriculum, gPA scoring, Parent Portal) or the Skills pathway (Academic Mentoring — weekly sessions, monthly reports, Grades 1–16). Raising the whole child.",

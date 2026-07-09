@@ -9,6 +9,7 @@ import { ROUTE_META, SITE, T, DONATION_DETAILS } from "./siteConfig.js";
 import { usePageMeta } from "./usePageMeta.js";
 import { submitJsonForm } from "./formSubmit.js";
 import { trackEvent } from "./analytics.js";
+import { referralFields } from "./nbc/referral.js";
 
 const FUND_ENDPOINT = "https://formsubmit.co/ajax/" + SITE.operationsEmail;
 const PAYSTACK_GIVE = "https://paystack.shop/pay/kin";
@@ -41,6 +42,7 @@ export default function NBCFund({ dark }) {
         Name: form.name, Organisation: form.org, Email: form.email,
         WhatsApp: form.whatsapp, Tier: form.tier, IntendedAmount: form.amount,
         Message: form.message, Source: "NBC Fund page",
+        ...referralFields(),
       }, "NBC Funder inquiry");
       trackEvent("nbc_funder_inquiry", { tier: form.tier || "unspecified" });
       setStatus("done");

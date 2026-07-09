@@ -1,25 +1,54 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Download, Share2, Sparkles, ArrowRight, RefreshCw, Check } from "lucide-react";
+import { Download, Share2, Sparkles, ArrowRight, RefreshCw, Check, Camera, User } from "lucide-react";
 import NBCEmblem from "./NBCEmblem.jsx";
 import { C, PILLARS, STATES, NBC, makeBuilderId } from "./nbcBrand.js";
 import { CREST_SVG, svgToImage, roundRect } from "./crestSvg.js";
 import { addBuilder } from "./builderRoster.js";
-import { SITE } from "../siteConfig.js";
+import { myShareLink, bumpInviteCount, inviteCount } from "./referral.js";
 import { trackEvent } from "../analytics.js";
 
 const STORE = "nbc_builder_v1";
 const YEAR = 2026;
+const PHOTO_SIZE = 320; // stored square, downscaled client-side before it ever touches localStorage
+
+// Downscale + center-crop a File to a square JPEG data URL so we never store
+// a multi-megabyte phone photo in localStorage.
+function fileToSquareDataUrl(file, size = PHOTO_SIZE) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    const reader = new FileReader();
+    reader.onerror = reject;
+    reader.onload = () => {
+      img.onerror = reject;
+      img.onload = () => {
+        const side = Math.min(img.width, img.height);
+        const sx = (img.width - side) / 2;
+        const sy = (img.height - side) / 2;
+        const cv = document.createElement("canvas");
+        cv.width = size; cv.height = size;
+        const ctx = cv.getContext("2d");
+        ctx.drawImage(img, sx, sy, side, side, 0, 0, size, size);
+        resolve(cv.toDataURL("image/jpeg", 0.86));
+      };
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
 
 export default function BuilderID() {
   const [name, setName] = useState("");
   const [stateSel, setStateSel] = useState("");
   const [pillar, setPillar] = useState(PILLARS[0].key);
+  const [photo, setPhoto] = useState("");
   const [issued, setIssued] = useState("");
   const [saved, setSaved] = useState(false);
   const [busy, setBusy] = useState(false);
   const [shared, setShared] = useState(false);
+  const [invites, setInvites] = useState(0);
+  const fileRef = useRef(null);
 
   useEffect(() => {
     try {
@@ -27,9 +56,10 @@ export default function BuilderID() {
       if (raw) {
         const d = JSON.parse(raw);
         setName(d.name || ""); setStateSel(d.state || ""); setPillar(d.pillar || PILLARS[0].key);
-        setIssued(d.issued || ""); setSaved(true);
+        setPhoto(d.photo || ""); setIssued(d.issued || ""); setSaved(true);
       }
     } catch { /* ignore */ }
+    setInvites(inviteCount());
   }, []);
 
   const id = makeBuilderId(name || "builder", YEAR);
@@ -42,20 +72,30 @@ export default function BuilderID() {
     } catch { return `Jul ${YEAR}`; }
   };
 
+  const pickPhoto = () => fileRef.current?.click();
+  const onPhotoChange = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    try {
+      const dataUrl = await fileToSquareDataUrl(file);
+      setPhoto(dataUrl);
+    } catch { /* ignore bad file */ }
+  };
+
   const generate = () => {
     if (!name.trim()) return;
     const stamp = issued || monthYear();
     setIssued(stamp);
-    const record = { name: name.trim(), state: stateSel, pillar, issued: stamp, id };
+    const record = { name: name.trim(), state: stateSel, pillar, photo, issued: stamp, id };
     try { localStorage.setItem(STORE, JSON.stringify(record)); } catch { /* ignore */ }
     addBuilder({ name: name.trim(), state: stateSel || "Nigeria", pillar, id });
-    trackEvent("nbc_builder_id_generated", { state: stateSel || "unknown", pillar });
+    trackEvent("nbc_builder_id_generated", { state: stateSel || "unknown", pillar, hasPhoto: !!photo });
     setSaved(true);
   };
 
   const reset = () => { setSaved(false); setShared(false); };
 
-  // Render the card to a high-res PNG blob.
+  // Render the card to a high-res PNG blob — same layout as the live preview.
   const renderCard = async () => {
     const W = 1000, H = 630, S = 2;
     const cv = document.createElement("canvas");
@@ -78,48 +118,70 @@ export default function BuilderID() {
     ctx.strokeStyle = "rgba(230,201,143,0.5)"; ctx.lineWidth = 2;
     roundRect(ctx, 26, 26, W - 52, H - 52, 26); ctx.stroke();
 
-    // Crest
-    try { const crest = await svgToImage(CREST_SVG); ctx.drawImage(crest, 60, 70, 150, 150); } catch { /* ignore */ }
-
-    // Header text
+    // Header: crest + wordmark
+    try { const crest = await svgToImage(CREST_SVG); ctx.drawImage(crest, 60, 56, 72, 72); } catch { /* ignore */ }
     ctx.textBaseline = "alphabetic";
     ctx.fillStyle = "#E6C98F";
-    ctx.font = "800 26px 'Plus Jakarta Sans', sans-serif";
-    ctx.fillText("NATION BUILDERS CORP", 240, 110);
+    ctx.font = "800 24px 'Plus Jakarta Sans', sans-serif";
+    ctx.fillText("NATION BUILDERS CORP", 148, 84);
     ctx.fillStyle = "rgba(250,249,246,0.55)";
-    ctx.font = "500 20px 'DM Sans', sans-serif";
-    ctx.fillText(`Class of ${YEAR}  ·  ${NBC.motto}`, 240, 142);
+    ctx.font = "500 17px 'DM Sans', sans-serif";
+    ctx.fillText(`Class of ${YEAR}  ·  ${NBC.motto}`, 148, 110);
 
-    // Name
+    // Photo — circular, or a placeholder disc with the initial
+    const px = 60, py = 168, pd = 168, pr = pd / 2;
+    ctx.save();
+    ctx.beginPath(); ctx.arc(px + pr, py + pr, pr, 0, Math.PI * 2); ctx.closePath(); ctx.clip();
+    if (photo) {
+      try {
+        const img = await loadRasterImage(photo);
+        ctx.drawImage(img, px, py, pd, pd);
+      } catch {
+        ctx.fillStyle = "#0F3322"; ctx.fillRect(px, py, pd, pd);
+      }
+    } else {
+      ctx.fillStyle = "#0F3322"; ctx.fillRect(px, py, pd, pd);
+    }
+    ctx.restore();
+    ctx.strokeStyle = "rgba(230,201,143,0.55)"; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.arc(px + pr, py + pr, pr, 0, Math.PI * 2); ctx.stroke();
+    if (!photo) {
+      ctx.fillStyle = "#E6C98F";
+      ctx.font = "900 64px 'Playfair Display', serif";
+      ctx.textAlign = "center";
+      ctx.fillText(displayName.charAt(0).toUpperCase(), px + pr, py + pr + 22);
+      ctx.textAlign = "left";
+    }
+
+    // Name + ID, to the right of the photo
+    const tx = px + pd + 40;
     ctx.fillStyle = "#FAF9F6";
-    ctx.font = "900 62px 'Playfair Display', serif";
-    ctx.fillText(displayName.slice(0, 22), 60, 330);
-
-    // ID
+    ctx.font = "900 48px 'Playfair Display', serif";
+    ctx.fillText(displayName.slice(0, 20), tx, 240);
     ctx.fillStyle = "#E6C98F";
-    ctx.font = "500 30px 'DM Mono', monospace";
-    ctx.fillText(id, 62, 380);
+    ctx.font = "500 26px 'DM Mono', monospace";
+    ctx.fillText(id, tx, 282);
 
-    // Meta row
+    // Meta row under photo/name block
     ctx.fillStyle = "rgba(250,249,246,0.5)";
-    ctx.font = "700 16px 'Plus Jakarta Sans', sans-serif";
-    ctx.fillText("STATE", 62, 445);
-    ctx.fillText("PILLAR", 320, 445);
+    ctx.font = "700 15px 'Plus Jakarta Sans', sans-serif";
+    ctx.fillText("STATE", tx, 320);
+    ctx.fillText("PILLAR", tx + 240, 320);
     ctx.fillStyle = "#FAF9F6";
-    ctx.font = "700 26px 'DM Sans', sans-serif";
-    ctx.fillText(stateSel || "Nigeria", 62, 478);
-    ctx.fillText(pillarObj.key, 320, 478);
+    ctx.font = "700 22px 'DM Sans', sans-serif";
+    ctx.fillText(stateSel || "Nigeria", tx, 350);
+    ctx.fillText(pillarObj.key, tx + 240, 350);
 
     // Footer motto / signature
     ctx.strokeStyle = "rgba(230,201,143,0.25)"; ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(62, 540); ctx.lineTo(W - 62, 540); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(60, 500); ctx.lineTo(W - 60, 500); ctx.stroke();
     ctx.fillStyle = "rgba(250,249,246,0.6)";
     ctx.font = "italic 500 22px 'Playfair Display', serif";
-    ctx.fillText("“I am a Nation Builder.”", 62, 585);
+    ctx.fillText("“I am a Nation Builder.”", 60, 550);
     ctx.fillStyle = "#E6C98F";
     ctx.font = "700 18px 'Plus Jakarta Sans', sans-serif";
     ctx.textAlign = "right";
-    ctx.fillText("nbc.kidsinspiringnation.org", W - 62, 585);
+    ctx.fillText("nbc.kidsinspiringnation.org", W - 60, 550);
     ctx.textAlign = "left";
 
     return new Promise((res) => cv.toBlob((b) => res(b), "image/png"));
@@ -142,13 +204,16 @@ export default function BuilderID() {
     try {
       const blob = await renderCard();
       const file = new File([blob], `${id}.png`, { type: "image/png" });
-      const text = `I just became a Nation Builder 🇳🇬 ${id}. Join me — build the Nigeria you want to see.`;
+      const link = myShareLink("/NBC"); // carries my Builder ID as ?ref=
+      const text = `I just became a Nation Builder 🇳🇬 ${id}. Join me — build the Nigeria you want to see. ${link}`;
       trackEvent("nbc_builder_id_share", { id });
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        await navigator.share({ files: [file], text, title: "I'm a Nation Builder" });
+        await navigator.share({ files: [file], text, title: "I'm a Nation Builder", url: link });
+        bumpInviteCount(); setInvites(inviteCount());
         setShared(true);
       } else {
-        await navigator.clipboard.writeText(`${text} ${SITE.siteUrl}/NBC`);
+        await navigator.clipboard.writeText(text);
+        bumpInviteCount(); setInvites(inviteCount());
         setShared(true); setTimeout(() => setShared(false), 2200);
         await download();
       }
@@ -163,19 +228,40 @@ export default function BuilderID() {
           {!saved ? (
             <motion.div key="form" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }}>
               <div style={{ display: "flex", flexDirection: "column", gap: "1.1rem" }}>
+                {/* Photo picker */}
+                <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+                  <input ref={fileRef} type="file" accept="image/*" onChange={onPhotoChange} style={{ display: "none" }} />
+                  <button type="button" onClick={pickPhoto}
+                    style={{ width: 72, height: 72, borderRadius: "50%", flexShrink: 0, position: "relative", overflow: "hidden",
+                      border: `2px solid ${photo ? C.gold : "rgba(250,249,246,.25)"}`, background: "rgba(255,255,255,.05)",
+                      display: "grid", placeItems: "center", cursor: "pointer", padding: 0 }}>
+                    {photo ? (
+                      <img src={photo} alt="Your photo" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                    ) : (
+                      <User size={28} color="rgba(250,249,246,.4)" />
+                    )}
+                    <div style={{ position: "absolute", bottom: 0, insetInline: 0, background: "rgba(5,20,13,.75)", display: "grid", placeItems: "center", padding: "3px 0" }}>
+                      <Camera size={12} color={C.goldL} />
+                    </div>
+                  </button>
+                  <div>
+                    <div style={{ fontWeight: 800, fontSize: ".92rem", color: "#FAF9F6" }}>Add your photo</div>
+                    <div style={{ fontSize: ".78rem", color: "rgba(250,249,246,.5)" }}>Optional — makes your card feel real.</div>
+                  </div>
+                </div>
                 <div>
                   <label style={lbl}>Your first name</label>
                   <input value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. Amara" style={field} maxLength={22} />
                 </div>
                 <div>
-                  <label style={lbl}>Your state</label>
+                  <label style={lbl}>Your state <span style={{ fontWeight: 400, color: "rgba(250,249,246,.4)" }}>(optional)</span></label>
                   <select value={stateSel} onChange={(e) => setStateSel(e.target.value)} style={field}>
                     <option value="">Select your state</option>
                     {STATES.map((s) => <option key={s} value={s}>{s}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label style={lbl}>The value you'll carry</label>
+                  <label style={lbl}>The value you'll carry <span style={{ fontWeight: 400, color: "rgba(250,249,246,.4)" }}>(optional)</span></label>
                   <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
                     {PILLARS.map((p) => (
                       <button key={p.key} type="button" onClick={() => setPillar(p.key)}
@@ -195,7 +281,7 @@ export default function BuilderID() {
                     background: name.trim() ? C.gold : "rgba(250,249,246,.12)", color: name.trim() ? "#14532d" : "rgba(250,249,246,.4)" }}>
                   <Sparkles size={18} /> Generate my Builder ID
                 </button>
-                <p style={{ fontSize: ".8rem", color: "rgba(250,249,246,.45)", margin: 0 }}>Free · takes 30 seconds · no sign-up needed to start.</p>
+                <p style={{ fontSize: ".8rem", color: "rgba(250,249,246,.45)", margin: 0 }}>Free · takes 30 seconds · only your name is required.</p>
               </div>
             </motion.div>
           ) : (
@@ -217,6 +303,11 @@ export default function BuilderID() {
                   <Download size={17} /> {busy ? "Rendering…" : "Download"}
                 </button>
               </div>
+              {invites > 0 && (
+                <p style={{ marginTop: ".9rem", fontSize: ".85rem", color: C.goldL, fontWeight: 700, display: "inline-flex", alignItems: "center", gap: 6 }}>
+                  <Sparkles size={14} /> You've invited {invites} {invites === 1 ? "builder" : "builders"} so far — the movement grows with you.
+                </p>
+              )}
               <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", marginTop: "1.5rem" }}>
                 <Link to="/NBC/register" style={{ color: C.goldL, fontWeight: 800, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6 }}>Register your project <ArrowRight size={15} /></Link>
                 <Link to="/nbc/course" style={{ color: "rgba(250,249,246,.7)", fontWeight: 700, textDecoration: "none" }}>Start the course</Link>
@@ -229,34 +320,59 @@ export default function BuilderID() {
 
       {/* Live card preview */}
       <motion.div initial={{ opacity: 0, scale: 0.95, rotate: -1 }} whileInView={{ opacity: 1, scale: 1, rotate: 0 }} viewport={{ once: true }} transition={{ type: "spring", stiffness: 120, damping: 16 }}>
-        <div style={{ position: "relative", borderRadius: 24, padding: "1.75rem", aspectRatio: "1000 / 630",
+        <div style={{ position: "relative", borderRadius: 24, padding: "1.6rem", aspectRatio: "1000 / 630",
           background: "linear-gradient(135deg, #0B2A1B 0%, #08200F 55%, #05140D 100%)",
           border: `1.5px solid rgba(230,201,143,.4)`, boxShadow: "0 30px 70px rgba(0,0,0,.45)", overflow: "hidden" }}>
           <div aria-hidden style={{ position: "absolute", top: -80, right: -60, width: 320, height: 320, borderRadius: "50%", background: "radial-gradient(circle, rgba(197,160,55,.22), transparent 70%)" }} />
           <div style={{ position: "relative", display: "flex", flexDirection: "column", height: "100%", justifyContent: "space-between" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-              <NBCEmblem size={64} ring={false} id="card" />
+            {/* Header: crest + wordmark */}
+            <div style={{ display: "flex", alignItems: "center", gap: ".7rem" }}>
+              <NBCEmblem size={40} ring={false} id="card" />
               <div>
-                <div style={{ color: C.goldL, fontWeight: 800, fontSize: "clamp(.8rem,2.2vw,1rem)", letterSpacing: ".04em" }}>NATION BUILDERS CORP</div>
-                <div style={{ color: "rgba(250,249,246,.55)", fontSize: "clamp(.7rem,1.8vw,.85rem)" }}>Class of {YEAR}</div>
+                <div style={{ color: C.goldL, fontWeight: 800, fontSize: "clamp(.68rem,1.8vw,.85rem)", letterSpacing: ".04em" }}>NATION BUILDERS CORP</div>
+                <div style={{ color: "rgba(250,249,246,.5)", fontSize: "clamp(.6rem,1.5vw,.72rem)" }}>Class of {YEAR}</div>
               </div>
             </div>
-            <div>
-              <div style={{ fontFamily: "'Playfair Display',serif", fontWeight: 900, color: C.cream, fontSize: "clamp(1.5rem,5vw,2.6rem)", lineHeight: 1 }}>{displayName}</div>
-              <div style={{ fontFamily: "'DM Mono',monospace", color: C.goldL, fontSize: "clamp(.9rem,2.6vw,1.25rem)", marginTop: ".35rem" }}>{id}</div>
+
+            {/* Photo + name/id row */}
+            <div style={{ display: "flex", alignItems: "center", gap: "1.1rem" }}>
+              <div style={{ width: "clamp(56px,16vw,88px)", height: "clamp(56px,16vw,88px)", borderRadius: "50%", flexShrink: 0, overflow: "hidden",
+                border: `2px solid ${C.gold}88`, background: "#0F3322", display: "grid", placeItems: "center" }}>
+                {photo ? (
+                  <img src={photo} alt={displayName} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                ) : (
+                  <span style={{ fontFamily: "'Playfair Display',serif", fontWeight: 900, fontSize: "clamp(1.4rem,4vw,2rem)", color: C.goldL }}>
+                    {displayName.charAt(0).toUpperCase()}
+                  </span>
+                )}
+              </div>
+              <div style={{ minWidth: 0 }}>
+                <div style={{ fontFamily: "'Playfair Display',serif", fontWeight: 900, color: C.cream, fontSize: "clamp(1.25rem,4.4vw,2.1rem)", lineHeight: 1.05, wordBreak: "break-word" }}>{displayName}</div>
+                <div style={{ fontFamily: "'DM Mono',monospace", color: C.goldL, fontSize: "clamp(.8rem,2.2vw,1.05rem)", marginTop: ".25rem" }}>{id}</div>
+              </div>
             </div>
+
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: "1rem" }}>
               <div style={{ display: "flex", gap: "1.5rem" }}>
                 <Meta k="State" v={stateSel || "Nigeria"} />
                 <Meta k="Pillar" v={`${pillarObj.emoji} ${pillarObj.key}`} />
               </div>
-              <div style={{ fontStyle: "italic", fontFamily: "'Playfair Display',serif", color: "rgba(250,249,246,.6)", fontSize: "clamp(.75rem,2vw,1rem)", textAlign: "right" }}>"I am a<br />Nation Builder."</div>
+              <div style={{ fontStyle: "italic", fontFamily: "'Playfair Display',serif", color: "rgba(250,249,246,.6)", fontSize: "clamp(.7rem,1.8vw,.9rem)", textAlign: "right" }}>"I am a<br />Nation Builder."</div>
             </div>
           </div>
         </div>
       </motion.div>
     </div>
   );
+}
+
+function loadRasterImage(src) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = reject;
+    img.src = src;
+  });
 }
 
 function Meta({ k, v }) {

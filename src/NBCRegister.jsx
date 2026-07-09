@@ -81,6 +81,7 @@ export default function NBCRegister() {
     const [submitted, setSubmitted] = useState(false);
     const [activeValueModal, setActiveValueModal] = useState(null);
     const [submitError, setSubmitError] = useState("");
+    const [showMoreProject, setShowMoreProject] = useState(false);
     
     // Centralized form state
     const [formData, setFormData] = useState({
@@ -141,7 +142,7 @@ export default function NBCRegister() {
         }));
     };
 
-    const TOTAL_STEPS = 5; // Step 5 is Review
+    const TOTAL_STEPS = 4; // Step 4 is Review — Team info merged into Project step
 
     // Auto-fill referral code from URL ?ref=
     useEffect(() => {
@@ -286,7 +287,7 @@ export default function NBCRegister() {
         try {
             await submitUrlEncodedForm(SCRIPT_URL, payload, 'NBC registration');
 
-            setRefLink(`${window.location.origin}/NBC/register?ref=${nbcId}`);
+            setRefLink(`https://nbc.kidsinspiringnation.org/NBC?ref=${nbcId}`);
             setUserId(nbcId);
             setSubmitted(true);
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -300,8 +301,7 @@ export default function NBCRegister() {
 
     const stepLabels = [
         '📋 Personal Info',
-        '👥 Team Info',
-        '💡 Project Details',
+        '💡 Project & Team',
         '👨‍🏫 Mentor & Agreement',
         '👀 Review & Confirm'
     ];
@@ -460,8 +460,8 @@ export default function NBCRegister() {
                                                         <p style={{ fontSize: '0.7rem', color: '#94a3b8', marginTop: '0.2rem' }}>11 digits, no spaces</p>
                                                     </div>
                                                     <div>
-                                                        <label className={LABEL}>WhatsApp Number <span style={{ color: '#ef4444' }}>*</span></label>
-                                                        <input type="tel" name="whatsapp" value={formData.whatsapp} onChange={handleInputChange} required pattern="[0-9]{11}" className={INPUT} placeholder="08012345678" />
+                                                        <label className={LABEL}>WhatsApp Number <span style={{ fontWeight: 400, color: '#64748b' }}>(Optional)</span></label>
+                                                        <input type="tel" name="whatsapp" value={formData.whatsapp} onChange={handleInputChange} pattern="[0-9]{11}" className={INPUT} placeholder="08012345678" />
                                                         <p style={{ fontSize: '0.7rem', color: '#94a3b8', marginTop: '0.2rem' }}>WhatsApp is preferred for updates</p>
                                                     </div>
                                                     <div style={{ gridColumn: '1 / -1' }}>
@@ -481,16 +481,16 @@ export default function NBCRegister() {
                                                         </select>
                                                     </div>
                                                     <div>
-                                                        <label className={LABEL}>LGA <span style={{ color: '#ef4444' }}>*</span></label>
-                                                        <input type="text" name="lga" value={formData.lga} onChange={handleInputChange} required className={INPUT} placeholder="e.g. Ikeja" />
+                                                        <label className={LABEL}>LGA <span style={{ fontWeight: 400, color: '#64748b' }}>(Optional)</span></label>
+                                                        <input type="text" name="lga" value={formData.lga} onChange={handleInputChange} className={INPUT} placeholder="e.g. Ikeja" />
                                                     </div>
                                                     <div>
-                                                        <label className={LABEL}>City / Town <span style={{ color: '#ef4444' }}>*</span></label>
-                                                        <input type="text" name="city" value={formData.city} onChange={handleInputChange} required className={INPUT} placeholder="Where do you live?" />
+                                                        <label className={LABEL}>City / Town <span style={{ fontWeight: 400, color: '#64748b' }}>(Optional)</span></label>
+                                                        <input type="text" name="city" value={formData.city} onChange={handleInputChange} className={INPUT} placeholder="Where do you live?" />
                                                     </div>
                                                     <div>
-                                                        <label className={LABEL}>Address <span style={{ color: '#ef4444' }}>*</span></label>
-                                                        <input type="text" name="address" value={formData.address} onChange={handleInputChange} required className={INPUT} placeholder="House no. & street" />
+                                                        <label className={LABEL}>Address <span style={{ fontWeight: 400, color: '#64748b' }}>(Optional)</span></label>
+                                                        <input type="text" name="address" value={formData.address} onChange={handleInputChange} className={INPUT} placeholder="House no. & street" />
                                                     </div>
                                                 </div>
                                             </motion.div>
@@ -501,62 +501,66 @@ export default function NBCRegister() {
                                             <motion.div key="s2" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.25 }} className="space-y-5">
                                                 <div>
                                                     <label className={LABEL}>Solo or Team? <span style={{ color: '#ef4444' }}>*</span></label>
-                                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: '0.5rem' }}>
+                                                    <div style={{ display: 'flex', gap: '0.75rem', marginTop: '0.5rem' }}>
                                                         {['Solo', 'Team'].map(v => (
-                                                            <label key={v} style={{ display: 'flex', alignItems: 'center', padding: '1rem', border: `2px solid ${formData.team_type === v ? T.green : '#e2e8f0'}`, borderRadius: '14px', cursor: 'pointer', background: formData.team_type === v ? '#f0fdf4' : 'transparent', transition: 'all 0.2s' }}>
+                                                            <label key={v} style={{ flex: 1, display: 'flex', alignItems: 'center', padding: '0.85rem', border: `2px solid ${formData.team_type === v ? T.green : '#e2e8f0'}`, borderRadius: '14px', cursor: 'pointer', background: formData.team_type === v ? '#f0fdf4' : 'transparent', transition: 'all 0.2s' }}>
                                                                 <input type="radio" name="team_type" value={v} checked={formData.team_type === v} onChange={handleInputChange} style={{ display: 'none' }} />
-                                                                <div style={{ width: '20px', height: '20px', borderRadius: '50%', border: `2px solid ${formData.team_type === v ? T.green : '#cbd5e1'}`, marginRight: '0.75rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{formData.team_type === v && <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: T.green }} />}</div>
-                                                                <div><div style={{ fontWeight: 700 }}>{v}</div><div style={{ fontSize: '0.85rem', color: '#64748b' }}>{v === 'Solo' ? 'Working alone' : '2–5 members'}</div></div>
+                                                                <div style={{ width: '18px', height: '18px', borderRadius: '50%', border: `2px solid ${formData.team_type === v ? T.green : '#cbd5e1'}`, marginRight: '0.6rem', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{formData.team_type === v && <div style={{ width: '9px', height: '9px', borderRadius: '50%', background: T.green }} />}</div>
+                                                                <span style={{ fontWeight: 700 }}>{v}</span>
                                                             </label>
                                                         ))}
                                                     </div>
                                                 </div>
                                                 {formData.team_type === 'Team' && (
+                                                    <div className="space-y-3">
+                                                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                                                            <div><label className={LABEL}>Team Name</label><input type="text" name="team_name" value={formData.team_name} onChange={handleInputChange} className={INPUT} /></div>
+                                                            <div><label className={LABEL}>Team Size</label><select name="team_size" value={formData.team_size} onChange={handleInputChange} className={SELECT}><option value="">Select</option>{['2','3','4','5','6+'].map(n => <option key={n} value={n}>{n} members</option>)}</select></div>
+                                                        </div>
+                                                        {teamMembers.map((m, i) => (
+                                                            <div key={i} style={{ display: 'grid', gridTemplateColumns: '1.5fr 0.8fr 1.2fr', gap: '0.5rem', background: '#f8fafc', padding: '0.75rem', borderRadius: '12px' }}>
+                                                                <input type="text" placeholder="Name" value={m.name} onChange={e => handleMemberChange(i, 'name', e.target.value)} className={INPUT} style={{ padding: '0.5rem' }} />
+                                                                <input type="number" placeholder="Age" value={m.age} onChange={e => handleMemberChange(i, 'age', e.target.value)} className={INPUT} style={{ padding: '0.5rem' }} />
+                                                                <input type="tel" placeholder="Phone" value={m.phone} onChange={e => handleMemberChange(i, 'phone', e.target.value)} className={INPUT} style={{ padding: '0.5rem' }} />
+                                                            </div>
+                                                        ))}
+                                                        <button type="button" onClick={handleAddMember} style={{ width: '100%', padding: '0.5rem', border: `2px dashed ${T.green}`, color: T.green, borderRadius: '10px', fontWeight: 700 }}>+ Add Member</button>
+                                                    </div>
+                                                )}
+
+                                                <div style={{ borderTop: '1px solid #e2e8f0', paddingTop: '1.25rem' }} />
+
+                                                <div><label className={LABEL}>Project Title</label><input type="text" name="project_title" value={formData.project_title} onChange={handleInputChange} required className={INPUT} placeholder="e.g. Waste to Wealth" /></div>
+                                                <div><label className={LABEL}>Problem Category</label><select name="problem_category" value={formData.problem_category} onChange={handleInputChange} required className={SELECT}><option value="">Select Category</option>{['Education','Environment','Health','Economic','Civic','Arts','Tech','Other'].map(c => <option key={c}>{c}</option>)}</select></div>
+                                                <div><label className={LABEL}>Problem Statement</label><textarea name="problem_statement" value={formData.problem_statement} onChange={handleInputChange} required rows="3" className={INPUT} placeholder="What specific community issue are you solving?" /></div>
+                                                <div><label className={LABEL}>Solution</label><textarea name="solution" value={formData.solution} onChange={handleInputChange} required rows="3" className={INPUT} placeholder="How exactly will you solve it using character and resourcefulness?" /></div>
+
+                                                {!showMoreProject ? (
+                                                    <button type="button" onClick={() => setShowMoreProject(true)} style={{ fontSize: '0.8rem', fontWeight: 700, color: T.green, background: 'none', border: 'none', cursor: 'pointer', padding: 0, textAlign: 'left' }}>+ Add impact, timeline, budget & resources (optional)</button>
+                                                ) : (
                                                     <div className="space-y-4">
-                                                        <div><label className={LABEL}>Team Name</label><input type="text" name="team_name" value={formData.team_name} onChange={handleInputChange} className={INPUT} /></div>
-                                                        <div><label className={LABEL}>Team Size</label><select name="team_size" value={formData.team_size} onChange={handleInputChange} className={SELECT}><option value="">Select</option>{['2','3','4','5','6+'].map(n => <option key={n} value={n}>{n} members</option>)}</select></div>
-                                                        <div className="space-y-3">
-                                                            {teamMembers.map((m, i) => (
-                                                                <div key={i} style={{ display: 'grid', gridTemplateColumns: '1.5fr 0.8fr 1.2fr', gap: '0.5rem', background: '#f8fafc', padding: '0.75rem', borderRadius: '12px' }}>
-                                                                    <input type="text" placeholder="Name" value={m.name} onChange={e => handleMemberChange(i, 'name', e.target.value)} className={INPUT} style={{ padding: '0.5rem' }} />
-                                                                    <input type="number" placeholder="Age" value={m.age} onChange={e => handleMemberChange(i, 'age', e.target.value)} className={INPUT} style={{ padding: '0.5rem' }} />
-                                                                    <input type="tel" placeholder="Phone" value={m.phone} onChange={e => handleMemberChange(i, 'phone', e.target.value)} className={INPUT} style={{ padding: '0.5rem' }} />
-                                                                </div>
+                                                        <div><label className={LABEL}>Expected Impact <span style={{ fontWeight: 400, color: '#64748b' }}>(Optional)</span></label><textarea name="expected_impact" value={formData.expected_impact} onChange={handleInputChange} rows="2" className={INPUT} placeholder="Who will benefit and what will change?" /></div>
+                                                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                                                            <div><label className={LABEL}>Start <span style={{ fontWeight: 400, color: '#64748b' }}>(Optional)</span></label><input type="date" name="start_date" value={formData.start_date} onChange={handleInputChange} className={INPUT} /></div>
+                                                            <div><label className={LABEL}>End <span style={{ fontWeight: 400, color: '#64748b' }}>(Optional)</span></label><input type="date" name="completion_date" value={formData.completion_date} onChange={handleInputChange} className={INPUT} /></div>
+                                                        </div>
+                                                        <div><label className={LABEL}>Budget (₦) <span style={{ fontWeight: 400, color: '#64748b' }}>(Optional)</span></label><input type="number" name="budget" value={formData.budget} onChange={handleInputChange} className={INPUT} /></div>
+                                                        <div className="space-y-2">
+                                                            <label className={LABEL}>Resources</label>
+                                                            {['Donations', 'Local Materials', 'Borrow', 'In-kind', 'Personal', 'Other'].map(v => (
+                                                                <label key={v} style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', cursor: 'pointer' }}>
+                                                                    <input type="checkbox" name={`funding_${v.toLowerCase().replace(' ', '')}`} checked={formData[`funding_${v.toLowerCase().replace(' ', '')}`]} onChange={handleInputChange} /> <span>{v}</span>
+                                                                </label>
                                                             ))}
-                                                            <button type="button" onClick={handleAddMember} style={{ width: '100%', padding: '0.5rem', border: `2px dashed ${T.green}`, color: T.green, borderRadius: '10px', fontWeight: 700 }}>+ Add Member</button>
                                                         </div>
                                                     </div>
                                                 )}
                                             </motion.div>
                                         )}
 
-                                        {/* ── STEP 3: PROJECT DETAILS ── */}
+                                         {/* ── STEP 3: MENTOR & AGREEMENT ── */}
                                         {step === 3 && (
-                                            <motion.div key="s3" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.25 }} className="space-y-5">
-                                                <div><label className={LABEL}>Project Title</label><input type="text" name="project_title" value={formData.project_title} onChange={handleInputChange} required className={INPUT} placeholder="e.g. Waste to Wealth" /></div>
-                                                <div><label className={LABEL}>Problem Category</label><select name="problem_category" value={formData.problem_category} onChange={handleInputChange} required className={SELECT}><option value="">Select Category</option>{['Education','Environment','Health','Economic','Civic','Arts','Tech','Other'].map(c => <option key={c}>{c}</option>)}</select></div>
-                                                <div><label className={LABEL}>Problem Statement</label><textarea name="problem_statement" value={formData.problem_statement} onChange={handleInputChange} required rows="4" className={INPUT} placeholder="What specific community issue are you solving?" /></div>
-                                                <div><label className={LABEL}>Solution</label><textarea name="solution" value={formData.solution} onChange={handleInputChange} required rows="4" className={INPUT} placeholder="How exactly will you solve it using character and resourcefulness?" /></div>
-                                                <div><label className={LABEL}>Expected Impact</label><textarea name="expected_impact" value={formData.expected_impact} onChange={handleInputChange} required rows="2" className={INPUT} placeholder="Who will benefit and what will change?" /></div>
-                                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-                                                    <div><label className={LABEL}>Start</label><input type="date" name="start_date" value={formData.start_date} onChange={handleInputChange} required className={INPUT} /></div>
-                                                    <div><label className={LABEL}>End</label><input type="date" name="completion_date" value={formData.completion_date} onChange={handleInputChange} required className={INPUT} /></div>
-                                                </div>
-                                                <div><label className={LABEL}>Budget (₦)</label><input type="number" name="budget" value={formData.budget} onChange={handleInputChange} required className={INPUT} /></div>
-                                                <div className="space-y-2">
-                                                    <label className={LABEL}>Resources</label>
-                                                    {['Donations', 'Local Materials', 'Borrow', 'In-kind', 'Personal', 'Other'].map(v => (
-                                                        <label key={v} style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', cursor: 'pointer' }}>
-                                                            <input type="checkbox" name={`funding_${v.toLowerCase().replace(' ', '')}`} checked={formData[`funding_${v.toLowerCase().replace(' ', '')}`]} onChange={handleInputChange} /> <span>{v}</span>
-                                                        </label>
-                                                    ))}
-                                                </div>
-                                            </motion.div>
-                                        )}
-
-                                         {/* ── STEP 4: MENTOR & AGREEMENT ── */}
-                                        {step === 4 && (
-                                            <motion.div key="s4" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.25 }} className="space-y-6">
+                                            <motion.div key="s3b" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.25 }} className="space-y-6">
                                                 <div style={{ background: `linear-gradient(135deg, ${T.green}, ${T.greenD})`, borderRadius: '16px', padding: '1.75rem', color: 'white', boxShadow: '0 10px 30px rgba(11,42,27,0.2)' }}>
                                                     <h3 style={{ fontSize: '1.35rem', fontWeight: 900, fontFamily: "'Playfair Display', serif", marginBottom: '0.6rem', color: T.goldL }}>Guidance & Commitment</h3>
                                                     <p style={{ fontSize: '0.9rem', opacity: 0.85, lineHeight: 1.6 }}>Great projects are built with guidance. Tell us about your mentor, select the values that drive you, and commit to your journey as a National Builder.</p>
@@ -609,25 +613,23 @@ export default function NBCRegister() {
 
                                                 <div className="space-y-3 pt-2">
                                                     <label className={LABEL}>Required Commitments</label>
-                                                    {[
-                                                        { id: 'commitment', text: "I agree to commit to the 6-month duration of the challenge and see my project through to completion." },
-                                                        { id: 'values', text: "I agree to uphold the 8 Core Values of a National Builder in my personal life and project." },
-                                                        { id: 'honesty', text: "I certify that all information provided is true, and this project is my original idea." },
-                                                        { id: 'media', text: "I consent to the use of my photos, videos, and project documentation for educational and promotional purposes." },
-                                                        { id: 'rules', text: "I agree to abide by the official rules, regulations, and judge's decisions of NBC 2025." }
-                                                    ].map(v => (
-                                                        <label key={v.id} style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '0.75rem', fontSize: '0.85rem', cursor: 'pointer', background: '#f8fafc', padding: '1rem', borderRadius: '12px', border: '1px solid #f1f5f9' }}>
-                                                            <input type="checkbox" name={`agree_${v.id}`} checked={formData[`agree_${v.id}`]} onChange={handleInputChange} required style={{ marginTop: '0.15rem' }} /> 
-                                                            <span style={{ color: '#445164', fontWeight: 500 }}>{v.text}</span>
-                                                        </label>
-                                                    ))}
+                                                    <label style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '0.75rem', fontSize: '0.85rem', cursor: 'pointer', background: '#f8fafc', padding: '1rem', borderRadius: '12px', border: '1px solid #f1f5f9' }}>
+                                                        <input type="checkbox" checked={formData.agree_commitment && formData.agree_values && formData.agree_honesty && formData.agree_rules}
+                                                            onChange={(e) => { const v = e.target.checked; setFormData(p => ({ ...p, agree_commitment: v, agree_values: v, agree_honesty: v, agree_rules: v })); }}
+                                                            required style={{ marginTop: '0.15rem' }} />
+                                                        <span style={{ color: '#445164', fontWeight: 500 }}>I commit to the full challenge, will uphold the 8 Core Values, certify this project is my own original idea, and agree to the official rules and judges' decisions.</span>
+                                                    </label>
+                                                    <label style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '0.75rem', fontSize: '0.85rem', cursor: 'pointer', background: '#f8fafc', padding: '1rem', borderRadius: '12px', border: '1px solid #f1f5f9' }}>
+                                                        <input type="checkbox" name="agree_media" checked={formData.agree_media} onChange={handleInputChange} required style={{ marginTop: '0.15rem' }} />
+                                                        <span style={{ color: '#445164', fontWeight: 500 }}>I consent to my photos, videos, and project documentation being used for educational and promotional purposes.</span>
+                                                    </label>
                                                 </div>
                                             </motion.div>
                                         )}
 
-                                        {/* ── STEP 5: REVIEW & CONFIRM ── */}
-                                        {step === 5 && (
-                                            <motion.div key="s5" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.25 }}>
+                                        {/* ── STEP 4: REVIEW & CONFIRM ── */}
+                                        {step === 4 && (
+                                            <motion.div key="s4b" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.25 }}>
                                                 {submitError && (
                                                     <div style={{ marginBottom: '1rem', padding: '1rem 1.25rem', borderRadius: '14px', border: `1px solid ${T.err}33`, background: `${T.err}10`, color: T.err, fontSize: '0.9rem', lineHeight: 1.6 }}>
                                                         {submitError}
@@ -642,18 +644,14 @@ export default function NBCRegister() {
                                                     <ReviewItem label="Location" value={`${formData.city}, ${formData.state}`} />
                                                 </ReviewSection>
 
-                                                <ReviewSection title="Team Status" stepNum={2}>
+                                                <ReviewSection title="Project & Team" stepNum={2}>
                                                     <ReviewItem label="Type" value={formData.team_type} />
                                                     {formData.team_type === 'Team' && <ReviewItem label="Team Name" value={formData.team_name} />}
-                                                </ReviewSection>
-
-                                                <ReviewSection title="Project Vision" stepNum={3}>
                                                     <ReviewItem label="Title" value={formData.project_title} />
                                                     <ReviewItem label="Category" value={formData.problem_category} />
-                                                    <ReviewItem label="Budget" value={`₦${formData.budget}`} />
                                                 </ReviewSection>
 
-                                                <ReviewSection title="Leadership" stepNum={4}>
+                                                <ReviewSection title="Leadership" stepNum={3}>
                                                     <ReviewItem label="Mentor" value={formData.has_mentor === 'Yes' ? formData.mentor_name : 'No'} />
                                                     <ReviewItem label="Core Values" value={selectedValues.join(', ')} />
                                                 </ReviewSection>
