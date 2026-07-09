@@ -56,6 +56,7 @@ import { useLocation } from "react-router-dom";
 import { CONTACT_SUBJECTS, ROUTE_META, SITE, SOCIAL_LINKS, T } from "./siteConfig.js";
 import { usePageMeta } from "./usePageMeta.js";
 import { submitJsonForm } from "./formSubmit.js";
+import { hubConfigured, submitToHub } from "./formHub.js";
 
 const GOOGLE_SCRIPT_URL = import.meta.env.VITE_CONTACT_FORM_URL || "";
 const SOCIAL_ICONS = {
@@ -107,11 +108,15 @@ export default function Contact({ dark }) {
     setStatus("submitting");
     setErrorMessage("");
     try {
-      await submitJsonForm(
-        GOOGLE_SCRIPT_URL,
-        { ...form, type: "contact_form", timestamp: new Date().toISOString() },
-        "Contact form"
-      );
+      if (hubConfigured()) {
+        await submitToHub("contact", form, "Contact form");
+      } else {
+        await submitJsonForm(
+          GOOGLE_SCRIPT_URL,
+          { ...form, type: "contact_form", timestamp: new Date().toISOString() },
+          "Contact form"
+        );
+      }
       setStatus("success");
       setForm({ name: "", email: "", phone: "", subject: "general", message: "" });
       setTouched({});
