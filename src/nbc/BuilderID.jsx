@@ -79,7 +79,16 @@ export default function BuilderID() {
     try {
       const dataUrl = await fileToSquareDataUrl(file);
       setPhoto(dataUrl);
+      // If the card is already minted, persist the new photo immediately.
+      if (saved) {
+        try {
+          const raw = localStorage.getItem(STORE);
+          const d = raw ? JSON.parse(raw) : {};
+          localStorage.setItem(STORE, JSON.stringify({ ...d, photo: dataUrl }));
+        } catch { /* ignore */ }
+      }
     } catch { /* ignore bad file */ }
+    e.target.value = "";
   };
 
   const generate = () => {
@@ -224,13 +233,14 @@ export default function BuilderID() {
     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 340px), 1fr))", gap: "2.5rem", alignItems: "center" }}>
       {/* Controls */}
       <div>
+        {/* One hidden file input serving both the form and the minted state */}
+        <input ref={fileRef} type="file" accept="image/*" onChange={onPhotoChange} style={{ display: "none" }} />
         <AnimatePresence mode="wait">
           {!saved ? (
             <motion.div key="form" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }}>
               <div style={{ display: "flex", flexDirection: "column", gap: "1.1rem" }}>
                 {/* Photo picker */}
                 <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                  <input ref={fileRef} type="file" accept="image/*" onChange={onPhotoChange} style={{ display: "none" }} />
                   <button type="button" onClick={pickPhoto}
                     style={{ width: 72, height: 72, borderRadius: "50%", flexShrink: 0, position: "relative", overflow: "hidden",
                       border: `2px solid ${photo ? C.gold : "rgba(250,249,246,.25)"}`, background: "rgba(255,255,255,.05)",
@@ -301,6 +311,9 @@ export default function BuilderID() {
                 </button>
                 <button onClick={download} disabled={busy} style={btn("rgba(250,249,246,.1)", C.cream, true)}>
                   <Download size={17} /> {busy ? "Rendering…" : "Download"}
+                </button>
+                <button onClick={pickPhoto} disabled={busy} style={btn("rgba(250,249,246,.1)", C.cream, true)}>
+                  <Camera size={17} /> {photo ? "Change photo" : "Add my photo"}
                 </button>
               </div>
               {invites > 0 && (
