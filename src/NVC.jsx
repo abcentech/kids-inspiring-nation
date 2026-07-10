@@ -174,11 +174,11 @@ export default function NVC({ dark }) {
                     </motion.div>
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 150px), 1fr))", gap: "1rem", textAlign: "center" }}>
                         {[
-                            ["639", "children reached", "as at 2025"],
-                            ["365", "events held", "as at 2025"],
-                            ["14", "active programmes", "running year-round"],
-                            ["₦595,119", "top winner's cheque", "2025 Grand Finale"],
-                            ["2017", "building since", `CAC ${SITE.registrationId}`],
+                            ["100+", "schools reached", "across Nigeria"],
+                            ["5", "events held", "flagship gatherings"],
+                            ["₦5m+", "in cash awards", "to young builders"],
+                            ["2021", "building since", `CAC ${SITE.registrationId}`],
+                            ["70", "years to build", "2030 → 2090 mandate"],
                         ].map(([n, l, sub], i) => (
                             <motion.div key={l} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.06 }} viewport={{ once: true }}
                                 style={{ background: s.surf, border: `1px solid ${s.brd}`, borderRadius: 20, padding: "1.5rem 1rem" }}>
@@ -189,7 +189,7 @@ export default function NVC({ dark }) {
                         ))}
                     </div>
                     <p style={{ textAlign: "center", color: s.sub, fontSize: ".85rem", marginTop: "1.5rem", marginBottom: 0 }}>
-                        Numbers from the KidsInspiring Nation 2025 impact records and the Nation Builders Corps National Values Challenge Grand Finale.
+                        Numbers from the KidsInspiring Nation impact records and the Nation Builders Corps National Values Challenge Grand Finales.
                     </p>
                 </div>
             </section>
