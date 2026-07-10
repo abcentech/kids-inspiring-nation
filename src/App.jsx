@@ -747,6 +747,7 @@ function SiteNav({ dark, onGive }) {
       { label: "Contact Us", href: null, icon: "✉️", desc: "Get in touch", action: () => goTo('/contact') },
     ],
     Programs: [
+      { label: "KIND App", href: "https://app.kidsinspiringnation.org", icon: "📱", desc: "Daily family devotional app" },
       { label: "goDs University", href: null, icon: "👑", desc: "Spirit · Skills · Bible & Academic", action: () => goTo('/gU') },
       { label: "Nation Builders Corps", href: null, icon: "🇳🇬", desc: "Psalm 119 → community impact", action: () => goTo('/nation-builders') },
       { label: "Daily Streak", href: null, icon: "📅", desc: "60 seconds every day", action: () => goTo('/daily') },
