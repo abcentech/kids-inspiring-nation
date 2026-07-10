@@ -9,6 +9,7 @@ import { ROUTE_META, SITE, T } from "./siteConfig.js";
 import { usePageMeta } from "./usePageMeta.js";
 import { ShareRow } from "./engagement/GrowthWidgets.jsx";
 import Certificate from "./nbc/Certificate.jsx";
+import BuilderID from "./nbc/BuilderID.jsx";
 import { trackEvent } from "./analytics.js";
 import { NBC_MODULES, CORE_MODULES, VALUES_SERIES, PDF_BASE, getModule } from "./nbcCourse.js";
 import InteractiveBlock, { isPassiveBlock } from "./nbc/course/InteractiveBlocks.jsx";
@@ -127,6 +128,13 @@ function CourseIndex({ dark }) {
             <Certificate achievement="has mastered the 8 Core Values of a Nation Builder" eventName="values_complete" />
           </div>
         )}
+
+        {/* Builder ID — photo upload + shareable card */}
+        <div style={{ marginTop: "3rem" }}>
+          <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(1.4rem,4vw,1.9rem)", fontWeight: 900, margin: "0 0 .35rem" }}>Mint your Builder ID</h2>
+          <p style={{ color: s.sub, margin: "0 0 1.25rem", lineHeight: 1.6 }}>Upload your photo, claim your Builder number, and carry the card that says you build Nigeria. Your photo also appears on your certificates.</p>
+          <BuilderID />
+        </div>
 
         {/* Resource library */}
         <ResourceLibrary s={s} />

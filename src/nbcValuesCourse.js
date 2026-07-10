@@ -16,21 +16,21 @@ export const VALUES_SERIES = [
     proverb: { text: "Cunny die, cunny bury am.", meaning: "Every trick ends in the grave it dug. Build straight — shortcuts are the longest road." },
     title: "Integrity — Do the Correct Thing",
     emoji: "🛡️",
-    summary: "Do wetin correct even when nobody dey look. The value every other value stands on.",
+    summary: "Doing what is right even when nobody is watching. The value every other value stands on.",
     minutes: 6,
     lessons: [
       {
-        heading: "Wetin be integrity?",
+        heading: "What is integrity?",
         body: "Integrity means your inside and your outside match: what you say, what you do, and what you do in secret are the same thing. It is the value every other value stands on — because a builder nobody can trust cannot build anything that lasts.",
         takeaway: "Integrity is who you are when no one is watching.",
         interactions: [
           {
             type: "scenario",
-            prompt: "You dey write exam. Your best friend slide answer paper give you, and the invigilator no dey look. Wetin you go do?",
+            prompt: "You are writing an exam. Your best friend slides their answer paper to you, and the invigilator is not looking. What do you do?",
             options: [
-              { label: "Copy am sharp sharp — na free marks.", feedback: "Those marks are borrowed, not earned. A certificate built on cheating is a building built on sand — one day e go collapse on top your head.", good: false },
+              { label: "Copy it quickly — free marks.", feedback: "Those marks are borrowed, not earned. A certificate built on cheating is a building built on sand — one day e go collapse on top your head.", good: false },
               { label: "Push it back quietly and face your own paper.", feedback: "Correct! You fit lose small marks today, but you keep something worth far more — a name people can trust. That name go open doors wey marks no fit open.", good: true },
-              { label: "Collect am but promise yourself say na only this once.", feedback: "'Only this once' is how every corrupt person started. Integrity no get part-time.", good: false },
+              { label: "Take it, but promise yourself it is only this once.", feedback: "'Only this once' is how every corrupt person started. Integrity no get part-time.", good: false },
             ],
           },
         ],
@@ -82,7 +82,7 @@ export const VALUES_SERIES = [
     minutes: 6,
     lessons: [
       {
-        heading: "Wetin be discipline?",
+        heading: "What is discipline?",
         body: "Discipline is doing what you planned to do, whether or not you feel like it at the moment. Motivation is a visitor — it comes and goes. Discipline is family — it lives with you. Every skill, every project, every great nation is built by people who kept showing up on days they didn't feel like it.",
         takeaway: "You don't need to feel like it. You need to do it.",
         interactions: [
@@ -90,9 +90,9 @@ export const VALUES_SERIES = [
             type: "flip",
             prompt: "Tap each card — motivation talk vs discipline talk.",
             cards: [
-              { front: "\"I no feel like reading today.\"", back: "Discipline says: read the first page. Feelings follow action — start, and the mood go meet you there." },
-              { front: "\"I go start on Monday.\"", back: "Discipline says: start with 10 minutes NOW. Monday na where dreams dey go die." },
-              { front: "\"The project too big.\"", back: "Discipline says: break am. One small brick every day builds the house." },
+              { front: "\"I don't feel like reading today.\"", back: "Discipline says: read the first page. Feelings follow action — start, and the mood go meet you there." },
+              { front: "\"I will start on Monday.\"", back: "Discipline says: start with 10 minutes NOW. Monday na where dreams dey go die." },
+              { front: "\"The project is too big.\"", back: "Discipline says: break am. One small brick every day builds the house." },
             ],
           },
         ],
@@ -122,7 +122,7 @@ export const VALUES_SERIES = [
             items: [
               "Choose one small daily action",
               "Attach it to a fixed time you already keep",
-              "Do it even on days you no feel like am",
+              "Do it even on days you don't feel like it",
               "Resume immediately after any missed day",
               "Watch the results compound into something big",
             ],
@@ -156,7 +156,7 @@ export const VALUES_SERIES = [
     minutes: 6,
     lessons: [
       {
-        heading: "Wetin be wisdom?",
+        heading: "What is wisdom?",
         body: "Knowledge is knowing facts. Wisdom is knowing what to DO with them — the right action, at the right time, in the right way. Nigeria has many brilliant people; what builds a nation is brilliant people who also choose well. Our elders packaged wisdom into proverbs so it could travel light from generation to generation.",
         takeaway: "Knowledge knows the facts. Wisdom knows what to do with them.",
         interactions: [
@@ -179,11 +179,11 @@ export const VALUES_SERIES = [
         interactions: [
           {
             type: "scenario",
-            prompt: "Your club wan fix the broken school toilet, but the principal is in a terrible mood today and exams start tomorrow. Wetin wisdom go do?",
+            prompt: "Your club wants to fix the broken school toilet, but the principal is in a terrible mood today and exams start tomorrow. What would wisdom do?",
             options: [
               { label: "March into the principal's office right now with the demand.", feedback: "Right idea, wrong time. Even a true word at the wrong time becomes a quarrel. Wisdom waits for the door to be open.", good: false },
               { label: "Write the plan neatly, wait for after exams, then book a good time to present it.", feedback: "Na so! Same idea, right timing, right packaging — completely different result. That is wisdom.", good: true },
-              { label: "Abandon the idea — the principal go never gree.", feedback: "Wisdom is not fear. Giving up entirely is not wise timing; it is quitting wearing wisdom's cloth.", good: false },
+              { label: "Abandon the idea — the principal will never agree.", feedback: "Wisdom is not fear. Giving up entirely is not wise timing; it is quitting wearing wisdom's cloth.", good: false },
             ],
           },
         ],
@@ -213,11 +213,11 @@ export const VALUES_SERIES = [
     proverb: { text: "One hand no fit carry load reach head.", meaning: "Even your own success needs other people's hands. Lift others — na so nation dey rise." },
     title: "Service — Put Others First",
     emoji: "🤲",
-    summary: "Use wetin you get to lift people wey need am. The heartbeat of nation building.",
+    summary: "Use what you have to lift those who need it. The heartbeat of nation building.",
     minutes: 6,
     lessons: [
       {
-        heading: "Wetin be service?",
+        heading: "What is service?",
         body: "Service is using what is in your hand — your time, energy, talent — for someone who cannot pay you back. It is the exact opposite of 'wetin dey there for me?'. A nation rises when enough people ask 'wetin I fit give?' instead of 'wetin I fit collect?'.",
         takeaway: "Builders ask 'what can I give?' — not 'what can I get?'",
         interactions: [
@@ -229,7 +229,7 @@ export const VALUES_SERIES = [
               { text: "Teaching your junior ones maths after school, free.", bucket: 0 },
               { text: "Joining the club only because of the prize money.", bucket: 1 },
               { text: "Cleaning the community borehole area every Saturday.", bucket: 0 },
-              { text: "Helping only when the camera dey around.", bucket: 1 },
+              { text: "Helping only when the camera is around.", bucket: 1 },
             ],
           },
         ],
@@ -243,7 +243,7 @@ export const VALUES_SERIES = [
             type: "quiz",
             questions: [
               { q: "What made Dr. Adadevoh's action true service?", options: ["She was paid extra for it", "She protected millions at great personal cost", "She became famous immediately"], answer: 1 },
-              { q: "Your version of service today is…", options: ["Waiting until you are rich enough to help", "Using what is already in your hand for someone who can't repay you", "Doing big things only when NBC dey watch"], answer: 1 },
+              { q: "Your version of service today is…", options: ["Waiting until you are rich enough to help", "Using what is already in your hand for someone who can't repay you", "Doing big things only when NBC is watching"], answer: 1 },
             ],
           },
         ],
@@ -255,10 +255,10 @@ export const VALUES_SERIES = [
         interactions: [
           {
             type: "scenario",
-            prompt: "Your club get ₦2,000 and Saturday free. Which plan is the strongest service?",
+            prompt: "Your club has ₦2,000 and a free Saturday. Which plan is the strongest service?",
             options: [
               { label: "Print club T-shirts so people can know us around town.", feedback: "Branding is fine, but that money serves YOU, not the community. Service points outward.", good: false },
-              { label: "Buy chalk and teach free weekend lessons for primary pupils wey dey struggle.", feedback: "Correct! Small money, big service — and the impact compounds every week you show up.", good: true },
+              { label: "Buy chalk and teach free weekend lessons for primary pupils who are struggling.", feedback: "Correct! Small money, big service — and the impact compounds every week you show up.", good: true },
               { label: "Save the money until it becomes big enough for a borehole.", feedback: "A borehole someday is worth less than literacy today. Start serving with what is in your hand NOW.", good: false },
             ],
           },
@@ -279,15 +279,15 @@ export const VALUES_SERIES = [
     minutes: 6,
     lessons: [
       {
-        heading: "Wetin be justice?",
+        heading: "What is justice?",
         body: "Justice means everyone gets fair treatment — not because of who they know, how they look, where they come from, or how loudly they can shout. In a just team, the quiet member's idea gets the same hearing as the popular member's idea. Injustice anywhere in your club is a crack in your foundation.",
         takeaway: "A team is only as strong as how it treats its weakest voice.",
         interactions: [
           {
             type: "scenario",
-            prompt: "During your club meeting, the loudest boy always talks over Amina, whose ideas are actually good. As team lead, wetin justice demand?",
+            prompt: "During your club meeting, the loudest boy always talks over Amina, whose ideas are actually good. As team lead, what does justice demand?",
             options: [
-              { label: "Let it be — na so life dey; the loud go always win.", feedback: "'Na so life dey' is exactly how injustice survives. Builders exist to change 'na so life dey'.", good: false },
+              { label: "Let it be — that is how life is; the loud always win.", feedback: "'Na so life dey' is exactly how injustice survives. Builders exist to change 'na so life dey'.", good: false },
               { label: "Introduce a rule: everyone speaks in turn, and quiet members are asked directly for their view.", feedback: "Correct! Justice is often a SYSTEM, not just a feeling — fair structures protect fair treatment.", good: true },
               { label: "Ban the loud boy from meetings.", feedback: "That trades one injustice for another. Justice restrains unfairness without becoming unfair.", good: false },
             ],
@@ -303,7 +303,7 @@ export const VALUES_SERIES = [
             type: "quiz",
             questions: [
               { q: "What made Gani Fawehinmi a justice builder?", options: ["He defended those who could not pay or fight for themselves", "He was the richest lawyer in Nigeria", "He avoided all trouble with authority"], answer: 0 },
-              { q: "In your school, justice-building looks like…", options: ["Reporting only your enemies", "Standing up (properly and calmly) when someone is treated unfairly — even if the person no be your friend", "Keeping quiet so wahala no go find you"], answer: 1 },
+              { q: "In your school, justice-building looks like…", options: ["Reporting only your enemies", "Standing up (properly and calmly) when someone is treated unfairly — even if the person is not your friend", "Keeping quiet so that trouble does not find you"], answer: 1 },
             ],
           },
         ],
@@ -337,11 +337,11 @@ export const VALUES_SERIES = [
     proverb: { text: "No matter how night tey, day must break.", meaning: "However long the darkness lasts, dawn is compulsory. Keep building till your daybreak." },
     title: "Perseverance — No Give Up",
     emoji: "🌱",
-    summary: "Fall seven times, stand up eight. Wetin separate finished projects from abandoned ones.",
+    summary: "Fall seven times, stand up eight. What separates finished projects from abandoned ones.",
     minutes: 6,
     lessons: [
       {
-        heading: "Wetin be perseverance?",
+        heading: "What is perseverance?",
         body: "Perseverance is continuing after the excitement has died — after the plan fails once, twice, three times. Nigeria is full of abandoned projects; what the nation needs is finishers. Every real solution you admire failed quietly several times before it worked publicly once.",
         takeaway: "The plan failing is not the project dying — quitting is.",
         interactions: [
@@ -403,7 +403,7 @@ export const VALUES_SERIES = [
     minutes: 6,
     lessons: [
       {
-        heading: "Wetin be humility?",
+        heading: "What is humility?",
         body: "Humility is not thinking small of yourself — it is thinking of yourself less. The humble builder shares credit, learns from anyone (including juniors), and never forgets the people and places that made them. Our elders put it perfectly: the river that forgets its source will dry up.",
         takeaway: "The river that forgets its source will dry up.",
         interactions: [
@@ -425,7 +425,7 @@ export const VALUES_SERIES = [
         interactions: [
           {
             type: "scenario",
-            prompt: "Your project just won the school award. Journalists ask, 'Who did this?' Wetin humility talk?",
+            prompt: "Your project just won the school award. Journalists ask, 'Who did this?' What does humility say?",
             options: [
               { label: "\"Na me get the idea — the others just helped small.\"", feedback: "Even if true, you just taught your team never to give their best for you again. Pride eats its own future.", good: false },
               { label: "\"Our team did this — let me tell you what each person built.\"", feedback: "Correct! Shared credit multiplies loyalty. Next project, the same team go run through wall for you.", good: true },
@@ -463,7 +463,7 @@ export const VALUES_SERIES = [
     minutes: 6,
     lessons: [
       {
-        heading: "Wetin be excellence?",
+        heading: "What is excellence?",
         body: "Excellence is refusing to submit 'manage am like that'. It is the extra pass — the neat handwriting, the third revision, the photo retaken in better light, the report checked twice. Excellence is not perfection or expensive equipment; it is finishing everything you touch at the highest level YOUR hands can reach.",
         takeaway: "'Manage am like that' is the enemy of nation building.",
         interactions: [
@@ -473,9 +473,9 @@ export const VALUES_SERIES = [
             buckets: ["Excellence ✨", "Manage am 😩"],
             items: [
               { text: "Rewriting the report because the first draft was rough.", bucket: 0 },
-              { text: "\"The photo blur small but dem go understand.\"", bucket: 1 },
+              { text: "\"The photo is a little blurry, but they will understand.\"", bucket: 1 },
               { text: "Testing the solution twice before presenting it.", bucket: 0 },
-              { text: "Submitting late and unproofread — \"na the idea matter.\"", bucket: 1 },
+              { text: "Submitting late and unproofread — \"it's the idea that matters.\"", bucket: 1 },
             ],
           },
         ],
@@ -501,9 +501,9 @@ export const VALUES_SERIES = [
         interactions: [
           {
             type: "scenario",
-            prompt: "Your project works, but the poster get spelling mistakes and the photos dark. Presentation na tomorrow. Wetin excellence do?",
+            prompt: "Your project works, but the poster has spelling mistakes and the photos are dark. The presentation is tomorrow. What does excellence do?",
             options: [
-              { label: "Present am like that — the solution na im matter.", feedback: "A great solution presented poorly gets remembered poorly. The wrapping is part of the gift.", good: false },
+              { label: "Present it like that — the solution is what matters.", feedback: "A great solution presented poorly gets remembered poorly. The wrapping is part of the gift.", good: false },
               { label: "Tonight: fix the spellings, re-snap 3 photos in daylight tomorrow morning, print again.", feedback: "Correct! Excellence is often just 2 extra hours nobody else was willing to spend.", good: true },
               { label: "Cancel the presentation until everything is perfect.", feedback: "Excellence ships; perfectionism hides. Improve what you can in the time you have — then show up.", good: false },
             ],
