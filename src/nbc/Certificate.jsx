@@ -46,7 +46,7 @@ export default function Certificate({ achievement = "has completed the Nation Bu
     ctx.textAlign = "center";
     ctx.fillStyle = C.goldD;
     ctx.font = "800 24px 'Plus Jakarta Sans', sans-serif";
-    ctx.fillText("NATION BUILDERS CORP", W / 2, 258);
+    ctx.fillText("NATION BUILDERS CORPS", W / 2, 258);
 
     ctx.fillStyle = C.green;
     ctx.font = "900 58px 'Playfair Display', serif";
@@ -144,7 +144,7 @@ export default function Certificate({ achievement = "has completed the Nation Bu
         {/* Preview */}
         <div style={{ background: "#FAF9F6", color: C.green, borderRadius: 16, padding: "clamp(1.25rem,4vw,2rem)", textAlign: "center", border: `4px double ${C.gold}`, aspectRatio: "1400 / 990", display: "flex", flexDirection: "column", justifyContent: "center", gap: ".4rem" }}>
           <div style={{ display: "flex", justifyContent: "center", marginBottom: ".2rem" }}><NBCEmblem size={54} id="cert" /></div>
-          <div style={{ color: C.goldD, fontWeight: 800, fontSize: "clamp(.6rem,1.6vw,.8rem)", letterSpacing: ".06em" }}>NATION BUILDERS CORP</div>
+          <div style={{ color: C.goldD, fontWeight: 800, fontSize: "clamp(.6rem,1.6vw,.8rem)", letterSpacing: ".06em" }}>NATION BUILDERS CORPS</div>
           <div style={{ fontFamily: "'Playfair Display',serif", fontWeight: 900, fontSize: "clamp(1rem,3vw,1.5rem)" }}>Certificate of Nation Building</div>
           <div style={{ color: "#3D4F46", fontSize: "clamp(.6rem,1.6vw,.8rem)" }}>This certifies that</div>
           <div style={{ fontFamily: "'Playfair Display',serif", fontWeight: 900, fontSize: "clamp(1.3rem,4.2vw,2.1rem)", color: C.green }}>{who}</div>

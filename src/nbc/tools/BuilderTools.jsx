@@ -103,7 +103,7 @@ function ToolView({ dark, tool }) {
   const [step, setStep] = useState(0);
   const [saved, setSaved] = useState(false);
 
-  usePageMeta({ title: `${tool.title} — Nation Builders Corp`, description: tool.tagline, canonicalPath: `/nbc/tools/${tool.slug}`, image: ROUTE_META.nbc.image });
+  usePageMeta({ title: `${tool.title} — Nation Builders Corps`, description: tool.tagline, canonicalPath: `/nbc/tools/${tool.slug}`, image: ROUTE_META.nbc.image });
   useEffect(() => { setData(readTool(tool.slug)); setStep(0); window.scrollTo(0, 0); }, [tool.slug]);
 
   const update = (id, v) => {
@@ -120,7 +120,7 @@ function ToolView({ dark, tool }) {
   const comp = st.summaryComputed ? computed(data) : null;
 
   const exportTxt = () => {
-    const lines = [`${tool.title.toUpperCase()}`, `Nation Builders Corp`, ""];
+    const lines = [`${tool.title.toUpperCase()}`, `Nation Builders Corps`, ""];
     tool.steps.forEach((sec) => {
       lines.push(`## ${sec.heading}`);
       (sec.fields || []).forEach((f) => { if (data[f.id]) lines.push(`- ${f.label}: ${data[f.id]}`); });

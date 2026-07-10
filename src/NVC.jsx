@@ -56,7 +56,7 @@ const INITIATIVES = [
 ];
 
 const FAQS = [
-    { q: "What exactly is the Nation Builders Corp?", a: "A national movement where young people (7–17) become 'Nation Builders' — solving real community problems with character and resourcefulness. It runs July to July, with the school calendar." },
+    { q: "What exactly is the Nation Builders Corps?", a: "A national movement where young people (7–17) become 'Nation Builders' — solving real community problems with character and resourcefulness. It runs July to July, with the school calendar." },
     { q: "How do I join?", a: "Generate your free Builder ID in 30 seconds above — no sign-up needed to start. Then register your project and take the free course when you're ready." },
     { q: "Do I need money to take part?", a: "No. NBC is a test of resourcefulness, not wealth. The best builders solve problems with waste, volunteers, and creativity — often spending zero naira." },
     { q: "When does the program run?", a: "July to July — from the end of one 3rd term to the next. You join in July, build through the terms, meet at the December Conference, and finish at the July Grand Finale." },
@@ -106,7 +106,7 @@ export default function NVC({ dark }) {
 
                 <div style={{ maxWidth: "78rem", margin: "0 auto", padding: "0 clamp(1.25rem,4vw,2.5rem)", position: "relative", zIndex: 2, width: "100%" }}>
                     <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .8 }} style={{ maxWidth: "60rem" }}>
-                        <div style={{ marginBottom: "1.75rem" }}><Eyebrow>🇳🇬 The Nation Builders Corp</Eyebrow></div>
+                        <div style={{ marginBottom: "1.75rem" }}><Eyebrow>🇳🇬 The Nation Builders Corps</Eyebrow></div>
                         <h1 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(3rem, 9vw, 6.8rem)", fontWeight: 900, color: C.cream, lineHeight: .88, letterSpacing: "-.045em", margin: "0 0 1.75rem" }}>
                             Don't wait for the nation.<br /><em style={{ fontStyle: "italic", color: C.goldL }}>Build</em> it.
                         </h1>
@@ -162,7 +162,7 @@ export default function NVC({ dark }) {
             {/* Wall of Builders */}
             <WallOfBuilders />
 
-            {/* Moments — Nation Builders Corp National Values gallery */}
+            {/* Moments — Nation Builders Corps National Values gallery */}
             <GalleryStrip dark={dark} />
 
             {/* Receipts — the proof behind the promise */}
@@ -189,7 +189,7 @@ export default function NVC({ dark }) {
                         ))}
                     </div>
                     <p style={{ textAlign: "center", color: s.sub, fontSize: ".85rem", marginTop: "1.5rem", marginBottom: 0 }}>
-                        Numbers from the KidsInspiring Nation 2025 impact records and the Nation Builders Corp National Values Challenge Grand Finale.
+                        Numbers from the KidsInspiring Nation 2025 impact records and the Nation Builders Corps National Values Challenge Grand Finale.
                     </p>
                 </div>
             </section>
@@ -202,7 +202,7 @@ export default function NVC({ dark }) {
                             <Eyebrow>The mission</Eyebrow>
                             <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(2rem,5vw,3rem)", fontWeight: 900, color: s.txt, lineHeight: 1.1, margin: "1rem 0 1.5rem" }}>Character is the highest form of national capital.</h2>
                             <p style={{ fontSize: "1.1rem", color: s.sub, lineHeight: 1.7, marginBottom: "2rem" }}>
-                                We believe money is secondary to character. The Nation Builders Corp is a meritocracy where young Nigerians learn to build a nation from the ground up — solving local problems using only creativity, discipline, and service.
+                                We believe money is secondary to character. The Nation Builders Corps is a meritocracy where young Nigerians learn to build a nation from the ground up — solving local problems using only creativity, discipline, and service.
                             </p>
                             <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
                                 {[["🎯", "Discipline first", "No handouts. We teach the hustle it takes to lead."], ["🤝", "Radical service", "Lead by solving your neighbour's problems."]].map(([e, t, d]) => (

@@ -42,13 +42,13 @@ export const NBC_MODULES = [
       },
       {
         heading: "Character before cash",
-        body: "The Nation Builders Corp is a meritocracy of character, not wealth. The best builders solve problems with waste, volunteers, and creativity — often spending zero naira. Resourcefulness is the flex.",
+        body: "The Nation Builders Corps is a meritocracy of character, not wealth. The best builders solve problems with waste, volunteers, and creativity — often spending zero naira. Resourcefulness is the flex.",
         takeaway: "Character is the highest form of national capital.",
         interactions: [
           {
             type: "quiz",
             questions: [
-              { q: "What matters most in the Nation Builders Corp?", options: ["How much money you have", "Your character and resourcefulness", "The size of your school"], answer: 1 },
+              { q: "What matters most in the Nation Builders Corps?", options: ["How much money you have", "Your character and resourcefulness", "The size of your school"], answer: 1 },
               { q: "A builder solves a real problem spending ₦0. In NBC that is…", options: ["A weakness — they had no budget", "The flex — resourcefulness is scored highest", "Against the rules"], answer: 1 },
             ],
           },
@@ -233,7 +233,7 @@ export const NBC_MODULES = [
       },
       {
         heading: "No mentor yet? Here's how",
-        body: "Ask one adult this week using a simple line: 'I am joining the Nation Builders Corp to solve [problem]. Will you check in on me once a month?' Most people say yes when a young person asks to serve.",
+        body: "Ask one adult this week using a simple line: 'I am joining the Nation Builders Corps to solve [problem]. Will you check in on me once a month?' Most people say yes when a young person asks to serve.",
         takeaway: "The ask is one sentence. Send it today.",
         interactions: [
           {
@@ -387,6 +387,15 @@ export const NBC_MODULES = [
     ],
   },
 ];
+
+// The Core Values Deep Dive — 8 Pidgin-and-English modules, one per value.
+// Kept in its own file for size; merged here so progress/badges/routing
+// treat them like any other module.
+import { VALUES_SERIES } from "./nbcValuesCourse.js";
+NBC_MODULES.push(...VALUES_SERIES);
+
+export const CORE_MODULES = NBC_MODULES.filter((m) => !m.series);
+export { VALUES_SERIES };
 
 export const PDF_BASE = "/psalm119/downloads/";
 

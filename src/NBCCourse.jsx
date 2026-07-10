@@ -10,7 +10,7 @@ import { usePageMeta } from "./usePageMeta.js";
 import { ShareRow } from "./engagement/GrowthWidgets.jsx";
 import Certificate from "./nbc/Certificate.jsx";
 import { trackEvent } from "./analytics.js";
-import { NBC_MODULES, PDF_BASE, getModule } from "./nbcCourse.js";
+import { NBC_MODULES, CORE_MODULES, VALUES_SERIES, PDF_BASE, getModule } from "./nbcCourse.js";
 import InteractiveBlock, { isPassiveBlock } from "./nbc/course/InteractiveBlocks.jsx";
 import WeeklyStreak from "./nbc/WeeklyStreak.jsx";
 import {
@@ -91,8 +91,46 @@ function CourseIndex({ dark }) {
 
       {/* Module grid */}
       <section style={{ maxWidth: "68rem", margin: "0 auto", padding: "3rem 1.25rem 0" }}>
+        <ModuleGrid modules={CORE_MODULES} state={state} s={s} />
+
+        {/* Core Values Deep Dive series */}
+        <div style={{ margin: "3.5rem 0 1.5rem", padding: "2rem", borderRadius: 24, background: T.greenD, color: T.cream }}>
+          <div style={{ display: "inline-flex", alignItems: "center", gap: 8, color: T.goldL, fontWeight: 800, letterSpacing: ".12em", textTransform: "uppercase", fontSize: ".76rem", marginBottom: ".6rem" }}>
+            🗣️ For English & Pidgin
+          </div>
+          <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(1.6rem,5vw,2.3rem)", fontWeight: 900, margin: "0 0 .5rem" }}>
+            The Core Values Deep Dive
+          </h2>
+          <p style={{ color: "rgba(250,249,246,.82)", lineHeight: 1.6, maxWidth: "56ch", margin: 0 }}>
+            Eight values, eight short modules — taught in plain English <em>and</em> Nigerian Pidgin, with real Naija heroes, proverbs from our elders, and challenges you can live this week. Na here character dey start.
+          </p>
+        </div>
+        <ModuleGrid modules={VALUES_SERIES} state={state} s={s} />
+      </section>
+
+      <section style={{ maxWidth: "68rem", margin: "0 auto", padding: "0 1.25rem" }}>
+        {/* Certificate on full completion */}
+        {overall.pct === 100 && (
+          <div style={{ marginTop: "3rem" }}>
+            <Certificate achievement="has completed the Nation Builders Course" eventName="course_complete" />
+          </div>
+        )}
+
+        {/* Share the course */}
+        <div style={{ marginTop: "3rem", padding: "2rem", borderRadius: 24, background: s.surf, border: `1px solid ${s.brd}`, textAlign: "center" }}>
+          <h3 style={{ fontSize: "1.3rem", fontWeight: 800, margin: "0 0 .5rem" }}>Share nation building with the world</h3>
+          <p style={{ color: s.sub, marginBottom: "1.25rem" }}>Send this free course to a young person who should be a Nation Builder.</p>
+          <ShareRow dark={dark} url={COURSE_URL} text="Take the free Nation Builders Course — learn to build the Nigeria you want to see 🇳🇬" />
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function ModuleGrid({ modules, state, s }) {
+  return (
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 300px), 1fr))", gap: "1.25rem" }}>
-          {NBC_MODULES.map((m, i) => {
+          {modules.map((m, i) => {
             const mp = moduleProgress(m.slug, state);
             return (
               <motion.div key={m.slug} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.04 }}
@@ -120,22 +158,6 @@ function CourseIndex({ dark }) {
             );
           })}
         </div>
-
-        {/* Certificate on full completion */}
-        {overall.pct === 100 && (
-          <div style={{ marginTop: "3rem" }}>
-            <Certificate achievement="has completed the Nation Builders Course" eventName="course_complete" />
-          </div>
-        )}
-
-        {/* Share the course */}
-        <div style={{ marginTop: "3rem", padding: "2rem", borderRadius: 24, background: s.surf, border: `1px solid ${s.brd}`, textAlign: "center" }}>
-          <h3 style={{ fontSize: "1.3rem", fontWeight: 800, margin: "0 0 .5rem" }}>Share nation building with the world</h3>
-          <p style={{ color: s.sub, marginBottom: "1.25rem" }}>Send this free course to a young person who should be a Nation Builder.</p>
-          <ShareRow dark={dark} url={COURSE_URL} text="Take the free Nation Builders Course — learn to build the Nigeria you want to see 🇳🇬" />
-        </div>
-      </section>
-    </div>
   );
 }
 
@@ -252,6 +274,12 @@ function LessonCard({ lesson, done, onComplete, s, n }) {
         <h3 style={{ fontSize: "1.2rem", fontWeight: 800, margin: 0 }}>{lesson.heading}</h3>
       </div>
       <p style={{ color: s.sub, lineHeight: 1.7, margin: "0 0 1rem" }}>{lesson.body}</p>
+      {lesson.pidgin && (
+        <div style={{ padding: "1rem 1.15rem", borderRadius: 14, background: "rgba(20,83,45,.07)", border: `1px solid rgba(20,83,45,.14)`, margin: "0 0 1rem" }}>
+          <div style={{ fontWeight: 800, fontSize: ".72rem", letterSpacing: ".12em", textTransform: "uppercase", color: T.green, marginBottom: ".35rem" }}>🗣️ For Pidgin</div>
+          <p style={{ margin: 0, lineHeight: 1.7, color: s.txt, fontSize: ".97rem" }}>{lesson.pidgin}</p>
+        </div>
+      )}
       <div style={{ padding: ".85rem 1.1rem", borderRadius: 14, background: "rgba(197,160,55,.1)", color: T.goldD, fontWeight: 700, fontSize: ".92rem" }}>
         💡 {lesson.takeaway}
       </div>

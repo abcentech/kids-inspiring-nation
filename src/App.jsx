@@ -748,7 +748,7 @@ function SiteNav({ dark, onGive }) {
     ],
     Programs: [
       { label: "goDs University", href: null, icon: "👑", desc: "Spirit · Skills · Bible & Academic", action: () => goTo('/gU') },
-      { label: "Nation Builders Corp", href: null, icon: "🇳🇬", desc: "Psalm 119 → community impact", action: () => goTo('/nation-builders') },
+      { label: "Nation Builders Corps", href: null, icon: "🇳🇬", desc: "Psalm 119 → community impact", action: () => goTo('/nation-builders') },
       { label: "Daily Streak", href: null, icon: "📅", desc: "60 seconds every day", action: () => goTo('/daily') },
       { label: "Explore All", href: null, icon: "✨", desc: "View our 14 active programmes", action: () => goTo('#programs') },
     ],
