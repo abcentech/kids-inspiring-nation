@@ -138,7 +138,7 @@ export default function BuilderID() {
     ctx.fillText(`Class of ${YEAR}  ·  ${NBC.motto}`, 148, 110);
 
     // Photo — circular, or a placeholder disc with the initial
-    const px = 60, py = 168, pd = 168, pr = pd / 2;
+    const px = 60, py = 150, pd = 210, pr = pd / 2;
     ctx.save();
     ctx.beginPath(); ctx.arc(px + pr, py + pr, pr, 0, Math.PI * 2); ctx.closePath(); ctx.clip();
     if (photo) {
@@ -152,13 +152,13 @@ export default function BuilderID() {
       ctx.fillStyle = "#0F3322"; ctx.fillRect(px, py, pd, pd);
     }
     ctx.restore();
-    ctx.strokeStyle = "rgba(230,201,143,0.55)"; ctx.lineWidth = 3;
-    ctx.beginPath(); ctx.arc(px + pr, py + pr, pr, 0, Math.PI * 2); ctx.stroke();
+    ctx.strokeStyle = "#E6C98F"; ctx.lineWidth = 6;
+    ctx.beginPath(); ctx.arc(px + pr, py + pr, pr - 3, 0, Math.PI * 2); ctx.stroke();
     if (!photo) {
       ctx.fillStyle = "#E6C98F";
-      ctx.font = "900 64px 'Playfair Display', serif";
+      ctx.font = "900 82px 'Playfair Display', serif";
       ctx.textAlign = "center";
-      ctx.fillText(displayName.charAt(0).toUpperCase(), px + pr, py + pr + 22);
+      ctx.fillText(displayName.charAt(0).toUpperCase(), px + pr, py + pr + 28);
       ctx.textAlign = "left";
     }
 
@@ -349,12 +349,13 @@ export default function BuilderID() {
 
             {/* Photo + name/id row */}
             <div style={{ display: "flex", alignItems: "center", gap: "1.1rem" }}>
-              <div style={{ width: "clamp(56px,16vw,88px)", height: "clamp(56px,16vw,88px)", borderRadius: "50%", flexShrink: 0, overflow: "hidden",
-                border: `2px solid ${C.gold}88`, background: "#0F3322", display: "grid", placeItems: "center" }}>
+              <div style={{ width: "clamp(72px,20vw,112px)", height: "clamp(72px,20vw,112px)", borderRadius: "50%", flexShrink: 0, overflow: "hidden",
+                border: `3px solid ${C.goldL}`, boxShadow: `0 0 0 3px rgba(230,201,143,.18), 0 8px 22px rgba(0,0,0,.4)`,
+                background: "#0F3322", display: "grid", placeItems: "center" }}>
                 {photo ? (
                   <img src={photo} alt={displayName} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                 ) : (
-                  <span style={{ fontFamily: "'Playfair Display',serif", fontWeight: 900, fontSize: "clamp(1.4rem,4vw,2rem)", color: C.goldL }}>
+                  <span style={{ fontFamily: "'Playfair Display',serif", fontWeight: 900, fontSize: "clamp(1.8rem,5vw,2.6rem)", color: C.goldL }}>
                     {displayName.charAt(0).toUpperCase()}
                   </span>
                 )}
