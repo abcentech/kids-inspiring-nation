@@ -102,10 +102,34 @@ function CourseIndex({ dark }) {
             The Core Values Deep Dive
           </h2>
           <p style={{ color: "rgba(250,249,246,.82)", lineHeight: 1.6, maxWidth: "56ch", margin: 0 }}>
-            Eight values, eight short modules — taught in plain English <em>and</em> Nigerian Pidgin, with real Naija heroes, proverbs from our elders, and challenges you can live this week. Na here character dey start.
+            Eight values, eight short modules — real Naija heroes, proverbs from our elders, and challenges you can live this week. Na here character dey start.
           </p>
+          {/* 8-value progress dots */}
+          <div style={{ display: "flex", gap: ".5rem", flexWrap: "wrap", marginTop: "1.25rem" }}>
+            {VALUES_SERIES.map((v) => {
+              const done = moduleProgress(v.slug, state).complete;
+              return (
+                <span key={v.slug} title={v.title} style={{ width: 38, height: 38, borderRadius: 999, display: "grid", placeItems: "center", fontSize: "1.05rem", background: done ? v.accent : "rgba(255,255,255,.08)", border: `2px solid ${done ? v.accent : "rgba(255,255,255,.18)"}`, filter: done ? "none" : "grayscale(1)", opacity: done ? 1 : .55 }}>
+                  {v.emoji}
+                </span>
+              );
+            })}
+            <span style={{ alignSelf: "center", fontSize: ".82rem", color: "rgba(250,249,246,.7)", fontWeight: 700, marginLeft: ".25rem" }}>
+              {VALUES_SERIES.filter((v) => moduleProgress(v.slug, state).complete).length}/8 values mastered
+            </span>
+          </div>
         </div>
         <ModuleGrid modules={VALUES_SERIES} state={state} s={s} />
+
+        {/* Values completion certificate */}
+        {VALUES_SERIES.every((v) => moduleProgress(v.slug, state).complete) && (
+          <div style={{ marginTop: "2.5rem" }}>
+            <Certificate achievement="has mastered the 8 Core Values of a Nation Builder" eventName="values_complete" />
+          </div>
+        )}
+
+        {/* Resource library */}
+        <ResourceLibrary s={s} />
       </section>
 
       <section style={{ maxWidth: "68rem", margin: "0 auto", padding: "0 1.25rem" }}>
@@ -127,6 +151,37 @@ function CourseIndex({ dark }) {
   );
 }
 
+const RESOURCES = [
+  { file: "NBC Brochure.pdf", label: "NBC Brochure", note: "The full programme — share with schools, parents & sponsors", emoji: "📘" },
+  { file: "Values Training Workbook.pdf", label: "Values Workbook", note: "The 8 values, on paper", emoji: "📖" },
+  { file: "Project Planning Guide.pdf", label: "Project Planner", note: "From idea to community project", emoji: "🗺️" },
+  { file: "Mentor Guide.pdf", label: "Mentor Guide", note: "For advisors & mentors", emoji: "🧭" },
+  { file: "Monthly Progress Tracker.pdf", label: "Progress Tracker", note: "Log your monthly impact", emoji: "📊" },
+  { file: "Impact Report.pdf", label: "Impact Report", note: "How builders report results", emoji: "🏆" },
+];
+
+function ResourceLibrary({ s }) {
+  return (
+    <div style={{ marginTop: "3rem" }}>
+      <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(1.4rem,4vw,1.9rem)", fontWeight: 900, margin: "0 0 .35rem" }}>Take everything with you</h2>
+      <p style={{ color: s.sub, margin: "0 0 1.25rem", lineHeight: 1.6 }}>The brochure and every builder resource — free to download, print, and share offline.</p>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 250px), 1fr))", gap: ".9rem" }}>
+        {RESOURCES.map((r) => (
+          <a key={r.file} href={`${PDF_BASE}${r.file}`} download
+            style={{ display: "flex", alignItems: "center", gap: ".85rem", padding: "1rem 1.1rem", borderRadius: 16, background: s.surf, border: `1px solid ${s.brd}`, textDecoration: "none", color: s.txt }}>
+            <span style={{ fontSize: "1.6rem" }}>{r.emoji}</span>
+            <span style={{ flex: 1, minWidth: 0 }}>
+              <span style={{ display: "block", fontWeight: 800, fontSize: ".95rem" }}>{r.label}</span>
+              <span style={{ display: "block", fontSize: ".78rem", color: s.sub, lineHeight: 1.4 }}>{r.note}</span>
+            </span>
+            <Download size={17} color={T.goldD} style={{ flexShrink: 0 }} />
+          </a>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function ModuleGrid({ modules, state, s }) {
   return (
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 300px), 1fr))", gap: "1.25rem" }}>
@@ -134,7 +189,7 @@ function ModuleGrid({ modules, state, s }) {
             const mp = moduleProgress(m.slug, state);
             return (
               <motion.div key={m.slug} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.04 }}
-                style={{ background: s.surf, border: `1px solid ${mp.complete ? T.gold : s.brd}`, borderRadius: 22, padding: "1.5rem", display: "flex", flexDirection: "column" }}>
+                style={{ background: s.surf, border: `1px solid ${mp.complete ? T.gold : s.brd}`, borderTop: m.accent ? `5px solid ${m.accent}` : undefined, borderRadius: 22, padding: "1.5rem", display: "flex", flexDirection: "column" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: ".75rem" }}>
                   <span style={{ fontSize: "2rem" }}>{m.emoji}</span>
                   {mp.complete
@@ -142,6 +197,7 @@ function ModuleGrid({ modules, state, s }) {
                     : <span style={{ display: "inline-flex", alignItems: "center", gap: 4, color: s.sub, fontSize: ".78rem" }}><Clock size={13} /> {m.minutes} min</span>}
                 </div>
                 <h3 style={{ fontSize: "1.15rem", fontWeight: 800, margin: "0 0 .4rem" }}>{m.title}</h3>
+                {m.pidgin && <p style={{ fontSize: ".88rem", fontStyle: "italic", color: m.accent || T.goldD, fontWeight: 700, margin: "0 0 .4rem" }}>🗣️ “{m.pidgin}”</p>}
                 <p style={{ fontSize: ".9rem", color: s.sub, lineHeight: 1.5, flex: 1, marginBottom: "1rem" }}>{m.summary}</p>
                 {mp.done > 0 && <div style={{ marginBottom: ".9rem" }}><ProgressBar pct={mp.pct} s={s} /></div>}
                 <div style={{ display: "flex", gap: ".5rem", flexWrap: "wrap" }}>
@@ -198,7 +254,15 @@ function LessonView({ dark, mod }) {
           </div>
           <div style={{ fontSize: "2.4rem", marginBottom: ".5rem" }}>{mod.emoji}</div>
           <h1 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(1.9rem,6vw,3rem)", fontWeight: 900, lineHeight: 1.1, margin: "0 0 .75rem" }}>{mod.title}</h1>
+          {mod.pidgin && <p style={{ fontStyle: "italic", color: T.goldL, fontWeight: 700, fontSize: "1.05rem", margin: "0 0 .6rem" }}>🗣️ “{mod.pidgin}”</p>}
           <p style={{ color: "rgba(250,249,246,.8)", lineHeight: 1.6, marginBottom: "1.25rem" }}>{mod.summary}</p>
+          {mod.proverb && (
+            <div style={{ margin: "0 0 1.25rem", padding: "1rem 1.25rem", borderRadius: 16, background: "rgba(197,160,55,.12)", border: "1px solid rgba(230,201,143,.35)", maxWidth: "34rem" }}>
+              <div style={{ fontWeight: 800, fontSize: ".7rem", letterSpacing: ".14em", textTransform: "uppercase", color: T.goldL, marginBottom: ".3rem" }}>🪶 Elders' Proverb</div>
+              <div style={{ fontFamily: "'Playfair Display',serif", fontStyle: "italic", fontSize: "1.15rem", fontWeight: 700, color: T.cream, lineHeight: 1.4 }}>“{mod.proverb.text}”</div>
+              <div style={{ fontSize: ".85rem", color: "rgba(250,249,246,.75)", marginTop: ".35rem", lineHeight: 1.5 }}>{mod.proverb.meaning}</div>
+            </div>
+          )}
           <div style={{ maxWidth: "26rem" }}>
             <div style={{ display: "flex", justifyContent: "space-between", fontSize: ".78rem", opacity: .8, marginBottom: 6 }}>
               <span><Clock size={12} /> {mod.minutes} min</span><span>{mp.done}/{mp.total} done</span>
@@ -274,12 +338,6 @@ function LessonCard({ lesson, done, onComplete, s, n }) {
         <h3 style={{ fontSize: "1.2rem", fontWeight: 800, margin: 0 }}>{lesson.heading}</h3>
       </div>
       <p style={{ color: s.sub, lineHeight: 1.7, margin: "0 0 1rem" }}>{lesson.body}</p>
-      {lesson.pidgin && (
-        <div style={{ padding: "1rem 1.15rem", borderRadius: 14, background: "rgba(20,83,45,.07)", border: `1px solid rgba(20,83,45,.14)`, margin: "0 0 1rem" }}>
-          <div style={{ fontWeight: 800, fontSize: ".72rem", letterSpacing: ".12em", textTransform: "uppercase", color: T.green, marginBottom: ".35rem" }}>🗣️ For Pidgin</div>
-          <p style={{ margin: 0, lineHeight: 1.7, color: s.txt, fontSize: ".97rem" }}>{lesson.pidgin}</p>
-        </div>
-      )}
       <div style={{ padding: ".85rem 1.1rem", borderRadius: 14, background: "rgba(197,160,55,.1)", color: T.goldD, fontWeight: 700, fontSize: ".92rem" }}>
         💡 {lesson.takeaway}
       </div>
