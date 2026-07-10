@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-07-10T15:05:21.147Z",
+  "updatedAt": "2026-07-10T19:54:40.855Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "BpZBr0smSe8",
+          "title": "Your Life Was Never Meant to Be a Spectator Sport 🏟️",
+          "published": "2026-07-10T17:00:36+00:00"
+        },
         {
           "id": "PLfBvHrf6gk",
           "title": "Why People Care More About Your Love Than You 🤔",
@@ -28,11 +33,6 @@
           "id": "vIhBGh8IXW8",
           "title": "This One Choice Changes How People See You 💡",
           "published": "2026-07-08T05:00:18+00:00"
-        },
-        {
-          "id": "FiSPoqD8GUg",
-          "title": "This is the Oldest Secret for Living Long. Are you missing it? 🚶🏾‍♂️",
-          "published": "2026-07-07T17:29:35+00:00"
         }
       ]
     },
