@@ -41,7 +41,7 @@ export default function NationBuildersCorp({ dark }) {
             </div>
             <h1 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(3rem,7.8vw,5.5rem)", fontWeight: 900, color: T.cream, letterSpacing: "-0.04em", lineHeight: 0.94, marginBottom: "1.2rem" }}>
               Psalm 119<br />
-              <em style={{ fontStyle: "italic", color: T.goldL }}>→ Nation Builders Corp</em>
+              <em style={{ fontStyle: "italic", color: T.goldL }}>→ Nation Builders Corps</em>
             </h1>
             <p style={{ fontSize: "clamp(1rem,2.4vw,1.2rem)", color: "rgba(253,247,236,.72)", lineHeight: 1.78, maxWidth: "62ch", marginBottom: "1.6rem" }}>
               We started in 2021 by rewarding academic rigour and memorisation consistency with a small cash “Star Award” (about ₦11,900). Over the years, that simple spark evolved into a nation-building arm: children and teenagers building real solutions for their communities.
@@ -83,7 +83,7 @@ export default function NationBuildersCorp({ dark }) {
                 From rote to responsibility.
               </div>
               <p style={{ color: p2, lineHeight: 1.75, margin: 0 }}>
-                The Psalm 119 roots remain, but the output evolved: values, resourcefulness, service, and leadership. Nation Builders Corp is where a young person’s faith and skills become visible service.
+                The Psalm 119 roots remain, but the output evolved: values, resourcefulness, service, and leadership. Nation Builders Corps is where a young person’s faith and skills become visible service.
               </p>
             </div>
           </div>
@@ -137,7 +137,7 @@ export default function NationBuildersCorp({ dark }) {
             Build Something That Helps People.
           </div>
           <p style={{ color: "rgba(253,247,236,.7)", maxWidth: "62ch", margin: "0 auto 1.6rem", lineHeight: 1.75 }}>
-            Nation Builders Corp sits inside the NBC programme experience. If you’re new, start with the NBC page to understand how it works, then register.
+            Nation Builders Corps sits inside the NBC programme experience. If you’re new, start with the NBC page to understand how it works, then register.
           </p>
           <div style={{ display: "flex", justifyContent: "center", gap: ".8rem", flexWrap: "wrap" }}>
             <Link to="/NBC" className="gold-btn" style={{ display: "inline-flex", alignItems: "center", gap: ".5rem", padding: ".95em 1.4em", borderRadius: 999, background: T.gold, color: "#fff", fontWeight: 900, textDecoration: "none" }}>

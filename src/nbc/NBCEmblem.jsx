@@ -1,4 +1,4 @@
-// The Nation Builders Corp crest.
+// The Nation Builders Corps crest.
 // A civic emblem: a shield bearing a rising sun (a new dawn) behind ascending
 // pillars (building), crowned by a star (excellence), on a laurel-flanked base.
 // Green + gold. Scales cleanly from a 36px nav mark to the 520px hero fallback,
@@ -7,7 +7,7 @@
 export default function NBCEmblem({ size = 120, ring = true, glow = false, id = "nbc" }) {
   const gid = (n) => `${id}-${n}`;
   return (
-    <svg width={size} height={size} viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Nation Builders Corp crest">
+    <svg width={size} height={size} viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Nation Builders Corps crest">
       <defs>
         <radialGradient id={gid("shield")} cx="50%" cy="34%" r="80%">
           <stop offset="0%" stopColor="#17462D" />

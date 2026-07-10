@@ -107,7 +107,7 @@ export default function SchoolsHub({ dark }) {
             { e: "🧑‍🏫", t: "Adult supervision, always", d: "Every club is guided by a named teacher advisor appointed by the school. No unsupervised activity, ever." },
             { e: "✍️", t: "Parental consent first", d: "Written parental consent is collected for every member before a club is inaugurated. Parents stay informed." },
             { e: "🛡️", t: "Privacy by design", d: "Builders appear publicly by first name only. We never publish surnames, contact details, or locations of minors." },
-            { e: "📜", t: "A registered organisation", d: `Nation Builders Corp is a programme of KidsInspiring Nation, registered in Nigeria (CAC ${SITE.registrationId}) — with full records kept for every club.` },
+            { e: "📜", t: "A registered organisation", d: `Nation Builders Corps is a programme of KidsInspiring Nation, registered in Nigeria (CAC ${SITE.registrationId}) — with full records kept for every club.` },
           ].map((b, i) => (
             <TiltCard key={i} dark={dark}>
               <span style={{ fontSize: "1.6rem" }}>{b.e}</span>

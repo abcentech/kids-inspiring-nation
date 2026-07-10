@@ -1,4 +1,4 @@
-// Photos from previous Nation Builders Corp seasons — the National Values
+// Photos from previous Nation Builders Corps seasons — the National Values
 // collection, shot at the 2025 Grand Finale. All real moments, already
 // hosted in /public/photos/. Order top-to-bottom = display order.
 //
@@ -17,4 +17,4 @@ export const GALLERY = [
   { src: "/photos/Nation_Builders_Program1.jpg", caption: "The next wave, standing — Grand Finale 2025" },
 ];
 
-export const GALLERY_TAG = "Nation Builders Corp · National Values";
+export const GALLERY_TAG = "Nation Builders Corps · National Values";

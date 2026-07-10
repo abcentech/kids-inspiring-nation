@@ -123,7 +123,7 @@ export default function BuilderID() {
     ctx.textBaseline = "alphabetic";
     ctx.fillStyle = "#E6C98F";
     ctx.font = "800 24px 'Plus Jakarta Sans', sans-serif";
-    ctx.fillText("NATION BUILDERS CORP", 148, 84);
+    ctx.fillText("NATION BUILDERS CORPS", 148, 84);
     ctx.fillStyle = "rgba(250,249,246,0.55)";
     ctx.font = "500 17px 'DM Sans', sans-serif";
     ctx.fillText(`Class of ${YEAR}  ·  ${NBC.motto}`, 148, 110);
@@ -329,7 +329,7 @@ export default function BuilderID() {
             <div style={{ display: "flex", alignItems: "center", gap: ".7rem" }}>
               <NBCEmblem size={40} ring={false} id="card" />
               <div>
-                <div style={{ color: C.goldL, fontWeight: 800, fontSize: "clamp(.68rem,1.8vw,.85rem)", letterSpacing: ".04em" }}>NATION BUILDERS CORP</div>
+                <div style={{ color: C.goldL, fontWeight: 800, fontSize: "clamp(.68rem,1.8vw,.85rem)", letterSpacing: ".04em" }}>NATION BUILDERS CORPS</div>
                 <div style={{ color: "rgba(250,249,246,.5)", fontSize: "clamp(.6rem,1.5vw,.72rem)" }}>Class of {YEAR}</div>
               </div>
             </div>

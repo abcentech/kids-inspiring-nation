@@ -30,7 +30,7 @@ export default function GalleryStrip({ dark }) {
             {GALLERY.map((g, i) => (
               <motion.figure key={i} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-40px" }} transition={{ delay: (i % 6) * 0.05 }}
                 style={{ margin: 0, borderRadius: 18, overflow: "hidden", position: "relative", gridRow: g.tall ? "span 2" : undefined, background: C.greenD, border: `1px solid ${C.gold}22` }}>
-                <img src={g.src} alt={g.caption || "Nation Builders Corp"} loading="lazy" style={{ display: "block", width: "100%", height: "100%", objectFit: "cover", minHeight: 200 }} />
+                <img src={g.src} alt={g.caption || "Nation Builders Corps"} loading="lazy" style={{ display: "block", width: "100%", height: "100%", objectFit: "cover", minHeight: 200 }} />
                 {g.caption && (
                   <figcaption style={{ position: "absolute", left: 0, right: 0, bottom: 0, padding: "1.5rem .9rem .8rem", fontSize: ".82rem", fontWeight: 600, color: "#fff", background: "linear-gradient(0deg, rgba(4,17,10,.85), transparent)" }}>
                     {g.caption}

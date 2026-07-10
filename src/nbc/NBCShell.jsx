@@ -6,7 +6,7 @@ import { SITE } from "../siteConfig.js";
 import { NBC, C } from "./nbcBrand.js";
 import NBCEmblem from "./NBCEmblem.jsx";
 
-// The standalone chrome for the Nation Builders Corp. Every /nbc* route renders
+// The standalone chrome for the Nation Builders Corps. Every /nbc* route renders
 // with NBCNav on top and NBCFooter below (wired in App.jsx so they persist
 // across NBC route changes). NBC reads as a self-contained product; the
 // KidsInspiring Nation main site is referenced exactly once — the "Powered by"
@@ -93,7 +93,7 @@ export function NBCNav() {
           <Link to="/NBC" onClick={close} style={{ display: "flex", alignItems: "center", gap: ".6rem", textDecoration: "none", flexShrink: 0 }}>
             <NBCEmblem size={36} ring={false} id="shell-nav" />
             <span style={{ fontWeight: 800, fontSize: ".92rem", color: C.cream, fontFamily: "'Plus Jakarta Sans',sans-serif", letterSpacing: "-.01em", whiteSpace: "nowrap" }}>
-              Nation Builders Corp
+              Nation Builders Corps
             </span>
           </Link>
 
@@ -147,7 +147,7 @@ export function NBCFooter() {
     <footer style={{ background: C.greenD, color: C.cream, padding: "clamp(3rem,7vw,5rem) 0 2.5rem", borderTop: `1px solid ${C.gold}22`, fontFamily: "'DM Sans',sans-serif" }}>
       <div style={{ maxWidth: "80rem", margin: "0 auto", padding: "0 clamp(1.25rem,4vw,2.5rem)", textAlign: "center" }}>
         <div style={{ display: "flex", justifyContent: "center", marginBottom: "1rem" }}><NBCEmblem size={72} id="shell-footer" /></div>
-        <div style={{ fontFamily: "'Playfair Display',serif", fontWeight: 900, fontSize: "1.4rem" }}>Nation Builders Corp</div>
+        <div style={{ fontFamily: "'Playfair Display',serif", fontWeight: 900, fontSize: "1.4rem" }}>Nation Builders Corps</div>
         <p style={{ color: "rgba(250,249,246,.6)", marginBottom: ".9rem", fontStyle: "italic" }}>{NBC.motto}</p>
         <p style={{ color: C.goldL, fontFamily: "'Playfair Display',serif", fontStyle: "italic", fontWeight: 700, fontSize: "1.05rem", letterSpacing: ".01em", marginBottom: "1.5rem" }}>{NBC.mandate}</p>
 

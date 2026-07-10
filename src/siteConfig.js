@@ -71,7 +71,7 @@ export const SITE = {
     instagram: "https://instagram.com/KidsInspiringNation",
     linktree: "https://linktr.ee/KidsInspiringNation",
   },
-  // Nation Builders Corp's own social presence (distinct from the KIN accounts).
+  // Nation Builders Corps's own social presence (distinct from the KIN accounts).
   nbcSocials: {
     instagram: "https://instagram.com/nationbuilderscorp",
     youtube: "https://youtube.com/@NationBuildersCorp",
@@ -157,9 +157,9 @@ export const ROUTE_META = {
     image: "/photos/Community_impact.jpg",
   },
   nationBuilders: {
-    title: `Nation Builders Corp (NBC Origin Story) — ${SITE.name}`,
+    title: `Nation Builders Corps (NBC Origin Story) — ${SITE.name}`,
     description:
-      "The Nation Building arm of KidsInspiring Nation: how Psalm 119 grew from rewarding academic rigour into Nation Builders Corp and community impact.",
+      "The Nation Building arm of KidsInspiring Nation: how Psalm 119 grew from rewarding academic rigour into Nation Builders Corps and community impact.",
     canonicalPath: "/nation-builders",
     image: "/photos/Nation_Builders_Program.jpg",
   },
@@ -315,7 +315,7 @@ export const ROUTE_META = {
     image: "/photos/KINevents.jpg",
   },
   nbc: {
-    title: `Nation Builders Corp — ${SITE.name}`,
+    title: `Nation Builders Corps — ${SITE.name}`,
     description: "Don't wait for the nation — build it. Join a movement of young Nigerians solving real community problems. Get your Builder ID in 30 seconds.",
     canonicalPath: "/NBC",
     image: "/photos/nbc-og.png",
@@ -334,7 +334,7 @@ export const ROUTE_META = {
   },
   nbcFund: {
     title: `Fund Nation Building — ${SITE.name}`,
-    description: "Invest in the Nation Builders Corp: fund school clubs, a free national course, and a movement of young Nigerians solving real community problems.",
+    description: "Invest in the Nation Builders Corps: fund school clubs, a free national course, and a movement of young Nigerians solving real community problems.",
     canonicalPath: "/nbc/fund",
     image: "/photos/nbc-og.png",
     jsonLd: [
@@ -352,7 +352,7 @@ export const ROUTE_META = {
       {
         "@context": "https://schema.org",
         "@type": "DonateAction",
-        name: "Fund the Nation Builders Corp",
+        name: "Fund the Nation Builders Corps",
         recipient: {
           "@type": "NGO",
           name: SITE.name,
@@ -362,25 +362,25 @@ export const ROUTE_META = {
     ],
   },
   nbcTools: {
-    title: `Builder Tools — Nation Builders Corp`,
+    title: `Builder Tools — Nation Builders Corps`,
     description: "Every Nation Builders workbook as a fillable, interactive on-site tool: Values Commitment, Project Planner, Monthly Impact Log, Impact Report Builder and the Mentor Checklist — with charts, autosave and export.",
     canonicalPath: "/nbc/tools",
     image: "/photos/nbc-og.png",
   },
   nbcStudents: {
-    title: `For Students — Nation Builders Corp`,
+    title: `For Students — Nation Builders Corps`,
     description: "Your builder journey: get your Builder ID, take the free course, launch a community project, track your impact, and win recognition at the July Grand Finale.",
     canonicalPath: "/nbc/students",
     image: "/photos/nbc-og.png",
   },
   nbcAdvisors: {
-    title: `For Advisors — Nation Builders Corp`,
+    title: `For Advisors — Nation Builders Corps`,
     description: "Guide young Nation Builders. Everything a teacher or mentor needs to run a school club, coach projects, and review impact — with a downloadable Advisor Pack.",
     canonicalPath: "/nbc/advisors",
     image: "/photos/nbc-og.png",
   },
   nbcSchools: {
-    title: `For Schools — Nation Builders Corp`,
+    title: `For Schools — Nation Builders Corps`,
     description: "Start a Nation Builders Club in your school in four steps. Give your students a nationwide stage for character, service, and real community impact.",
     canonicalPath: "/nbc/schools",
     image: "/photos/nbc-og.png",

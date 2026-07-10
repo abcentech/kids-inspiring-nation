@@ -731,7 +731,7 @@ export default function NBCRegister() {
                                     {[
                                         { label: '📱 WhatsApp', bg: '#25D366', onClick: () => { const m = `🇳🇬 Join me as a NATIONAL BUILDER!\n\nI just registered for NBC — Nigeria's biggest youth challenge for kids!\n✅ Solve real problems in your community\n✅ Learn 8 powerful values\n✅ Compete for ₦3,000,000!\n\nRegister here: ${refLink}\n\n#NationalBuildersCorps`; window.open(`https://wa.me/?text=${encodeURIComponent(m)}`, '_blank'); } },
                                         { label: '📘 Facebook', bg: '#1877F2', onClick: () => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(refLink)}`, '_blank') },
-                                        { label: '🐦 Twitter', bg: '#1DA1F2', onClick: () => { const t = `I just joined Nigeria's National Builders Corp! Competing for ₦3M. Join me:`; window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(t)}&url=${encodeURIComponent(refLink)}`, '_blank'); } },
+                                        { label: '🐦 Twitter', bg: '#1DA1F2', onClick: () => { const t = `I just joined Nigeria's National Builders Corps! Competing for ₦3M. Join me:`; window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(t)}&url=${encodeURIComponent(refLink)}`, '_blank'); } },
                                     ].map(btn => (
                                         <button key={btn.label} onClick={btn.onClick} style={{
                                             flex: 1, padding: '0.65rem', borderRadius: '10px',

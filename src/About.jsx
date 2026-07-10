@@ -99,7 +99,7 @@ const CHAPTERS = [
   },
   {
     id: 6,
-    title: "Nation Builders Corp",
+    title: "Nation Builders Corps",
     date: "2021–2026",
     icon: "🇳🇬",
     color: T.gold,
@@ -107,7 +107,7 @@ const CHAPTERS = [
     preview: "Psalm 119 matured from rigour into community impact — builders solving real problems.",
     full: [
       `The Psalm 119 roots shaped discipline. But the mandate is bigger: nation building.`,
-      `Over the years, the arm matured from rewarding academic rigour to rewarding measurable community impact — Nation Builders Corp.`,
+      `Over the years, the arm matured from rewarding academic rigour to rewarding measurable community impact — Nation Builders Corps.`,
       `In 2026, the headline prize is ₦1,190,000 for the individual or group that can make a real difference in their community.`,
       `Read the full story on the Nation Builders page: kidsinspiringnation.org/nation-builders`,
       `#JesusChristisOurJOY`,
