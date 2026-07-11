@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-07-11T08:16:32.197Z",
+  "updatedAt": "2026-07-11T13:57:30.992Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "MPY0a5_XXg4",
+          "title": "The Richest Place on Earth isn’t where you think 🪦",
+          "published": "2026-07-11T09:41:40+00:00"
+        },
         {
           "id": "BpZBr0smSe8",
           "title": "Your Life Was Never Meant to Be a Spectator Sport 🏟️",
@@ -28,11 +33,6 @@
           "id": "zSSbcuJ7Zbk",
           "title": "Why religion won't give you a long life; Don’t expect to live LONG if you miss this one thing 🤔",
           "published": "2026-07-08T17:00:25+00:00"
-        },
-        {
-          "id": "vIhBGh8IXW8",
-          "title": "This One Choice Changes How People See You 💡",
-          "published": "2026-07-08T05:00:18+00:00"
         }
       ]
     },
