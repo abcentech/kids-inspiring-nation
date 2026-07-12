@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-07-12T04:02:21.305Z",
+  "updatedAt": "2026-07-12T08:33:18.615Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "POouz333H84",
+          "title": "Beyond Statistics: Who Really Numbers Your Days?",
+          "published": "2026-07-12T05:00:25+00:00"
+        },
         {
           "id": "MPY0a5_XXg4",
           "title": "The Richest Place on Earth isn’t where you think 🪦",
@@ -28,11 +33,6 @@
           "id": "WBavB-EUyTw",
           "title": "The One Word Hospitals Can’t Explain 🏥",
           "published": "2026-07-09T05:00:06+00:00"
-        },
-        {
-          "id": "zSSbcuJ7Zbk",
-          "title": "Why religion won't give you a long life; Don’t expect to live LONG if you miss this one thing 🤔",
-          "published": "2026-07-08T17:00:25+00:00"
         }
       ]
     },
