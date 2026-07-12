@@ -56,16 +56,22 @@ const INITIATIVES = [
 ];
 
 const FAQS = [
-    { q: "What exactly is the Nation Builders Corps?", a: "A national movement where young people (7–17) become 'Nation Builders' — solving real community problems with character and resourcefulness. It runs July to July, with the school calendar." },
-    { q: "How do I join?", a: "Generate your free Builder ID in 30 seconds above — no sign-up needed to start. Then register your project and take the free course when you're ready." },
+    { q: "What exactly is the Nation Builders Corps?", a: "A national movement that cultivates patriotic, service-oriented, creative and responsible young leaders — 'Nation Builders' who solve real community problems with character and resourcefulness. It runs July to July, with the school calendar." },
+    { q: "Who can join?", a: "Young Nigerians aged 10 and above with a heart for service and growth — anyone who reflects honesty and hard work, and is willing to commit to weekly action and community impact. Builders are chosen for character and commitment, not grades alone." },
+    { q: "How do I join?", a: "Generate your free Builder ID in 30 seconds above, then register your project and take the free course. Joining through a school runs in four steps: Recruit → Apply ('Why do you want to be a Nation Builder?') → Induct (take the pledge and receive your 'NB' prefix) → Build for a full year." },
     { q: "Do I need money to take part?", a: "No. NBC is a test of resourcefulness, not wealth. The best builders solve problems with waste, volunteers, and creativity — often spending zero naira." },
-    { q: "When does the program run?", a: "July to July — from the end of one 3rd term to the next. You join in July, build through the terms, meet at the December Conference, and finish at the July Grand Finale." },
-    { q: "What is the December Nation Builders Conference?", a: "Our national gathering. Builders and school clubs come together to learn, connect, and showcase the year's work so far — a mid-year boost on the road to the Grand Finale." },
-    { q: "What happens at the July Grand Finale?", a: "It's the culmination of the session and our elite recognition event. The most impactful builders are celebrated, their projects showcased, and ₦3,000,000 in prizes awarded." },
-    { q: "How do I start a Nation Builders Club in my school?", a: "Four steps: find a teacher-advisor, gather at least 10 students, submit the Chapter Request, then send your member roster. Start with the free 'Start a Club' lesson in the course." },
-    { q: "What are the 8 core values?", a: "Integrity, Discipline, Wisdom, Service, Justice, Perseverance, Humility, and Excellence — the building blocks of a true Nation Builder. Learn them in the free course." },
+    { q: "What are the three pillars of NBC?", a: "Spirit, Skills and Service. Spirit shapes your character, Skills prepare your hands (research, critical thinking, leadership, communication), and Service impacts your environment through real community projects." },
+    { q: "What happens during the year?", a: "Every NBC team moves through five stages: Investigation (find a real community problem), Planning (goals, roles, budgets), Action (execute and create measurable change), Reflection (document honestly what worked), and Demonstration (present it all at the Grand Finale)." },
+    { q: "What are the weekly meetings like?", a: "45–60 minutes with your team and teacher-advisor: opening and pledge, roll call and minutes, ~20 minutes of project work, decisions by vote, then actions and logbook. Teams that keep faithful records consistently do better work." },
+    { q: "What is the logbook?", a: "Every team's official record — minutes and attendance, project activity with hours of service, budget records for every naira, photos and evidence of impact, and honest reflections, signed off by the Secretary and Advisor. It doubles as your evidence at the Grand Finale." },
+    { q: "When does the program run?", a: "July to July — from the end of one 3rd term to the next. Term 1: investigate, plan, execute. Term 2: improve and take action. Term 3: reflect and present at the Grand Finale, with the December Conference in between." },
+    { q: "What is the December Nation Builders Conference?", a: "Our national gathering. Builders from schools all over Nigeria meet inspiring mentors, refine their project ideas, receive hands-on training, and forge friendships — leaving equipped to turn plans into action." },
+    { q: "What happens at the July Grand Finale?", a: "The most anticipated event of the year and the culmination of the session. Teams showcase finished community projects to parents, teachers and leaders; the most impactful builders are honoured with awards and national recognition." },
+    { q: "How does my school start a Nation Builders Corps?", a: "Establish: school leadership agrees to host, appoints a teacher-advisor, and secures parental consent. Launch: builders are chosen on character, officers elected, and the logbook opened at a formal induction. Build: a full year of weekly meetings, projects and national events. Submit the Chapter Request to begin." },
+    { q: "What are the 8 core values?", a: "Integrity & Truth-Seeking, Discipline & Diligence, Wisdom & Discernment, Service & Compassion, Justice & Righteousness, Perseverance & Resilience, Humility & Learning, and Excellence & Craftsmanship. Learn all eight in the free course." },
+    { q: "What is the Nation Builders' Pledge?", a: "\"I am a Nation Builder. I choose truth over shortcuts, service over self, and courage over comfort. I will learn with humility, work with discipline, and lead with compassion — building my character, my community, and my nation. So help me God.\"" },
     { q: "Will I get a certificate?", a: "Yes — every builder who submits a complete Impact Report earns a certificate, and top referrers and finalists receive national recognition." },
-    { q: "Is there a community I can join?", a: "Yes. After you register you'll get the link to our official WhatsApp community — the best place for updates and to meet other builders." },
+    { q: "How do I contact the Corps directly?", a: "Talk to your school advisor, call or WhatsApp +234 811 349 4684, or register here to get the link to our official community — the best place for updates and to meet other builders." },
 ];
 
 export default function NVC({ dark }) {
@@ -99,9 +105,14 @@ export default function NVC({ dark }) {
             {/* Hero */}
             <section id="top" style={{ minHeight: "100svh", background: C.greenD, position: "relative", display: "flex", alignItems: "center", overflow: "hidden", padding: "7rem 0 4rem" }}>
                 <div aria-hidden style={{ position: "absolute", inset: 0, background: `radial-gradient(circle at 18% 28%, ${C.gold}18 0%, transparent 42%), radial-gradient(circle at 82% 75%, ${C.green}55 0%, transparent 55%), linear-gradient(160deg, ${C.greenD} 0%, ${C.greenM} 55%, ${C.greenD} 100%)` }} />
-                <motion.div aria-hidden style={{ position: "absolute", right: "-4vw", top: "10vh", y: crestY, opacity: 0.92, zIndex: 1 }}>
+                <motion.div aria-hidden className="nbc-hero-crest" style={{ position: "absolute", right: "-4vw", top: "10vh", y: crestY, zIndex: 1 }}>
                     <Crest3D size={520} emblemId="hero" />
                 </motion.div>
+                <style>{`
+                  .nbc-hero-crest { opacity: .92; }
+                  @media (max-width: 1100px) { .nbc-hero-crest { opacity: .3; } }
+                  @media (max-width: 820px) { .nbc-hero-crest { display: none; } }
+                `}</style>
                 <div aria-hidden style={{ position: "absolute", left: "-3vw", bottom: "-4vh", fontFamily: "'Playfair Display',serif", fontStyle: "italic", fontWeight: 900, fontSize: "34vw", color: "transparent", WebkitTextStroke: `1px ${C.gold}12`, userSelect: "none", lineHeight: .8 }}>NBC</div>
 
                 <div style={{ maxWidth: "78rem", margin: "0 auto", padding: "0 clamp(1.25rem,4vw,2.5rem)", position: "relative", zIndex: 2, width: "100%" }}>
