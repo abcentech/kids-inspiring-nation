@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-07-13T04:04:09.616Z",
+  "updatedAt": "2026-07-13T09:50:12.756Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "Hbg19M0dM5s",
+          "title": "Every Life Has Value",
+          "published": "2026-07-13T05:00:11+00:00"
+        },
         {
           "id": "POouz333H84",
           "title": "Beyond Statistics: Who Really Numbers Your Days?",
@@ -28,11 +33,6 @@
           "id": "JK_mV9i-6lI",
           "title": "This is the Secret to Working till 85 years!",
           "published": "2026-07-09T17:56:50+00:00"
-        },
-        {
-          "id": "WBavB-EUyTw",
-          "title": "The One Word Hospitals Can’t Explain 🏥",
-          "published": "2026-07-09T05:00:06+00:00"
         }
       ]
     },
