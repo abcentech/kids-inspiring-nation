@@ -1,9 +1,19 @@
 {
-  "updatedAt": "2026-07-13T15:14:54.537Z",
+  "updatedAt": "2026-07-13T19:52:49.008Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "RRSvyvsZHq8",
+          "title": "If You Want To Live, This is What To Say 🤔: Speak Life!",
+          "published": "2026-07-13T17:00:31+00:00"
+        },
+        {
+          "id": "8ZH0Elhtndg",
+          "title": "A world without medicine: Could we survive?🌍😲",
+          "published": "2026-07-13T17:00:23+00:00"
+        },
         {
           "id": "Hbg19M0dM5s",
           "title": "Every Life Has Value",
@@ -23,16 +33,6 @@
           "id": "BpZBr0smSe8",
           "title": "Your Life Was Never Meant to Be a Spectator Sport 🏟️",
           "published": "2026-07-10T17:00:36+00:00"
-        },
-        {
-          "id": "PLfBvHrf6gk",
-          "title": "Why People Care More About Your Love Than You 🤔",
-          "published": "2026-07-10T05:00:20+00:00"
-        },
-        {
-          "id": "JK_mV9i-6lI",
-          "title": "This is the Secret to Working till 85 years!",
-          "published": "2026-07-09T17:56:50+00:00"
         }
       ]
     },
