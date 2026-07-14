@@ -59,7 +59,7 @@ export const SITE = {
   // Form Hub — the Apps Script web app (/exec URL) that logs every form to
   // one Google Sheet and pings Telegram. Paste the URL from FORM_HUB_SETUP.md
   // step 4 here. Baked into the client bundle, so no CI secret needed.
-  formHubUrl: "",
+  formHubUrl: "https://script.google.com/macros/s/AKfycbymPYhqM67YsfH_ph9oav9sk4DRQ022MLNTAMAsr0xSOcFi-mybVJ1ChnoKuEzbnFhNgQ/exec",
   email: "KidsinspiringNation@gmail.com",
   operationsEmail: "KidsInspiringOperations@gmail.com",
   phone: "+234 812 267 3417",

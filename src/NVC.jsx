@@ -16,6 +16,7 @@ import WallOfBuilders from './nbc/WallOfBuilders.jsx';
 import { NBC, PILLARS, CALENDAR, C } from './nbc/nbcBrand.js';
 import GalleryStrip from './nbc/GalleryStrip.jsx';
 import { submitJsonForm } from './formSubmit.js';
+import { notifyHub } from './formHub.js';
 import { submitBrevo } from './engagement/GrowthWidgets.jsx';
 import { trackEvent } from './analytics.js';
 
@@ -74,6 +75,8 @@ function ConnectSection({ dark, s }) {
         try {
             // Email goes to the Brevo "NBC Builders Network" list for campaigns…
             if (email.trim().includes("@")) { try { await submitBrevo(email.trim()); } catch { /* non-fatal */ } }
+            // …the Sheet + Telegram hub gets a mirror copy…
+            notifyHub("nbc-connect", { Name: name.trim(), Email: email.trim(), WhatsApp: phone.trim() });
             // …and the full signup (incl. WhatsApp) lands in the operations inbox.
             await submitJsonForm(CONNECT_ENDPOINT, {
                 _subject: "📬 New NBC community signup",
