@@ -74,7 +74,7 @@ function ConnectSection({ dark, s }) {
         setState("busy");
         try {
             // Email goes to the Brevo "NBC Builders Network" list for campaigns…
-            if (email.trim().includes("@")) { try { await submitBrevo(email.trim()); } catch { /* non-fatal */ } }
+            if (email.trim().includes("@")) { try { await submitBrevo(email.trim(), SITE.nbcBrevoFormUrl); } catch { /* non-fatal */ } }
             // …the Sheet + Telegram hub gets a mirror copy…
             notifyHub("nbc-connect", { Name: name.trim(), Email: email.trim(), WhatsApp: phone.trim() });
             // …and the full signup (incl. WhatsApp) lands in the operations inbox.

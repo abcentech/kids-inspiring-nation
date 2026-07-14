@@ -14,6 +14,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { SITE, T } from "../siteConfig.js";
 import { trackEvent } from "../analytics.js";
+import { notifyHub } from "../formHub.js";
 import {
   Flame, Send, MessageCircle, X, Share2, Copy, Check,
   Facebook, Sparkles, ArrowRight, CalendarCheck, Bell,
@@ -133,8 +134,8 @@ function StickyJoinBar({ dark }) {
 }
 
 /* ── Brevo email submit (graceful no-op if not configured) ──────── */
-export async function submitBrevo(email) {
-  const url = SITE.brevoFormUrl;
+export async function submitBrevo(email, formUrl) {
+  const url = formUrl || SITE.brevoFormUrl;
   if (!url) return { ok: false, reason: "unconfigured" };
   try {
     const body = new URLSearchParams();
@@ -182,6 +183,7 @@ function ExitIntentCapture({ dark }) {
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { setState("error"); return; }
     setState("loading");
     const res = await submitBrevo(email);
+    notifyHub("KIN-websignups", { Email: email });
     trackEvent("capture_submit", { configured: !!SITE.brevoFormUrl });
     try { localStorage.setItem("kin_capture_done", "1"); } catch { /* ignore */ }
     setState(res.ok || res.reason === "unconfigured" ? "done" : "error");
