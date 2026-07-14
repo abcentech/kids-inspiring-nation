@@ -12,11 +12,20 @@ const ROLE = [
 ];
 
 const MEETING = [
-  "Open with one value of the week (2 min) — from the 8 core values.",
-  "Each builder shares one thing they did since last meeting (5 min).",
-  "Solve one blocker together as a club (10 min).",
-  "Agree each builder's single next action before you close (3 min).",
-  "Log attendance and wins — proof for the December Conference.",
+  "Opening + Pledge — 5 min. Stand, recite the Nation Builders' Pledge, set the tone.",
+  "Roll call + minutes — 8 min. Attendance in the logbook; Secretary reads last week's minutes.",
+  "Project work (main session) — 20 min. The real work: investigate, plan, or execute the club project.",
+  "Decisions by vote — 5 min. Builders vote on choices; officers record the outcome.",
+  "Actions + logbook + close — 5 min. Each builder's next action, logbook signed off.",
+];
+
+const LOGBOOK = [
+  "Meeting minutes and attendance register",
+  "Project activity log with hours of service",
+  "Budget and resource records (every naira)",
+  "Photos and evidence of community impact",
+  "Honest reflection at each project stage",
+  "Sign-off by Secretary and Advisor",
 ];
 
 export default function AdvisorsHub({ dark }) {
@@ -54,10 +63,11 @@ export default function AdvisorsHub({ dark }) {
       <Section dark={dark} alt>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: "2.5rem", alignItems: "start" }}>
           <div>
-            <SectionHead eyebrow="Run a club meeting" title="A 20-minute meeting that actually moves projects." sub="Copy this simple agenda. It keeps clubs consistent — and consistency is what turns good intentions into finished projects." dark={dark} />
+            <SectionHead eyebrow="Run a club meeting" title="The 45–60 minute meeting that moves projects." sub="Copy this agenda straight from the NBC handbook. It keeps clubs consistent — and consistency is what turns good intentions into finished projects." dark={dark} />
             <CTA href="/psalm119/downloads/Mentor Guide.pdf"><Download size={16} /> Full Advisor Pack (PDF)</CTA>
           </div>
           <TiltCard dark={dark}>
+            <div style={{ fontSize: ".72rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: ".1em", color: C.goldD, marginBottom: ".9rem" }}>Meeting agenda (45–60 min)</div>
             <ol style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: ".9rem" }}>
               {MEETING.map((step, i) => (
                 <motion.li key={i} initial={{ opacity: 0, x: -12 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }}
@@ -67,6 +77,21 @@ export default function AdvisorsHub({ dark }) {
                 </motion.li>
               ))}
             </ol>
+          </TiltCard>
+          <TiltCard dark={dark}>
+            <div style={{ fontSize: ".72rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: ".1em", color: C.goldD, marginBottom: ".9rem" }}>What goes in the logbook</div>
+            <ol style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: ".9rem" }}>
+              {LOGBOOK.map((item, i) => (
+                <motion.li key={i} initial={{ opacity: 0, x: -12 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }}
+                  style={{ display: "flex", gap: ".8rem", alignItems: "flex-start" }}>
+                  <CheckCircle2 size={20} color={C.ok} style={{ flexShrink: 0, marginTop: 2 }} />
+                  <span style={{ color: s.txt, lineHeight: 1.5, fontSize: ".95rem" }}>{item}</span>
+                </motion.li>
+              ))}
+            </ol>
+            <p style={{ marginTop: "1.1rem", marginBottom: 0, fontStyle: "italic", color: s.sub, fontSize: ".9rem" }}>
+              "NBCs that keep faithful records consistently do better work." The logbook is both the club's record and the evidence presented at the Grand Finale.
+            </p>
           </TiltCard>
         </div>
       </Section>

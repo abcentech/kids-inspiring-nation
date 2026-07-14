@@ -15,6 +15,8 @@ import NationalLedger from './nbc/NationalLedger.jsx';
 import WallOfBuilders from './nbc/WallOfBuilders.jsx';
 import { NBC, PILLARS, CALENDAR, C } from './nbc/nbcBrand.js';
 import GalleryStrip from './nbc/GalleryStrip.jsx';
+import { submitJsonForm } from './formSubmit.js';
+import { trackEvent } from './analytics.js';
 
 /* Subtle film grain for depth. */
 const GRAIN = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E";
@@ -54,6 +56,80 @@ const INITIATIVES = [
     { Icon: Mic, t: "December Conference", d: "The nation's builders gather to learn, connect, and showcase the year's work so far.", href: "#journey", cta: "See the year" },
     { Icon: Trophy, t: "July Grand Finale", d: "The session culminates as the most impactful builders are honoured by the nation and awarded.", href: "#recognition", cta: "See the prizes" },
 ];
+
+const CONNECT_ENDPOINT = "https://formsubmit.co/ajax/" + (SITE.operationsEmail || "KidsInspiringOperations@gmail.com");
+
+function ConnectSection({ dark, s }) {
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
+    const [state, setState] = useState("idle"); // idle | busy | done | error
+    const canSend = (email.trim().includes("@") || phone.trim().length >= 7);
+
+    const submit = async (e) => {
+        e.preventDefault();
+        if (!canSend || state === "busy") return;
+        setState("busy");
+        try {
+            await submitJsonForm(CONNECT_ENDPOINT, {
+                _subject: "📬 New NBC community signup",
+                _template: "table",
+                Form: "NBC Stay Connected",
+                Name: name.trim() || "(not given)",
+                Email: email.trim() || "(not given)",
+                WhatsApp: phone.trim() || "(not given)",
+            }, "Community signup");
+            trackEvent("nbc_connect_signup", { hasEmail: !!email.trim(), hasWhatsApp: !!phone.trim() });
+            setState("done");
+        } catch { setState("error"); }
+    };
+
+    const field = { flex: "1 1 200px", padding: ".95rem 1.15rem", borderRadius: 14, border: "1.5px solid rgba(250,249,246,.22)", background: "rgba(255,255,255,.06)", color: "#FAF9F6", fontSize: "1rem", outline: "none", fontFamily: "inherit", minWidth: 0 };
+
+    return (
+        <section id="connect" style={{ padding: "clamp(4rem,9vw,6.5rem) 0", background: C.green, color: C.cream, position: "relative", overflow: "hidden" }}>
+            <div aria-hidden style={{ position: "absolute", inset: 0, background: `radial-gradient(circle at 15% 20%, ${C.gold}14, transparent 45%)` }} />
+            <div style={{ maxWidth: "58rem", margin: "0 auto", padding: "0 clamp(1.25rem,4vw,2.5rem)", position: "relative", textAlign: "center" }}>
+                <div style={{ display: "flex", justifyContent: "center", marginBottom: ".75rem" }}><Eyebrow center>Stay connected</Eyebrow></div>
+                <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(1.9rem,5vw,2.9rem)", fontWeight: 900, margin: "0 0 .75rem" }}>Join the builders' network.</h2>
+                <p style={{ color: "rgba(250,249,246,.78)", fontSize: "1.05rem", lineHeight: 1.65, maxWidth: "46ch", margin: "0 auto 2rem" }}>
+                    Drop your email or WhatsApp number — we'll add you to the official WhatsApp community and send you builder updates, event invites, and course news. No spam, ever.
+                </p>
+
+                {state !== "done" ? (
+                    <form onSubmit={submit} style={{ display: "flex", flexDirection: "column", gap: ".85rem", maxWidth: "40rem", margin: "0 auto" }}>
+                        <div style={{ display: "flex", flexWrap: "wrap", gap: ".85rem" }}>
+                            <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Your first name (optional)" style={field} maxLength={40} />
+                            <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Email address" style={field} />
+                            <input value={phone} onChange={(e) => setPhone(e.target.value)} type="tel" placeholder="WhatsApp number e.g. +234…" style={field} />
+                        </div>
+                        <button type="submit" disabled={!canSend || state === "busy"}
+                            style={{ padding: "1.05rem 2rem", borderRadius: 999, border: "none", fontWeight: 800, fontSize: "1.05rem",
+                                cursor: canSend ? "pointer" : "not-allowed",
+                                background: canSend ? C.gold : "rgba(250,249,246,.15)", color: canSend ? "#14532d" : "rgba(250,249,246,.45)" }}>
+                            {state === "busy" ? "Connecting…" : "Connect me"}
+                        </button>
+                        {state === "error" && <p style={{ color: "#FCA5A5", fontSize: ".88rem", margin: 0 }}>Something went wrong — please try again, or message us directly on WhatsApp below.</p>}
+                        <p style={{ fontSize: ".78rem", color: "rgba(250,249,246,.5)", margin: 0 }}>Give at least one — email or WhatsApp. We only use it to keep you in the loop.</p>
+                    </form>
+                ) : (
+                    <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} style={{ maxWidth: "36rem", margin: "0 auto" }}>
+                        <p style={{ fontSize: "1.15rem", fontWeight: 700, color: C.goldL, marginBottom: "1.25rem" }}>✓ You're on the list, {name.trim() || "Builder"}! One more step —</p>
+                        <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: ".8rem" }}>
+                            <a href={SITE.socials?.whatsappChannel} target="_blank" rel="noopener noreferrer"
+                                style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "1rem 1.8rem", borderRadius: 999, background: "#25D366", color: "#0B2A1B", fontWeight: 800, textDecoration: "none" }}>
+                                Join the WhatsApp community <ArrowRight size={16} />
+                            </a>
+                            <Link to="/nbc/course" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "1rem 1.8rem", borderRadius: 999, background: "rgba(250,249,246,.1)", border: "1.5px solid rgba(250,249,246,.25)", color: C.cream, fontWeight: 800, textDecoration: "none" }}>
+                                Start the free course
+                            </Link>
+                        </div>
+                    </motion.div>
+                )}
+            </div>
+        </section>
+    );
+}
 
 const FAQS = [
     { q: "What exactly is the Nation Builders Corps?", a: "A national movement that cultivates patriotic, service-oriented, creative and responsible young leaders — 'Nation Builders' who solve real community problems with character and resourcefulness. It runs July to July, with the school calendar." },
@@ -227,12 +303,42 @@ export default function NVC({ dark }) {
                         <motion.div initial={{ opacity: 0, scale: .95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} style={{ background: C.green, color: "#fff", padding: "clamp(2.5rem,6vw,4rem) 2.5rem", borderRadius: 32, textAlign: "center", position: "relative", overflow: "hidden" }}>
                             <div aria-hidden style={{ position: "absolute", top: -50, right: -50, opacity: .12 }}><NBCEmblem size={240} ring={false} id="mission" /></div>
                             <div style={{ position: "relative" }}>
-                                <div style={{ fontFamily: "'Plus Jakarta Sans',sans-serif", color: C.goldL, fontSize: "4rem", fontWeight: 900, lineHeight: 1 }}>7–17</div>
+                                <div style={{ fontFamily: "'Plus Jakarta Sans',sans-serif", color: C.goldL, fontSize: "4rem", fontWeight: 900, lineHeight: 1 }}>10+</div>
                                 <p style={{ textTransform: "uppercase", letterSpacing: ".18em", fontSize: ".78rem", fontWeight: 700, opacity: .9, marginTop: ".5rem" }}>The age of a builder</p>
                                 <div style={{ height: 1, background: "rgba(255,255,255,.15)", margin: "2rem 0" }} />
                                 <blockquote style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.5rem", fontWeight: 700, fontStyle: "italic", lineHeight: 1.35, color: C.cream, margin: 0 }}>"You don't need to be an adult to build a nation. You just need a problem you refuse to ignore."</blockquote>
                             </div>
                         </motion.div>
+                    </div>
+                </div>
+            </section>
+
+            {/* The NBC Framework — three pillars */}
+            <section id="framework" style={{ padding: "clamp(4rem,9vw,7rem) 0", background: C.greenD, color: C.cream, borderTop: `1px solid ${C.gold}22` }}>
+                <div style={{ maxWidth: "78rem", margin: "0 auto", padding: "0 clamp(1.25rem,4vw,2.5rem)" }}>
+                    <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ textAlign: "center", marginBottom: "3rem" }}>
+                        <div style={{ display: "flex", justifyContent: "center", marginBottom: ".75rem" }}><Eyebrow center>The NBC framework</Eyebrow></div>
+                        <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(2rem,5.5vw,3.2rem)", fontWeight: 900 }}>Three pillars of everything we do.</h2>
+                        <p style={{ color: "rgba(250,249,246,.65)", fontSize: "1.02rem", marginTop: ".6rem" }}>Spirit shapes your character · Skills prepare your hands · Service impacts your environment</p>
+                    </motion.div>
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 260px), 1fr))", gap: "1.25rem" }}>
+                        {[
+                            ["✦", "Spirit", "Developing strong inner character.", ["Character", "Courage", "Wisdom", "Integrity", "Excellence"]],
+                            ["💡", "Skills", "Practical tools for real-world leadership.", ["Research", "Capacity development", "Critical thinking", "Leadership", "Communication"]],
+                            ["🎖️", "Service", "Impacting your environment through service.", ["Community projects", "Real-world impact", "Problem solving", "Collaborative effort"]],
+                        ].map(([emoji, t, d, items], idx) => (
+                            <motion.div key={t} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.08 }} viewport={{ once: true }}
+                                style={{ background: "rgba(255,255,255,.05)", border: `1px solid ${C.gold}30`, borderRadius: 24, padding: "2rem" }}>
+                                <div style={{ fontSize: "1.9rem", marginBottom: ".6rem" }}>{emoji}</div>
+                                <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.5rem", fontWeight: 800, margin: "0 0 .35rem", color: C.goldL }}>{t}</h3>
+                                <p style={{ color: "rgba(250,249,246,.75)", margin: "0 0 1.1rem", fontSize: ".95rem" }}>{d}</p>
+                                <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexWrap: "wrap", gap: ".45rem" }}>
+                                    {items.map((it) => (
+                                        <li key={it} style={{ fontSize: ".74rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".06em", padding: ".35rem .7rem", borderRadius: 999, background: `${C.gold}16`, color: C.cream, border: `1px solid ${C.gold}2a` }}>{it}</li>
+                                    ))}
+                                </ul>
+                            </motion.div>
+                        ))}
                     </div>
                 </div>
             </section>
@@ -332,6 +438,9 @@ export default function NVC({ dark }) {
                     <p style={{ color: C.goldL, fontFamily: "'Playfair Display',serif", fontStyle: "italic", fontSize: "1.1rem", marginTop: "1.75rem", marginBottom: 0 }}>
                         Whoever builds Nigeria's children is building a meaningful share of humanity's future.
                     </p>
+                    <p style={{ color: "rgba(250,249,246,.6)", fontSize: ".92rem", marginTop: "1rem", marginBottom: 0, letterSpacing: ".04em" }}>
+                        We serve our Communities, our Nations, and our God.
+                    </p>
                 </div>
             </section>
 
@@ -379,6 +488,9 @@ export default function NVC({ dark }) {
                     </div>
                 </div>
             </section>
+
+            {/* Stay connected — email + WhatsApp capture */}
+            <ConnectSection dark={dark} s={s} />
 
             {/* FAQ */}
             <section id="faq" style={{ padding: "clamp(4.5rem,10vw,8rem) 0", background: dark ? "#050505" : "#FAFAF5", borderTop: `1px solid ${s.brd}` }}>
