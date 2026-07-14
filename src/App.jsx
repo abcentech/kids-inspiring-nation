@@ -38,7 +38,8 @@ import { captureReferral } from "./nbc/referral.js";
 import { initAnalytics } from "./analytics.js";
 import { PROGRAMS } from "./impactData.js";
 import Dashboard from "./Dashboard.jsx";
-import GrowthWidgets, { ShareRow, DailyStreakFeature } from "./engagement/GrowthWidgets.jsx";
+import GrowthWidgets, { ShareRow, DailyStreakFeature, submitBrevo } from "./engagement/GrowthWidgets.jsx";
+import { notifyHub } from "./formHub.js";
 import { NBCNav, NBCFooter, NAV_H as NBC_NAV_PAD } from "./nbc/NBCShell.jsx";
 import { C as NBC_C } from "./nbc/nbcBrand.js";
 
@@ -1908,12 +1909,65 @@ function NotFoundPage({ dark }) {
   );
 }
 
+function FooterSignup() {
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState("idle"); // idle | sending | done
+  const submit = async (e) => {
+    e.preventDefault();
+    const value = email.trim();
+    if (!value || status === "sending") return;
+    setStatus("sending");
+    try {
+      await submitBrevo(value);
+      notifyHub("KIN-websignups", { Email: value });
+      setStatus("done");
+    } catch {
+      setStatus("idle");
+    }
+  };
+  return (
+    <div style={{ width: "100%", maxWidth: 560, margin: "0 auto", paddingBottom: "1.75rem", borderBottom: "1px solid rgba(253,247,236,.08)" }}>
+      <div style={{ fontFamily: "'Playfair Display',serif", fontWeight: 800, fontSize: "1.2rem", color: T.cream, marginBottom: ".35rem" }}>
+        Stay inspired
+      </div>
+      <p style={{ fontSize: ".85rem", color: "rgba(253,247,236,.55)", marginBottom: "1rem", lineHeight: 1.6 }}>
+        Get event reminders, stories, and updates from KidsInspiring Nation — no spam, ever.
+      </p>
+      {status === "done" ? (
+        <div style={{ padding: ".8rem 1.2rem", borderRadius: 12, background: "rgba(200,168,90,.14)", color: T.goldL, fontWeight: 700, fontSize: ".9rem" }}>
+          You're on the list — welcome to the family! 🎉
+        </div>
+      ) : (
+        <form onSubmit={submit} style={{ display: "flex", gap: ".5rem", flexWrap: "wrap", justifyContent: "center" }}>
+          <input
+            type="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Your email address"
+            aria-label="Email address"
+            style={{ flex: "1 1 220px", minWidth: 0, padding: ".8rem 1rem", borderRadius: 999, border: "1px solid rgba(253,247,236,.18)", background: "rgba(253,247,236,.06)", color: T.cream, fontSize: ".9rem", outline: "none" }}
+          />
+          <button
+            type="submit"
+            disabled={status === "sending"}
+            style={{ padding: ".8rem 1.6rem", borderRadius: 999, border: "none", background: T.gold, color: "#fff", fontWeight: 800, fontSize: ".9rem", cursor: "pointer", opacity: status === "sending" ? 0.7 : 1 }}
+          >
+            {status === "sending" ? "Joining…" : "Sign me up"}
+          </button>
+        </form>
+      )}
+    </div>
+  );
+}
+
 function SiteBottomBar({ dark }) {
   return (
-    <footer style={{ background: "#060E08", borderTop: "1px solid rgba(253,247,236,.06)", padding: "2rem 0" }}>
-      <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 clamp(1.25rem,5vw,3rem)" }}>
-        <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem", alignItems: "center", textAlign: "center" }}>
-          
+    <footer style={{ background: "#060E08", borderTop: "1px solid rgba(253,247,236,.06)", padding: "2.5rem 0 2rem" }}>
+      <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 clamp(1.25rem,5vw,3rem)", textAlign: "center" }}>
+        <FooterSignup />
+        <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem", alignItems: "center", textAlign: "center", marginTop: "1.75rem" }}>
+
           {/* Trust & Legal Strip */}
           <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap", justifyContent: "center", fontSize: ".82rem", color: "rgba(253,247,236,.45)" }}>
             <div style={{ fontWeight: 800, color: T.goldL }}>{SITE.registrationId}</div>
