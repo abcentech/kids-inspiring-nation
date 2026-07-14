@@ -16,6 +16,7 @@ import WallOfBuilders from './nbc/WallOfBuilders.jsx';
 import { NBC, PILLARS, CALENDAR, C } from './nbc/nbcBrand.js';
 import GalleryStrip from './nbc/GalleryStrip.jsx';
 import { submitJsonForm } from './formSubmit.js';
+import { submitBrevo } from './engagement/GrowthWidgets.jsx';
 import { trackEvent } from './analytics.js';
 
 /* Subtle film grain for depth. */
@@ -71,6 +72,9 @@ function ConnectSection({ dark, s }) {
         if (!canSend || state === "busy") return;
         setState("busy");
         try {
+            // Email goes to the Brevo "NBC Builders Network" list for campaigns…
+            if (email.trim().includes("@")) { try { await submitBrevo(email.trim()); } catch { /* non-fatal */ } }
+            // …and the full signup (incl. WhatsApp) lands in the operations inbox.
             await submitJsonForm(CONNECT_ENDPOINT, {
                 _subject: "📬 New NBC community signup",
                 _template: "table",

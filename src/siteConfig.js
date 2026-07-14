@@ -54,7 +54,8 @@ export const SITE = {
   siteUrl: "https://kidsinspiringnation.org",
   // Brevo (Sendinblue) hosted subscription form action URL, e.g. https://xxxx.sibforms.com/serve/MUIF...
   // Set VITE_BREVO_FORM_URL in your .env to enable email capture. Falls back to WhatsApp join if empty.
-  brevoFormUrl: import.meta.env.VITE_BREVO_FORM_URL || "",
+  brevoFormUrl: import.meta.env.VITE_BREVO_FORM_URL ||
+    "https://1bed281f.sibforms.com/serve/MUIFAAxVpUtm-1Rm31C9c7SIGG6WTDlk6SjJARySUVL0cWCwI1yUvXHw00td0gW5kAaXnXWiAVIxTk1-q9cpC-BKl9UxyaTUWNyOG7LGbLIpcOhnCWXfItuP3yTE7c8I7soBYKaH2WViHM_PV-yH6GQy-SthdD8vdrDWte9TpQ_eOY9TTbtCUDsp20l6kHfwCAKHPbQNY11Q3xLivQ==",
   // Form Hub — the Apps Script web app (/exec URL) that logs every form to
   // one Google Sheet and pings Telegram. Paste the URL from FORM_HUB_SETUP.md
   // step 4 here. Baked into the client bundle, so no CI secret needed.

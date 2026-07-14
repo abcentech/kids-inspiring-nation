@@ -133,7 +133,7 @@ function StickyJoinBar({ dark }) {
 }
 
 /* ── Brevo email submit (graceful no-op if not configured) ──────── */
-async function submitBrevo(email) {
+export async function submitBrevo(email) {
   const url = SITE.brevoFormUrl;
   if (!url) return { ok: false, reason: "unconfigured" };
   try {
