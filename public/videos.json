@@ -1,9 +1,19 @@
 {
-  "updatedAt": "2026-07-14T14:16:51.300Z",
+  "updatedAt": "2026-07-14T19:47:14.291Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "0gvCjZqGEIA",
+          "title": "Do you want to live long? Start Thinking This.",
+          "published": "2026-07-14T17:00:20+00:00"
+        },
+        {
+          "id": "BQ41ZbmNVGQ",
+          "title": "Stop Saying You Are Sick! Do This Instead",
+          "published": "2026-07-14T17:00:00+00:00"
+        },
         {
           "id": "RRSvyvsZHq8",
           "title": "If You Want To Live, This is What To Say 🤔: Speak Life!",
@@ -23,16 +33,6 @@
           "id": "POouz333H84",
           "title": "Beyond Statistics: Who Really Numbers Your Days?",
           "published": "2026-07-12T05:00:25+00:00"
-        },
-        {
-          "id": "MPY0a5_XXg4",
-          "title": "The Richest Place on Earth isn’t where you think 🪦",
-          "published": "2026-07-11T09:41:40+00:00"
-        },
-        {
-          "id": "BpZBr0smSe8",
-          "title": "Your Life Was Never Meant to Be a Spectator Sport 🏟️",
-          "published": "2026-07-10T17:00:36+00:00"
         }
       ]
     },
