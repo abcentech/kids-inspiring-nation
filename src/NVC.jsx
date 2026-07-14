@@ -116,7 +116,7 @@ function ConnectSection({ dark, s }) {
                     <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} style={{ maxWidth: "36rem", margin: "0 auto" }}>
                         <p style={{ fontSize: "1.15rem", fontWeight: 700, color: C.goldL, marginBottom: "1.25rem" }}>✓ You're on the list, {name.trim() || "Builder"}! One more step —</p>
                         <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: ".8rem" }}>
-                            <a href={SITE.socials?.whatsappChannel} target="_blank" rel="noopener noreferrer"
+                            <a href={SITE.nbcSocials?.whatsappGroup || SITE.socials?.whatsappChannel} target="_blank" rel="noopener noreferrer"
                                 style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "1rem 1.8rem", borderRadius: 999, background: "#25D366", color: "#0B2A1B", fontWeight: 800, textDecoration: "none" }}>
                                 Join the WhatsApp community <ArrowRight size={16} />
                             </a>

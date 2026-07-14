@@ -73,8 +73,9 @@ export const SITE = {
   },
   // Nation Builders Corps's own social presence (distinct from the KIN accounts).
   nbcSocials: {
-    instagram: "https://instagram.com/NationBuildersCorps",
-    youtube: "https://youtube.com/@NationBuildersCorps",
+    instagram: "https://instagram.com/nationbuilderscorp",
+    youtube: "https://youtube.com/@nationbuilderscorp",
+    whatsappGroup: "https://chat.whatsapp.com/DGQyyXHkcGpEgOuvnHYQng",
   },
 };
 
