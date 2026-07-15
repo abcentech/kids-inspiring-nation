@@ -1,9 +1,19 @@
 {
-  "updatedAt": "2026-07-15T14:14:05.278Z",
+  "updatedAt": "2026-07-15T19:39:22.587Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "6Qw1394FXBU",
+          "title": "Do You Know This Secret to Living a 100-Year Life?",
+          "published": "2026-07-15T18:36:26+00:00"
+        },
+        {
+          "id": "VH6KFbsIBjQ",
+          "title": "Your Words Decide How Long You Live",
+          "published": "2026-07-15T17:00:24+00:00"
+        },
         {
           "id": "0gvCjZqGEIA",
           "title": "Do you want to live long? Start Thinking This.",
@@ -23,16 +33,6 @@
           "id": "8ZH0Elhtndg",
           "title": "A world without medicine: Could we survive?🌍😲",
           "published": "2026-07-13T17:00:23+00:00"
-        },
-        {
-          "id": "Hbg19M0dM5s",
-          "title": "Every Life Has Value",
-          "published": "2026-07-13T05:00:11+00:00"
-        },
-        {
-          "id": "POouz333H84",
-          "title": "Beyond Statistics: Who Really Numbers Your Days?",
-          "published": "2026-07-12T05:00:25+00:00"
         }
       ]
     },
