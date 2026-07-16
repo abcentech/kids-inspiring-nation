@@ -19,6 +19,7 @@ import { submitJsonForm } from './formSubmit.js';
 import { notifyHub } from './formHub.js';
 import { submitBrevo } from './engagement/GrowthWidgets.jsx';
 import NigeriaEducationViz from './engagement/NigeriaEducationViz.jsx';
+import FunnelRail from './nbc/FunnelRail.jsx';
 import { trackEvent } from './analytics.js';
 
 /* Subtle film grain for depth. */
@@ -172,6 +173,12 @@ export default function NVC({ dark }) {
         return () => window.removeEventListener("scroll", h);
     }, []);
 
+    // Scope the funnel scroll-snap to this page only (toggled on <html>).
+    useEffect(() => {
+        document.documentElement.classList.add("nbc-snap");
+        return () => document.documentElement.classList.remove("nbc-snap");
+    }, []);
+
     const s = dark
         ? { bg: T.bgD, surf: T.srfD, brd: T.brdD, txt: T.d1, sub: T.d2 }
         : { bg: T.cream, surf: "#FFFFFF", brd: "rgba(11,42,27,.06)", txt: T.green, sub: T.greenM };
@@ -186,6 +193,10 @@ export default function NVC({ dark }) {
         <div style={{ fontFamily: "'DM Sans',sans-serif", background: s.bg, color: s.txt, overflowX: "hidden" }}>
             <div aria-hidden style={{ position: "fixed", inset: 0, backgroundImage: `url("${GRAIN}")`, opacity: dark ? 0.05 : 0.03, pointerEvents: "none", zIndex: 1, mixBlendMode: "overlay" }} />
 
+            <FunnelRail />
+
+            {/* ═══ ACT 1 — HOOK ═══ */}
+            <span id="act-1" className="snap-step" aria-hidden="true" />
             {/* Hero */}
             <section id="top" style={{ minHeight: "100svh", background: C.greenD, position: "relative", display: "flex", alignItems: "center", overflow: "hidden", padding: "7rem 0 4rem" }}>
                 <div aria-hidden style={{ position: "absolute", inset: 0, background: `radial-gradient(circle at 18% 28%, ${C.gold}18 0%, transparent 42%), radial-gradient(circle at 82% 75%, ${C.green}55 0%, transparent 55%), linear-gradient(160deg, ${C.greenD} 0%, ${C.greenM} 55%, ${C.greenD} 100%)` }} />
@@ -235,60 +246,8 @@ export default function NVC({ dark }) {
                 </div>
             </div>
 
-            {/* Become a Builder — Pledge + ID card */}
-            <section id="join" style={{ background: `linear-gradient(180deg, ${C.green} 0%, ${C.greenD} 100%)`, color: C.cream, padding: "clamp(4.5rem,10vw,8rem) 0", position: "relative", zIndex: 2 }}>
-                <div style={{ maxWidth: "78rem", margin: "0 auto", padding: "0 clamp(1.25rem,4vw,2.5rem)" }}>
-                    <div style={{ textAlign: "center", marginBottom: "3.5rem", maxWidth: "42rem", marginInline: "auto" }}>
-                        <div style={{ marginBottom: "1.25rem", display: "flex", justifyContent: "center" }}><Eyebrow center>Take the oath</Eyebrow></div>
-                        <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(2rem,5.5vw,3.4rem)", fontWeight: 900, lineHeight: 1.08, margin: "0 0 1.5rem" }}>Get your Builder ID.<br /><span style={{ color: C.goldL }}>Carry it with pride.</span></h2>
-                        <div style={{ display: "flex", flexDirection: "column", gap: ".35rem", color: "rgba(250,249,246,.75)", fontStyle: "italic", fontFamily: "'Playfair Display',serif", fontSize: "clamp(1rem,2.4vw,1.2rem)", lineHeight: 1.5 }}>
-                            {NBC.pledge.map((line, i) => <span key={i} style={i === NBC.pledge.length - 1 ? { color: C.goldL, fontWeight: 700, marginTop: ".4rem" } : undefined}>{line}</span>)}
-                        </div>
-                    </div>
-                    <div style={{ background: "rgba(255,255,255,.03)", border: "1px solid rgba(230,201,143,.16)", borderRadius: 32, padding: "clamp(1.5rem,4vw,3rem)" }}>
-                        <BuilderID />
-                    </div>
-                </div>
-            </section>
-
-            {/* Movement / national ledger */}
-            <NationalLedger />
-
-            {/* Wall of Builders */}
-            <WallOfBuilders />
-
-            {/* Moments — Nation Builders Corps National Values gallery */}
-            <GalleryStrip dark={dark} />
-
-            {/* Receipts — the proof behind the promise */}
-            <section aria-label="Our track record" style={{ background: dark ? "#080808" : "#FFFFFF", borderBottom: `1px solid ${s.brd}`, padding: "clamp(3rem,7vw,5rem) 0" }}>
-                <div style={{ maxWidth: "78rem", margin: "0 auto", padding: "0 clamp(1.25rem,4vw,2.5rem)" }}>
-                    <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ textAlign: "center", marginBottom: "2.5rem" }}>
-                        <div style={{ display: "flex", justifyContent: "center", marginBottom: ".75rem" }}><Eyebrow center>A movement with receipts</Eyebrow></div>
-                        <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(1.8rem,4.5vw,2.6rem)", fontWeight: 900, color: s.txt, margin: 0 }}>Promises are easy. Here's the proof.</h2>
-                    </motion.div>
-                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 150px), 1fr))", gap: "1rem", textAlign: "center" }}>
-                        {[
-                            ["100+", "schools reached", "across Nigeria"],
-                            ["5", "events held", "flagship gatherings"],
-                            ["₦5m+", "in cash awards", "to young builders"],
-                            ["2021", "building since", `CAC ${SITE.registrationId}`],
-                            ["70", "years to build", "2030 → 2090 mandate"],
-                        ].map(([n, l, sub], i) => (
-                            <motion.div key={l} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.06 }} viewport={{ once: true }}
-                                style={{ background: s.surf, border: `1px solid ${s.brd}`, borderRadius: 20, padding: "1.5rem 1rem" }}>
-                                <div style={{ fontFamily: "'Plus Jakarta Sans',sans-serif", fontSize: "clamp(1.5rem,3vw,2rem)", fontWeight: 900, color: C.goldD, lineHeight: 1 }}>{n}</div>
-                                <div style={{ fontWeight: 800, color: s.txt, fontSize: ".92rem", marginTop: ".5rem" }}>{l}</div>
-                                <div style={{ color: s.sub, fontSize: ".78rem", marginTop: ".2rem" }}>{sub}</div>
-                            </motion.div>
-                        ))}
-                    </div>
-                    <p style={{ textAlign: "center", color: s.sub, fontSize: ".85rem", marginTop: "1.5rem", marginBottom: 0 }}>
-                        Numbers from the KidsInspiring Nation impact records and the Nation Builders Corps National Values Challenge Grand Finales.
-                    </p>
-                </div>
-            </section>
-
+            {/* ═══ ACT 2 — THE PROBLEM ═══ */}
+            <span id="act-2" className="snap-step" aria-hidden="true" />
             {/* The case: state of education & values in Nigeria — data-driven challenge */}
             <NigeriaEducationViz
                 dark={dark}
@@ -300,6 +259,8 @@ export default function NVC({ dark }) {
                 }
             />
 
+            {/* ═══ ACT 3 — THE BELIEF ═══ */}
+            <span id="act-3" className="snap-step" aria-hidden="true" />
             {/* Mission */}
             <section id="mission" style={{ padding: "clamp(4.5rem,10vw,8rem) 0", background: s.bg }}>
                 <div style={{ maxWidth: "78rem", margin: "0 auto", padding: "0 clamp(1.25rem,4vw,2.5rem)" }}>
@@ -332,6 +293,40 @@ export default function NVC({ dark }) {
                 </div>
             </section>
 
+            {/* Mandate band */}
+            <section aria-label="Our mandate" style={{ background: C.greenD, color: C.cream, padding: "clamp(3.5rem,8vw,6rem) 0", position: "relative", overflow: "hidden", borderTop: `1px solid ${C.gold}22`, borderBottom: `1px solid ${C.gold}22` }}>
+                <div aria-hidden style={{ position: "absolute", inset: 0, background: `radial-gradient(circle at 50% 120%, ${C.gold}18 0%, transparent 60%)` }} />
+                <div style={{ maxWidth: "56rem", margin: "0 auto", padding: "0 clamp(1.25rem,4vw,2.5rem)", textAlign: "center", position: "relative", zIndex: 2 }}>
+                    <div style={{ marginBottom: "1.25rem", display: "flex", justifyContent: "center" }}><Eyebrow center>Our mandate</Eyebrow></div>
+                    <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+                        style={{ fontFamily: "'Playfair Display',serif", fontWeight: 900, fontSize: "clamp(2rem,6vw,3.6rem)", lineHeight: 1.05, letterSpacing: "-.02em", margin: 0 }}>
+                        In <em style={{ fontStyle: "italic", color: C.goldL }}>7 Decades</em>, Nigeria Will Be Built.
+                    </motion.h2>
+                    <p style={{ color: "rgba(250,249,246,.75)", fontSize: "1.05rem", lineHeight: 1.65, marginTop: "1.5rem", maxWidth: "42rem", marginInline: "auto" }}>
+                        Not in one election cycle. Not by one government. Nation building is a 70-year work of character — carried by generation after generation of young builders. We are the first. {NBC.heritage}.
+                    </p>
+                    <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "1rem", marginTop: "2.25rem" }}>
+                        {[
+                            ["3rd", "most populous nation on Earth by 2050 — Nigeria's projected rank"],
+                            ["~18", "the median age of a Nigerian — this is a nation of children"],
+                        ].map(([n, l]) => (
+                            <div key={n} style={{ display: "flex", alignItems: "center", gap: ".9rem", background: "rgba(255,255,255,.05)", border: `1px solid ${C.gold}33`, borderRadius: 16, padding: ".9rem 1.4rem", maxWidth: "21rem", textAlign: "left" }}>
+                                <span style={{ fontFamily: "'Plus Jakarta Sans',sans-serif", fontSize: "1.7rem", fontWeight: 900, color: C.goldL, flexShrink: 0 }}>{n}</span>
+                                <span style={{ fontSize: ".85rem", color: "rgba(250,249,246,.75)", lineHeight: 1.45 }}>{l}</span>
+                            </div>
+                        ))}
+                    </div>
+                    <p style={{ color: C.goldL, fontFamily: "'Playfair Display',serif", fontStyle: "italic", fontSize: "1.1rem", marginTop: "1.75rem", marginBottom: 0 }}>
+                        Whoever builds Nigeria's children is building a meaningful share of humanity's future.
+                    </p>
+                    <p style={{ color: "rgba(250,249,246,.6)", fontSize: ".92rem", marginTop: "1rem", marginBottom: 0, letterSpacing: ".04em" }}>
+                        We serve our Communities, our Nations, and our God.
+                    </p>
+                </div>
+            </section>
+
+            {/* ═══ ACT 4 — THE METHOD ═══ */}
+            <span id="act-4" className="snap-step" aria-hidden="true" />
             {/* The NBC Framework — three pillars */}
             <section id="framework" style={{ padding: "clamp(4rem,9vw,7rem) 0", background: C.greenD, color: C.cream, borderTop: `1px solid ${C.gold}22` }}>
                 <div style={{ maxWidth: "78rem", margin: "0 auto", padding: "0 clamp(1.25rem,4vw,2.5rem)" }}>
@@ -431,37 +426,42 @@ export default function NVC({ dark }) {
                 </div>
             </section>
 
-            {/* Mandate band */}
-            <section aria-label="Our mandate" style={{ background: C.greenD, color: C.cream, padding: "clamp(3.5rem,8vw,6rem) 0", position: "relative", overflow: "hidden", borderTop: `1px solid ${C.gold}22`, borderBottom: `1px solid ${C.gold}22` }}>
-                <div aria-hidden style={{ position: "absolute", inset: 0, background: `radial-gradient(circle at 50% 120%, ${C.gold}18 0%, transparent 60%)` }} />
-                <div style={{ maxWidth: "56rem", margin: "0 auto", padding: "0 clamp(1.25rem,4vw,2.5rem)", textAlign: "center", position: "relative", zIndex: 2 }}>
-                    <div style={{ marginBottom: "1.25rem", display: "flex", justifyContent: "center" }}><Eyebrow center>Our mandate</Eyebrow></div>
-                    <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-                        style={{ fontFamily: "'Playfair Display',serif", fontWeight: 900, fontSize: "clamp(2rem,6vw,3.6rem)", lineHeight: 1.05, letterSpacing: "-.02em", margin: 0 }}>
-                        In <em style={{ fontStyle: "italic", color: C.goldL }}>7 Decades</em>, Nigeria Will Be Built.
-                    </motion.h2>
-                    <p style={{ color: "rgba(250,249,246,.75)", fontSize: "1.05rem", lineHeight: 1.65, marginTop: "1.5rem", maxWidth: "42rem", marginInline: "auto" }}>
-                        Not in one election cycle. Not by one government. Nation building is a 70-year work of character — carried by generation after generation of young builders. We are the first. {NBC.heritage}.
-                    </p>
-                    <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "1rem", marginTop: "2.25rem" }}>
+            {/* ═══ ACT 5 — THE PROOF ═══ */}
+            <span id="act-5" className="snap-step" aria-hidden="true" />
+            {/* Receipts — the proof behind the promise */}
+            <section aria-label="Our track record" style={{ background: dark ? "#080808" : "#FFFFFF", borderBottom: `1px solid ${s.brd}`, padding: "clamp(3rem,7vw,5rem) 0" }}>
+                <div style={{ maxWidth: "78rem", margin: "0 auto", padding: "0 clamp(1.25rem,4vw,2.5rem)" }}>
+                    <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ textAlign: "center", marginBottom: "2.5rem" }}>
+                        <div style={{ display: "flex", justifyContent: "center", marginBottom: ".75rem" }}><Eyebrow center>A movement with receipts</Eyebrow></div>
+                        <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(1.8rem,4.5vw,2.6rem)", fontWeight: 900, color: s.txt, margin: 0 }}>Promises are easy. Here's the proof.</h2>
+                    </motion.div>
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 150px), 1fr))", gap: "1rem", textAlign: "center" }}>
                         {[
-                            ["3rd", "most populous nation on Earth by 2050 — Nigeria's projected rank"],
-                            ["~18", "the median age of a Nigerian — this is a nation of children"],
-                        ].map(([n, l]) => (
-                            <div key={n} style={{ display: "flex", alignItems: "center", gap: ".9rem", background: "rgba(255,255,255,.05)", border: `1px solid ${C.gold}33`, borderRadius: 16, padding: ".9rem 1.4rem", maxWidth: "21rem", textAlign: "left" }}>
-                                <span style={{ fontFamily: "'Plus Jakarta Sans',sans-serif", fontSize: "1.7rem", fontWeight: 900, color: C.goldL, flexShrink: 0 }}>{n}</span>
-                                <span style={{ fontSize: ".85rem", color: "rgba(250,249,246,.75)", lineHeight: 1.45 }}>{l}</span>
-                            </div>
+                            ["100+", "schools reached", "across Nigeria"],
+                            ["5", "events held", "flagship gatherings"],
+                            ["₦5m+", "in cash awards", "to young builders"],
+                            ["2021", "building since", `CAC ${SITE.registrationId}`],
+                            ["70", "years to build", "2030 → 2090 mandate"],
+                        ].map(([n, l, sub], i) => (
+                            <motion.div key={l} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.06 }} viewport={{ once: true }}
+                                style={{ background: s.surf, border: `1px solid ${s.brd}`, borderRadius: 20, padding: "1.5rem 1rem" }}>
+                                <div style={{ fontFamily: "'Plus Jakarta Sans',sans-serif", fontSize: "clamp(1.5rem,3vw,2rem)", fontWeight: 900, color: C.goldD, lineHeight: 1 }}>{n}</div>
+                                <div style={{ fontWeight: 800, color: s.txt, fontSize: ".92rem", marginTop: ".5rem" }}>{l}</div>
+                                <div style={{ color: s.sub, fontSize: ".78rem", marginTop: ".2rem" }}>{sub}</div>
+                            </motion.div>
                         ))}
                     </div>
-                    <p style={{ color: C.goldL, fontFamily: "'Playfair Display',serif", fontStyle: "italic", fontSize: "1.1rem", marginTop: "1.75rem", marginBottom: 0 }}>
-                        Whoever builds Nigeria's children is building a meaningful share of humanity's future.
-                    </p>
-                    <p style={{ color: "rgba(250,249,246,.6)", fontSize: ".92rem", marginTop: "1rem", marginBottom: 0, letterSpacing: ".04em" }}>
-                        We serve our Communities, our Nations, and our God.
+                    <p style={{ textAlign: "center", color: s.sub, fontSize: ".85rem", marginTop: "1.5rem", marginBottom: 0 }}>
+                        Numbers from the KidsInspiring Nation impact records and the Nation Builders Corps National Values Challenge Grand Finales.
                     </p>
                 </div>
             </section>
+
+            {/* Wall of Builders */}
+            <WallOfBuilders />
+
+            {/* Moments — Nation Builders Corps National Values gallery */}
+            <GalleryStrip dark={dark} />
 
             {/* Recognition / prizes */}
             <section id="recognition" style={{ padding: "clamp(4.5rem,10vw,8rem) 0", background: s.bg }}>
@@ -485,7 +485,46 @@ export default function NVC({ dark }) {
                 </div>
             </section>
 
-            {/* Fund */}
+            {/* Movement / national ledger */}
+            <NationalLedger />
+
+            {/* ═══ ACT 6 — THE IDENTITY ═══ */}
+            <span id="act-6" className="snap-step" aria-hidden="true" />
+            {/* Become a Builder — Pledge + ID card */}
+            <section id="join" style={{ background: `linear-gradient(180deg, ${C.green} 0%, ${C.greenD} 100%)`, color: C.cream, padding: "clamp(4.5rem,10vw,8rem) 0", position: "relative", zIndex: 2 }}>
+                <div style={{ maxWidth: "78rem", margin: "0 auto", padding: "0 clamp(1.25rem,4vw,2.5rem)" }}>
+                    <div style={{ textAlign: "center", marginBottom: "3.5rem", maxWidth: "42rem", marginInline: "auto" }}>
+                        <div style={{ marginBottom: "1.25rem", display: "flex", justifyContent: "center" }}><Eyebrow center>Take the oath</Eyebrow></div>
+                        <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(2rem,5.5vw,3.4rem)", fontWeight: 900, lineHeight: 1.08, margin: "0 0 1.5rem" }}>Get your Builder ID.<br /><span style={{ color: C.goldL }}>Carry it with pride.</span></h2>
+                        <div style={{ display: "flex", flexDirection: "column", gap: ".35rem", color: "rgba(250,249,246,.75)", fontStyle: "italic", fontFamily: "'Playfair Display',serif", fontSize: "clamp(1rem,2.4vw,1.2rem)", lineHeight: 1.5 }}>
+                            {NBC.pledge.map((line, i) => <span key={i} style={i === NBC.pledge.length - 1 ? { color: C.goldL, fontWeight: 700, marginTop: ".4rem" } : undefined}>{line}</span>)}
+                        </div>
+                    </div>
+                    <div style={{ background: "rgba(255,255,255,.03)", border: "1px solid rgba(230,201,143,.16)", borderRadius: 32, padding: "clamp(1.5rem,4vw,3rem)" }}>
+                        <BuilderID />
+                    </div>
+                </div>
+            </section>
+
+            {/* ═══ ACT 7 — THE ASK ═══ */}
+            <span id="act-7" className="snap-step" aria-hidden="true" />
+            {/* Stay connected — email + WhatsApp capture */}
+            <ConnectSection dark={dark} s={s} />
+
+            {/* FAQ */}
+            <section id="faq" style={{ padding: "clamp(4.5rem,10vw,8rem) 0", background: dark ? "#050505" : "#FAFAF5", borderTop: `1px solid ${s.brd}` }}>
+                <div style={{ maxWidth: "58rem", margin: "0 auto", padding: "0 clamp(1.25rem,4vw,2.5rem)" }}>
+                    <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ textAlign: "center", marginBottom: "3rem" }}>
+                        <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(1.8rem,5vw,2.8rem)", fontWeight: 900, color: s.txt }}>Questions, answered.</h2>
+                        <p style={{ color: s.sub, marginTop: ".5rem" }}>Everything you need to know before you build.</p>
+                    </motion.div>
+                    <div style={{ display: "flex", flexDirection: "column", gap: ".9rem" }}>
+                        {FAQS.map((faq, idx) => <FAQItem key={idx} faq={faq} idx={idx} s={s} />)}
+                    </div>
+                </div>
+            </section>
+
+            {/* Fund — donors & funders (secondary audience) */}
             <section id="fund" style={{ padding: "clamp(4.5rem,10vw,8rem) 0", background: C.green, color: C.cream, position: "relative", overflow: "hidden" }}>
                 <div aria-hidden style={{ position: "absolute", top: "-6rem", right: "-4rem", opacity: .08 }}><NBCEmblem size={360} ring={false} id="fund" /></div>
                 <div style={{ maxWidth: "68rem", margin: "0 auto", padding: "0 clamp(1.25rem,4vw,2.5rem)", position: "relative" }}>
@@ -508,27 +547,17 @@ export default function NVC({ dark }) {
                 </div>
             </section>
 
-            {/* Stay connected — email + WhatsApp capture */}
-            <ConnectSection dark={dark} s={s} />
-
-            {/* FAQ */}
-            <section id="faq" style={{ padding: "clamp(4.5rem,10vw,8rem) 0", background: dark ? "#050505" : "#FAFAF5", borderTop: `1px solid ${s.brd}` }}>
-                <div style={{ maxWidth: "58rem", margin: "0 auto", padding: "0 clamp(1.25rem,4vw,2.5rem)" }}>
-                    <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ textAlign: "center", marginBottom: "3rem" }}>
-                        <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(1.8rem,5vw,2.8rem)", fontWeight: 900, color: s.txt }}>Questions, answered.</h2>
-                        <p style={{ color: s.sub, marginTop: ".5rem" }}>Everything you need to know before you build.</p>
-                    </motion.div>
-                    <div style={{ display: "flex", flexDirection: "column", gap: ".9rem" }}>
-                        {FAQS.map((faq, idx) => <FAQItem key={idx} faq={faq} idx={idx} s={s} />)}
-                    </div>
-                </div>
-            </section>
-
 
             <style>{`
                 @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
                 @media (min-width: 768px) { .md\\:flex { display: flex !important; } .md\\:hidden { display: none !important; } }
                 @media (max-width: 767px) { .md\\:flex { display: none !important; } }
+
+                /* Funnel scroll-snap — scoped to <html.nbc-snap>, desktop only, motion-safe. */
+                @media (min-width: 821px) and (prefers-reduced-motion: no-preference) {
+                    html.nbc-snap { scroll-snap-type: y proximity; scroll-padding-top: 64px; }
+                    html.nbc-snap .snap-step { display: block; height: 0; scroll-snap-align: start; scroll-margin-top: 64px; }
+                }
             `}</style>
         </div>
     );
