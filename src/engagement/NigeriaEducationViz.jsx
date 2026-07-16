@@ -16,14 +16,14 @@ const FIGURES = [
     decimals: 1,
     label: "children out of school",
     sub: "One of the highest numbers in the world — about 1 in 3 Nigerian children.",
-    source: "UNICEF Nigeria, 2022",
+    source: "UNICEF Nigeria, 2024",
   },
   {
-    value: 70,
+    value: 92,
     suffix: "%",
     decimals: 0,
     label: "cannot read by age 10",
-    sub: "In “learning poverty” — unable to read and understand a simple text.",
+    sub: "In “learning poverty” — unable to read and understand a simple text by age 10.",
     source: "World Bank, 2022",
   },
   {
@@ -35,11 +35,11 @@ const FIGURES = [
     source: "UNESCO UIS",
   },
   {
-    value: 48,
+    value: 52,
     suffix: "%",
     decimals: 0,
     label: "of northern girls out of school",
-    sub: "In the North-East & North-West, nearly half of girls never enrol.",
+    sub: "Girls' primary net attendance in the North-East & North-West is barely 47%.",
     source: "UNICEF Nigeria",
   },
 ];
