@@ -102,7 +102,15 @@ function Counter({ value, suffix, decimals, run }) {
   return <>{n.toFixed(decimals)}{suffix}</>;
 }
 
-export default function NigeriaEducationViz({ dark }) {
+export default function NigeriaEducationViz({
+  dark,
+  answerTitle = "Our answer",
+  answerBody = (
+    <>
+      We raise <strong style={{ color: "#E6C98F" }}>GoDs — Geniuses with divine purpose</strong> — pairing academic excellence with daily character formation, so the next generation is equipped to build the nation these numbers describe.
+    </>
+  ),
+}) {
   const [ref, seen] = useInView();
   const cream = "rgba(250,249,246,.72)";
 
@@ -184,9 +192,9 @@ export default function NigeriaEducationViz({ dark }) {
             </p>
           </div>
           <div style={{ background: "rgba(250,249,246,.04)", border: `1px solid ${T.gold}22`, borderRadius: 18, padding: "clamp(1.5rem,4vw,2rem)", display: "flex", flexDirection: "column", justifyContent: "center" }}>
-            <div style={{ fontWeight: 800, fontSize: "1.05rem", marginBottom: ".6rem", color: T.cream }}>Our answer</div>
+            <div style={{ fontWeight: 800, fontSize: "1.05rem", marginBottom: ".6rem", color: T.cream }}>{answerTitle}</div>
             <p style={{ fontSize: ".92rem", color: cream, lineHeight: 1.7, margin: 0 }}>
-              We raise <strong style={{ color: T.goldL }}>GoDs — Geniuses with divine purpose</strong> — pairing academic excellence with daily character formation, so the next generation is equipped to build the nation these numbers describe.
+              {answerBody}
             </p>
           </div>
         </div>
