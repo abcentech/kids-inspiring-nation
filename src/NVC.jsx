@@ -290,7 +290,15 @@ export default function NVC({ dark }) {
             </section>
 
             {/* The case: state of education & values in Nigeria — data-driven challenge */}
-            <NigeriaEducationViz dark={dark} />
+            <NigeriaEducationViz
+                dark={dark}
+                answerTitle="So we refuse to wait."
+                answerBody={
+                    <>
+                        We will not wait for a solution to arrive — <strong style={{ color: C.goldL }}>we become it</strong>. The Nation Builders Corps challenges the very ones whose future is being tampered with to take up the reins and build their own environment. The nation these numbers describe is not someone else's to fix. It is ours.
+                    </>
+                }
+            />
 
             {/* Mission */}
             <section id="mission" style={{ padding: "clamp(4.5rem,10vw,8rem) 0", background: s.bg }}>
