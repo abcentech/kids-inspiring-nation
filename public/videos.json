@@ -1,9 +1,19 @@
 {
-  "updatedAt": "2026-07-16T14:26:38.445Z",
+  "updatedAt": "2026-07-16T19:36:04.252Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "Y1blcoIwrVw",
+          "title": "This is How to Build a Brain That Never Gets Old",
+          "published": "2026-07-16T18:13:26+00:00"
+        },
+        {
+          "id": "aa1l86XT_Pk",
+          "title": "Stop Just Speaking. Start Creating.",
+          "published": "2026-07-16T17:00:14+00:00"
+        },
         {
           "id": "6Qw1394FXBU",
           "title": "Do You Know This Secret to Living a 100-Year Life?",
@@ -23,16 +33,6 @@
           "id": "BQ41ZbmNVGQ",
           "title": "Stop Saying You Are Sick! Do This Instead",
           "published": "2026-07-14T17:00:00+00:00"
-        },
-        {
-          "id": "RRSvyvsZHq8",
-          "title": "If You Want To Live, This is What To Say 🤔: Speak Life!",
-          "published": "2026-07-13T17:00:31+00:00"
-        },
-        {
-          "id": "8ZH0Elhtndg",
-          "title": "A world without medicine: Could we survive?🌍😲",
-          "published": "2026-07-13T17:00:23+00:00"
         }
       ]
     },
