@@ -40,6 +40,7 @@ import { PROGRAMS } from "./impactData.js";
 import Dashboard from "./Dashboard.jsx";
 import GrowthWidgets, { ShareRow, DailyStreakFeature, submitBrevo } from "./engagement/GrowthWidgets.jsx";
 import { notifyHub } from "./formHub.js";
+import NigeriaEducationViz from "./engagement/NigeriaEducationViz.jsx";
 import { NBCNav, NBCFooter, NAV_H as NBC_NAV_PAD } from "./nbc/NBCShell.jsx";
 import { C as NBC_C } from "./nbc/nbcBrand.js";
 
@@ -170,6 +171,7 @@ function Website({ dark }) {
       <KINDCountdown />
       <KINDStrip dark={dark} />
       <AboutSection dark={dark} />
+      <NigeriaEducationViz dark={dark} />
       <DailyStreakFeature dark={dark} />
       <ProgramsTeaser dark={dark} />
       <VideoSection dark={dark} />
