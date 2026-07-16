@@ -18,6 +18,7 @@ import GalleryStrip from './nbc/GalleryStrip.jsx';
 import { submitJsonForm } from './formSubmit.js';
 import { notifyHub } from './formHub.js';
 import { submitBrevo } from './engagement/GrowthWidgets.jsx';
+import NigeriaEducationViz from './engagement/NigeriaEducationViz.jsx';
 import { trackEvent } from './analytics.js';
 
 /* Subtle film grain for depth. */
@@ -287,6 +288,9 @@ export default function NVC({ dark }) {
                     </p>
                 </div>
             </section>
+
+            {/* The case: state of education & values in Nigeria — data-driven challenge */}
+            <NigeriaEducationViz dark={dark} />
 
             {/* Mission */}
             <section id="mission" style={{ padding: "clamp(4.5rem,10vw,8rem) 0", background: s.bg }}>
