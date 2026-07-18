@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-07-18T13:53:13.730Z",
+  "updatedAt": "2026-07-18T19:35:12.962Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "YMdR3R9S2zM",
+          "title": "This is How To Build a Brain That Never Gets Old",
+          "published": "2026-07-18T17:00:03+00:00"
+        },
         {
           "id": "woCLgm5kTTA",
           "title": "3 Longevity Secrets Doctors Don't Tell You",
@@ -28,11 +33,6 @@
           "id": "6Qw1394FXBU",
           "title": "Do You Know This Secret to Living a 100-Year Life?",
           "published": "2026-07-15T18:36:26+00:00"
-        },
-        {
-          "id": "VH6KFbsIBjQ",
-          "title": "Your Words Decide How Long You Live",
-          "published": "2026-07-15T17:00:24+00:00"
         }
       ]
     },
