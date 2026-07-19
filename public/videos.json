@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-07-19T13:56:30.667Z",
+  "updatedAt": "2026-07-19T19:35:46.003Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "WKaoS198lUM",
+          "title": "Why \"A\" students fail at real survival.",
+          "published": "2026-07-19T17:00:05+00:00"
+        },
         {
           "id": "YMdR3R9S2zM",
           "title": "This is How To Build a Brain That Never Gets Old",
@@ -28,11 +33,6 @@
           "id": "aa1l86XT_Pk",
           "title": "Stop Just Speaking. Start Creating.",
           "published": "2026-07-16T17:00:14+00:00"
-        },
-        {
-          "id": "6Qw1394FXBU",
-          "title": "Do You Know This Secret to Living a 100-Year Life?",
-          "published": "2026-07-15T18:36:26+00:00"
         }
       ]
     },
