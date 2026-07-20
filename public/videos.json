@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-07-20T14:35:15.858Z",
+  "updatedAt": "2026-07-20T19:59:07.722Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "jLpJ1bH_rps",
+          "title": "One Car You Can NEVER Replace",
+          "published": "2026-07-20T17:00:06+00:00"
+        },
         {
           "id": "WKaoS198lUM",
           "title": "Why \"A\" students fail at real survival.",
@@ -28,11 +33,6 @@
           "id": "Y1blcoIwrVw",
           "title": "This is How to Build a Brain That Never Gets Old",
           "published": "2026-07-16T18:13:26+00:00"
-        },
-        {
-          "id": "aa1l86XT_Pk",
-          "title": "Stop Just Speaking. Start Creating.",
-          "published": "2026-07-16T17:00:14+00:00"
         }
       ]
     },
