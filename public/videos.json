@@ -1,9 +1,19 @@
 {
-  "updatedAt": "2026-07-21T14:27:11.104Z",
+  "updatedAt": "2026-07-21T19:55:09.509Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "fRkxV77sdbM",
+          "title": "Never Try to Manage These 3 Things: FLEE!",
+          "published": "2026-07-21T17:00:09+00:00"
+        },
+        {
+          "id": "_oZDFbdTKRI",
+          "title": "Fix Your Fuel Now or Destroy Your 100-Year Body!",
+          "published": "2026-07-21T17:00:06+00:00"
+        },
         {
           "id": "MxW7RtZWxd4",
           "title": "The One Word Your Body is Waiting to Hear",
@@ -15,11 +25,6 @@
           "published": "2026-07-20T17:00:06+00:00"
         },
         {
-          "id": "_oZDFbdTKRI",
-          "title": "Fix Your Fuel Now or Destroy Your 100-Year Body!",
-          "published": "2026-07-20T09:17:09+00:00"
-        },
-        {
           "id": "WKaoS198lUM",
           "title": "Why \"A\" students fail at real survival.",
           "published": "2026-07-19T17:00:05+00:00"
@@ -28,11 +33,6 @@
           "id": "YMdR3R9S2zM",
           "title": "This is How To Build a Brain That Never Gets Old",
           "published": "2026-07-18T17:00:03+00:00"
-        },
-        {
-          "id": "woCLgm5kTTA",
-          "title": "3 Longevity Secrets Doctors Don't Tell You",
-          "published": "2026-07-17T17:38:51+00:00"
         }
       ]
     },
