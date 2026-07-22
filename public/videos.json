@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-07-22T14:28:06.998Z",
+  "updatedAt": "2026-07-22T19:48:04.947Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "3Y6XjHk4j0g",
+          "title": "The Silent Killer You’re Ignoring Every Night",
+          "published": "2026-07-22T17:00:16+00:00"
+        },
         {
           "id": "15NVYx9zvro",
           "title": "Do This Instead of Complaining",
@@ -28,11 +33,6 @@
           "id": "jLpJ1bH_rps",
           "title": "One Car You Can NEVER Replace",
           "published": "2026-07-20T17:00:06+00:00"
-        },
-        {
-          "id": "WKaoS198lUM",
-          "title": "Why \"A\" students fail at real survival.",
-          "published": "2026-07-19T17:00:05+00:00"
         }
       ]
     },
