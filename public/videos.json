@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-07-22T08:47:41.442Z",
+  "updatedAt": "2026-07-22T14:28:06.998Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "15NVYx9zvro",
+          "title": "Do This Instead of Complaining",
+          "published": "2026-07-22T09:45:53+00:00"
+        },
         {
           "id": "fRkxV77sdbM",
           "title": "Never Try to Manage These 3 Things: FLEE!",
@@ -28,11 +33,6 @@
           "id": "WKaoS198lUM",
           "title": "Why \"A\" students fail at real survival.",
           "published": "2026-07-19T17:00:05+00:00"
-        },
-        {
-          "id": "YMdR3R9S2zM",
-          "title": "This is How To Build a Brain That Never Gets Old",
-          "published": "2026-07-18T17:00:03+00:00"
         }
       ]
     },
