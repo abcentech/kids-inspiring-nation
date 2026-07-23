@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-07-23T03:48:31.133Z",
+  "updatedAt": "2026-07-23T08:47:01.539Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "qoYV9E52EsU",
+          "title": "Stop trying to change. Do this instead",
+          "published": "2026-07-23T05:00:13+00:00"
+        },
         {
           "id": "3Y6XjHk4j0g",
           "title": "The Silent Killer You’re Ignoring Every Night",
@@ -28,11 +33,6 @@
           "id": "MxW7RtZWxd4",
           "title": "The One Word Your Body is Waiting to Hear",
           "published": "2026-07-21T11:00:04+00:00"
-        },
-        {
-          "id": "jLpJ1bH_rps",
-          "title": "One Car You Can NEVER Replace",
-          "published": "2026-07-20T17:00:06+00:00"
         }
       ]
     },
