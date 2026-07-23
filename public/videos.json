@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-07-23T14:36:32.681Z",
+  "updatedAt": "2026-07-23T19:49:05.925Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "rvbdYOGd174",
+          "title": "Stop Sitting All Day: Do This Daily Reset",
+          "published": "2026-07-23T17:00:32+00:00"
+        },
         {
           "id": "qoYV9E52EsU",
           "title": "Stop trying to change. Do this instead",
@@ -28,11 +33,6 @@
           "id": "_oZDFbdTKRI",
           "title": "Fix Your Fuel Now or Destroy Your 100-Year Body!",
           "published": "2026-07-21T17:00:06+00:00"
-        },
-        {
-          "id": "MxW7RtZWxd4",
-          "title": "The One Word Your Body is Waiting to Hear",
-          "published": "2026-07-21T11:00:04+00:00"
         }
       ]
     },
