@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-07-24T14:16:09.454Z",
+  "updatedAt": "2026-07-24T19:50:00.038Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "Q8DX3KSjCnw",
+          "title": "One Habit That Poisons Your Body and Soul",
+          "published": "2026-07-24T17:00:25+00:00"
+        },
         {
           "id": "0vbPIx9BWIk",
           "title": "The Cellular Secret to a Body That Never Gets Old",
@@ -28,11 +33,6 @@
           "id": "15NVYx9zvro",
           "title": "Do This Instead of Complaining",
           "published": "2026-07-22T09:45:53+00:00"
-        },
-        {
-          "id": "fRkxV77sdbM",
-          "title": "Never Try to Manage These 3 Things: FLEE!",
-          "published": "2026-07-21T17:00:09+00:00"
         }
       ]
     },
