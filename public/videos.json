@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-07-24T03:48:04.963Z",
+  "updatedAt": "2026-07-24T08:45:24.914Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "0vbPIx9BWIk",
+          "title": "The Cellular Secret to a Body That Never Gets Old",
+          "published": "2026-07-24T05:00:02+00:00"
+        },
         {
           "id": "rvbdYOGd174",
           "title": "Stop Sitting All Day: Do This Daily Reset",
@@ -28,11 +33,6 @@
           "id": "fRkxV77sdbM",
           "title": "Never Try to Manage These 3 Things: FLEE!",
           "published": "2026-07-21T17:00:09+00:00"
-        },
-        {
-          "id": "_oZDFbdTKRI",
-          "title": "Fix Your Fuel Now or Destroy Your 100-Year Body!",
-          "published": "2026-07-21T17:00:06+00:00"
         }
       ]
     },
