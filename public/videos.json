@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-07-26T04:00:07.579Z",
+  "updatedAt": "2026-07-26T08:40:52.060Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "xLHuDIJeubM",
+          "title": "The Dangerous Habit Even Rich People Are Quitting",
+          "published": "2026-07-26T05:00:30+00:00"
+        },
         {
           "id": "atQosqpTywk",
           "title": "The specific blueprint God used when He made you",
@@ -28,11 +33,6 @@
           "id": "qoYV9E52EsU",
           "title": "Stop trying to change. Do this instead",
           "published": "2026-07-23T05:00:13+00:00"
-        },
-        {
-          "id": "3Y6XjHk4j0g",
-          "title": "The Silent Killer You’re Ignoring Every Night",
-          "published": "2026-07-22T17:00:16+00:00"
         }
       ]
     },
