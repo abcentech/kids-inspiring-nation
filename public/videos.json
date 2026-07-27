@@ -1,9 +1,19 @@
 {
-  "updatedAt": "2026-07-27T15:17:23.102Z",
+  "updatedAt": "2026-07-27T19:58:03.078Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "x2JikvgSiA0",
+          "title": "Rest is not Weakness",
+          "published": "2026-07-27T17:00:17+00:00"
+        },
+        {
+          "id": "eV0ZRQQv7_o",
+          "title": "The One Thing That Quietly Shortens Your Life",
+          "published": "2026-07-27T17:00:05+00:00"
+        },
         {
           "id": "xLHuDIJeubM",
           "title": "The Dangerous Habit Even Rich People Are Quitting",
@@ -23,16 +33,6 @@
           "id": "0vbPIx9BWIk",
           "title": "The Cellular Secret to a Body That Never Gets Old",
           "published": "2026-07-24T05:00:02+00:00"
-        },
-        {
-          "id": "rvbdYOGd174",
-          "title": "Stop Sitting All Day: Do This Daily Reset",
-          "published": "2026-07-23T17:00:32+00:00"
-        },
-        {
-          "id": "qoYV9E52EsU",
-          "title": "Stop trying to change. Do this instead",
-          "published": "2026-07-23T05:00:13+00:00"
         }
       ]
     },
