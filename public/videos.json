@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-07-28T03:41:10.285Z",
+  "updatedAt": "2026-07-28T09:08:40.366Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "sj9fzHoT6qw",
+          "title": "The Moment You Became Priceless",
+          "published": "2026-07-28T05:00:13+00:00"
+        },
         {
           "id": "x2JikvgSiA0",
           "title": "Rest is not Weakness",
@@ -28,11 +33,6 @@
           "id": "Q8DX3KSjCnw",
           "title": "One Habit That Poisons Your Body and Soul",
           "published": "2026-07-24T17:00:25+00:00"
-        },
-        {
-          "id": "0vbPIx9BWIk",
-          "title": "The Cellular Secret to a Body That Never Gets Old",
-          "published": "2026-07-24T05:00:02+00:00"
         }
       ]
     },
