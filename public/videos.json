@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-07-29T14:33:41.871Z",
+  "updatedAt": "2026-07-29T19:47:37.457Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "kvxyI5wR9Cc",
+          "title": "This is The Lie Society Told You About Retirement.",
+          "published": "2026-07-29T17:00:01+00:00"
+        },
         {
           "id": "ARvp7xvgjkY",
           "title": "Why You Are God’s Masterpiece",
@@ -28,11 +33,6 @@
           "id": "jALyq1wR6rE",
           "title": "Ep 12 · Never Stop Learning",
           "published": "2026-07-28T15:41:19+00:00"
-        },
-        {
-          "id": "QR7sdQgzoB4",
-          "title": "Ep 10 · The Longest Conversation You'll Ever Have",
-          "published": "2026-07-28T15:31:50+00:00"
         }
       ]
     },
