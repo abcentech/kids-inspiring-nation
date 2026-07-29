@@ -424,6 +424,68 @@ export default function About({ dark }) {
         </div>
       </div>
 
+      {/* ─── MISSION · WHAT WE DO · NONPROFIT STATUS ─── */}
+      <section style={{ padding: "clamp(4rem,10vw,7rem) 0", background: bg }}>
+        <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 clamp(1.25rem,5vw,3rem)" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 22rem), 1fr))", gap: "clamp(2rem,5vw,3.5rem)", alignItems: "start" }}>
+            {/* Mission */}
+            <div>
+              <div style={{ fontSize: ".76rem", fontWeight: 500, letterSpacing: ".1em", textTransform: "uppercase", color: T.gold, marginBottom: ".75rem" }}>
+                Our Mission
+              </div>
+              <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(1.8rem,4.5vw,2.6rem)", fontWeight: 900, letterSpacing: "-0.025em", color: txt, lineHeight: 1.12, marginBottom: "1.1rem" }}>
+                Raising children of character to build a nation
+              </h2>
+              <p style={{ fontSize: "clamp(1rem,2.2vw,1.12rem)", color: dark ? "rgba(253,247,236,.72)" : T.p2, lineHeight: 1.78, marginBottom: "1rem" }}>
+                KidsInspiring Nation is a Nigerian non-profit organisation on a mission to raise children and
+                teenagers of character, purpose and skill — and to equip them to transform their communities and
+                their nation. Everything we run is free for the families we serve.
+              </p>
+              <p style={{ fontSize: "clamp(.95rem,2vw,1.05rem)", color: dark ? "rgba(253,247,236,.6)" : T.p2, lineHeight: 1.72 }}>
+                Since 2017 we have reached 639 children through 14 year-round programmes, held 365 events, and
+                served 1,952 meals — building character, faith, academic skill and a lifelong habit of service.
+              </p>
+            </div>
+
+            {/* What we do + nonprofit status */}
+            <div>
+              <div style={{ fontSize: ".76rem", fontWeight: 500, letterSpacing: ".1em", textTransform: "uppercase", color: T.gold, marginBottom: ".9rem" }}>
+                What We Do
+              </div>
+              <div style={{ display: "grid", gap: ".8rem", marginBottom: "1.75rem" }}>
+                {[
+                  { ic: "📖", t: "Character & faith formation", d: "A free daily devotion (KIND, 8pm), values classes and Psalm 119 challenges that form the inner person." },
+                  { ic: "🧠", t: "Academic mentoring", d: "goDs University and the P119 Academy — weekly mentoring and academic-excellence coaching." },
+                  { ic: "🇳🇬", t: "Nation Builders Corps", d: "A year-long challenge where young Nigerians identify and solve a real problem in their own community." },
+                  { ic: "🍽️", t: "Community service & feeding", d: "FACE and outreach — meals, mentorship and practical service across our communities." },
+                ].map(w => (
+                  <div key={w.t} style={{ display: "flex", gap: ".85rem", alignItems: "flex-start", background: card, border: `1px solid ${dark ? "rgba(255,255,255,.06)" : "rgba(22,97,62,.09)"}`, borderRadius: 14, padding: "1rem 1.1rem" }}>
+                    <span style={{ fontSize: "1.5rem", lineHeight: 1 }}>{w.ic}</span>
+                    <div>
+                      <div style={{ fontSize: ".95rem", fontWeight: 700, color: txt, marginBottom: ".2rem" }}>{w.t}</div>
+                      <div style={{ fontSize: ".85rem", color: dark ? "rgba(253,247,236,.6)" : T.p2, lineHeight: 1.55 }}>{w.d}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Nonprofit status badge */}
+              <div style={{ borderRadius: 16, padding: "1.25rem 1.4rem", background: T.greenD, border: `1px solid ${T.gold}33` }}>
+                <div style={{ fontSize: ".7rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: T.goldL, marginBottom: ".5rem" }}>
+                  A registered nonprofit
+                </div>
+                <p style={{ fontSize: ".9rem", color: "rgba(253,247,236,.75)", lineHeight: 1.65, margin: 0 }}>
+                  <strong style={{ color: T.cream }}>{SITE.legalName}</strong> is a non-profit organisation
+                  registered in Nigeria as an Association with Incorporated Trustees —
+                  <strong style={{ color: T.goldL }}> CAC {SITE.registrationId}</strong>. Established {SITE.establishedYear}.
+                  We operate publicly as {SITE.name} and reinvest every gift into the children and communities we serve.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ─── FOUNDING STORY (Chapter Modal Cards) ─── */}
       <section style={{ padding: "clamp(4rem,10vw,7rem) 0", background: bg }}>
         <div style={{ maxWidth: "74rem", margin: "0 auto", padding: "0 clamp(1.25rem,5vw,3rem)" }}>

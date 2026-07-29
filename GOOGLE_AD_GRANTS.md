@@ -32,7 +32,8 @@ need action in external dashboards (Google for Nonprofits, GA4, Google Ads).
 |---|---|
 | Own the domain (`kidsinspiringnation.org`) | ✅ |
 | **HTTPS** across the site | ✅ (GitHub Pages TLS) |
-| Clear description of mission / what the org does | ✅ (homepage hero + About) |
+| Clear description of mission / what the org does | ✅ (homepage "Who We Are" mission+activities, About "Our Mission / What We Do" section) |
+| **Nonprofit status prominently displayed** | ✅ (footer nonprofit block + contact info, About nonprofit badge, homepage registered-nonprofit line, home NGO JSON-LD) |
 | No commercial/deceptive content; nonprofit purpose clear | ✅ |
 | Functional, no broken links, loads reasonably fast | ✅ — heavy images removed (see §5) |
 | A privacy policy | ✅ `/privacy` |

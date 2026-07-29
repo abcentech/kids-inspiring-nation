@@ -48,6 +48,7 @@ const NVC = lazy(() => import("./NVC.jsx"));
 const NBCRegister = lazy(() => import("./NBCRegister.jsx"));
 const NBCCourse = lazy(() => import("./NBCCourse.jsx"));
 const NBCFund = lazy(() => import("./NBCFund.jsx"));
+const NBCProgram = lazy(() => import("./nbc/ProgramPage.jsx"));
 const NBCStudents = lazy(() => import("./nbc/hubs/StudentsHub.jsx"));
 const NBCAdvisors = lazy(() => import("./nbc/hubs/AdvisorsHub.jsx"));
 const NBCSchools = lazy(() => import("./nbc/hubs/SchoolsHub.jsx"));
@@ -1083,24 +1084,26 @@ function Hero({ onDash }) {
           {/* Eyebrow */}
           <motion.div variants={{ initial: { opacity: 0, y: 15 }, animate: { opacity: 1, y: 0 } }} style={{ display: "inline-flex", alignItems: "center", gap: "0.75rem", fontSize: "0.76rem", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase", color: T.goldL, marginBottom: "1.75rem" }}>
             <span style={{ width: "2rem", height: "1.5px", background: T.gold, display: "block" }} />
-            For children aged 7–17 · Open worldwide
+            Nation Builders Corps · Open in all 36 states &amp; the FCT
           </motion.div>
           {/* Main headline */}
           <motion.h1 variants={{ initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 } }} style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(2.8rem,8vw,5.8rem)", fontWeight: 900, color: T.cream, letterSpacing: "-0.03em", lineHeight: .96, marginBottom: "1.5rem" }}>
-            What if your child<br />
-            was born to <em style={{ fontStyle: "italic", color: T.goldL }}>build a Nation?</em>
+            Your child was born to<br />
+            <em style={{ fontStyle: "italic", color: T.goldL }}>build a Nation.</em> Show them how.
           </motion.h1>
-          <motion.p variants={{ initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 } }} style={{ fontSize: "clamp(1rem,2.4vw,1.2rem)", color: "rgba(253,247,236,.72)", lineHeight: 1.68, marginBottom: "2rem", maxWidth: "48ch" }}>
-            Most children are entertained. A <strong style={{ color: T.goldL }}>genius</strong> is <em>formed</em> — in character, spirit, and skills — every single day of the year. 14 programmes. One mission.
+          <motion.p variants={{ initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 } }} style={{ fontSize: "clamp(1rem,2.4vw,1.2rem)", color: "rgba(253,247,236,.72)", lineHeight: 1.68, marginBottom: "2rem", maxWidth: "50ch" }}>
+            The <strong style={{ color: T.goldL }}>Nation Builders Corps</strong> is a year-long challenge for young Nigerians aged 10+. They pick a real problem in their community and build the solution — with character, not excuses. Free. Nationwide.
           </motion.p>
           {/* Single dominant CTA */}
           <motion.div variants={{ initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 } }} className="hero-btns" style={{ display: "flex", gap: ".75rem", alignItems: "center", flexWrap: "wrap" }}>
-            <motion.a whileHover={{ scale: 1.05, filter: "brightness(1.1)" }} whileTap={{ scale: 0.98 }} href="#join" className="gold-btn" style={{ display: "inline-flex", alignItems: "center", gap: ".6rem", padding: "1em 2.8em", borderRadius: 999, background: T.gold, color: "#fff", fontWeight: 800, fontSize: "1.05rem", fontFamily: "'Plus Jakarta Sans',sans-serif", boxShadow: `0 12px 36px ${T.gold}55` }}>
-              🔥 Enrol Your Child Now
+            <motion.div whileHover={{ scale: 1.05, filter: "brightness(1.1)" }} whileTap={{ scale: 0.98 }} style={{ display: "inline-flex" }}>
+              <Link to="/nbc/program" className="gold-btn" style={{ display: "inline-flex", alignItems: "center", gap: ".6rem", padding: "1em 2.8em", borderRadius: 999, background: T.gold, color: "#fff", fontWeight: 800, fontSize: "1.05rem", fontFamily: "'Plus Jakarta Sans',sans-serif", boxShadow: `0 12px 36px ${T.gold}55`, textDecoration: "none" }}>
+                🇳🇬 Join the Nation Builders Corps →
+              </Link>
+            </motion.div>
+            <motion.a whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.98 }} href="#join" className="ghost-btn" style={{ display: "inline-flex", alignItems: "center", gap: ".5rem", padding: ".9em 2em", borderRadius: 999, background: "rgba(253,247,236,.07)", color: T.cream, fontWeight: 500, fontSize: ".95rem", border: "1.5px solid rgba(253,247,236,.18)", cursor: "pointer", textDecoration: "none" }}>
+              Enrol your child →
             </motion.a>
-            <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.98 }} onClick={onDash} className="ghost-btn" style={{ display: "inline-flex", alignItems: "center", gap: ".5rem", padding: ".9em 2em", borderRadius: 999, background: "rgba(253,247,236,.07)", color: T.cream, fontWeight: 500, fontSize: ".95rem", border: "1.5px solid rgba(253,247,236,.18)", cursor: "pointer" }}>
-              <Activity size={15} strokeWidth={1.5} /> See our 2025 impact →
-            </motion.button>
           </motion.div>
           {/* Schedule strip */}
           <motion.div variants={{ initial: { opacity: 0 }, animate: { opacity: 1 } }} transition={{ delay: 0.8 }} style={{ display: "flex", gap: "1.5rem", marginTop: "3.5rem", paddingTop: "2rem", borderTop: "1px solid rgba(196,136,44,.18)", flexWrap: "wrap" }}>
@@ -1213,10 +1216,18 @@ function AboutSection({ dark }) {
               A Movement,<br />Not Just an Organisation
             </h2>
             <p className="reveal d2" style={{ fontSize: "clamp(.95rem,2vw,1.1rem)", color: dark ? "rgba(253,247,236,.75)" : T.greenM, lineHeight: 1.78, marginBottom: "1rem", maxWidth: "58ch" }}>
-              KidsInspiring Nation exists to raise <strong><GoDs style={{ color: T.gold }} /></strong> — Geniuses with divine purpose — to build Nations.
+              <strong>Our mission:</strong> KidsInspiring Nation raises children and teenagers of
+              character, purpose and skill — and equips them to build their communities and their nation.
             </p>
-            <p className="reveal d2" style={{ fontSize: "1rem", color: txt, lineHeight: 1.72, maxWidth: "58ch", marginBottom: "1.75rem" }}>
-              We are a Nigerian NGO running 14 concurrent programmes.
+            <p className="reveal d2" style={{ fontSize: "1rem", color: txt, lineHeight: 1.72, maxWidth: "58ch", marginBottom: "1rem" }}>
+              We are a registered Nigerian non-profit organisation running 14 free, year-round programmes:
+              a daily character devotion, faith and values classes, academic mentoring through goDs University,
+              community feeding, and the Nation Builders Corps — where young Nigerians solve real problems in
+              their own communities. Since 2017 we have reached 639 children across 365 events and served 1,952
+              meals, all at no cost to the families we serve.
+            </p>
+            <p className="reveal d2" style={{ fontSize: ".82rem", color: dark ? "rgba(253,247,236,.5)" : T.p3, lineHeight: 1.6, maxWidth: "58ch", marginBottom: "1.75rem" }}>
+              Registered nonprofit · {SITE.legalName} · Incorporated Trustees, CAC {SITE.registrationId} · Est. {SITE.establishedYear}
             </p>
             <div className="reveal d2" style={{ display: "flex", gap: ".9rem", flexWrap: "wrap", marginTop: "-1rem", marginBottom: "1.75rem" }}>
               <Link to="/kids-inspiring" style={{ fontSize: ".82rem", fontWeight: 800, color: "rgba(253,247,236,.78)", textDecoration: "none", borderBottom: "1px solid rgba(232,185,84,.35)" }}>
@@ -1970,9 +1981,33 @@ function SiteBottomBar({ dark }) {
         <FooterSignup />
         <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem", alignItems: "center", textAlign: "center", marginTop: "1.75rem" }}>
 
+          {/* Nonprofit status — prominently declared */}
+          <div style={{ maxWidth: "44rem", padding: "1rem 1.4rem", borderRadius: 14, background: "rgba(196,136,44,.07)", border: "1px solid rgba(196,136,44,.18)" }}>
+            <div style={{ fontSize: ".72rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: T.goldL, marginBottom: ".45rem" }}>
+              A registered nonprofit
+            </div>
+            <p style={{ fontSize: ".84rem", color: "rgba(253,247,236,.62)", lineHeight: 1.65, margin: 0 }}>
+              <strong style={{ color: T.cream }}>{SITE.legalName}</strong> (operating as {SITE.name}) is a
+              non-profit organisation registered in Nigeria as an Association with Incorporated Trustees —
+              <strong style={{ color: T.goldL }}> CAC {SITE.registrationId}</strong>. Established {SITE.establishedYear}. A youth-development
+              and character-formation NGO — not for private profit.
+            </p>
+          </div>
+
+          {/* Contact strip */}
+          <div style={{ display: "flex", alignItems: "center", gap: ".8rem", flexWrap: "wrap", justifyContent: "center", fontSize: ".8rem", color: "rgba(253,247,236,.5)" }}>
+            <a href={`mailto:${SITE.email}`} style={{ color: "inherit", textDecoration: "none" }}>{SITE.email}</a>
+            <span style={{ width: 1, height: 12, background: "rgba(253,247,236,0.15)" }} />
+            <a href={`tel:${SITE.phone.replace(/\s/g, "")}`} style={{ color: "inherit", textDecoration: "none" }}>{SITE.phone}</a>
+            <span style={{ width: 1, height: 12, background: "rgba(253,247,236,0.15)" }} />
+            <span>{SITE.officeAddress}</span>
+          </div>
+
           {/* Trust & Legal Strip */}
           <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap", justifyContent: "center", fontSize: ".82rem", color: "rgba(253,247,236,.45)" }}>
-            <div style={{ fontWeight: 800, color: T.goldL }}>{SITE.registrationId}</div>
+            <Link to="/about" style={{ color: "inherit", textDecoration: "none", fontWeight: 600 }}>About &amp; Mission</Link>
+            <span style={{ width: 1, height: 12, background: "rgba(253,247,236,0.15)" }} />
+            <Link to="/give" style={{ color: "inherit", textDecoration: "none", fontWeight: 600 }}>Donate</Link>
             <span style={{ width: 1, height: 12, background: "rgba(253,247,236,0.15)" }} />
             <Link to="/privacy" style={{ color: "inherit", textDecoration: "none", fontWeight: 600 }}>Privacy Policy</Link>
             <span style={{ width: 1, height: 12, background: "rgba(253,247,236,0.15)" }} />
@@ -2044,6 +2079,7 @@ export default function App() {
           <Route path="/gU" element={<RouteFrame meta={ROUTE_META.godsUniversity}><GodsUniversity dark={dark} /></RouteFrame>} />
           <Route path="/NBC" element={<RouteFrame meta={ROUTE_META.nbc} paddingTop=""><NVC dark={dark} /></RouteFrame>} />
           <Route path="/nbc" element={<Navigate to="/NBC" replace />} />
+          <Route path="/nbc/program" element={<RouteFrame meta={ROUTE_META.nbc} paddingTop={`${NBC_NAV_PAD}px`}><NBCProgram /></RouteFrame>} />
           <Route path="/NBC/register" element={<RouteFrame meta={ROUTE_META.nbcRegister} paddingTop={`${NBC_NAV_PAD}px`}><NBCRegister /></RouteFrame>} />
           <Route path="/nbc/course" element={<RouteFrame meta={ROUTE_META.nbcCourse} paddingTop=""><NBCCourse dark={dark} /></RouteFrame>} />
           <Route path="/nbc/course/:slug" element={<RouteFrame meta={ROUTE_META.nbcCourse} paddingTop=""><NBCCourse dark={dark} /></RouteFrame>} />
