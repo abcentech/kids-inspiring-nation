@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-07-29T03:44:19.892Z",
+  "updatedAt": "2026-07-29T09:13:37.159Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "ARvp7xvgjkY",
+          "title": "Why You Are God’s Masterpiece",
+          "published": "2026-07-29T05:00:08+00:00"
+        },
         {
           "id": "AvmV70bU77I",
           "title": "This is the Most Important Video you would see on Legacy TODAY!!!",
@@ -28,11 +33,6 @@
           "id": "QR7sdQgzoB4",
           "title": "Ep 10 · The Longest Conversation You'll Ever Have",
           "published": "2026-07-28T15:31:50+00:00"
-        },
-        {
-          "id": "Z0evUsOKvak",
-          "title": "Ep 9 · You Are the Herbalist of Your Life",
-          "published": "2026-07-28T15:31:48+00:00"
         }
       ]
     },
