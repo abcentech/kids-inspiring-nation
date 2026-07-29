@@ -147,6 +147,25 @@ export const ROUTE_META = {
       "A Nigerian NGO raising the next generation through character, faith and skill. 639 children, 14 programmes, and a free daily devotion at 8pm WAT. Join the movement building Nigeria's nation builders.",
     canonicalPath: "/",
     image: "/photos/og-default.jpg",
+    jsonLd: {
+      "@context": "https://schema.org",
+      "@type": "NGO",
+      name: SITE.name,
+      alternateName: SITE.legalName,
+      url: SITE.siteUrl,
+      email: SITE.email,
+      telephone: SITE.phone,
+      foundingDate: "2017",
+      identifier: SITE.registrationId,
+      description:
+        "KidsInspiring Nation is a registered Nigerian non-profit organisation raising children and teenagers of character, purpose and skill through 14 free programmes, and equipping them to build their communities and nation.",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: SITE.officeAddress,
+        addressCountry: "NG",
+      },
+      sameAs: Object.values(SITE.socials),
+    },
   },
   kidsInspiring: {
     title: `Kids Inspiring Nigeria — ${SITE.name}`,

@@ -16,6 +16,7 @@ export const NAV_H = 64;
 
 const NAV = [
   { label: "Home", to: "/NBC" },
+  { label: "Program", to: "/nbc/program" },
   { label: "Course", to: "/nbc/course" },
   { label: "Tools", to: "/nbc/tools" },
   { label: "Students", to: "/nbc/students" },
