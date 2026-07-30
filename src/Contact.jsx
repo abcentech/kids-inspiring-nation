@@ -57,6 +57,7 @@ import { CONTACT_SUBJECTS, ROUTE_META, SITE, SOCIAL_LINKS, T } from "./siteConfi
 import { usePageMeta } from "./usePageMeta.js";
 import { submitJsonForm } from "./formSubmit.js";
 import { hubConfigured, submitToHub } from "./formHub.js";
+import { trackEvent } from "./analytics.js";
 
 const GOOGLE_SCRIPT_URL = import.meta.env.VITE_CONTACT_FORM_URL || "";
 const SOCIAL_ICONS = {
@@ -117,6 +118,7 @@ export default function Contact({ dark }) {
           "Contact form"
         );
       }
+      trackEvent("contact_submit", { subject: form.subject });
       setStatus("success");
       setForm({ name: "", email: "", phone: "", subject: "general", message: "" });
       setTouched({});
