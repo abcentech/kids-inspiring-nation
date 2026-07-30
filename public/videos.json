@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-07-30T14:36:10.291Z",
+  "updatedAt": "2026-07-30T19:55:31.076Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "DJR_ugLgsdY",
+          "title": "3 Things you must know at 17 before you Retire at 70. ",
+          "published": "2026-07-30T17:00:06+00:00"
+        },
         {
           "id": "dy4tQuTH8-g",
           "title": "Why Sleep is Your Body's Mechanic",
@@ -28,11 +33,6 @@
           "id": "7iLGUgxVkz0",
           "title": "Ep 4 · A Starved Spirit",
           "published": "2026-07-28T15:54:11+00:00"
-        },
-        {
-          "id": "TSHYQiooBQ4",
-          "title": "Ep 1 · The Giver of Life",
-          "published": "2026-07-28T15:48:49+00:00"
         }
       ]
     },
