@@ -6,6 +6,7 @@ import { ROUTE_META, SITE, T } from './siteConfig.js';
 import { usePageMeta } from './usePageMeta.js';
 import { submitUrlEncodedForm } from './formSubmit.js';
 import { hubConfigured, submitToHub } from './formHub.js';
+import { trackEvent } from './analytics.js';
 
 const SCRIPT_URL = import.meta.env.VITE_NBC_FORM_URL || "";
 
@@ -294,6 +295,7 @@ export default function NBCRegister() {
 
             setRefLink(`https://nbc.kidsinspiringnation.org/NBC?ref=${nbcId}`);
             setUserId(nbcId);
+            trackEvent("nbc_registration", { id: nbcId });
             setSubmitted(true);
             window.scrollTo({ top: 0, behavior: 'smooth' });
         } catch (err) {
