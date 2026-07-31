@@ -1,9 +1,19 @@
 {
-  "updatedAt": "2026-07-31T14:39:59.755Z",
+  "updatedAt": "2026-07-31T19:56:01.938Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "7puQjlUP0EU",
+          "title": "Join us this evening to pray for families. #kidsinspiringnation #divorce #seperation #FamilyPrays",
+          "published": "2026-07-31T19:06:47+00:00"
+        },
+        {
+          "id": "BqZ4wN2wr5s",
+          "title": "The One Thing Better Than Living to 100",
+          "published": "2026-07-31T17:00:16+00:00"
+        },
         {
           "id": "HyH7-2myk-k",
           "title": "Your Body is Not a Trash Can",
@@ -23,16 +33,6 @@
           "id": "kvxyI5wR9Cc",
           "title": "This is The Lie Society Told You About Retirement.",
           "published": "2026-07-29T17:00:01+00:00"
-        },
-        {
-          "id": "ARvp7xvgjkY",
-          "title": "Why You Are God’s Masterpiece",
-          "published": "2026-07-29T05:00:08+00:00"
-        },
-        {
-          "id": "AvmV70bU77I",
-          "title": "This is the Most Important Video you would see on Legacy TODAY!!!",
-          "published": "2026-07-28T17:00:31+00:00"
         }
       ]
     },
