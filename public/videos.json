@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-08-02T03:57:22.900Z",
+  "updatedAt": "2026-08-02T08:38:49.118Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "NVoNPVg0Syg",
+          "title": "Why Even Billionaires Ride Bikes",
+          "published": "2026-08-02T05:00:14+00:00"
+        },
         {
           "id": "G5ipE36G_m0",
           "title": "The Technology of Movement",
@@ -28,11 +33,6 @@
           "id": "DJR_ugLgsdY",
           "title": "3 Things you must know at 17 before you Retire at 70. ",
           "published": "2026-07-30T17:00:06+00:00"
-        },
-        {
-          "id": "dy4tQuTH8-g",
-          "title": "Why Sleep is Your Body's Mechanic",
-          "published": "2026-07-30T05:00:21+00:00"
         }
       ]
     },
