@@ -1,9 +1,19 @@
 {
-  "updatedAt": "2026-08-03T03:59:39.795Z",
+  "updatedAt": "2026-08-03T10:08:26.151Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "BaPLLKzBvTA",
+          "title": "This is the Money Blue Print you have been Searching For!",
+          "published": "2026-08-03T06:00:04+00:00"
+        },
+        {
+          "id": "_W45jBJqLJo",
+          "title": "The Money Trap 99% Of People Fall For",
+          "published": "2026-08-03T05:00:22+00:00"
+        },
         {
           "id": "NVoNPVg0Syg",
           "title": "Why Even Billionaires Ride Bikes",
@@ -23,16 +33,6 @@
           "id": "BqZ4wN2wr5s",
           "title": "The One Thing Better Than Living to 100",
           "published": "2026-07-31T17:00:16+00:00"
-        },
-        {
-          "id": "HyH7-2myk-k",
-          "title": "Your Body is Not a Trash Can",
-          "published": "2026-07-31T05:00:25+00:00"
-        },
-        {
-          "id": "DJR_ugLgsdY",
-          "title": "3 Things you must know at 17 before you Retire at 70. ",
-          "published": "2026-07-30T17:00:06+00:00"
         }
       ]
     },
