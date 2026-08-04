@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-08-04T14:42:55.175Z",
+  "updatedAt": "2026-08-04T20:02:25.017Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "PHHPGrKZGGg",
+          "title": "Why You're Losing Money Without Knowing It!",
+          "published": "2026-08-04T17:00:12+00:00"
+        },
         {
           "id": "oCXHMO8nMOI",
           "title": "I Studied 70 Years of Faith. Here is the Blueprint.",
@@ -28,11 +33,6 @@
           "id": "G5ipE36G_m0",
           "title": "The Technology of Movement",
           "published": "2026-08-01T05:00:30+00:00"
-        },
-        {
-          "id": "7puQjlUP0EU",
-          "title": "Join us this evening to pray for families. #kidsinspiringnation #divorce #seperation #FamilyPrays",
-          "published": "2026-07-31T19:06:47+00:00"
         }
       ]
     },
