@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-08-05T03:38:24.483Z",
+  "updatedAt": "2026-08-05T09:09:44.830Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "3LgaXO3UYWE",
+          "title": "Legacy is a mindset, not an asset",
+          "published": "2026-08-05T05:00:34+00:00"
+        },
         {
           "id": "PHHPGrKZGGg",
           "title": "Why You're Losing Money Without Knowing It!",
@@ -15,6 +20,11 @@
           "published": "2026-08-04T05:00:31+00:00"
         },
         {
+          "id": "03nMeRxy-gA",
+          "title": "99% of People Fail This Wealth Test. Do You?",
+          "published": "2026-08-04T00:02:32+00:00"
+        },
+        {
           "id": "BaPLLKzBvTA",
           "title": "This is the Money Blue Print you have been Searching For!",
           "published": "2026-08-03T06:00:04+00:00"
@@ -23,16 +33,6 @@
           "id": "_W45jBJqLJo",
           "title": "The Money Trap 99% Of People Fall For",
           "published": "2026-08-03T05:00:22+00:00"
-        },
-        {
-          "id": "NVoNPVg0Syg",
-          "title": "Why Even Billionaires Ride Bikes",
-          "published": "2026-08-02T05:00:14+00:00"
-        },
-        {
-          "id": "G5ipE36G_m0",
-          "title": "The Technology of Movement",
-          "published": "2026-08-01T05:00:30+00:00"
         }
       ]
     },
