@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-08-05T14:37:06.737Z",
+  "updatedAt": "2026-08-05T19:58:01.041Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "03nMeRxy-gA",
+          "title": "99% of People Fail This Wealth Test. Do You?",
+          "published": "2026-08-05T17:00:06+00:00"
+        },
         {
           "id": "3LgaXO3UYWE",
           "title": "Legacy is a mindset, not an asset",
@@ -18,11 +23,6 @@
           "id": "oCXHMO8nMOI",
           "title": "I Studied 70 Years of Faith. Here is the Blueprint.",
           "published": "2026-08-04T05:00:31+00:00"
-        },
-        {
-          "id": "03nMeRxy-gA",
-          "title": "99% of People Fail This Wealth Test. Do You?",
-          "published": "2026-08-04T00:02:32+00:00"
         },
         {
           "id": "BaPLLKzBvTA",
