@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-08-06T03:43:48.623Z",
+  "updatedAt": "2026-08-06T09:10:10.370Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "q7_djDL4cgs",
+          "title": "Reproduce, Don't Replace: Your Real Purpose",
+          "published": "2026-08-06T05:00:03+00:00"
+        },
         {
           "id": "03nMeRxy-gA",
           "title": "99% of People Fail This Wealth Test. Do You?",
@@ -28,11 +33,6 @@
           "id": "BaPLLKzBvTA",
           "title": "This is the Money Blue Print you have been Searching For!",
           "published": "2026-08-03T06:00:04+00:00"
-        },
-        {
-          "id": "_W45jBJqLJo",
-          "title": "The Money Trap 99% Of People Fall For",
-          "published": "2026-08-03T05:00:22+00:00"
         }
       ]
     },
