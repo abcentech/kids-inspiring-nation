@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-08-07T13:42:10.725Z",
+  "updatedAt": "2026-08-07T19:20:10.989Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "5F9AAKObS4w",
+          "title": "Your Phone Isn't Ruining You. Your Habits Are.",
+          "published": "2026-08-07T17:00:22+00:00"
+        },
         {
           "id": "hJ2U_ry-CcA",
           "title": "The Divine Law of Daily Strength",
@@ -28,11 +33,6 @@
           "id": "3LgaXO3UYWE",
           "title": "Legacy is a mindset, not an asset",
           "published": "2026-08-05T05:00:34+00:00"
-        },
-        {
-          "id": "PHHPGrKZGGg",
-          "title": "Why You're Losing Money Without Knowing It!",
-          "published": "2026-08-04T17:00:12+00:00"
         }
       ]
     },
