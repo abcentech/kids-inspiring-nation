@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-08-06T14:38:15.393Z",
+  "updatedAt": "2026-08-07T00:17:59.906Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "Oe0w-wFZ440",
+          "title": "Miracles Won't Make You Rich. This Will.",
+          "published": "2026-08-06T17:00:35+00:00"
+        },
         {
           "id": "q7_djDL4cgs",
           "title": "Reproduce, Don't Replace: Your Real Purpose",
@@ -28,11 +33,6 @@
           "id": "oCXHMO8nMOI",
           "title": "I Studied 70 Years of Faith. Here is the Blueprint.",
           "published": "2026-08-04T05:00:31+00:00"
-        },
-        {
-          "id": "BaPLLKzBvTA",
-          "title": "This is the Money Blue Print you have been Searching For!",
-          "published": "2026-08-03T06:00:04+00:00"
         }
       ]
     },
