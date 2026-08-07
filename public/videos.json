@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-08-07T00:17:59.906Z",
+  "updatedAt": "2026-08-07T07:45:30.118Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "hJ2U_ry-CcA",
+          "title": "The Divine Law of Daily Strength",
+          "published": "2026-08-07T05:00:19+00:00"
+        },
         {
           "id": "Oe0w-wFZ440",
           "title": "Miracles Won't Make You Rich. This Will.",
@@ -28,11 +33,6 @@
           "id": "PHHPGrKZGGg",
           "title": "Why You're Losing Money Without Knowing It!",
           "published": "2026-08-04T17:00:12+00:00"
-        },
-        {
-          "id": "oCXHMO8nMOI",
-          "title": "I Studied 70 Years of Faith. Here is the Blueprint.",
-          "published": "2026-08-04T05:00:31+00:00"
         }
       ]
     },
