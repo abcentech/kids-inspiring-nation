@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-08-08T13:15:06.046Z",
+  "updatedAt": "2026-08-08T19:02:16.761Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "yTHP2YS0i9M",
+          "title": "You Are Wasting Your Life. Here’s How to Fix It.",
+          "published": "2026-08-08T17:55:01+00:00"
+        },
         {
           "id": "-iEaCQUWetc",
           "title": "Stop Looking for Earthly Awards: Focus on This",
@@ -28,11 +33,6 @@
           "id": "q7_djDL4cgs",
           "title": "Reproduce, Don't Replace: Your Real Purpose",
           "published": "2026-08-06T05:00:03+00:00"
-        },
-        {
-          "id": "03nMeRxy-gA",
-          "title": "99% of People Fail This Wealth Test. Do You?",
-          "published": "2026-08-05T17:00:06+00:00"
         }
       ]
     },
