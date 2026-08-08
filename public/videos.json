@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-08-08T02:24:14.299Z",
+  "updatedAt": "2026-08-08T07:17:55.210Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "-iEaCQUWetc",
+          "title": "Stop Looking for Earthly Awards: Focus on This",
+          "published": "2026-08-08T05:00:21+00:00"
+        },
         {
           "id": "5F9AAKObS4w",
           "title": "Your Phone Isn't Ruining You. Your Habits Are.",
@@ -28,11 +33,6 @@
           "id": "03nMeRxy-gA",
           "title": "99% of People Fail This Wealth Test. Do You?",
           "published": "2026-08-05T17:00:06+00:00"
-        },
-        {
-          "id": "3LgaXO3UYWE",
-          "title": "Legacy is a mindset, not an asset",
-          "published": "2026-08-05T05:00:34+00:00"
         }
       ]
     },
