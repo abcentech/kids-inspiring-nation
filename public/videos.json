@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-08-10T13:48:18.827Z",
+  "updatedAt": "2026-08-10T19:24:43.297Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "Dsw-up2xnGE",
+          "title": "The Money Lesson Most People Learn Too Late",
+          "published": "2026-08-10T17:00:05+00:00"
+        },
         {
           "id": "mB4MiUi7jlA",
           "title": "Want to Live Long? Do This One Thing",
@@ -28,11 +33,6 @@
           "id": "5F9AAKObS4w",
           "title": "Your Phone Isn't Ruining You. Your Habits Are.",
           "published": "2026-08-07T17:00:22+00:00"
-        },
-        {
-          "id": "hJ2U_ry-CcA",
-          "title": "The Divine Law of Daily Strength",
-          "published": "2026-08-07T05:00:19+00:00"
         }
       ]
     },
