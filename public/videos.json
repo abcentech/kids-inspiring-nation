@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-08-10T02:37:10.493Z",
+  "updatedAt": "2026-08-10T08:08:08.572Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "mB4MiUi7jlA",
+          "title": "Want to Live Long? Do This One Thing",
+          "published": "2026-08-10T05:00:39+00:00"
+        },
         {
           "id": "QZ8P-Q9KF04",
           "title": "Why You Must Stop Worrying About the Outcome",
@@ -28,11 +33,6 @@
           "id": "hJ2U_ry-CcA",
           "title": "The Divine Law of Daily Strength",
           "published": "2026-08-07T05:00:19+00:00"
-        },
-        {
-          "id": "Oe0w-wFZ440",
-          "title": "Miracles Won't Make You Rich. This Will.",
-          "published": "2026-08-06T17:00:35+00:00"
         }
       ]
     },
