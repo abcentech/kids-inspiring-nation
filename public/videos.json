@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-08-11T02:30:33.847Z",
+  "updatedAt": "2026-08-11T07:40:40.420Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "BF1lMuUGosA",
+          "title": "The secret to living a life of multiplication",
+          "published": "2026-08-11T05:00:00+00:00"
+        },
         {
           "id": "Dsw-up2xnGE",
           "title": "The Money Lesson Most People Learn Too Late",
@@ -28,11 +33,6 @@
           "id": "-iEaCQUWetc",
           "title": "Stop Looking for Earthly Awards: Focus on This",
           "published": "2026-08-08T05:00:21+00:00"
-        },
-        {
-          "id": "5F9AAKObS4w",
-          "title": "Your Phone Isn't Ruining You. Your Habits Are.",
-          "published": "2026-08-07T17:00:22+00:00"
         }
       ]
     },
