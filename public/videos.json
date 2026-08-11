@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-08-11T13:46:33.757Z",
+  "updatedAt": "2026-08-11T19:28:15.499Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "nyfNrYKteqk",
+          "title": "The Money Trap 90% of High Earners Fall Into",
+          "published": "2026-08-11T17:00:15+00:00"
+        },
         {
           "id": "BF1lMuUGosA",
           "title": "The secret to living a life of multiplication",
@@ -28,11 +33,6 @@
           "id": "yTHP2YS0i9M",
           "title": "You Are Wasting Your Life. Here’s How to Fix It.",
           "published": "2026-08-08T17:55:01+00:00"
-        },
-        {
-          "id": "-iEaCQUWetc",
-          "title": "Stop Looking for Earthly Awards: Focus on This",
-          "published": "2026-08-08T05:00:21+00:00"
         }
       ]
     },
