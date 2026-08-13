@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-08-13T13:51:41.077Z",
+  "updatedAt": "2026-08-13T19:28:50.425Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "poiXfXxJfJs",
+          "title": "The 1 Mistake That Permanently Destroys Trust",
+          "published": "2026-08-13T17:00:18+00:00"
+        },
         {
           "id": "nNIIuyQEWkE",
           "title": "Why You Must Never Cut Off From Your Source",
@@ -28,11 +33,6 @@
           "id": "nyfNrYKteqk",
           "title": "The Money Trap 90% of High Earners Fall Into",
           "published": "2026-08-11T17:00:15+00:00"
-        },
-        {
-          "id": "BF1lMuUGosA",
-          "title": "The secret to living a life of multiplication",
-          "published": "2026-08-11T05:00:00+00:00"
         }
       ]
     },
