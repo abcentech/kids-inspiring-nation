@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-08-14T13:47:26.362Z",
+  "updatedAt": "2026-08-14T19:16:53.663Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "bJxzPMQlMYg",
+          "title": "The Only Wealth Strategy That Never Fails.",
+          "published": "2026-08-14T17:00:40+00:00"
+        },
         {
           "id": "OZ_9r7zkZNI",
           "title": "The One Secret to a Life That Never Withers",
@@ -28,11 +33,6 @@
           "id": "ovbI9q5-_zs",
           "title": "The Secret to a Life That Never Stops Growing",
           "published": "2026-08-12T05:00:32+00:00"
-        },
-        {
-          "id": "9EsQddrweWk",
-          "title": "This Spending Habit Secretly Reveals Who Controls You",
-          "published": "2026-08-11T19:29:19+00:00"
         }
       ]
     },
