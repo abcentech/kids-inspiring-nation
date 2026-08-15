@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-08-15T01:52:24.913Z",
+  "updatedAt": "2026-08-15T07:00:37.052Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "-2R91AjOdE0",
+          "title": "Don't Just Start, Finish Your Course",
+          "published": "2026-08-15T05:00:36+00:00"
+        },
         {
           "id": "bJxzPMQlMYg",
           "title": "This is the reason why your Son STEALS. The Money Test.",
@@ -28,11 +33,6 @@
           "id": "_JcnggJ4FXI",
           "title": "Before You Spend Another Naira, Ask Yourself This.",
           "published": "2026-08-12T17:00:13+00:00"
-        },
-        {
-          "id": "ovbI9q5-_zs",
-          "title": "The Secret to a Life That Never Stops Growing",
-          "published": "2026-08-12T05:00:32+00:00"
         }
       ]
     },
