@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-08-15T13:01:38.968Z",
+  "updatedAt": "2026-08-15T18:50:16.908Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "Grui0BHNv0g",
+          "title": "Stop Making This Excuse Before It Ruins You!",
+          "published": "2026-08-15T17:00:39+00:00"
+        },
         {
           "id": "-2R91AjOdE0",
           "title": "Don't Just Start, Finish Your Course",
@@ -28,11 +33,6 @@
           "id": "nNIIuyQEWkE",
           "title": "Why You Must Never Cut Off From Your Source",
           "published": "2026-08-13T05:00:18+00:00"
-        },
-        {
-          "id": "_JcnggJ4FXI",
-          "title": "Before You Spend Another Naira, Ask Yourself This.",
-          "published": "2026-08-12T17:00:13+00:00"
         }
       ]
     },
