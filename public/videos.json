@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-08-16T01:59:19.360Z",
+  "updatedAt": "2026-08-16T07:02:29.536Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "SGur3VikgD8",
+          "title": "Don’t Ease Off, Don’t Give Up",
+          "published": "2026-08-16T05:00:25+00:00"
+        },
         {
           "id": "Grui0BHNv0g",
           "title": "Stop Making This Excuse Before It Ruins You!",
@@ -28,11 +33,6 @@
           "id": "poiXfXxJfJs",
           "title": "The 1 Mistake That Permanently Destroys Trust",
           "published": "2026-08-13T17:00:18+00:00"
-        },
-        {
-          "id": "nNIIuyQEWkE",
-          "title": "Why You Must Never Cut Off From Your Source",
-          "published": "2026-08-13T05:00:18+00:00"
         }
       ]
     },
