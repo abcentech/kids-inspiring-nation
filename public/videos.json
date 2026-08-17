@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-08-17T13:09:41.142Z",
+  "updatedAt": "2026-08-17T19:01:10.495Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "0Wa8uM0nOs8",
+          "title": "The Money Mistake That Keeps Families Broke for Generations",
+          "published": "2026-08-17T17:00:39+00:00"
+        },
         {
           "id": "AV2Djp9R2zU",
           "title": "The 3 things that drains your resources",
@@ -28,11 +33,6 @@
           "id": "bJxzPMQlMYg",
           "title": "This is the reason why your Son STEALS. The Money Test.",
           "published": "2026-08-14T17:00:40+00:00"
-        },
-        {
-          "id": "OZ_9r7zkZNI",
-          "title": "The One Secret to a Life That Never Withers",
-          "published": "2026-08-14T05:00:21+00:00"
         }
       ]
     },
