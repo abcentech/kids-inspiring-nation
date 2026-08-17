@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-08-17T01:57:16.076Z",
+  "updatedAt": "2026-08-17T07:25:42.303Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "AV2Djp9R2zU",
+          "title": "The 3 things that drains your resources",
+          "published": "2026-08-17T05:00:02+00:00"
+        },
         {
           "id": "SGur3VikgD8",
           "title": "Don’t Ease Off, Don’t Give Up",
@@ -28,11 +33,6 @@
           "id": "OZ_9r7zkZNI",
           "title": "The One Secret to a Life That Never Withers",
           "published": "2026-08-14T05:00:21+00:00"
-        },
-        {
-          "id": "poiXfXxJfJs",
-          "title": "The 1 Mistake That Permanently Destroys Trust",
-          "published": "2026-08-13T17:00:18+00:00"
         }
       ]
     },
