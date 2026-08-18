@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-08-18T13:11:29.683Z",
+  "updatedAt": "2026-08-18T18:59:50.384Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "-LgJq1U6uwE",
+          "title": "The Money Mistake Stealing Your Peace",
+          "published": "2026-08-18T17:00:15+00:00"
+        },
         {
           "id": "PScZtExFL70",
           "title": "Stop Guessing: Why You Must Count the Cost",
@@ -28,11 +33,6 @@
           "id": "Grui0BHNv0g",
           "title": "Stop Making This Excuse Before It Ruins You!",
           "published": "2026-08-15T17:00:39+00:00"
-        },
-        {
-          "id": "-2R91AjOdE0",
-          "title": "Don't Just Start, Finish Your Course",
-          "published": "2026-08-15T05:00:36+00:00"
         }
       ]
     },
