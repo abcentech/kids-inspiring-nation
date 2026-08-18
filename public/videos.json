@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-08-18T01:53:07.638Z",
+  "updatedAt": "2026-08-18T07:07:41.327Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "PScZtExFL70",
+          "title": "Stop Guessing: Why You Must Count the Cost",
+          "published": "2026-08-18T05:00:04+00:00"
+        },
         {
           "id": "0Wa8uM0nOs8",
           "title": "The Money Mistake That Keeps Families Broke for Generations",
@@ -28,11 +33,6 @@
           "id": "-2R91AjOdE0",
           "title": "Don't Just Start, Finish Your Course",
           "published": "2026-08-15T05:00:36+00:00"
-        },
-        {
-          "id": "bJxzPMQlMYg",
-          "title": "This is the reason why your Son STEALS. The Money Test.",
-          "published": "2026-08-14T17:00:40+00:00"
         }
       ]
     },
