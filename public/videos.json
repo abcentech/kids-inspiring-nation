@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-08-19T01:55:32.221Z",
+  "updatedAt": "2026-08-19T07:08:47.392Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "NPY1cIXpRA4",
+          "title": "You must be accoutable for everything you do now in future.",
+          "published": "2026-08-19T05:00:27+00:00"
+        },
         {
           "id": "-LgJq1U6uwE",
           "title": "The Money Mistake Stealing Your Peace",
@@ -28,11 +33,6 @@
           "id": "SGur3VikgD8",
           "title": "Don’t Ease Off, Don’t Give Up",
           "published": "2026-08-16T05:00:25+00:00"
-        },
-        {
-          "id": "Grui0BHNv0g",
-          "title": "Stop Making This Excuse Before It Ruins You!",
-          "published": "2026-08-15T17:00:39+00:00"
         }
       ]
     },
