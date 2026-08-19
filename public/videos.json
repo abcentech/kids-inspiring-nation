@@ -1,12 +1,17 @@
 {
-  "updatedAt": "2026-08-19T13:12:36.609Z",
+  "updatedAt": "2026-08-19T18:56:05.738Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
         {
+          "id": "ZHSJ-3cmcEc",
+          "title": "You Can’t Build Wealth While Holding On to This",
+          "published": "2026-08-19T17:00:04+00:00"
+        },
+        {
           "id": "NPY1cIXpRA4",
-          "title": "You must be accoutable for everything you do now in future.",
+          "title": "Why Accountability?",
           "published": "2026-08-19T05:00:27+00:00"
         },
         {
@@ -26,13 +31,8 @@
         },
         {
           "id": "AV2Djp9R2zU",
-          "title": "The 3 things that drains your resources",
+          "title": "Resource Suckers",
           "published": "2026-08-17T05:00:02+00:00"
-        },
-        {
-          "id": "SGur3VikgD8",
-          "title": "Don’t Ease Off, Don’t Give Up",
-          "published": "2026-08-16T05:00:25+00:00"
         }
       ]
     },
