@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-08-20T13:14:35.048Z",
+  "updatedAt": "2026-08-20T19:03:53.757Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "EWIjvYkagng",
+          "title": "More Money Won’t Fix This Problem.",
+          "published": "2026-08-20T17:00:01+00:00"
+        },
         {
           "id": "KZPYW4Jb8DM",
           "title": "The \"Extra Change\" Test You’re Failing",
@@ -28,11 +33,6 @@
           "id": "PScZtExFL70",
           "title": "Stop Guessing: Why You Must Count the Cost",
           "published": "2026-08-18T05:00:04+00:00"
-        },
-        {
-          "id": "0Wa8uM0nOs8",
-          "title": "The Money Mistake That Keeps Families Broke for Generations",
-          "published": "2026-08-17T17:00:39+00:00"
         }
       ]
     },
