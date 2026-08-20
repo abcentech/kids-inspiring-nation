@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-08-20T01:54:05.433Z",
+  "updatedAt": "2026-08-20T07:09:54.566Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "KZPYW4Jb8DM",
+          "title": "The \"Extra Change\" Test You’re Failing",
+          "published": "2026-08-20T05:00:03+00:00"
+        },
         {
           "id": "ZHSJ-3cmcEc",
           "title": "You Can’t Build Wealth While Holding On to This",
@@ -28,11 +33,6 @@
           "id": "0Wa8uM0nOs8",
           "title": "The Money Mistake That Keeps Families Broke for Generations",
           "published": "2026-08-17T17:00:39+00:00"
-        },
-        {
-          "id": "AV2Djp9R2zU",
-          "title": "Resource Suckers",
-          "published": "2026-08-17T05:00:02+00:00"
         }
       ]
     },
