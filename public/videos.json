@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-08-21T02:00:09.940Z",
+  "updatedAt": "2026-08-21T07:10:37.141Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "ye-06b_YDu0",
+          "title": "The Secret Wealth God Gives to Family",
+          "published": "2026-08-21T05:00:11+00:00"
+        },
         {
           "id": "EWIjvYkagng",
           "title": "More Money Won’t Fix This Problem.",
@@ -28,11 +33,6 @@
           "id": "-LgJq1U6uwE",
           "title": "The Money Mistake Stealing Your Peace",
           "published": "2026-08-18T17:00:15+00:00"
-        },
-        {
-          "id": "PScZtExFL70",
-          "title": "Stop Guessing: Why You Must Count the Cost",
-          "published": "2026-08-18T05:00:04+00:00"
         }
       ]
     },
