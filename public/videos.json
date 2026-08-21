@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-08-21T13:14:15.308Z",
+  "updatedAt": "2026-08-21T19:00:08.451Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "ZcQVdBVxSlU",
+          "title": "This 1 Money Mistake Is Costing You",
+          "published": "2026-08-21T17:52:56+00:00"
+        },
         {
           "id": "ye-06b_YDu0",
           "title": "The Secret Wealth God Gives to Family",
@@ -28,11 +33,6 @@
           "id": "NPY1cIXpRA4",
           "title": "Why Accountability?",
           "published": "2026-08-19T05:00:27+00:00"
-        },
-        {
-          "id": "-LgJq1U6uwE",
-          "title": "The Money Mistake Stealing Your Peace",
-          "published": "2026-08-18T17:00:15+00:00"
         }
       ]
     },
