@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-08-22T01:53:10.371Z",
+  "updatedAt": "2026-08-22T07:02:54.046Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "r5wzgYeKu0c",
+          "title": "The only question that matters.",
+          "published": "2026-08-22T05:00:18+00:00"
+        },
         {
           "id": "ZcQVdBVxSlU",
           "title": "This 1 Money Mistake Is Costing You",
@@ -28,11 +33,6 @@
           "id": "ZHSJ-3cmcEc",
           "title": "You Can’t Build Wealth While Holding On to This",
           "published": "2026-08-19T17:00:04+00:00"
-        },
-        {
-          "id": "NPY1cIXpRA4",
-          "title": "Why Accountability?",
-          "published": "2026-08-19T05:00:27+00:00"
         }
       ]
     },
