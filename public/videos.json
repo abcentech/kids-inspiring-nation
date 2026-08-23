@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-08-23T02:01:58.224Z",
+  "updatedAt": "2026-08-23T07:05:17.465Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "SNm4OFW5jmI",
+          "title": "The Salvation of God: Knowing Jesus.",
+          "published": "2026-08-23T05:00:35+00:00"
+        },
         {
           "id": "NaGCthVSTkY",
           "title": "Is Your Freedom in Money Actually a Trap?",
@@ -28,11 +33,6 @@
           "id": "EWIjvYkagng",
           "title": "More Money Won’t Fix This Problem.",
           "published": "2026-08-20T17:00:01+00:00"
-        },
-        {
-          "id": "KZPYW4Jb8DM",
-          "title": "The \"Extra Change\" Test You’re Failing",
-          "published": "2026-08-20T05:00:03+00:00"
         }
       ]
     },
