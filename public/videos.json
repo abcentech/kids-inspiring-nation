@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-08-22T18:51:32.622Z",
+  "updatedAt": "2026-08-23T02:01:58.224Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "NaGCthVSTkY",
+          "title": "Is Your Freedom in Money Actually a Trap?",
+          "published": "2026-08-22T20:06:26+00:00"
+        },
         {
           "id": "r5wzgYeKu0c",
           "title": "The only question that matters.",
@@ -28,11 +33,6 @@
           "id": "KZPYW4Jb8DM",
           "title": "The \"Extra Change\" Test You’re Failing",
           "published": "2026-08-20T05:00:03+00:00"
-        },
-        {
-          "id": "ZHSJ-3cmcEc",
-          "title": "You Can’t Build Wealth While Holding On to This",
-          "published": "2026-08-19T17:00:04+00:00"
         }
       ]
     },
