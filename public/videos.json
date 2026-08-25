@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-08-25T13:14:43.642Z",
+  "updatedAt": "2026-08-25T19:01:32.967Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "n2hz9Nd3MPE",
+          "title": "You’re Using Money as an Excuse to Stay Small!",
+          "published": "2026-08-25T17:00:00+00:00"
+        },
         {
           "id": "SimpjEhM8UU",
           "title": "Small Waste, Big Consequences",
@@ -28,11 +33,6 @@
           "id": "NaGCthVSTkY",
           "title": "Is Your Freedom in Money Actually a Trap?",
           "published": "2026-08-22T20:06:26+00:00"
-        },
-        {
-          "id": "r5wzgYeKu0c",
-          "title": "The only question that matters.",
-          "published": "2026-08-22T05:00:18+00:00"
         }
       ]
     },
