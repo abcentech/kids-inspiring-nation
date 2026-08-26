@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-08-26T13:25:36.936Z",
+  "updatedAt": "2026-08-26T20:09:10.220Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "OlqEZ3fll9Q",
+          "title": "This Daily Habit Makes You Impossible to Ignore!",
+          "published": "2026-08-26T17:00:27+00:00"
+        },
         {
           "id": "SdMo92uFT4o",
           "title": "3 Hidden Expenses Killing Your Wealth",
@@ -28,11 +33,6 @@
           "id": "hFva3lajsDA",
           "title": "The One Secret to Earning Absolute Trust",
           "published": "2026-08-24T17:00:01+00:00"
-        },
-        {
-          "id": "SNm4OFW5jmI",
-          "title": "The Salvation of God: Knowing Jesus.",
-          "published": "2026-08-23T05:00:35+00:00"
         }
       ]
     },
