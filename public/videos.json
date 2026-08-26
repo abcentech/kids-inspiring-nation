@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-08-25T19:01:32.967Z",
+  "updatedAt": "2026-08-26T02:01:10.509Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "SdMo92uFT4o",
+          "title": "3 Hidden Expenses Killing Your Wealth",
+          "published": "2026-08-25T23:00:13+00:00"
+        },
         {
           "id": "n2hz9Nd3MPE",
           "title": "You’re Using Money as an Excuse to Stay Small!",
@@ -28,11 +33,6 @@
           "id": "SNm4OFW5jmI",
           "title": "The Salvation of God: Knowing Jesus.",
           "published": "2026-08-23T05:00:35+00:00"
-        },
-        {
-          "id": "NaGCthVSTkY",
-          "title": "Is Your Freedom in Money Actually a Trap?",
-          "published": "2026-08-22T20:06:26+00:00"
         }
       ]
     },
