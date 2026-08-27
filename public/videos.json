@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-08-26T20:09:10.220Z",
+  "updatedAt": "2026-08-27T09:57:06.736Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "SdqU_eq1TI8",
+          "title": "Why You Should Never Beg at the 9th Month",
+          "published": "2026-08-26T23:00:15+00:00"
+        },
         {
           "id": "OlqEZ3fll9Q",
           "title": "This Daily Habit Makes You Impossible to Ignore!",
@@ -28,11 +33,6 @@
           "id": "s7dX0gLDk_I",
           "title": "Your Prayer for Money Will NEVER Be Answered — Do THIS Instead!",
           "published": "2026-08-24T17:00:12+00:00"
-        },
-        {
-          "id": "hFva3lajsDA",
-          "title": "The One Secret to Earning Absolute Trust",
-          "published": "2026-08-24T17:00:01+00:00"
         }
       ]
     },
