@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-08-27T09:57:06.736Z",
+  "updatedAt": "2026-08-27T22:24:26.520Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "z7VVcA65P6M",
+          "title": "While You Waited, Someone Else Took Your Spot",
+          "published": "2026-08-27T17:00:17+00:00"
+        },
         {
           "id": "SdqU_eq1TI8",
           "title": "Why You Should Never Beg at the 9th Month",
@@ -28,11 +33,6 @@
           "id": "SimpjEhM8UU",
           "title": "Small Waste, Big Consequences",
           "published": "2026-08-24T23:00:33+00:00"
-        },
-        {
-          "id": "s7dX0gLDk_I",
-          "title": "Your Prayer for Money Will NEVER Be Answered — Do THIS Instead!",
-          "published": "2026-08-24T17:00:12+00:00"
         }
       ]
     },
