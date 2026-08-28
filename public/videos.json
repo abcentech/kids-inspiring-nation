@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-08-28T11:30:07.364Z",
+  "updatedAt": "2026-08-28T22:26:45.886Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "EPvDNtQdXrU",
+          "title": "Where Did All Your Money Go? Watch This First",
+          "published": "2026-08-28T17:00:02+00:00"
+        },
         {
           "id": "oOgiAdwkE3k",
           "title": "The Test Most People Fail in Their Hardest Season",
@@ -28,11 +33,6 @@
           "id": "SdMo92uFT4o",
           "title": "3 Hidden Expenses Killing Your Wealth",
           "published": "2026-08-25T23:00:13+00:00"
-        },
-        {
-          "id": "n2hz9Nd3MPE",
-          "title": "You’re Using Money as an Excuse to Stay Small!",
-          "published": "2026-08-25T17:00:00+00:00"
         }
       ]
     },
