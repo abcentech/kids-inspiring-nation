@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-08-29T16:46:26.748Z",
+  "updatedAt": "2026-08-29T20:58:38.659Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "09EIYnRIDfo",
+          "title": "There Is One Investment Rule You Don’t Know (But Should)",
+          "published": "2026-08-29T20:24:49+00:00"
+        },
         {
           "id": "ZtFJu_P5XRE",
           "title": "The One Resource You’re Overlooking",
@@ -28,11 +33,6 @@
           "id": "SdqU_eq1TI8",
           "title": "Why You Should Never Beg at the 9th Month",
           "published": "2026-08-26T23:00:15+00:00"
-        },
-        {
-          "id": "OlqEZ3fll9Q",
-          "title": "This Daily Habit Makes You Impossible to Ignore!",
-          "published": "2026-08-26T17:00:27+00:00"
         }
       ]
     },
