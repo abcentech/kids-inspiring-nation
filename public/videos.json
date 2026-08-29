@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-08-28T22:26:45.886Z",
+  "updatedAt": "2026-08-29T07:09:25.386Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "ZtFJu_P5XRE",
+          "title": "The One Resource You’re Overlooking",
+          "published": "2026-08-28T23:00:31+00:00"
+        },
         {
           "id": "EPvDNtQdXrU",
           "title": "Where Did All Your Money Go? Watch This First",
@@ -28,11 +33,6 @@
           "id": "OlqEZ3fll9Q",
           "title": "This Daily Habit Makes You Impossible to Ignore!",
           "published": "2026-08-26T17:00:27+00:00"
-        },
-        {
-          "id": "SdMo92uFT4o",
-          "title": "3 Hidden Expenses Killing Your Wealth",
-          "published": "2026-08-25T23:00:13+00:00"
         }
       ]
     },
