@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-08-29T20:58:38.659Z",
+  "updatedAt": "2026-08-30T05:30:24.473Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "qj2Id5wjJt4",
+          "title": "1 Money Mistake That Permanently Destroys Trust",
+          "published": "2026-08-29T23:00:38+00:00"
+        },
         {
           "id": "09EIYnRIDfo",
           "title": "There Is One Investment Rule You Don’t Know (But Should)",
@@ -28,11 +33,6 @@
           "id": "z7VVcA65P6M",
           "title": "While You Waited, Someone Else Took Your Spot",
           "published": "2026-08-27T17:00:17+00:00"
-        },
-        {
-          "id": "SdqU_eq1TI8",
-          "title": "Why You Should Never Beg at the 9th Month",
-          "published": "2026-08-26T23:00:15+00:00"
         }
       ]
     },
