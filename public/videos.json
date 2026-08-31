@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-08-31T14:02:09.063Z",
+  "updatedAt": "2026-08-31T22:54:30.907Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "K8z25xj4ico",
+          "title": "Is Your Money Growing? God Is Saying Something",
+          "published": "2026-08-31T17:16:26+00:00"
+        },
         {
           "id": "yVu0Wxozaxo",
           "title": "The Integrity Test You Are Failing",
@@ -28,11 +33,6 @@
           "id": "EPvDNtQdXrU",
           "title": "Where Did All Your Money Go? Watch This First",
           "published": "2026-08-28T17:00:02+00:00"
-        },
-        {
-          "id": "oOgiAdwkE3k",
-          "title": "The Test Most People Fail in Their Hardest Season",
-          "published": "2026-08-27T23:00:33+00:00"
         }
       ]
     },
