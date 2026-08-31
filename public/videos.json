@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-08-30T21:12:30.310Z",
+  "updatedAt": "2026-08-31T05:44:53.974Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "yVu0Wxozaxo",
+          "title": "The Integrity Test You Are Failing",
+          "published": "2026-08-30T23:00:34+00:00"
+        },
         {
           "id": "qj2Id5wjJt4",
           "title": "1 Money Mistake That Permanently Destroys Trust",
@@ -28,11 +33,6 @@
           "id": "oOgiAdwkE3k",
           "title": "The Test Most People Fail in Their Hardest Season",
           "published": "2026-08-27T23:00:33+00:00"
-        },
-        {
-          "id": "z7VVcA65P6M",
-          "title": "While You Waited, Someone Else Took Your Spot",
-          "published": "2026-08-27T17:00:17+00:00"
         }
       ]
     },
