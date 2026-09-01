@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-09-01T05:17:43.484Z",
+  "updatedAt": "2026-09-01T11:45:38.770Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "hWbKP8bvg7E",
+          "title": "The Secret to a Life Without Lack",
+          "published": "2026-09-01T05:00:01+00:00"
+        },
         {
           "id": "K8z25xj4ico",
           "title": "Is Your Money Growing? God Is Saying Something",
@@ -28,11 +33,6 @@
           "id": "ZtFJu_P5XRE",
           "title": "The One Resource You’re Overlooking",
           "published": "2026-08-28T23:00:31+00:00"
-        },
-        {
-          "id": "EPvDNtQdXrU",
-          "title": "Where Did All Your Money Go? Watch This First",
-          "published": "2026-08-28T17:00:02+00:00"
         }
       ]
     },
