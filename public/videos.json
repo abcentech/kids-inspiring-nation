@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-09-01T16:43:47.609Z",
+  "updatedAt": "2026-09-01T21:06:54.936Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "0sVq4CDp5Xs",
+          "title": "Your Potential Will Never Build Anything Till You Do THIS!",
+          "published": "2026-09-01T17:43:06+00:00"
+        },
         {
           "id": "hWbKP8bvg7E",
           "title": "The Secret to a Life Without Lack",
@@ -28,11 +33,6 @@
           "id": "09EIYnRIDfo",
           "title": "There Is One Investment Rule You Don’t Know (But Should)",
           "published": "2026-08-29T20:24:49+00:00"
-        },
-        {
-          "id": "ZtFJu_P5XRE",
-          "title": "The One Resource You’re Overlooking",
-          "published": "2026-08-28T23:00:31+00:00"
         }
       ]
     },
