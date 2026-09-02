@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-09-02T04:42:49.249Z",
+  "updatedAt": "2026-09-02T11:26:44.000Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "1K1ovF0jVsU",
+          "title": "The secret to a life without lack 2",
+          "published": "2026-09-02T09:47:32+00:00"
+        },
         {
           "id": "0sVq4CDp5Xs",
           "title": "Your Potential Will Never Build Anything Till You Do THIS!",
@@ -28,11 +33,6 @@
           "id": "qj2Id5wjJt4",
           "title": "1 Money Mistake That Permanently Destroys Trust",
           "published": "2026-08-29T23:00:38+00:00"
-        },
-        {
-          "id": "09EIYnRIDfo",
-          "title": "There Is One Investment Rule You Don’t Know (But Should)",
-          "published": "2026-08-29T20:24:49+00:00"
         }
       ]
     },
