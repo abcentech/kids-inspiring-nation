@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-09-02T16:39:51.179Z",
+  "updatedAt": "2026-09-02T21:07:03.110Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "DnRChA-3Mtg",
+          "title": "Stop Waiting for Your Goliath: Build Your Sling Now!",
+          "published": "2026-09-02T17:00:14+00:00"
+        },
         {
           "id": "1K1ovF0jVsU",
           "title": "The secret to a life without lack 2",
@@ -28,11 +33,6 @@
           "id": "yVu0Wxozaxo",
           "title": "The Integrity Test You Are Failing",
           "published": "2026-08-30T23:00:34+00:00"
-        },
-        {
-          "id": "qj2Id5wjJt4",
-          "title": "1 Money Mistake That Permanently Destroys Trust",
-          "published": "2026-08-29T23:00:38+00:00"
         }
       ]
     },
