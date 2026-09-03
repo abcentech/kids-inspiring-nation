@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-09-03T11:22:54.737Z",
+  "updatedAt": "2026-09-03T16:30:45.657Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "7gmdHPm0j3k",
+          "title": "Resource Suckers",
+          "published": "2026-09-03T16:28:30+00:00"
+        },
         {
           "id": "DnRChA-3Mtg",
           "title": "Stop Waiting for Your Goliath: Build Your Sling Now!",
@@ -28,11 +33,6 @@
           "id": "K8z25xj4ico",
           "title": "Is Your Money Growing? God Is Saying Something",
           "published": "2026-08-31T17:16:26+00:00"
-        },
-        {
-          "id": "yVu0Wxozaxo",
-          "title": "The Integrity Test You Are Failing",
-          "published": "2026-08-30T23:00:34+00:00"
         }
       ]
     },
