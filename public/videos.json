@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-09-03T16:30:45.657Z",
+  "updatedAt": "2026-09-03T21:06:55.452Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "eabAO55Ml18",
+          "title": "Stop Letting These 3 Things Drain Your Potential",
+          "published": "2026-09-03T18:00:55+00:00"
+        },
         {
           "id": "7gmdHPm0j3k",
           "title": "Resource Suckers",
@@ -28,11 +33,6 @@
           "id": "hWbKP8bvg7E",
           "title": "The Secret to a Life Without Lack",
           "published": "2026-09-01T05:00:01+00:00"
-        },
-        {
-          "id": "K8z25xj4ico",
-          "title": "Is Your Money Growing? God Is Saying Something",
-          "published": "2026-08-31T17:16:26+00:00"
         }
       ]
     },
