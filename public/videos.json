@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-09-06T04:47:11.557Z",
+  "updatedAt": "2026-09-06T11:04:02.288Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "vOfZ4ynJgs8",
+          "title": "The Truth About Everything You Own",
+          "published": "2026-09-06T05:00:13+00:00"
+        },
         {
           "id": "F-w2EVkCt_Q",
           "title": "Your Gift Is Useful Only To The Point YOU Have Built Capacity",
@@ -28,11 +33,6 @@
           "id": "DnRChA-3Mtg",
           "title": "Stop Waiting for Your Goliath: Build Your Sling Now!",
           "published": "2026-09-02T17:00:14+00:00"
-        },
-        {
-          "id": "1K1ovF0jVsU",
-          "title": "The secret to a life without lack 2",
-          "published": "2026-09-02T09:47:32+00:00"
         }
       ]
     },
