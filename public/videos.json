@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-09-07T12:43:51.287Z",
+  "updatedAt": "2026-09-07T21:34:34.760Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "G8aR9E9pISE",
+          "title": "Your GOLIATH Will Never Show Up Till You UNLOCK This!",
+          "published": "2026-09-07T17:00:22+00:00"
+        },
         {
           "id": "zvQ1XKfRdTM",
           "title": "The Secret to a Life of Investment",
@@ -28,11 +33,6 @@
           "id": "eabAO55Ml18",
           "title": "Stop Letting These 3 Things Drain Your Potential",
           "published": "2026-09-03T18:00:55+00:00"
-        },
-        {
-          "id": "7gmdHPm0j3k",
-          "title": "Resource Suckers",
-          "published": "2026-09-03T16:28:30+00:00"
         }
       ]
     },
