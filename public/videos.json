@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-09-07T04:51:17.696Z",
+  "updatedAt": "2026-09-07T12:43:51.287Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "zvQ1XKfRdTM",
+          "title": "The Secret to a Life of Investment",
+          "published": "2026-09-07T05:00:24+00:00"
+        },
         {
           "id": "vOfZ4ynJgs8",
           "title": "The Truth About Everything You Own",
@@ -28,11 +33,6 @@
           "id": "7gmdHPm0j3k",
           "title": "Resource Suckers",
           "published": "2026-09-03T16:28:30+00:00"
-        },
-        {
-          "id": "DnRChA-3Mtg",
-          "title": "Stop Waiting for Your Goliath: Build Your Sling Now!",
-          "published": "2026-09-02T17:00:14+00:00"
         }
       ]
     },
