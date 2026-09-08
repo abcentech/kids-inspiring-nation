@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-09-08T16:42:33.807Z",
+  "updatedAt": "2026-09-08T21:14:02.834Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "_4dsVU0wETg",
+          "title": "Your GIANTS Are Afraid of You! (They Just Look Bigger)",
+          "published": "2026-09-08T17:02:04+00:00"
+        },
         {
           "id": "8mvfZuJku3s",
           "title": "1 Harsh Truth About Financial Preparation",
@@ -28,11 +33,6 @@
           "id": "F-w2EVkCt_Q",
           "title": "Your Gift Is Useful Only To The Point YOU Have Built Capacity",
           "published": "2026-09-05T17:00:39+00:00"
-        },
-        {
-          "id": "44kqIQH5uTo",
-          "title": "To Every Child Fighting a Secret Battle — This Is for You",
-          "published": "2026-09-04T17:00:39+00:00"
         }
       ]
     },
