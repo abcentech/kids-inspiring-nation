@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-09-08T04:47:01.817Z",
+  "updatedAt": "2026-09-08T11:26:15.797Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "8mvfZuJku3s",
+          "title": "1 Harsh Truth About Financial Preparation",
+          "published": "2026-09-08T10:27:32+00:00"
+        },
         {
           "id": "G8aR9E9pISE",
           "title": "Your GOLIATH Will Never Show Up Till You UNLOCK This!",
@@ -11,12 +16,12 @@
         },
         {
           "id": "zvQ1XKfRdTM",
-          "title": "The Secret to a Life of Investment",
+          "title": "Time Investment !",
           "published": "2026-09-07T05:00:24+00:00"
         },
         {
           "id": "vOfZ4ynJgs8",
-          "title": "The Truth About Everything You Own",
+          "title": "Why Everything You Own Controls You",
           "published": "2026-09-06T05:00:13+00:00"
         },
         {
@@ -28,11 +33,6 @@
           "id": "44kqIQH5uTo",
           "title": "To Every Child Fighting a Secret Battle — This Is for You",
           "published": "2026-09-04T17:00:39+00:00"
-        },
-        {
-          "id": "eabAO55Ml18",
-          "title": "Stop Letting These 3 Things Drain Your Potential",
-          "published": "2026-09-03T18:00:55+00:00"
         }
       ]
     },
