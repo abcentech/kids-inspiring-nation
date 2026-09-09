@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-09-09T16:43:53.967Z",
+  "updatedAt": "2026-09-09T20:59:14.425Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "RCKGWSAXtSI",
+          "title": "You Can’t Fight Your Giant in Another Man’s Armor!",
+          "published": "2026-09-09T17:58:31+00:00"
+        },
         {
           "id": "_4dsVU0wETg",
           "title": "Your GIANTS Are Afraid of You! (They Just Look Bigger)",
@@ -28,11 +33,6 @@
           "id": "vOfZ4ynJgs8",
           "title": "Why Everything You Own Controls You",
           "published": "2026-09-06T05:00:13+00:00"
-        },
-        {
-          "id": "F-w2EVkCt_Q",
-          "title": "Your Gift Is Useful Only To The Point YOU Have Built Capacity",
-          "published": "2026-09-05T17:00:39+00:00"
         }
       ]
     },
