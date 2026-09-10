@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-09-10T16:29:59.552Z",
+  "updatedAt": "2026-09-10T20:55:40.223Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "-U08gU9HhT0",
+          "title": "Goliath Isn’t Your Problem! This Blindspot Is.",
+          "published": "2026-09-10T17:00:16+00:00"
+        },
         {
           "id": "RCKGWSAXtSI",
           "title": "You Can’t Fight Your Giant in Another Man’s Armor!",
@@ -28,11 +33,6 @@
           "id": "zvQ1XKfRdTM",
           "title": "Time Investment !",
           "published": "2026-09-07T05:00:24+00:00"
-        },
-        {
-          "id": "vOfZ4ynJgs8",
-          "title": "Why Everything You Own Controls You",
-          "published": "2026-09-06T05:00:13+00:00"
         }
       ]
     },
