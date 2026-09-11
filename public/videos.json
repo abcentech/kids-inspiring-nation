@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-09-11T16:34:12.830Z",
+  "updatedAt": "2026-09-11T21:01:48.863Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "jnSuAXoYx8I",
+          "title": "You’ll Keep Struggling Until You Learn This Cheat Code.",
+          "published": "2026-09-11T17:13:54+00:00"
+        },
         {
           "id": "6KhK7fFkqTo",
           "title": "The 1% vs 100% Rule You Need to Understand",
@@ -28,11 +33,6 @@
           "id": "8mvfZuJku3s",
           "title": "1 Harsh Truth About Financial Preparation",
           "published": "2026-09-08T10:27:32+00:00"
-        },
-        {
-          "id": "G8aR9E9pISE",
-          "title": "Your GOLIATH Will Never Show Up Till You UNLOCK This!",
-          "published": "2026-09-07T17:00:22+00:00"
         }
       ]
     },
