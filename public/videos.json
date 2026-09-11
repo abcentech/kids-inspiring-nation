@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-09-11T04:48:15.971Z",
+  "updatedAt": "2026-09-11T11:30:12.826Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "6KhK7fFkqTo",
+          "title": "The 1% vs 100% Rule You Need to Understand",
+          "published": "2026-09-11T05:00:23+00:00"
+        },
         {
           "id": "-U08gU9HhT0",
           "title": "Goliath Isn’t Your Problem! This Blindspot Is.",
@@ -28,11 +33,6 @@
           "id": "G8aR9E9pISE",
           "title": "Your GOLIATH Will Never Show Up Till You UNLOCK This!",
           "published": "2026-09-07T17:00:22+00:00"
-        },
-        {
-          "id": "zvQ1XKfRdTM",
-          "title": "Time Investment !",
-          "published": "2026-09-07T05:00:24+00:00"
         }
       ]
     },
