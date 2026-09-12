@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-09-12T15:36:22.968Z",
+  "updatedAt": "2026-09-12T20:38:22.781Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "txUsY5nFeDw",
+          "title": "Your Identity Is Under Attack (Until You Settle This!)",
+          "published": "2026-09-12T17:00:13+00:00"
+        },
         {
           "id": "jnSuAXoYx8I",
           "title": "You’ll Keep Struggling Until You Learn This Cheat Code.",
@@ -28,11 +33,6 @@
           "id": "_4dsVU0wETg",
           "title": "Your GIANTS Are Afraid of You! (They Just Look Bigger)",
           "published": "2026-09-08T17:02:04+00:00"
-        },
-        {
-          "id": "8mvfZuJku3s",
-          "title": "1 Harsh Truth About Financial Preparation",
-          "published": "2026-09-08T10:27:32+00:00"
         }
       ]
     },
