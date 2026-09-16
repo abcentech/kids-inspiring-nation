@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-09-16T11:45:27.557Z",
+  "updatedAt": "2026-09-16T17:05:46.349Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "C5msYFNsyc4",
+          "title": "If You Experience This, You’ve Found Your Life’s Purpose.",
+          "published": "2026-09-16T17:00:38+00:00"
+        },
         {
           "id": "ChWh3oqf1LQ",
           "title": "The Accountability Truth You Need to Hear",
@@ -28,11 +33,6 @@
           "id": "txUsY5nFeDw",
           "title": "Your Identity Is Under Attack (Until You Settle This!)",
           "published": "2026-09-12T17:00:13+00:00"
-        },
-        {
-          "id": "jnSuAXoYx8I",
-          "title": "You’ll Keep Struggling Until You Learn This Cheat Code.",
-          "published": "2026-09-11T17:13:54+00:00"
         }
       ]
     },
