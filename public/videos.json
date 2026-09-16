@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-09-16T04:55:59.407Z",
+  "updatedAt": "2026-09-16T11:45:27.557Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "ChWh3oqf1LQ",
+          "title": "The Accountability Truth You Need to Hear",
+          "published": "2026-09-16T05:00:20+00:00"
+        },
         {
           "id": "xjNkCy5KlkE",
           "title": "Forget the Threat. Look at This Instead.",
@@ -28,11 +33,6 @@
           "id": "jnSuAXoYx8I",
           "title": "You’ll Keep Struggling Until You Learn This Cheat Code.",
           "published": "2026-09-11T17:13:54+00:00"
-        },
-        {
-          "id": "6KhK7fFkqTo",
-          "title": "The 1% vs 100% Rule You Need to Understand",
-          "published": "2026-09-11T05:00:23+00:00"
         }
       ]
     },
