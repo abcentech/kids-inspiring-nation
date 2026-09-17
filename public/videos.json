@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-09-17T04:59:07.532Z",
+  "updatedAt": "2026-09-17T11:49:47.183Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "er7XIo9AIZ0",
+          "title": "Bet you didn't know this!",
+          "published": "2026-09-17T05:00:27+00:00"
+        },
         {
           "id": "C5msYFNsyc4",
           "title": "If You Experience This, You’ve Found Your Life’s Purpose.",
@@ -28,11 +33,6 @@
           "id": "yT5xByglB6U",
           "title": "You’ll Never Face Goliath If You Let Critics Stop You!",
           "published": "2026-09-14T17:00:19+00:00"
-        },
-        {
-          "id": "txUsY5nFeDw",
-          "title": "Your Identity Is Under Attack (Until You Settle This!)",
-          "published": "2026-09-12T17:00:13+00:00"
         }
       ]
     },
