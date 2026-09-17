@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-09-17T11:49:47.183Z",
+  "updatedAt": "2026-09-17T17:06:42.343Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "M9ctZZE8Y-w",
+          "title": "Your Obstacles Aren’t the Problem—Your Thinking Is.",
+          "published": "2026-09-17T17:00:12+00:00"
+        },
         {
           "id": "er7XIo9AIZ0",
           "title": "Bet you didn't know this!",
@@ -28,11 +33,6 @@
           "id": "aMTO9c59nV0",
           "title": "Check This Before You Spend Another Naira",
           "published": "2026-09-15T06:21:50+00:00"
-        },
-        {
-          "id": "yT5xByglB6U",
-          "title": "You’ll Never Face Goliath If You Let Critics Stop You!",
-          "published": "2026-09-14T17:00:19+00:00"
         }
       ]
     },
