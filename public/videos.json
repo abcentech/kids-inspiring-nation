@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-09-18T16:30:45.178Z",
+  "updatedAt": "2026-09-18T20:58:08.124Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "S_4cuvUbXik",
+          "title": "God Gave You an Assignment—Are You Ignoring It?",
+          "published": "2026-09-18T17:40:53+00:00"
+        },
         {
           "id": "M9ctZZE8Y-w",
           "title": "How To Renew Your Mind From Negative Thoughts (Ask This Instead)",
@@ -28,11 +33,6 @@
           "id": "xjNkCy5KlkE",
           "title": "Forget the Threat. Look at This Instead.",
           "published": "2026-09-15T17:00:05+00:00"
-        },
-        {
-          "id": "aMTO9c59nV0",
-          "title": "Check This Before You Spend Another Naira",
-          "published": "2026-09-15T06:21:50+00:00"
         }
       ]
     },
