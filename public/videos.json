@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-09-19T15:56:16.703Z",
+  "updatedAt": "2026-09-19T20:47:44.716Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "afWjpAJ044s",
+          "title": "Career vs. Cause: The 1 Mistake You Can't Afford to Make",
+          "published": "2026-09-19T17:49:41+00:00"
+        },
         {
           "id": "S_4cuvUbXik",
           "title": "God Gave You an Assignment—Are You Ignoring It?",
@@ -28,11 +33,6 @@
           "id": "ChWh3oqf1LQ",
           "title": "The Accountability Truth You Need to Hear",
           "published": "2026-09-16T05:00:20+00:00"
-        },
-        {
-          "id": "xjNkCy5KlkE",
-          "title": "Forget the Threat. Look at This Instead.",
-          "published": "2026-09-15T17:00:05+00:00"
         }
       ]
     },
