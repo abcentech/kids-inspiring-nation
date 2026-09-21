@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-09-21T12:57:48.813Z",
+  "updatedAt": "2026-09-21T22:01:57.862Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "Q1ugLJdD_Zk",
+          "title": "Stop Running From What Scares You (Do This Instead)",
+          "published": "2026-09-21T17:00:29+00:00"
+        },
         {
           "id": "afWjpAJ044s",
           "title": "How to Find Your Calling: The 1 Mistake You Can't Afford to Make",
@@ -28,11 +33,6 @@
           "id": "C5msYFNsyc4",
           "title": "How To Know Your Purpose and Calling: What Makes You Angry?",
           "published": "2026-09-16T17:00:38+00:00"
-        },
-        {
-          "id": "ChWh3oqf1LQ",
-          "title": "The Accountability Truth You Need to Hear",
-          "published": "2026-09-16T05:00:20+00:00"
         }
       ]
     },
