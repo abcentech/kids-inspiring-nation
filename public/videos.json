@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-09-22T11:47:34.825Z",
+  "updatedAt": "2026-09-22T17:01:45.302Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "7umSdLsX2dw",
+          "title": "If You Don’t Conquer These 5 Giants, You’ll Regret It Later.",
+          "published": "2026-09-22T17:00:33+00:00"
+        },
         {
           "id": "Q1ugLJdD_Zk",
           "title": "Stop Running From What Scares You (Do This Instead)",
@@ -28,11 +33,6 @@
           "id": "er7XIo9AIZ0",
           "title": "Bet you didn't know this!",
           "published": "2026-09-17T05:00:27+00:00"
-        },
-        {
-          "id": "C5msYFNsyc4",
-          "title": "How To Know Your Purpose and Calling: What Makes You Angry?",
-          "published": "2026-09-16T17:00:38+00:00"
         }
       ]
     },
