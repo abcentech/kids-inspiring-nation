@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-09-23T17:10:59.283Z",
+  "updatedAt": "2026-09-23T21:34:26.090Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "u2Vb2OqXQSU",
+          "title": "How To Overcome Insecurity: Turn Disadvantage Into Power.",
+          "published": "2026-09-23T17:25:59+00:00"
+        },
         {
           "id": "7umSdLsX2dw",
           "title": "If You Don’t Conquer These 5 Giants, You’ll Regret It Later.",
@@ -28,11 +33,6 @@
           "id": "M9ctZZE8Y-w",
           "title": "How To Renew Your Mind From Negative Thoughts (Ask This Instead)",
           "published": "2026-09-17T17:00:12+00:00"
-        },
-        {
-          "id": "er7XIo9AIZ0",
-          "title": "Bet you didn't know this!",
-          "published": "2026-09-17T05:00:27+00:00"
         }
       ]
     },
