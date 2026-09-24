@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-09-24T11:55:21.341Z",
+  "updatedAt": "2026-09-24T17:17:23.868Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "FWCNnqNpEuo",
+          "title": "How To Overcome Fear: Why Courage Starts Before You Feel Ready",
+          "published": "2026-09-24T17:00:07+00:00"
+        },
         {
           "id": "Qv_jF2ChwxA",
           "title": "Don’t Confuse Permission with Ownership",
@@ -28,11 +33,6 @@
           "id": "afWjpAJ044s",
           "title": "How to Find Your Calling: The 1 Mistake You Can't Afford to Make",
           "published": "2026-09-19T17:49:41+00:00"
-        },
-        {
-          "id": "S_4cuvUbXik",
-          "title": "God Gave You an Assignment—Are You Ignoring It?",
-          "published": "2026-09-18T17:40:53+00:00"
         }
       ]
     },
