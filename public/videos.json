@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-09-24T05:00:42.527Z",
+  "updatedAt": "2026-09-24T11:55:21.341Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "Qv_jF2ChwxA",
+          "title": "Don’t Confuse Permission with Ownership",
+          "published": "2026-09-24T05:00:20+00:00"
+        },
         {
           "id": "u2Vb2OqXQSU",
           "title": "How To Overcome Insecurity: Turn Disadvantage Into Power.",
@@ -28,11 +33,6 @@
           "id": "S_4cuvUbXik",
           "title": "God Gave You an Assignment—Are You Ignoring It?",
           "published": "2026-09-18T17:40:53+00:00"
-        },
-        {
-          "id": "M9ctZZE8Y-w",
-          "title": "How To Renew Your Mind From Negative Thoughts (Ask This Instead)",
-          "published": "2026-09-17T17:00:12+00:00"
         }
       ]
     },
