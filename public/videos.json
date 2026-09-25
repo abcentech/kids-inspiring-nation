@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-09-25T11:57:29.887Z",
+  "updatedAt": "2026-09-25T17:17:43.848Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "GEH7_lKSmcY",
+          "title": "You Only Get One Shot: Stop Hiding Behind Endless Practice",
+          "published": "2026-09-25T17:00:17+00:00"
+        },
         {
           "id": "FWCNnqNpEuo",
           "title": "How To Overcome Fear: Why Courage Starts Before You Feel Ready",
@@ -28,11 +33,6 @@
           "id": "Q1ugLJdD_Zk",
           "title": "Stop Running From What Scares You (Do This Instead)",
           "published": "2026-09-21T17:00:29+00:00"
-        },
-        {
-          "id": "afWjpAJ044s",
-          "title": "How to Find Your Calling: The 1 Mistake You Can't Afford to Make",
-          "published": "2026-09-19T17:49:41+00:00"
         }
       ]
     },
