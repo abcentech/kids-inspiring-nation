@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-09-26T16:29:19.037Z",
+  "updatedAt": "2026-09-26T21:16:15.716Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "wJbyHDnu694",
+          "title": "The 1 Decision That Prepares You for Huge Opportunities",
+          "published": "2026-09-26T17:00:39+00:00"
+        },
         {
           "id": "GEH7_lKSmcY",
           "title": "You Only Get One Shot: Stop Hiding Behind Endless Practice",
@@ -28,11 +33,6 @@
           "id": "7umSdLsX2dw",
           "title": "If You Don’t Conquer These 5 Giants, You’ll Regret It Later.",
           "published": "2026-09-22T17:00:33+00:00"
-        },
-        {
-          "id": "Q1ugLJdD_Zk",
-          "title": "Stop Running From What Scares You (Do This Instead)",
-          "published": "2026-09-21T17:00:29+00:00"
         }
       ]
     },
