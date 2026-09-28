@@ -18,6 +18,7 @@ const NAV = [
   { label: "Home", to: "/NBC" },
   { label: "Program", to: "/nbc/program" },
   { label: "Course", to: "/nbc/course" },
+  { label: "Watch & Play", to: "/NBC#watch" },
   { label: "Tools", to: "/nbc/tools" },
   { label: "Students", to: "/nbc/students" },
   { label: "Advisors", to: "/nbc/advisors" },
@@ -160,6 +161,7 @@ export function NBCFooter() {
         <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: "1.25rem 1.5rem", fontSize: ".85rem", color: "rgba(250,249,246,.7)" }}>
           <Link to="/NBC/register" style={{ color: "inherit", textDecoration: "none" }}>Join</Link>
           <Link to="/nbc/course" style={{ color: "inherit", textDecoration: "none" }}>Course</Link>
+          <a href="/play/" style={{ color: "inherit", textDecoration: "none" }}>Play Lightrun</a>
           <Link to="/nbc/tools" style={{ color: "inherit", textDecoration: "none" }}>Builder Tools</Link>
           <Link to="/nbc/students" style={{ color: "inherit", textDecoration: "none" }}>For Students</Link>
           <Link to="/nbc/advisors" style={{ color: "inherit", textDecoration: "none" }}>For Advisors</Link>

@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Fly the Eagle through 30 Nigerian cities. Blast the corruption, collect the virtues, beat each boss, then take the Nation Builder's pledge. Free, from the Nation Builders Corps.">
+<meta property="og:title" content="Nation Builders: Lightrun">
+<meta property="og:description" content="30 cities. 30 bosses. One pledge. A free game from the Nation Builders Corps.">
+<meta property="og:image" content="https://kidsinspiringnation.org/nbc/media/game-shot.jpg">
+<meta property="og:url" content="https://kidsinspiringnation.org/play/">
+<meta name="theme-color" content="#030a07">
+<link rel="icon" href="/logo.svg">
+<link rel="canonical" href="https://kidsinspiringnation.org/play/">
+<title>Nation Builders: Lightrun</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg:#030a07;--ink:#f4f1e6;--mute:#9fb8a8;--green:#19c46a;--gold:#ffc21a;--red:#ff3b3b;--line:rgba(255,255,255,.14);--glass:rgba(6,24,15,.72)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;overflow:hidden;user-select:none;touch-action:none}
+#c{position:fixed;inset:0;width:100%;height:100%;display:block}
+.screen{position:fixed;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:16px;text-align:center;overflow-y:auto;background:radial-gradient(ellipse at 50% 40%,rgba(3,20,12,.35),rgba(3,10,7,.88) 75%)}
+.screen.on{display:flex}
+.logo{font-family:"Archivo Black",Impact,sans-serif;font-size:clamp(44px,12vw,108px);line-height:.86;margin:0;letter-spacing:-1px;background:linear-gradient(180deg,#fff 20%,#ffe28a 55%,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 28px rgba(255,194,26,.45))}
+.sub{font-family:"Archivo Black";letter-spacing:6px;font-size:clamp(12px,3vw,16px);color:var(--green);text-shadow:0 0 14px rgba(25,196,106,.8)}
+h2{font-family:"Archivo Black";font-size:clamp(26px,7vw,48px);margin:0;text-wrap:balance}
+p{color:var(--mute);max-width:480px;line-height:1.5;margin:0}
+.btn{font-family:"Archivo Black",sans-serif;font-size:20px;letter-spacing:1px;border:0;border-radius:14px;padding:16px 40px;cursor:pointer;color:#1b1200;background:linear-gradient(180deg,#ffe06b,var(--gold));box-shadow:0 0 0 2px rgba(255,255,255,.2) inset,0 8px 30px rgba(255,194,26,.45);transition:transform .08s}
+.btn:active{transform:scale(.96)}.btn:focus-visible,.ghost:focus-visible,.day:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.btn.g{background:linear-gradient(180deg,#3ff09a,var(--green));color:#022412;box-shadow:0 8px 30px rgba(25,196,106,.45)}
+.ghost{font:700 15px Inter;background:transparent;color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:11px 20px;cursor:pointer}
+.row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.panel{background:var(--glass);border:1px solid var(--line);border-radius:18px;padding:18px;width:min(560px,100%);backdrop-filter:blur(8px)}
+#grid{display:grid;grid-template-columns:repeat(6,1fr);gap:7px;width:min(520px,100%)}
+.day{aspect-ratio:1;border-radius:10px;background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--ink);font:900 17px "Archivo Black";cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.day small{font:700 9px Inter;color:var(--gold);letter-spacing:1px}
+.day.lock{opacity:.3;cursor:default}.day.done{background:linear-gradient(160deg,rgba(25,196,106,.45),rgba(25,196,106,.1));border-color:var(--green)}
+.day.next{border-color:var(--gold);box-shadow:0 0 18px rgba(255,194,26,.6);animation:pl 1.2s infinite}@keyframes pl{50%{transform:scale(1.06)}}
+.stats{display:flex;gap:22px;justify-content:center;font:700 13px Inter;color:var(--mute);letter-spacing:1px;font-variant-numeric:tabular-nums}
+.stats b{display:block;font:900 26px "Archivo Black";color:var(--gold)}
+.stars{font-size:48px;letter-spacing:8px}.stars span{color:rgba(255,255,255,.12)}.stars span.on{color:var(--gold);text-shadow:0 0 22px rgba(255,194,26,.8)}
+.verse{font:italic 600 19px Inter;color:var(--ink)}.ref{font:900 12px Inter;letter-spacing:3px;color:var(--gold)}
+#hud{position:fixed;left:0;right:0;top:env(safe-area-inset-top,0px);display:none;padding:12px 16px;pointer-events:none;font-variant-numeric:tabular-nums}
+#hud.on{display:block}
+.htop{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.hs{font:900 26px "Archivo Black";text-shadow:0 0 12px rgba(0,0,0,.8)}
+.hd{font:900 11px Inter;letter-spacing:2px;color:var(--gold)}
+.bar{height:6px;border-radius:3px;background:rgba(255,255,255,.12);overflow:hidden;margin-top:6px;width:min(260px,40vw)}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--gold));box-shadow:0 0 10px var(--gold)}
+#boss{display:none;margin:10px auto 0;width:min(520px,90vw);text-align:center}
+#boss .bar{width:100%;height:10px}#boss .bar i{background:linear-gradient(90deg,#ff7a3b,var(--red));box-shadow:0 0 14px var(--red)}
+#boss span{font:900 12px Inter;letter-spacing:4px;color:#ff8080}
+#hearts{font-size:22px;color:var(--red);text-shadow:0 0 10px var(--red);text-align:right}
+#combo{position:fixed;left:50%;top:22%;transform:translateX(-50%);font:900 clamp(22px,6vw,40px) "Archivo Black";color:var(--gold);text-shadow:0 0 20px rgba(255,194,26,.9);pointer-events:none;opacity:0;transition:opacity .2s}
+#banner{position:fixed;left:0;right:0;top:40%;text-align:center;pointer-events:none;font:900 clamp(30px,9vw,72px) "Archivo Black";opacity:0;text-shadow:0 0 30px currentColor}
+#blast{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));width:84px;height:84px;border-radius:50%;border:2px solid var(--line);background:conic-gradient(var(--gold) var(--p,0%),rgba(255,255,255,.08) 0);color:#fff;font:900 11px Inter;letter-spacing:1px;display:none;cursor:pointer;pointer-events:auto}
+#blast.ready{animation:pl .8s infinite;box-shadow:0 0 30px var(--gold);color:#1b1200}
+#mute{pointer-events:auto;background:rgba(0,0,0,.4);border:1px solid var(--line);color:#fff;border-radius:10px;font:700 12px Inter;padding:6px 10px;cursor:pointer}
+input[type=text]{font:800 20px Inter;padding:14px;border-radius:12px;border:1px solid var(--line);background:rgba(0,0,0,.4);color:var(--ink);width:100%;text-align:center}
+label.pl{display:flex;gap:10px;align-items:flex-start;text-align:left;padding:10px 2px;border-bottom:1px solid var(--line);cursor:pointer;font-weight:700}
+label.pl input{width:22px;height:22px;accent-color:var(--green);flex:none}
+.handles{font:700 13px Inter;color:var(--mute)}.handles b{color:#ff4e45}
+.help{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;text-align:left;font:600 14px Inter;color:var(--mute);align-items:center}
+.help i{font-style:normal;font:900 13px Inter;color:var(--ink)}
+.dot{width:14px;height:14px;border-radius:50%;display:inline-block}
+@media (prefers-reduced-motion:reduce){.day.next,#blast.ready{animation:none}}
+</style>
+
+</head>
+<body>
+<canvas id="c"></canvas>
+<div id="hud">
+  <div class="htop">
+    <div><div class="hd" id="hDay">DAY 1</div><div class="hs" id="hScore">0</div><div class="bar"><i id="hProg"></i></div></div>
+    <div><div id="hearts">♥♥♥</div><div style="text-align:right;margin-top:6px"><button id="mute" aria-label="Toggle sound">SOUND ON</button></div></div>
+  </div>
+  <div id="boss"><span id="bossName">CORRUPTION CORE</span><div class="bar"><i id="bossHp"></i></div></div>
+</div>
+<div id="combo"></div><div id="banner"></div>
+<button id="blast" aria-label="Unity blast">UNITY<br>BLAST</button>
+
+<section class="screen on" id="sTitle">
+  <div class="sub">BUILDING THE NIGERIA GOD INTENDS</div>
+  <h1 class="logo">NATION<br>BUILDERS</h1>
+  <div class="sub" style="color:var(--gold);letter-spacing:10px">LIGHTRUN</div>
+  <p>Fly the Eagle through 30 cities. Blast the corruption, collect the virtues, light up Nigeria, then take the pledge.</p>
+  <div class="row"><button class="btn" id="bPlay">PLAY</button></div>
+  <button class="ghost" id="bPledgeTop">Take the pledge</button>
+  <div class="handles"><b>▶</b> @NationBuildersCorps · @KidsInspiringNation</div>
+  <a class="handles" href="/NBC" style="text-decoration:none">A game from the <b style="color:var(--gold)">Nation Builders Corps</b> · nbc.kidsinspiringnation.org</a>
+</section>
+
+<section class="screen" id="sMap">
+  <h2>30 CITIES</h2>
+  <div class="stats"><div><b id="mStars">0</b>STARS / 90</div><div><b id="mDone">0</b>LIT / 30</div><div><b id="mBest">0</b>BEST</div></div>
+  <div id="grid"></div>
+  <div class="row"><button class="btn g" id="bPledge">TAKE THE PLEDGE</button><button class="ghost" id="bHome">Home</button></div>
+</section>
+
+<section class="screen" id="sIntro">
+  <div class="ref" id="iDay">DAY 1</div>
+  <h2 id="iTitle"></h2>
+  <p id="iSub"></p>
+  <div class="panel help">
+    <i>MOVE</i><span>Drag anywhere, or use the arrow keys / WASD. You fire automatically.</span>
+    <i><span class="dot" style="background:#ffc21a;box-shadow:0 0 10px #ffc21a"></span></i><span>Virtue gems power up your shots and charge the Unity Blast.</span>
+    <i><span class="dot" style="background:#ff3b3b;box-shadow:0 0 10px #ff3b3b"></span></i><span>Corruption drones and red shots cost a heart.</span>
+    <i>BLAST</i><span>Tap the gold button or press Space to wipe the screen.</span>
+  </div>
+  <div class="row"><button class="btn" id="bGo">LAUNCH</button><button class="ghost" id="bBack">Back</button></div>
+</section>
+
+<section class="screen" id="sEnd">
+  <div class="ref" id="eDay"></div>
+  <h2 id="eHead">CITY LIT!</h2>
+  <div class="stars" id="eStars"></div>
+  <div class="stats"><div><b id="eScore">0</b>SCORE</div><div><b id="eKills">0</b>CLEANED</div><div><b id="eCombo">0</b>BEST COMBO</div></div>
+  <div class="panel"><div class="verse" id="eVerse"></div><div class="ref" id="eRef" style="margin-top:8px"></div></div>
+  <div class="row"><button class="btn" id="bNext">NEXT CITY</button></div>
+  <div class="row"><button class="ghost" id="bRetry">Retry for 3 stars</button><button class="ghost" id="bToMap">Map</button></div>
+</section>
+
+<section class="screen" id="sPledge">
+  <div class="sub">THE NATION BUILDER'S</div><h2>PLEDGE</h2>
+  <div class="panel">
+    <input type="text" id="pName" maxlength="32" placeholder="Your name" aria-label="Your name">
+    <div id="pLines"></div>
+    <div class="row" style="margin-top:14px"><button class="btn g" id="bSign" disabled style="opacity:.4">I PLEDGE</button></div>
+  </div>
+  <button class="ghost" id="bPBack">Back</button>
+</section>
+
+<section class="screen" id="sCert">
+  <h2>WELCOME, NATION BUILDER</h2>
+  <canvas id="cert" width="1080" height="1350" hidden></canvas>
+  <img id="certImg" alt="Your Nation Builder pledge certificate" style="width:min(400px,100%);border-radius:12px;box-shadow:0 0 60px rgba(255,194,26,.35)">
+  <div class="row"><button class="btn" id="bSave">SAVE CERTIFICATE</button><a class="btn g" href="/NBC#join" style="text-decoration:none">GET YOUR BUILDER ID</a></div>
+  <p>Your certificate stays on this device. Share it with #NationBuilders, then make it official with a free Builder ID.</p>
+  <button class="ghost" id="bCBack">Back to map</button>
+</section>
+
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+<script type="module">
+import * as THREE from "three";
+import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
+import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
+import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js";
+import { OutputPass } from "three/addons/postprocessing/OutputPass.js";
+
+// ---------------- content ----------------
+const DAYS=[
+["OLOIBIRI","Why Nations Need Building, Not Just Governing","Righteousness exalts a nation.","Proverbs 14:34",["RIGHTEOUS","VISION","BUILD"]],
+["GIVEN BACK","The Woman Who Gave the Money Back","Do not steal. Do not lie.","Leviticus 19:11",["HONEST","TRUTH","CLEAN"]],
+["GIADE","The Ones Who Showed Up","He delights in people who are trustworthy.","Proverbs 12:22",["FAITHFUL","PRESENT","TRUST"]],
+["IGBA BOI","Trust Is Money","All your words are true.","Psalm 119:160",["TRUST","WORD","LOYAL"]],
+["TEN YEARS","The Ten-Year Bet","Do it with all your might.","Ecclesiastes 9:10",["PATIENCE","EFFORT","VISION"]],
+["SEVEN TWELVE","The Four Lost Years","A crown that will last forever.","1 Corinthians 9:25",["DISCIPLINE","FOCUS","ENDURE"]],
+["NNEWI","Nnewi to the Assembly Line","Diligent hands bring wealth.","Proverbs 10:4",["DILIGENT","SKILL","MAKE"]],
+["TWO DROPS","Ten Thousand Villages","My heart is set on keeping your decrees","Psalm 119:112",["SERVE","REACH","CARE"]],
+["AJAOKUTA","The Furnace That Was Never Lit","By wisdom a house is built","Proverbs 24:3",["WISDOM","FINISH","PLAN"]],
+["COCOA SCHOOLS","The Premier Who Chose Schools","The wise store up knowledge","Proverbs 10:14",["LEARN","INVEST","FUTURE"]],
+["NO VICTOR","The Words and the Follow-Through","Ask God, who gives generously to all","James 1:5",["PEACE","FOLLOW","UNITY"]],
+["THREE DAYS","The People Who Come First","Carry each other's burdens.","Galatians 6:2",["NEIGHBOUR","HELP","SHARE"]],
+["SHE SAID NO","The Doctor Who Said No","Greater love has no one than this.","John 15:13",["COURAGE","PROTECT","LOVE"]],
+["ROUGH ROAD","The Man Who Prayed for a Rough Road","Whoever is kind to the poor lends to the Lord.","Proverbs 19:17",["KIND","GIVE","HUMBLE"]],
+["A CHILD IS A CHILD","The School That Took Everybody's Children","May your unfailing love be my comfort.","Psalm 119:76",["WELCOME","EQUAL","LOVE"]],
+["OF THE MASSES","Senior Advocate of the Masses","Seek justice. Defend the oppressed.","Isaiah 1:17",["JUSTICE","DEFEND","VOICE"]],
+["FOUR AND NINE","Four Men and Nine Men","Let justice roll on like a river","Amos 5:24",["JUSTICE","FAIR","RIVER"]],
+["LEKKI","The Question That Was Never Answered","To act justly and to love mercy","Micah 6:8",["MERCY","TRUTH","ASK"]],
+["TWENTY POUNDS","Rebuilding From Twenty Pounds","Let us not become weary in doing good","Galatians 6:9",["REBUILD","HOPE","STRIVE"]],
+["CAMCORDER","Shot on a Camcorder","Hard pressed on every side, but not crushed","2 Corinthians 4:8",["CREATE","START","BOLD"]],
+["THREE TO NINE","Three Naira to Nine","The testing of your faith produces perseverance","James 1:3",["PERSEVERE","STEADY","FAITH"]],
+["MONDAY MARKET","The Market That Burned","Though he may stumble, he will not fall.","Psalm 37:24",["RISE","RESTORE","TOGETHER"]],
+["ONE LETTER","The Letter Nobody Acted On","Pride goes before destruction.","Proverbs 16:18",["LISTEN","HEED","ACT"]],
+["BACK TO SCHOOL","The Head of State Who Went Back to School","But he gives us more grace.","James 4:6",["HUMBLE","LEARN","GRACE"]],
+["THE DOLLAR","We Fixed the Tax. We Never Fixed the Dollar.","Let the wise listen and add to their learning.","Proverbs 1:5",["LISTEN","WISE","ADAPT"]],
+["BEZALEL","The Physicist at Nsukka","I have filled him with the Spirit of God","Exodus 31:3",["GIFTED","SCIENCE","CRAFT"]],
+["AFRICAN EYES","I Will Not Accept an Inferior Position","Whatever you do, work at it with all your heart","Colossians 3:23",["DIGNITY","EXCEL","HEART"]],
+["INDIGO HANDS","The Craft They Called Merely Local","The Lord delights in those who fear him","Psalm 147:11",["HERITAGE","CRAFT","PRIDE"]],
+["CONCEDED","What the World Now Concedes","They will serve before kings","Proverbs 22:29",["EXCELLENCE","SKILL","HONOUR"]],
+["ALL OF THEM","The Nigeria God Intends","Righteousness exalts a nation","Proverbs 14:34",["NIGERIA","ALL OF US","BUILD"]]];
+const BOSSES=["BRIBERY","GREED","APATHY","BROKEN WORD","SHORTCUTS","CHEATING","IDLENESS","NEGLECT","WASTE","IGNORANCE"];
+const PLEDGE=["I will be honest, even when no one is watching.","I will work hard and finish what I start.","I will stand for justice and speak up for the weak.","I will treat every Nigerian as my neighbour.","I will use my gifts to build, not to tear down.","With God's help, I will build the Nigeria God intends."];
+
+// ---------------- save ----------------
+const KEY="nationbuilders.lightrun.v1";
+let S={stars:Array(30).fill(0),best:Array(30).fill(0),muted:false,pledged:null};
+try{Object.assign(S,JSON.parse(localStorage.getItem(KEY)||"{}"))}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+
+// ---------------- audio (synth) ----------------
+let AC=null,MASTER=null;
+function au(){if(!AC){try{AC=new (window.AudioContext||window.webkitAudioContext)();MASTER=AC.createGain();MASTER.gain.value=.5;MASTER.connect(AC.destination)}catch(e){}}if(AC&&AC.state==="suspended")AC.resume();return AC}
+function tone(f,d=.15,type="sine",g=.2,slide=1,when=0){const a=au();if(!a||S.muted)return;const t=a.currentTime+when,o=a.createOscillator(),v=a.createGain();o.type=type;o.frequency.setValueAtTime(f,t);if(slide!==1)o.frequency.exponentialRampToValueAtTime(Math.max(20,f*slide),t+d);v.gain.setValueAtTime(g,t);v.gain.exponentialRampToValueAtTime(.0008,t+d);o.connect(v).connect(MASTER);o.start(t);o.stop(t+d+.02)}
+function noise(d=.3,g=.3,f=800){const a=au();if(!a||S.muted)return;const b=a.createBuffer(1,a.sampleRate*d,a.sampleRate),ch=b.getChannelData(0);for(let i=0;i<ch.length;i++)ch[i]=(Math.random()*2-1)*(1-i/ch.length)**2;const s=a.createBufferSource(),fl=a.createBiquadFilter(),v=a.createGain();fl.type="lowpass";fl.frequency.value=f;v.gain.value=g;s.buffer=b;s.connect(fl).connect(v).connect(MASTER);s.start()}
+const PENT=[293.7,349.2,392,440,523.3,587.3,698.5,784,880,1046.5,1174.7,1396.9];
+const sfx={shot:()=>tone(880,.06,"square",.025,.5),boom:()=>{noise(.35,.35,1200);tone(90,.3,"sine",.3,.4)},big:()=>{noise(1.2,.6,600);tone(60,1,"sine",.5,.3)},
+ gem:c=>{tone(PENT[c%12],.18,"triangle",.14);tone(PENT[c%12]*2,.12,"sine",.05,1,.03)},hurt:()=>{noise(.4,.4,400);tone(140,.35,"sawtooth",.15,.4)},
+ blast:()=>{noise(1.5,.5,3000);[0,4,7,11].forEach((i,k)=>tone(PENT[i],.6,"triangle",.12,1,k*.06))},win:()=>[0,2,4,7,9,11].forEach((i,k)=>tone(PENT[i],.4,"triangle",.16,1,k*.1)),
+ lose:()=>[4,2,0].forEach((i,k)=>tone(PENT[i]/2,.4,"triangle",.2,1,k*.16)),click:()=>tone(660,.05,"sine",.08),warn:()=>{for(let k=0;k<3;k++)tone(220,.25,"sawtooth",.1,1,k*.35)}};
+// music: a driving talking-drum-ish loop + bass arpeggio, scheduled ahead
+let musOn=false,musT=0,musStep=0;
+function music(){const a=AC;if(!a||!musOn||S.muted)return;const beat=60/128/2;while(musT<a.currentTime+.2){const st=musStep%16,t=musT-a.currentTime;
+  if(st%4===0){tone(55,.25,"sine",.35,.5,t)} if(st%8===4){noise(.12,.12,2500)} if(st%2===1)tone(6000,.02,"square",.01,1,t);
+  const bass=[0,0,7,0,3,0,7,5][st>>1];if(st%2===0)tone(73.4*Math.pow(2,bass/12),.2,"triangle",.1,1,t);
+  if(G&&G.boss&&st%4===2)tone(146.8*Math.pow(2,[0,3,7,10][(musStep>>2)%4]/12),.18,"sawtooth",.04,1,t);
+  musT+=beat;musStep++}}
+
+// ---------------- three.js world ----------------
+const cv=document.getElementById("c");
+const R=new THREE.WebGLRenderer({canvas:cv,antialias:true,powerPreference:"high-performance"});
+R.setPixelRatio(Math.min(2,devicePixelRatio||1));R.toneMapping=THREE.ACESFilmicToneMapping;R.toneMappingExposure=.95;
+const scene=new THREE.Scene();scene.fog=new THREE.FogExp2(0x03100a,.009);
+const cam=new THREE.PerspectiveCamera(62,1,.1,600);cam.position.set(0,5.5,11);
+const comp=new EffectComposer(R);comp.addPass(new RenderPass(scene,cam));
+const bloom=new UnrealBloomPass(new THREE.Vector2(1,1),.9,.5,.42);comp.addPass(bloom);comp.addPass(new OutputPass());
+function resize(){const w=innerWidth,h=innerHeight;R.setSize(w,h,false);comp.setSize(w,h);cam.aspect=w/h;cam.fov=w<h?80:62;cam.updateProjectionMatrix()}
+addEventListener("resize",resize);resize();
+
+// sky dome with a rising sun
+const skyU={uT:{value:0},uLit:{value:0}};
+const sky=new THREE.Mesh(new THREE.SphereGeometry(400,32,16),new THREE.ShaderMaterial({side:THREE.BackSide,depthWrite:false,fog:false,uniforms:skyU,
+ vertexShader:`varying vec3 vP;void main(){vP=normalize(position);gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
+ fragmentShader:`varying vec3 vP;uniform float uT,uLit;void main(){float y=vP.y;vec3 top=mix(vec3(.01,.03,.06),vec3(.03,.12,.2),uLit);vec3 hor=mix(vec3(.06,.18,.1),vec3(1.,.55,.18),uLit*.9+.1);
+ vec3 c=mix(hor,top,smoothstep(-.02,.45,y));vec3 sd=normalize(vec3(0.,.06+uLit*.12,-1.));float s=max(dot(vP,sd),0.);c+=vec3(1.,.75,.3)*pow(s,300.)*3.+vec3(1.,.5,.15)*pow(s,12.)*(.4+uLit*.6);
+ float st=fract(sin(dot(floor(vP.xz*300.),vec2(12.9,78.2)))*43758.5);c+=step(.997,st)*smoothstep(.1,.5,y)*(1.-uLit)*.8;gl_FragColor=vec4(c,1.);}`}));
+scene.add(sky);
+
+// scrolling neon grid ground
+const gU={uT:{value:0},uLit:{value:0}};
+const ground=new THREE.Mesh(new THREE.PlaneGeometry(400,400,1,1),new THREE.ShaderMaterial({uniforms:gU,fog:false,
+ vertexShader:`varying vec2 vW;varying float vD;void main(){vec4 w=modelMatrix*vec4(position,1.);vW=w.xz;vec4 mv=viewMatrix*w;vD=-mv.z;gl_Position=projectionMatrix*mv;}`,
+ fragmentShader:`varying vec2 vW;varying float vD;uniform float uT,uLit;void main(){vec2 p=vW+vec2(0.,uT);vec2 g=abs(fract(p/4.)-.5)*4.;float l=1.-smoothstep(0.,.08*(1.+vD*.03),min(g.x,g.y));
+ float road=smoothstep(10.,9.,abs(vW.x));vec3 base=vec3(.01,.04,.025);vec3 lc=mix(vec3(.05,.6,.3),vec3(1.,.75,.2),road*.6);
+ vec3 c=base+lc*l*(.35+.65*road)*(1.+uLit*.6);c*=exp(-vD*.012);gl_FragColor=vec4(c,1.);}`}));
+ground.rotation.x=-Math.PI/2;scene.add(ground);
+
+scene.add(new THREE.HemisphereLight(0x88ffcc,0x081008,.6));
+const sun=new THREE.DirectionalLight(0xffd9a0,1.6);sun.position.set(3,10,-6);scene.add(sun);
+
+// city: instanced towers on both sides that light up as you clean the city
+const NB=160,bGeo=new THREE.BoxGeometry(1,1,1);bGeo.translate(0,.5,0);
+const winTex=(()=>{const c=document.createElement("canvas");c.width=64;c.height=128;const x=c.getContext("2d");x.fillStyle="#000";x.fillRect(0,0,64,128);
+ for(let yy=4;yy<128;yy+=10)for(let xx=4;xx<64;xx+=12){x.fillStyle=Math.random()<.7?"#fff":"#333";x.fillRect(xx,yy,7,6)}const t=new THREE.CanvasTexture(c);t.wrapS=t.wrapT=THREE.RepeatWrapping;return t})();
+const bMat=new THREE.MeshStandardMaterial({color:0x0b1f16,roughness:.6,metalness:.4,emissive:0x151a18,emissiveMap:winTex,emissiveIntensity:1});
+const city=new THREE.InstancedMesh(bGeo,bMat,NB);city.instanceMatrix.setUsage(THREE.DynamicDrawUsage);scene.add(city);
+const B=[];const dummy=new THREE.Object3D();const col=new THREE.Color();
+for(let i=0;i<NB;i++){const side=i%2?1:-1;B.push({x:side*(14+Math.random()*30),z:-Math.random()*320+20,w:3+Math.random()*5,h:6+Math.random()*34,lit:0,hue:Math.random()})}
+function placeCity(dt,speed,litTarget){for(let i=0;i<NB;i++){const b=B[i];b.z+=speed*dt;if(b.z>30){b.z-=340;b.h=6+Math.random()*34;b.x=(i%2?1:-1)*(14+Math.random()*30);b.lit=0}
+ b.lit+=(Math.min(1,litTarget*1.25-b.hue*.25)-b.lit)*Math.min(1,dt*2);
+ dummy.position.set(b.x,0,b.z);dummy.scale.set(b.w,b.h,b.w);dummy.updateMatrix();city.setMatrixAt(i,dummy.matrix);
+ const L=Math.max(.04,b.lit);col.setRGB((.02+L*.9*(b.hue>.5?1:.2))*.9,(.03+L*.6)*.9,(.02+L*.25*(b.hue>.5?.2:1))*.9);city.setColorAt(i,col)}
+ city.instanceMatrix.needsUpdate=true;city.instanceColor.needsUpdate=true}
+
+// the Eagle (player ship)
+const ship=new THREE.Group();
+{const body=new THREE.Mesh(new THREE.ConeGeometry(.55,2.6,6),new THREE.MeshStandardMaterial({color:0xeafff2,metalness:.7,roughness:.25,emissive:0x0a3,emissiveIntensity:.4}));body.rotation.x=-Math.PI/2;ship.add(body);
+ const wg=new THREE.BufferGeometry();wg.setAttribute("position",new THREE.Float32BufferAttribute([0,0,-.6,-2.6,-.1,1.1,-.5,0,.9, 0,0,-.6,.5,0,.9,2.6,-.1,1.1],3));wg.computeVertexNormals();
+ const wing=new THREE.Mesh(wg,new THREE.MeshStandardMaterial({color:0x19c46a,metalness:.5,roughness:.3,emissive:0x19c46a,emissiveIntensity:.8,side:THREE.DoubleSide}));ship.add(wing);
+ const tipM=new THREE.MeshBasicMaterial({color:0xffffff});[-2.5,2.5].forEach(x=>{const tp=new THREE.Mesh(new THREE.SphereGeometry(.09,8,8),tipM);tp.position.set(x,-.1,1.1);ship.add(tp)});
+ const eng=new THREE.Mesh(new THREE.SphereGeometry(.32,12,12),new THREE.MeshBasicMaterial({color:0xffc21a}));eng.position.z=1.25;eng.scale.z=1.8;ship.add(eng);ship.userData.eng=eng;
+ const sh=new THREE.Mesh(new THREE.SphereGeometry(2,24,16),new THREE.MeshBasicMaterial({color:0x40ffb0,transparent:true,opacity:0,blending:THREE.AdditiveBlending,depthWrite:false}));ship.add(sh);ship.userData.shield=sh}
+ship.position.set(0,2.5,0);scene.add(ship);
+// engine trail
+const TR=40,trPos=new Float32Array(TR*3),trail=new THREE.Points(new THREE.BufferGeometry().setAttribute("position",new THREE.BufferAttribute(trPos,3)),new THREE.PointsMaterial({color:0xffc21a,size:.35,transparent:true,opacity:.8,blending:THREE.AdditiveBlending,depthWrite:false}));scene.add(trail);
+
+// pools
+const glowTex=(()=>{const c=document.createElement("canvas");c.width=c.height=64;const x=c.getContext("2d"),g=x.createRadialGradient(32,32,0,32,32,32);g.addColorStop(0,"#fff");g.addColorStop(.25,"rgba(255,255,255,.8)");g.addColorStop(1,"rgba(255,255,255,0)");x.fillStyle=g;x.fillRect(0,0,64,64);return new THREE.CanvasTexture(c)})();
+function pool(n,make){const a=[];for(let i=0;i<n;i++){const m=make();m.visible=false;scene.add(m);a.push(m)}return a}
+const get=p=>p.find(m=>!m.visible);
+const boltGeo=new THREE.CylinderGeometry(.07,.07,1.8,6);boltGeo.rotateX(Math.PI/2);
+const bolts=pool(80,()=>new THREE.Mesh(boltGeo,new THREE.MeshBasicMaterial({color:0xfff2a0})));
+const ebolts=pool(120,()=>{const m=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTex,color:0xff3030,blending:THREE.AdditiveBlending,depthWrite:false}));m.scale.setScalar(1.1);return m});
+const droneGeo=new THREE.IcosahedronGeometry(.9,0),spikeGeo=new THREE.OctahedronGeometry(1.35,0);
+const drones=pool(40,()=>{const g=new THREE.Group();g.add(new THREE.Mesh(droneGeo,new THREE.MeshStandardMaterial({color:0x220000,emissive:0xff1a1a,emissiveIntensity:1.6,flatShading:true})));
+ const w=new THREE.Mesh(spikeGeo,new THREE.MeshBasicMaterial({color:0xff4040,wireframe:true}));g.add(w);g.userData.w=w;return g});
+const gemGeo=new THREE.OctahedronGeometry(.6,0);
+const gems=pool(40,()=>{const g=new THREE.Group();g.add(new THREE.Mesh(gemGeo,new THREE.MeshStandardMaterial({color:0xffc21a,emissive:0xffa000,emissiveIntensity:2,metalness:.8,roughness:.2,flatShading:true})));
+ const h=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTex,color:0xffc21a,blending:THREE.AdditiveBlending,depthWrite:false,opacity:.7}));h.scale.setScalar(3);g.add(h);return g});
+const walls=pool(12,()=>{const m=new THREE.Mesh(new THREE.BoxGeometry(6,6,.4),new THREE.MeshStandardMaterial({color:0x300,emissive:0xff2020,emissiveIntensity:.9,transparent:true,opacity:.55}));
+ m.add(new THREE.LineSegments(new THREE.EdgesGeometry(m.geometry),new THREE.LineBasicMaterial({color:0xff6060})));return m});
+// particles
+const NP=1400,pPos=new Float32Array(NP*3),pCol=new Float32Array(NP*3),pV=new Float32Array(NP*3),pL=new Float32Array(NP);
+const pGeo=new THREE.BufferGeometry();pGeo.setAttribute("position",new THREE.BufferAttribute(pPos,3));pGeo.setAttribute("color",new THREE.BufferAttribute(pCol,3));
+const parts=new THREE.Points(pGeo,new THREE.PointsMaterial({size:.5,map:glowTex,vertexColors:true,transparent:true,blending:THREE.AdditiveBlending,depthWrite:false}));parts.frustumCulled=false;scene.add(parts);
+let pI=0;function burst(p,c,n,sp=14){const cc=new THREE.Color(c);for(let k=0;k<n;k++){const i=pI++%NP;pPos[i*3]=p.x;pPos[i*3+1]=p.y;pPos[i*3+2]=p.z;
+ const th=Math.random()*6.28,ph=Math.acos(Math.random()*2-1),s=sp*(.3+Math.random());pV[i*3]=Math.sin(ph)*Math.cos(th)*s;pV[i*3+1]=Math.cos(ph)*s;pV[i*3+2]=Math.sin(ph)*Math.sin(th)*s;pL[i]=.6+Math.random()*.6;pCol[i*3]=cc.r;pCol[i*3+1]=cc.g;pCol[i*3+2]=cc.b}}
+// shockwave rings
+const rings=pool(10,()=>new THREE.Mesh(new THREE.RingGeometry(.8,1,48),new THREE.MeshBasicMaterial({color:0xffc21a,transparent:true,blending:THREE.AdditiveBlending,side:THREE.DoubleSide,depthWrite:false})));
+function ring(p,c,s=1){const r=get(rings);if(!r)return;r.visible=true;r.position.copy(p);r.material.color.set(c);r.userData={t:0,s};r.lookAt(cam.position)}
+// boss
+const boss=new THREE.Group();
+{const core=new THREE.Mesh(new THREE.IcosahedronGeometry(3,1),new THREE.MeshStandardMaterial({color:0x1a0000,emissive:0xff1010,emissiveIntensity:1.3,flatShading:true,metalness:.6}));boss.add(core);
+ const cage=new THREE.Mesh(new THREE.IcosahedronGeometry(4.6,1),new THREE.MeshBasicMaterial({color:0xff3a3a,wireframe:true}));boss.add(cage);boss.userData.cage=cage;boss.userData.core=core;
+ const halo=new THREE.Mesh(new THREE.TorusGeometry(6,.18,8,64),new THREE.MeshBasicMaterial({color:0xff6a00}));boss.add(halo);boss.userData.halo=halo}
+boss.visible=false;scene.add(boss);
+
+// ---------------- game state ----------------
+const $=id=>document.getElementById(id);
+let G=null,shake=0,slow=1;
+const input={x:0,y:0,drag:false,px:0,py:0,keys:{}};
+const BOUND={x:8,y0:1,y1:6.5};
+function start(i){
+  const dd=DAYS[i];G={i,t:0,dist:0,len:55+i*1.2,speed:34+i*.6,score:0,kills:0,combo:0,maxC:0,comboT:0,hearts:3,inv:0,fireT:0,power:1,powT:0,charge:0,
+   spawnT:1,gemT:.6,wallT:6,boss:null,over:false,words:dd[4],wi:0,hitsTaken:0};
+  [...bolts,...ebolts,...drones,...gems,...walls].forEach(m=>m.visible=false);boss.visible=false;ship.position.set(0,2.5,0);ship.visible=true;
+  $("hDay").textContent="DAY "+(i+1)+" · "+dd[0];$("boss").style.display="none";hearts();show(null);$("blast").style.display="block";
+  musOn=true;if(AC)musT=AC.currentTime+.05;banner(dd[0],"#ffc21a");
+}
+function hearts(){$("hearts").textContent="♥".repeat(Math.max(0,G.hearts))+"♡".repeat(Math.max(0,3-G.hearts))}
+let banT=0;function banner(t,c){const b=$("banner");b.textContent=t;b.style.color=c;b.style.opacity=1;banT=1.6}
+let comboHide=0;function comboPop(t){const c=$("combo");c.textContent=t;c.style.opacity=1;comboHide=.9}
+function fire(){const n=G.power>=3?5:G.power>=2?3:1;for(let k=0;k<n;k++){const b=get(bolts);if(!b)return;b.visible=true;b.position.copy(ship.position);b.position.z-=1.5;b.userData.vx=(k-(n-1)/2)*4;b.position.x+=(k-(n-1)/2)*.5}sfx.shot()}
+function spawnDrone(){const d=get(drones);if(!d)return;d.visible=true;const pat=Math.random();d.position.set((Math.random()*2-1)*BOUND.x,BOUND.y0+Math.random()*(BOUND.y1-BOUND.y0),-140);
+ d.userData={hp:1+(G.i>12?1:0),ph:Math.random()*6,wob:pat<.4?0:(2+Math.random()*3),shootT:1+Math.random()*2,vz:0}}
+function spawnGem(){const g=get(gems);if(!g)return;g.visible=true;g.position.set((Math.random()*2-1)*BOUND.x*.9,BOUND.y0+.5+Math.random()*(BOUND.y1-BOUND.y0-1),-140);g.userData={}}
+function spawnWall(){const gap=Math.floor(Math.random()*3);for(let k=0;k<3;k++){if(k===gap)continue;const w=get(walls);if(!w)return;w.visible=true;w.position.set((k-1)*6,3.5,-150)}}
+function eshot(from,dir,sp){const b=get(ebolts);if(!b)return;b.visible=true;b.position.copy(from);b.userData.v=dir.normalize().multiplyScalar(sp)}
+function hurt(){if(G.inv>0||G.over)return;G.hearts--;G.hitsTaken++;G.inv=1.6;G.combo=0;shake=1;sfx.hurt();burst(ship.position,0xff3b3b,60,10);hearts();if(navigator.vibrate)navigator.vibrate(80);
+ if(G.power>1)G.power--;if(G.hearts<=0)end(false)}
+function kill(d,pts){d.visible=false;G.kills++;G.combo++;G.comboT=2.2;G.maxC=Math.max(G.maxC,G.combo);const mult=1+Math.floor(G.combo/5);G.score+=pts*mult;
+ burst(d.position,0xff5030,50,16);burst(d.position,0xffc21a,20,8);ring(d.position,0xff6a30,1.5);sfx.boom();shake=Math.max(shake,.25);if(G.combo>=5&&G.combo%5===0)comboPop("COMBO x"+mult)}
+function blast(){if(!G||G.over||G.charge<1)return;G.charge=0;sfx.blast();shake=1.2;slow=.25;
+ ring(ship.position,0xffc21a,8);ring(ship.position,0x19c46a,6);burst(ship.position,0xffe28a,300,40);
+ drones.forEach(d=>d.visible&&kill(d,150));ebolts.forEach(b=>b.visible=false);walls.forEach(w=>{if(w.visible){burst(w.position,0xff4040,60,14);w.visible=false}});
+ if(G.boss){G.boss.hp-=G.boss.max*.12;bossHit()}banner("UNITY!","#19c46a")}
+function startBoss(){const lvl=G.i;G.boss={hp:40+lvl*9,max:40+lvl*9,t:0,pat:0,shootT:2};boss.visible=true;boss.position.set(0,4,-160);
+ $("bossName").textContent=BOSSES[lvl%BOSSES.length]+" CORE";$("boss").style.display="block";sfx.warn();banner("WARNING","#ff3b3b")}
+function bossHit(){$("bossHp").style.width=Math.max(0,G.boss.hp/G.boss.max*100)+"%";if(G.boss.hp<=0&&!G.over){const p=boss.position.clone();
+ for(let k=0;k<6;k++)setTimeout(()=>{const q=p.clone().add(new THREE.Vector3((Math.random()-.5)*8,(Math.random()-.5)*6,(Math.random()-.5)*4));burst(q,k%2?0xff4020:0xffc21a,160,26);ring(q,0xffc21a,4);sfx.boom()},k*140);
+ setTimeout(()=>{boss.visible=false;burst(p,0xffffff,400,45);sfx.big();shake=1.5},900);G.score+=5000;end(true)}}
+function end(won){if(G.over)return;G.over=true;G.won=won;$("blast").style.display="none";
+ if(won){setTimeout(()=>{sfx.win();banner("CITY LIT!","#ffc21a")},900)}else{ship.visible=false;burst(ship.position,0x19c46a,300,24);sfx.big();slow=.3}
+ setTimeout(()=>{musOn=false;results()},won?3200:2200)}
+
+// ---------------- main loop ----------------
+const clock=new THREE.Clock();const tmp=new THREE.Vector3();
+let litShown=0;
+function loop(){requestAnimationFrame(loop);frame(Math.min(.05,clock.getDelta()))}
+function frame(dt){slow+=(1-slow)*Math.min(1,dt*1.5);dt*=slow;const T=clock.elapsedTime;
+ if(AC)music();
+ const lit=G?Math.min(1,(S.stars.filter(x=>x).length/30)*.5+(G.dist/G.len)*.5+(G.boss&&G.boss.hp<=0?.5:0)):.15+.1*Math.sin(T*.3);litShown+=(lit-litShown)*Math.min(1,dt);
+ const speed=G&&!G.over?G.speed:(G?G.speed*.5:18);
+ gU.uT.value-=speed*dt;gU.uLit.value=litShown;skyU.uLit.value=litShown;bloom.strength=.85+litShown*.35;
+ placeCity(dt,speed,litShown);bMat.emissive.setRGB(.06+litShown*.95,.07+litShown*.62,.05+litShown*.18);
+ // camera + ship
+ if(G&&!G.over){
+  let ax=0,ay=0;const k=input.keys;if(k.ArrowLeft||k.KeyA)ax-=1;if(k.ArrowRight||k.KeyD)ax+=1;if(k.ArrowUp||k.KeyW)ay+=1;if(k.ArrowDown||k.KeyS)ay-=1;
+  input.x=THREE.MathUtils.clamp(input.x+ax*dt*14,-BOUND.x,BOUND.x);input.y=THREE.MathUtils.clamp(input.y+ay*dt*10,BOUND.y0,BOUND.y1);
+  const px=ship.position.x;ship.position.x+=(input.x-ship.position.x)*Math.min(1,dt*12);ship.position.y+=(input.y-ship.position.y)*Math.min(1,dt*12);
+  ship.rotation.z=THREE.MathUtils.lerp(ship.rotation.z,-(ship.position.x-px)/dt*.04,.2);ship.rotation.x=THREE.MathUtils.lerp(ship.rotation.x,(input.y-ship.position.y)*.15,.2);
+ } else if(!G){ship.position.x=Math.sin(T*.7)*4;ship.position.y=3+Math.sin(T*1.3);ship.rotation.z=-Math.cos(T*.7)*.4}
+ ship.userData.eng.scale.setScalar(1+Math.sin(T*40)*.15);ship.userData.eng.scale.z=1.8+Math.random()*.6;
+ ship.userData.shield.material.opacity=G&&G.inv>0?(.25+.2*Math.sin(T*30)):0;
+ for(let i=TR-1;i>0;i--){trPos[i*3]=trPos[(i-1)*3];trPos[i*3+1]=trPos[(i-1)*3+1];trPos[i*3+2]=trPos[(i-1)*3+2]+speed*dt}
+ trPos[0]=ship.position.x;trPos[1]=ship.position.y;trPos[2]=ship.position.z+1.4;trail.geometry.attributes.position.needsUpdate=true;trail.visible=ship.visible;
+ cam.position.x+=(ship.position.x*.55-cam.position.x)*Math.min(1,dt*4);cam.position.y+=(ship.position.y*.4+4-cam.position.y)*Math.min(1,dt*4);
+ shake*=Math.pow(.02,dt);cam.position.x+=(Math.random()-.5)*shake;cam.position.y+=(Math.random()-.5)*shake;
+ cam.lookAt(ship.position.x*.3,2.5,-30);sky.position.copy(cam.position);
+
+ if(G){const g=G;g.t+=dt;if(g.inv>0)g.inv-=dt;
+  if(!g.over){
+   if(!g.boss){g.dist+=dt;if(g.dist>=g.len)startBoss()}
+   $("hProg").style.width=Math.min(100,g.dist/g.len*100)+"%";
+   // fire
+   g.fireT-=dt;if(g.fireT<=0){fire();g.fireT=.12}
+   if(g.powT>0){g.powT-=dt;if(g.powT<=0&&g.power>1)g.power--}
+   g.comboT-=dt;if(g.comboT<=0)g.combo=0;
+   // spawns
+   const rate=Math.max(.35,1.3-g.i*.03);
+   if(!g.boss){g.spawnT-=dt;if(g.spawnT<=0){spawnDrone();if(g.i>6&&Math.random()<.4)spawnDrone();g.spawnT=rate*(.6+Math.random()*.8)}
+    g.gemT-=dt;if(g.gemT<=0){spawnGem();g.gemT=1.1+Math.random()*1.2}
+    if(g.i>=3){g.wallT-=dt;if(g.wallT<=0){spawnWall();g.wallT=Math.max(4,9-g.i*.15)+Math.random()*3}}}
+   else{g.gemT-=dt;if(g.gemT<=0){spawnGem();g.gemT=2.5}}
+  }
+  // bolts
+  for(const b of bolts)if(b.visible){b.position.z-=120*dt;b.position.x+=b.userData.vx*dt;if(b.position.z<-160){b.visible=false;continue}
+   for(const d of drones)if(d.visible&&b.position.distanceToSquared(d.position)<2.2){b.visible=false;d.userData.hp--;burst(b.position,0xffe28a,6,6);if(d.userData.hp<=0)kill(d,100);break}
+   if(b.visible&&g.boss&&boss.visible&&g.boss.hp>0&&b.position.distanceToSquared(boss.position)<22){b.visible=false;g.boss.hp--;g.score+=10;burst(b.position,0xff8040,5,8);boss.userData.core.material.emissiveIntensity=3;bossHit()}}
+  // drones
+  for(const d of drones)if(d.visible){const u=d.userData;u.ph+=dt;d.position.z+=(speed*.55+12)*dt;if(u.wob)d.position.x+=Math.sin(u.ph*u.wob)*dt*6;
+   d.rotation.x+=dt*2;d.rotation.y+=dt*3;d.children[1].rotation.y-=dt*4;
+   if(!g.over&&d.position.z>-90&&d.position.z<-10){u.shootT-=dt;if(u.shootT<=0&&g.i>=1){u.shootT=Math.max(1,3-g.i*.06);eshot(d.position,tmp.copy(ship.position).sub(d.position),30+g.i)}}
+   if(!g.over&&d.position.distanceToSquared(ship.position)<2.5){kill(d,0);hurt()}
+   if(d.position.z>15)d.visible=false}
+  for(const b of ebolts)if(b.visible){b.position.addScaledVector(b.userData.v,dt);if(b.position.z>15||b.position.z<-200){b.visible=false;continue}if(!g.over&&b.position.distanceToSquared(ship.position)<1){b.visible=false;hurt()}}
+  for(const w of walls)if(w.visible){w.position.z+=speed*dt;if(!g.over&&Math.abs(w.position.z-ship.position.z)<.8&&Math.abs(w.position.x-ship.position.x)<3.2&&Math.abs(w.position.y-ship.position.y)<3.2){hurt();burst(ship.position,0xff4040,40,12)}if(w.position.z>15)w.visible=false}
+  for(const m of gems)if(m.visible){m.position.z+=speed*.7*dt;m.rotation.y+=dt*3;
+   if(!g.over&&m.position.distanceToSquared(ship.position)<5){m.visible=false;const word=g.words[g.wi++%g.words.length];g.score+=250;g.charge=Math.min(1,g.charge+.2);g.power=Math.min(3,g.power+(g.wi%3===0?1:0));g.powT=8;
+    sfx.gem(g.wi);burst(m.position,0xffc21a,50,10);ring(m.position,0xffc21a,1.2);comboPop(word)}
+   if(m.position.z>15)m.visible=false}
+  // boss behaviour
+  if(g.boss&&boss.visible){const bs=g.boss;bs.t+=dt;boss.position.z+=(-55-boss.position.z)*Math.min(1,dt*.8);boss.position.x=Math.sin(bs.t*.6)*6;boss.position.y=4+Math.sin(bs.t*1.1)*1.5;
+   boss.userData.cage.rotation.x+=dt*.7;boss.userData.cage.rotation.y+=dt;boss.userData.halo.rotation.z+=dt*1.5;boss.userData.halo.rotation.x=Math.sin(bs.t)*.6;
+   const ce=boss.userData.core.material;ce.emissiveIntensity+=(1.3-ce.emissiveIntensity)*Math.min(1,dt*6);
+   if(!g.over&&boss.position.z>-70){bs.shootT-=dt;if(bs.shootT<=0){const rage=1-bs.hp/bs.max,n=8+Math.floor(g.i/3)+Math.floor(rage*8);
+     bs.pat++;if(bs.pat%3===0){for(let k=0;k<5;k++)setTimeout(()=>g.boss&&boss.visible&&eshot(boss.position,tmp.copy(ship.position).sub(boss.position),42),k*110)}
+     else{const off=bs.pat*.3;for(let k=0;k<n;k++){const a=off+k/n*6.283;eshot(boss.position,new THREE.Vector3(Math.cos(a)*.35,Math.sin(a)*.18,1),26+g.i*.5)}}
+     bs.shootT=Math.max(.7,1.8-g.i*.03-rage*.5)}}}
+  // HUD
+  $("hScore").textContent=g.score.toLocaleString();$("blast").style.setProperty("--p",g.charge*100+"%");$("blast").classList.toggle("ready",g.charge>=1);
+ }
+ // particles
+ for(let i=0;i<NP;i++){if(pL[i]<=0)continue;pL[i]-=dt*1.1;const f=Math.max(0,pL[i]);pPos[i*3]+=pV[i*3]*dt;pPos[i*3+1]+=pV[i*3+1]*dt;pPos[i*3+2]+=(pV[i*3+2]+speed*.5)*dt;pV[i*3+1]-=6*dt;
+  pCol[i*3]*=.985;pCol[i*3+1]*=.985;pCol[i*3+2]*=.985;if(f<=0){pPos[i*3+1]=-999}}
+ pGeo.attributes.position.needsUpdate=true;pGeo.attributes.color.needsUpdate=true;
+ for(const r of rings)if(r.visible){r.userData.t+=dt*1.8;const t=r.userData.t;r.scale.setScalar(1+t*6*r.userData.s);r.material.opacity=Math.max(0,1-t);if(t>=1)r.visible=false}
+ if(banT>0){banT-=dt/Math.max(.25,slow);if(banT<=.4)$("banner").style.opacity=Math.max(0,banT/.4)}
+ if(comboHide>0){comboHide-=dt;if(comboHide<=0)$("combo").style.opacity=0}
+ comp.render();
+}
+loop();
+
+// ---------------- input ----------------
+cv.addEventListener("pointerdown",e=>{au();input.drag=true;input.px=e.clientX;input.py=e.clientY});
+addEventListener("pointermove",e=>{if(!input.drag||!G)return;const s=18/Math.min(innerWidth,700);input.x=THREE.MathUtils.clamp(input.x+(e.clientX-input.px)*s,-BOUND.x,BOUND.x);input.y=THREE.MathUtils.clamp(input.y-(e.clientY-input.py)*s,BOUND.y0,BOUND.y1);input.px=e.clientX;input.py=e.clientY});
+addEventListener("pointerup",()=>input.drag=false);addEventListener("pointercancel",()=>input.drag=false);
+addEventListener("keydown",e=>{input.keys[e.code]=true;if(e.code==="Space"&&G&&!G.over){e.preventDefault();blast()}});addEventListener("keyup",e=>input.keys[e.code]=false);
+$("blast").addEventListener("pointerdown",e=>{e.stopPropagation();blast()});
+
+// ---------------- screens ----------------
+function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.toggle("on",s.id===id));$("hud").classList.toggle("on",id==null);if(id!=null)$("blast").style.display="none"}
+const unlocked=i=>i===0||S.stars[i-1]>0;
+function renderMap(){G=null;musOn=false;const g=$("grid");g.innerHTML="";const next=S.stars.findIndex(x=>!x);
+ DAYS.forEach((d,i)=>{const b=document.createElement("button");b.className="day"+(S.stars[i]?" done":"")+(unlocked(i)?"":" lock")+(i===next?" next":"");b.setAttribute("aria-label","Day "+(i+1)+" "+d[0]);
+  b.innerHTML=`${i+1}<small>${S.stars[i]?"★".repeat(S.stars[i]):unlocked(i)?"GO":"LOCKED"}</small>`;b.onclick=()=>{if(unlocked(i)){sfx.click();intro(i)}};g.appendChild(b)});
+ $("mStars").textContent=S.stars.reduce((a,b)=>a+b,0);$("mDone").textContent=S.stars.filter(x=>x).length;$("mBest").textContent=Math.max(0,...S.best).toLocaleString();show("sMap")}
+let cur=0;function intro(i){cur=i;$("iDay").textContent="DAY "+(i+1)+" OF 30";$("iTitle").textContent=DAYS[i][0];$("iSub").textContent=DAYS[i][1];show("sIntro")}
+function results(){const g=G,i=g.i,d=DAYS[i];let st=0;
+ if(g.won){st=1+(g.hitsTaken===0?1:g.hitsTaken===1?.5:0)+(g.kills>=15+i?1:0);st=Math.min(3,Math.floor(st+.5));S.stars[i]=Math.max(S.stars[i],st);S.best[i]=Math.max(S.best[i],g.score);save()}
+ $("eDay").textContent="DAY "+(i+1)+" · "+d[0];$("eHead").textContent=g.won?(st===3?"FLAWLESS!":"CITY LIT!"):"SHOT DOWN";
+ $("eStars").innerHTML=[0,1,2].map(k=>`<span class="${k<st?"on":""}">★</span>`).join("");
+ $("eScore").textContent=g.score.toLocaleString();$("eKills").textContent=g.kills;$("eCombo").textContent=g.maxC;
+ $("eVerse").textContent="“"+d[2]+"”";$("eRef").textContent=d[3].toUpperCase();
+ const nb=$("bNext");if(g.won&&i===29){nb.textContent="TAKE THE PLEDGE";nb.onclick=pledge}else if(g.won){nb.textContent="NEXT CITY";nb.onclick=()=>intro(i+1)}else{nb.textContent="TRY AGAIN";nb.onclick=()=>start(i)}
+ $("bRetry").style.display=g.won&&st<3?"inline-block":"none";show("sEnd")}
+function pledge(){G=null;const box=$("pLines");box.innerHTML="";PLEDGE.forEach((l,k)=>{const lb=document.createElement("label");lb.className="pl";lb.innerHTML=`<input type="checkbox" id="pl${k}"><span>${l}</span>`;box.appendChild(lb)});
+ $("pName").value=S.pledged?.name||"";const chk=()=>{const ok=$("pName").value.trim().length>0&&[...box.querySelectorAll("input")].every(c=>c.checked);$("bSign").disabled=!ok;$("bSign").style.opacity=ok?1:.4};
+ box.onchange=chk;$("pName").oninput=chk;chk();show("sPledge")}
+function wrap(x,t,cx,y,mw,lh){const ws=t.split(" ");let line="",yy=y;for(const w of ws){const tt=line?line+" "+w:w;if(x.measureText(tt).width>mw){x.fillText(line,cx,yy);line=w;yy+=lh}else line=tt}x.fillText(line,cx,yy)}
+function cert(){const c=$("cert"),x=c.getContext("2d"),w=c.width,h=c.height,n=S.pledged.name,done=S.stars.filter(s=>s).length,stars=S.stars.reduce((a,b)=>a+b,0);
+ const g=x.createRadialGradient(w/2,h*.35,50,w/2,h*.4,h);g.addColorStop(0,"#124a2c");g.addColorStop(1,"#030a07");x.fillStyle=g;x.fillRect(0,0,w,h);
+ x.strokeStyle="#ffc21a";x.lineWidth=8;x.strokeRect(40,40,w-80,h-80);x.globalAlpha=.4;x.lineWidth=2;x.strokeRect(62,62,w-124,h-124);x.globalAlpha=1;
+ ["#19c46a","#ffffff","#19c46a"].forEach((cc,k)=>{x.fillStyle=cc;x.fillRect(w/2-120+k*80,110,80,24)});
+ x.textAlign="center";x.fillStyle="#ffc21a";x.font='900 28px Inter';x.fillText("BUILDING THE NIGERIA GOD INTENDS",w/2,200);
+ x.fillStyle="#fff";x.font='66px "Archivo Black"';x.shadowColor="#ffc21a";x.shadowBlur=30;x.fillText("NATION BUILDER",w/2,300);x.shadowBlur=0;
+ x.fillStyle="#9fb8a8";x.font='600 30px Inter';x.fillText("This certifies that",w/2,390);
+ let fs=92;x.font=`${fs}px "Archivo Black"`;while(x.measureText(n).width>w-200&&fs>40){fs-=4;x.font=`${fs}px "Archivo Black"`}x.fillStyle="#ffd84d";x.fillText(n,w/2,490);
+ x.fillStyle="#9fb8a8";x.font='600 30px Inter';x.fillText("has pledged:",w/2,560);x.fillStyle="#f4f1e6";PLEDGE.forEach((l,k)=>wrap(x,l,w/2,630+k*80,w-220,36));
+ x.fillStyle="#ffc21a";x.font='900 34px Inter';x.fillText(`${done}/30 cities lit · ${stars} stars`,w/2,1130);
+ x.fillStyle="#fff";x.font='italic 30px Inter';x.fillText("“Righteousness exalts a nation.” Proverbs 14:34",w/2,1190);
+ x.fillStyle="#9fb8a8";x.font='600 24px Inter';x.fillText(S.pledged.date+"  ·  @NationBuildersCorps  ·  @KidsInspiringNation",w/2,1250);$("certImg").src=c.toDataURL("image/png")}
+
+$("bPlay").onclick=()=>{au();sfx.click();renderMap()};$("bPledgeTop").onclick=$("bPledge").onclick=()=>{sfx.click();pledge()};
+$("bHome").onclick=()=>show("sTitle");$("bBack").onclick=renderMap;$("bGo").onclick=()=>{au();start(cur)};
+$("bRetry").onclick=()=>start(G.i);$("bToMap").onclick=renderMap;$("bPBack").onclick=renderMap;$("bCBack").onclick=renderMap;
+$("bSign").onclick=()=>{S.pledged={name:$("pName").value.trim(),date:new Date().toISOString().slice(0,10)};save();sfx.win();cert();show("sCert")};
+$("bSave").onclick=()=>{const a=document.createElement("a");a.download="Nation-Builder-Pledge.png";a.href=$("cert").toDataURL("image/png");a.click()};
+const mt=()=>$("mute").textContent=S.muted?"SOUND OFF":"SOUND ON";$("mute").onclick=()=>{S.muted=!S.muted;save();mt()};mt();
+window.__nb={frame,start,get G(){return G},blast};
+</script>
+</body>
+</html>
