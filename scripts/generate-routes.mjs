@@ -5,7 +5,7 @@
 //
 // Source of truth: public/sitemap.xml — add a URL there and it gets a file.
 
-import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -22,6 +22,9 @@ const paths = [...sitemap.matchAll(/<loc>https?:\/\/[^/<]+(\/[^<]*)<\/loc>/g)]
 let count = 0;
 for (const p of paths) {
   const dir = join(dist, p);
+  // A route that already ships its own page from public/ (e.g. /play/, the static game)
+  // must keep it - overwriting it with the SPA shell would replace the page.
+  if (existsSync(join(dir, "index.html"))) continue;
   mkdirSync(dir, { recursive: true });
   writeFileSync(join(dir, "index.html"), html);
   count++;

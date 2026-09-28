@@ -20,6 +20,7 @@ import { notifyHub } from './formHub.js';
 import { submitBrevo } from './engagement/GrowthWidgets.jsx';
 import NigeriaEducationViz from './engagement/NigeriaEducationViz.jsx';
 import FunnelRail from './nbc/FunnelRail.jsx';
+import WatchPlay from './nbc/WatchPlay.jsx';
 import { trackEvent } from './analytics.js';
 
 /* Subtle film grain for depth. */
@@ -233,15 +234,16 @@ export default function NVC({ dark }) {
                 </motion.div>
             </section>
 
-            {/* Live ticker */}
+            {/* Fact ticker. Every item is a standing fact from our own records or calendar —
+                never an invented "live" event. A values movement cannot open with fake activity. */}
             <div style={{ background: dark ? T.srfD : C.green, borderBottom: `1px solid ${C.gold}22`, padding: ".8rem 0", position: "relative", zIndex: 2 }}>
                 <div style={{ maxWidth: "78rem", margin: "0 auto", padding: "0 2rem", display: "flex", alignItems: "center", gap: "1.5rem", overflow: "hidden" }}>
                     <div style={{ display: "flex", alignItems: "center", gap: ".5rem", whiteSpace: "nowrap" }}>
-                        <span style={{ width: 8, height: 8, borderRadius: "50%", background: C.ok, animation: "pulse 2s infinite" }} />
-                        <span style={{ fontSize: ".76rem", fontWeight: 800, color: C.cream, textTransform: "uppercase", letterSpacing: ".08em" }}>Live</span>
+                        <span style={{ width: 8, height: 8, borderRadius: "50%", background: C.gold }} />
+                        <span style={{ fontSize: ".76rem", fontWeight: 800, color: C.cream, textTransform: "uppercase", letterSpacing: ".08em" }}>The Corps</span>
                     </div>
-                    <motion.div animate={{ x: ["100%", "-100%"] }} transition={{ duration: 32, repeat: Infinity, ease: "linear" }} style={{ whiteSpace: "nowrap", flex: 1, color: "rgba(253,247,236,.7)", fontSize: ".85rem", fontWeight: 500 }}>
-                        · NEW BUILDER: NB-2026-4821, Kano · CHARTERED: Govt College, Ibadan · PROJECT LOGGED: "Waste to Wealth", Lagos · COURSE STARTED: Port Harcourt · CONFERENCE: December · GRAND FINALE: July ·
+                    <motion.div animate={{ x: ["100%", "-100%"] }} transition={{ duration: 36, repeat: Infinity, ease: "linear" }} style={{ whiteSpace: "nowrap", flex: 1, color: "rgba(253,247,236,.7)", fontSize: ".85rem", fontWeight: 500 }}>
+                        · BUILDING SINCE 2021 · 100+ SCHOOLS REACHED · ₦5M+ AWARDED TO YOUNG BUILDERS · NEW: THE 30-DAY ANIMATED SERIES — WATCH BELOW · CLUBS CHARTER IN JULY · CONFERENCE IN DECEMBER · GRAND FINALE IN JULY · {`CAC ${SITE.registrationId}`} ·
                     </motion.div>
                 </div>
             </div>
@@ -402,6 +404,9 @@ export default function NVC({ dark }) {
                     </div>
                 </div>
             </section>
+
+            {/* Watch & Play — the 30-day animated series and the Lightrun game */}
+            <WatchPlay />
 
             {/* The Year — journey */}
             <section id="journey" style={{ padding: "clamp(4.5rem,10vw,8rem) 0", background: C.greenD, color: C.cream, position: "relative", overflow: "hidden" }}>
