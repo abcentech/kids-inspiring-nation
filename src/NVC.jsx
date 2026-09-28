@@ -9,7 +9,7 @@ import { ROUTE_META, T, SITE } from './siteConfig.js';
 import { usePageMeta } from './usePageMeta.js';
 import { NBC_MODULES } from './nbcCourse.js';
 import NBCEmblem from './nbc/NBCEmblem.jsx';
-import Crest3D from './nbc/three/Crest3D.jsx';
+import HeroReel from './nbc/HeroReel.jsx';
 import BuilderID from './nbc/BuilderID.jsx';
 import NationalLedger from './nbc/NationalLedger.jsx';
 import WallOfBuilders from './nbc/WallOfBuilders.jsx';
@@ -165,7 +165,6 @@ export default function NVC({ dark }) {
     const [scrolled, setScrolled] = useState(false);
     const [menu, setMenu] = useState(false);
     const { scrollY } = useScroll();
-    const crestY = useTransform(scrollY, [0, 600], [0, 120]);
     const crestRotate = useTransform(scrollY, [0, 600], [0, 20]);
 
     useEffect(() => {
@@ -201,18 +200,14 @@ export default function NVC({ dark }) {
             {/* Hero */}
             <section id="top" style={{ minHeight: "100svh", background: C.greenD, position: "relative", display: "flex", alignItems: "center", overflow: "hidden", padding: "7rem 0 4rem" }}>
                 <div aria-hidden style={{ position: "absolute", inset: 0, background: `radial-gradient(circle at 18% 28%, ${C.gold}18 0%, transparent 42%), radial-gradient(circle at 82% 75%, ${C.green}55 0%, transparent 55%), linear-gradient(160deg, ${C.greenD} 0%, ${C.greenM} 55%, ${C.greenD} 100%)` }} />
-                <motion.div aria-hidden className="nbc-hero-crest" style={{ position: "absolute", right: "-4vw", top: "10vh", y: crestY, zIndex: 1 }}>
-                    <Crest3D size={520} emblemId="hero" />
-                </motion.div>
                 <style>{`
-                  .nbc-hero-crest { opacity: .92; }
-                  @media (max-width: 1100px) { .nbc-hero-crest { opacity: .3; } }
-                  @media (max-width: 820px) { .nbc-hero-crest { display: none; } }
+                  .nbc-hero-grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: clamp(2rem, 4vw, 3.5rem); align-items: center; }
+                  @media (max-width: 1100px) { .nbc-hero-grid { grid-template-columns: minmax(0, 1fr); } .nbc-hero-reel { max-width: 44rem; } }
                 `}</style>
                 <div aria-hidden style={{ position: "absolute", left: "-3vw", bottom: "-4vh", fontFamily: "'Playfair Display',serif", fontStyle: "italic", fontWeight: 900, fontSize: "34vw", color: "transparent", WebkitTextStroke: `1px ${C.gold}12`, userSelect: "none", lineHeight: .8 }}>NBC</div>
 
-                <div style={{ maxWidth: "78rem", margin: "0 auto", padding: "0 clamp(1.25rem,4vw,2.5rem)", position: "relative", zIndex: 2, width: "100%" }}>
-                    <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .8 }} style={{ maxWidth: "60rem" }}>
+                <div className="nbc-hero-grid" style={{ maxWidth: "78rem", margin: "0 auto", padding: "0 clamp(1.25rem,4vw,2.5rem)", position: "relative", zIndex: 2, width: "100%" }}>
+                    <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .8 }} style={{ minWidth: 0 }}>
                         <div style={{ marginBottom: "1.75rem" }}><Eyebrow>🇳🇬 The Nation Builders Corps</Eyebrow></div>
                         <h1 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(3rem, 9vw, 6.8rem)", fontWeight: 900, color: C.cream, lineHeight: .88, letterSpacing: "-.045em", margin: "0 0 1.75rem" }}>
                             Don't wait for the nation.<br /><em style={{ fontStyle: "italic", color: C.goldL }}>Build</em> it.
@@ -227,6 +222,10 @@ export default function NVC({ dark }) {
                             <motion.a whileHover={{ scale: 1.04 }} whileTap={{ scale: .97 }} href="#join" style={{ padding: "1.15rem 2.6rem", borderRadius: 999, background: C.gold, color: "#14532d", fontWeight: 800, fontSize: "1.1rem", boxShadow: `0 15px 40px ${C.gold}45`, textDecoration: "none" }}>Become a Builder</motion.a>
                             <motion.a whileHover={{ scale: 1.04 }} whileTap={{ scale: .97 }} href="/nbc/course" style={{ padding: "1.15rem 2.2rem", borderRadius: 999, background: "rgba(253,247,236,.07)", color: C.cream, fontWeight: 800, fontSize: "1.05rem", border: "1px solid rgba(253,247,236,.25)", backdropFilter: "blur(10px)", display: "inline-flex", alignItems: "center", gap: ".5rem", textDecoration: "none" }}><BookOpen size={18} /> Take the free course</motion.a>
                         </div>
+                    </motion.div>
+                    <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .8, delay: .15 }} style={{ minWidth: 0 }}>
+                        <HeroReel />
+                        <a href="#watch" style={{ display: "inline-flex", marginTop: ".9rem", color: C.goldL, fontWeight: 800, fontSize: ".9rem", textDecoration: "none" }}>New: the 30-day animated series. Watch the trailer →</a>
                     </motion.div>
                 </div>
                 <motion.div aria-hidden animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 2 }} style={{ position: "absolute", bottom: "2rem", left: "50%", transform: "translateX(-50%)", color: "rgba(253,247,236,.5)", zIndex: 2 }}>
