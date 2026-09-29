@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-09-29T13:03:01.290Z",
+  "updatedAt": "2026-09-29T22:21:55.437Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "RLOWJcHbk5w",
+          "title": "Stop Accepting Limits: Why Audacity Beats Fear Every Single Time",
+          "published": "2026-09-29T17:11:58+00:00"
+        },
         {
           "id": "wO7FhOuIZTY",
           "title": "Your Hard Work Means NOTHING Without This.",
@@ -28,11 +33,6 @@
           "id": "Qv_jF2ChwxA",
           "title": "Don’t Confuse Permission with Ownership",
           "published": "2026-09-24T05:00:20+00:00"
-        },
-        {
-          "id": "u2Vb2OqXQSU",
-          "title": "How To Overcome Insecurity: Turn Disadvantage Into Power.",
-          "published": "2026-09-23T17:25:59+00:00"
         }
       ]
     },
