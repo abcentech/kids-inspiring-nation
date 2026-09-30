@@ -1,9 +1,19 @@
 {
-  "updatedAt": "2026-09-30T12:45:28.217Z",
+  "updatedAt": "2026-09-30T22:21:37.567Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "MmSsP9GAbm0",
+          "title": "The Real Reason You’re Stuck While Others Move Forward",
+          "published": "2026-09-30T18:48:13+00:00"
+        },
+        {
+          "id": "Vrid9nvFhgY",
+          "title": "BUILDING THE NIGERIA GOD INTENDS | October 1Trailer",
+          "published": "2026-09-30T16:00:25+00:00"
+        },
         {
           "id": "RLOWJcHbk5w",
           "title": "Stop Accepting Limits: Why Audacity Beats Fear Every Single Time",
@@ -23,16 +33,6 @@
           "id": "GEH7_lKSmcY",
           "title": "You Only Get One Shot: Stop Hiding Behind Endless Practice",
           "published": "2026-09-25T17:00:17+00:00"
-        },
-        {
-          "id": "FWCNnqNpEuo",
-          "title": "How To Overcome Fear: Why Courage Starts Before You Feel Ready",
-          "published": "2026-09-24T17:00:07+00:00"
-        },
-        {
-          "id": "Qv_jF2ChwxA",
-          "title": "Don’t Confuse Permission with Ownership",
-          "published": "2026-09-24T05:00:20+00:00"
         }
       ]
     },
