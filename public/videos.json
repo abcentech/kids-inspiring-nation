@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-10-01T06:05:49.118Z",
+  "updatedAt": "2026-10-01T13:29:16.208Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "x_CWNL5wj34",
+          "title": "The Town That Gave Nigeria Its First Oil",
+          "published": "2026-10-01T05:00:12+00:00"
+        },
         {
           "id": "MmSsP9GAbm0",
           "title": "The Real Reason You’re Stuck While Others Move Forward",
@@ -28,11 +33,6 @@
           "id": "wJbyHDnu694",
           "title": "The 1 Decision That Prepares You for Huge Opportunities",
           "published": "2026-09-26T17:00:39+00:00"
-        },
-        {
-          "id": "GEH7_lKSmcY",
-          "title": "You Only Get One Shot: Stop Hiding Behind Endless Practice",
-          "published": "2026-09-25T17:00:17+00:00"
         }
       ]
     },
