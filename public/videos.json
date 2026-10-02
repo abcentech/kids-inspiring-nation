@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-10-02T12:47:04.604Z",
+  "updatedAt": "2026-10-02T22:19:27.216Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "S45JlK4XXo0",
+          "title": "BUILDING THE NIGERIA GOD INTENDS | October 2",
+          "published": "2026-10-02T21:28:59+00:00"
+        },
         {
           "id": "oUM8fjaYKd4",
           "title": "She Could Have Kept the Money",
@@ -28,11 +33,6 @@
           "id": "RLOWJcHbk5w",
           "title": "Stop Accepting Limits: Why Audacity Beats Fear Every Single Time",
           "published": "2026-09-29T17:11:58+00:00"
-        },
-        {
-          "id": "wO7FhOuIZTY",
-          "title": "Your Hard Work Means NOTHING Without This.",
-          "published": "2026-09-28T18:20:24+00:00"
         }
       ]
     },
