@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-10-02T05:48:51.194Z",
+  "updatedAt": "2026-10-02T12:47:04.604Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "oUM8fjaYKd4",
+          "title": "She Could Have Kept the Money",
+          "published": "2026-10-02T05:00:35+00:00"
+        },
         {
           "id": "x_CWNL5wj34",
           "title": "The Town That Gave Nigeria Its First Oil",
@@ -28,11 +33,6 @@
           "id": "wO7FhOuIZTY",
           "title": "Your Hard Work Means NOTHING Without This.",
           "published": "2026-09-28T18:20:24+00:00"
-        },
-        {
-          "id": "wJbyHDnu694",
-          "title": "The 1 Decision That Prepares You for Huge Opportunities",
-          "published": "2026-09-26T17:00:39+00:00"
         }
       ]
     },
