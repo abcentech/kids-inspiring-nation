@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-10-03T05:25:26.435Z",
+  "updatedAt": "2026-10-03T11:47:21.420Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "mW9XjrTAgJc",
+          "title": "They came to serve a part of Nigeria that was not their own. 🇳🇬",
+          "published": "2026-10-03T09:28:19+00:00"
+        },
         {
           "id": "S45JlK4XXo0",
           "title": "BUILDING THE NIGERIA GOD INTENDS | October 2",
@@ -28,11 +33,6 @@
           "id": "Vrid9nvFhgY",
           "title": "BUILDING THE NIGERIA GOD INTENDS | October 1Trailer",
           "published": "2026-09-30T16:00:25+00:00"
-        },
-        {
-          "id": "RLOWJcHbk5w",
-          "title": "Stop Accepting Limits: Why Audacity Beats Fear Every Single Time",
-          "published": "2026-09-29T17:11:58+00:00"
         }
       ]
     },
