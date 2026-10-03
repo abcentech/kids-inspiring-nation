@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-10-03T11:47:21.420Z",
+  "updatedAt": "2026-10-03T16:28:22.474Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "vhYEr5r1BIM",
+          "title": "The Ones Who Showed Up | Building the Nigeria God Intends | October 3 trailer",
+          "published": "2026-10-03T13:01:47+00:00"
+        },
         {
           "id": "mW9XjrTAgJc",
           "title": "They came to serve a part of Nigeria that was not their own. 🇳🇬",
@@ -28,11 +33,6 @@
           "id": "MmSsP9GAbm0",
           "title": "The Real Reason You’re Stuck While Others Move Forward",
           "published": "2026-09-30T18:48:13+00:00"
-        },
-        {
-          "id": "Vrid9nvFhgY",
-          "title": "BUILDING THE NIGERIA GOD INTENDS | October 1Trailer",
-          "published": "2026-09-30T16:00:25+00:00"
         }
       ]
     },
