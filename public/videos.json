@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-10-04T06:00:54.177Z",
+  "updatedAt": "2026-10-04T12:30:07.727Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "PC9fFH9pwTo",
+          "title": "The Accountability Behind Igbo Apprenticeship",
+          "published": "2026-10-04T05:00:24+00:00"
+        },
         {
           "id": "vhYEr5r1BIM",
           "title": "The Ones Who Showed Up | Building the Nigeria God Intends | October 3 trailer",
@@ -28,11 +33,6 @@
           "id": "x_CWNL5wj34",
           "title": "The Town That Gave Nigeria Its First Oil",
           "published": "2026-10-01T05:00:12+00:00"
-        },
-        {
-          "id": "MmSsP9GAbm0",
-          "title": "The Real Reason You’re Stuck While Others Move Forward",
-          "published": "2026-09-30T18:48:13+00:00"
         }
       ]
     },
