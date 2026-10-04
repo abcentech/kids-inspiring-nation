@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-10-04T12:30:07.727Z",
+  "updatedAt": "2026-10-04T21:35:37.798Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "PRShEn0gUIc",
+          "title": "Why Trust Alone Isn't Enough | Building the Nigeria God Intends | October 4 trailer",
+          "published": "2026-10-04T13:00:03+00:00"
+        },
         {
           "id": "PC9fFH9pwTo",
           "title": "The Accountability Behind Igbo Apprenticeship",
@@ -28,11 +33,6 @@
           "id": "oUM8fjaYKd4",
           "title": "She Could Have Kept the Money",
           "published": "2026-10-02T05:00:35+00:00"
-        },
-        {
-          "id": "x_CWNL5wj34",
-          "title": "The Town That Gave Nigeria Its First Oil",
-          "published": "2026-10-01T05:00:12+00:00"
         }
       ]
     },
