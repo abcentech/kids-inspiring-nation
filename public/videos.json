@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-10-05T14:53:16.013Z",
+  "updatedAt": "2026-10-06T00:07:49.734Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "z2-05GYItCg",
+          "title": "Dangote's Refinery: Persistence Without the Self-Made Myth | October 5 trailer",
+          "published": "2026-10-05T16:00:49+00:00"
+        },
         {
           "id": "PRShEn0gUIc",
           "title": "Why Trust Alone Isn't Enough | Building the Nigeria God Intends | October 4 trailer",
@@ -28,11 +33,6 @@
           "id": "S45JlK4XXo0",
           "title": "BUILDING THE NIGERIA GOD INTENDS | October 2",
           "published": "2026-10-02T21:28:59+00:00"
-        },
-        {
-          "id": "oUM8fjaYKd4",
-          "title": "She Could Have Kept the Money",
-          "published": "2026-10-02T05:00:35+00:00"
         }
       ]
     },
