@@ -1,9 +1,19 @@
 {
-  "updatedAt": "2026-10-06T06:29:39.851Z",
+  "updatedAt": "2026-10-06T18:27:18.278Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "Z0Zb4f4kqXg",
+          "title": "Chioma Ajunwa: The Comeback | October 6 Traller",
+          "published": "2026-10-06T16:00:18+00:00"
+        },
+        {
+          "id": "JY8B8O_3gKA",
+          "title": "4 Lost Years. One Historic Jump. 🇳🇬 | Chioma Ajunwa",
+          "published": "2026-10-06T05:00:13+00:00"
+        },
         {
           "id": "z2-05GYItCg",
           "title": "Dangote's Refinery: Persistence Without the Self-Made Myth | October 5 trailer",
@@ -23,16 +33,6 @@
           "id": "vhYEr5r1BIM",
           "title": "The Ones Who Showed Up | Building the Nigeria God Intends | October 3 trailer",
           "published": "2026-10-03T13:01:47+00:00"
-        },
-        {
-          "id": "mW9XjrTAgJc",
-          "title": "They came to serve a part of Nigeria that was not their own. 🇳🇬",
-          "published": "2026-10-03T09:28:19+00:00"
-        },
-        {
-          "id": "S45JlK4XXo0",
-          "title": "BUILDING THE NIGERIA GOD INTENDS | October 2",
-          "published": "2026-10-02T21:28:59+00:00"
         }
       ]
     },
