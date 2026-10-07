@@ -1,9 +1,19 @@
 {
-  "updatedAt": "2026-10-07T13:34:06.303Z",
+  "updatedAt": "2026-10-07T23:10:00.267Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "1GUhkcQBcmw",
+          "title": "Innoson: From Spare Parts to a Vehicle Factory | October 7 Trailer",
+          "published": "2026-10-07T16:00:19+00:00"
+        },
+        {
+          "id": "HTJa9cm7ujY",
+          "title": "Innoson: From Spare Parts to a Vehicle Factory",
+          "published": "2026-10-07T14:46:29+00:00"
+        },
         {
           "id": "Z0Zb4f4kqXg",
           "title": "Chioma Ajunwa: The Comeback | October 6 Traller",
@@ -23,16 +33,6 @@
           "id": "PRShEn0gUIc",
           "title": "Why Trust Alone Isn't Enough | Building the Nigeria God Intends | October 4 trailer",
           "published": "2026-10-04T13:00:03+00:00"
-        },
-        {
-          "id": "PC9fFH9pwTo",
-          "title": "The Accountability Behind Igbo Apprenticeship",
-          "published": "2026-10-04T05:00:24+00:00"
-        },
-        {
-          "id": "vhYEr5r1BIM",
-          "title": "The Ones Who Showed Up | Building the Nigeria God Intends | October 3 trailer",
-          "published": "2026-10-03T13:01:47+00:00"
         }
       ]
     },
