@@ -1,9 +1,19 @@
 {
-  "updatedAt": "2026-10-08T06:15:14.965Z",
+  "updatedAt": "2026-10-08T13:43:10.514Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "htV8DZs25rc",
+          "title": "The Vaccinators Who Kept Returning | October 8 Trailer",
+          "published": "2026-10-08T05:00:39+00:00"
+        },
+        {
+          "id": "823I2Lh4Mkw",
+          "title": "The Vaccinators Who Kept Returning | Nigeria's Wild Polio Story",
+          "published": "2026-10-08T05:00:26+00:00"
+        },
         {
           "id": "1GUhkcQBcmw",
           "title": "Innoson: From Spare Parts to a Vehicle Factory | October 7 Trailer",
@@ -23,16 +33,6 @@
           "id": "JY8B8O_3gKA",
           "title": "4 Lost Years. One Historic Jump. 🇳🇬 | Chioma Ajunwa",
           "published": "2026-10-06T05:00:13+00:00"
-        },
-        {
-          "id": "z2-05GYItCg",
-          "title": "Dangote's Refinery: Persistence Without the Self-Made Myth | October 5 trailer",
-          "published": "2026-10-05T16:00:49+00:00"
-        },
-        {
-          "id": "PRShEn0gUIc",
-          "title": "Why Trust Alone Isn't Enough | Building the Nigeria God Intends | October 4 trailer",
-          "published": "2026-10-04T13:00:03+00:00"
         }
       ]
     },
