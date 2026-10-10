@@ -1,9 +1,19 @@
 {
-  "updatedAt": "2026-10-10T06:00:25.905Z",
+  "updatedAt": "2026-10-10T12:41:16.697Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "Sj25PjDIZ4M",
+          "title": "Awolowo's Free Education: Who Actually Paid? | October 10 Trailer",
+          "published": "2026-10-10T05:00:10+00:00"
+        },
+        {
+          "id": "auAzD6cGBbs",
+          "title": "Awolowo's Free Education: Who Actually Paid?",
+          "published": "2026-10-10T05:00:01+00:00"
+        },
         {
           "id": "ZX22aASVTC4",
           "title": "A Big Vision Can Fail Without the Boring Parts",
@@ -23,16 +33,6 @@
           "id": "823I2Lh4Mkw",
           "title": "The Vaccinators Who Kept Returning | Nigeria's Wild Polio Story",
           "published": "2026-10-08T05:00:26+00:00"
-        },
-        {
-          "id": "1GUhkcQBcmw",
-          "title": "Innoson: From Spare Parts to a Vehicle Factory | October 7 Trailer",
-          "published": "2026-10-07T16:00:19+00:00"
-        },
-        {
-          "id": "HTJa9cm7ujY",
-          "title": "Innoson: From Spare Parts to a Vehicle Factory",
-          "published": "2026-10-07T14:46:29+00:00"
         }
       ]
     },
