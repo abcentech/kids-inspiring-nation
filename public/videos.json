@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-10-11T05:57:35.938Z",
+  "updatedAt": "2026-10-11T13:02:29.094Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "n9r_e8P13_8",
+          "title": "No Victor, No Vanquished | October 11 Trailer",
+          "published": "2026-10-11T05:00:24+00:00"
+        },
         {
           "id": "Sj25PjDIZ4M",
           "title": "Awolowo's Free Education: Who Actually Paid? | October 10 Trailer",
@@ -28,11 +33,6 @@
           "id": "htV8DZs25rc",
           "title": "The Vaccinators Who Kept Returning | October 8 Trailer",
           "published": "2026-10-08T05:00:39+00:00"
-        },
-        {
-          "id": "823I2Lh4Mkw",
-          "title": "The Vaccinators Who Kept Returning | Nigeria's Wild Polio Story",
-          "published": "2026-10-08T05:00:26+00:00"
         }
       ]
     },
