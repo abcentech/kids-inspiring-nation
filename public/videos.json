@@ -1,9 +1,19 @@
 {
-  "updatedAt": "2026-10-13T00:47:57.842Z",
+  "updatedAt": "2026-10-13T14:20:55.069Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "3ufu9PwpdsQ",
+          "title": "Dr Adadevoh Said No. A Prepared System Helped Save Lives.",
+          "published": "2026-10-13T10:48:58+00:00"
+        },
+        {
+          "id": "nDAIgHQWzT0",
+          "title": "When Floods Came, Neighbours Didn't Wait",
+          "published": "2026-10-12T16:09:30+00:00"
+        },
         {
           "id": "_r6ZxZnfgQ0",
           "title": "When Floods Came, Neighbours Didn't Wait",
@@ -23,16 +33,6 @@
           "id": "auAzD6cGBbs",
           "title": "Awolowo's Free Education: Who Actually Paid?",
           "published": "2026-10-10T05:00:01+00:00"
-        },
-        {
-          "id": "ZX22aASVTC4",
-          "title": "A Big Vision Can Fail Without the Boring Parts",
-          "published": "2026-10-09T05:00:15+00:00"
-        },
-        {
-          "id": "CEdUYkWJrDQ",
-          "title": "Ajaokuta: The Missing Links Behind a Giant Steel Plant",
-          "published": "2026-10-09T05:00:02+00:00"
         }
       ]
     },
