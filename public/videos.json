@@ -1,9 +1,19 @@
 {
-  "updatedAt": "2026-10-15T04:49:55.518Z",
+  "updatedAt": "2026-10-15T11:40:05.196Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "2XRBV6l2IkA",
+          "title": "Zannah Mustapha: Education, Mercy and Future Prowess",
+          "published": "2026-10-15T05:00:34+00:00"
+        },
+        {
+          "id": "tfkkHM_Bg1Y",
+          "title": "Zannah Mustapha Put Their Children in the Same Classroom | October 15 Trailer",
+          "published": "2026-10-15T05:00:00+00:00"
+        },
         {
           "id": "zWYUfZ3zvK8",
           "title": "What Tai Solarin's School Asks of Our Faith",
@@ -23,16 +33,6 @@
           "id": "3ufu9PwpdsQ",
           "title": "Dr Adadevoh Said No. A Prepared System Helped Save Lives.",
           "published": "2026-10-13T10:48:58+00:00"
-        },
-        {
-          "id": "nDAIgHQWzT0",
-          "title": "When Floods Came, Neighbours Didn't Wait",
-          "published": "2026-10-12T16:09:30+00:00"
-        },
-        {
-          "id": "_r6ZxZnfgQ0",
-          "title": "When Floods Came, Neighbours Didn't Wait",
-          "published": "2026-10-12T05:00:17+00:00"
         }
       ]
     },
