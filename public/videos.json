@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-10-16T16:44:53.414Z",
+  "updatedAt": "2026-10-16T21:19:26.989Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "p0REbH6mi-M",
+          "title": "Why Gani Fawehinmi Kept a Suitcase Packed",
+          "published": "2026-10-16T17:00:05+00:00"
+        },
         {
           "id": "dhiUt-5hixo",
           "title": "Why Gani Fawehinmi Kept a Suitcase Packed | October 16 Trailer",
@@ -28,11 +33,6 @@
           "id": "uNb9RdAHeVI",
           "title": "What Tai Solarin's School Asks of Our Faith",
           "published": "2026-10-14T05:00:03+00:00"
-        },
-        {
-          "id": "bc5rj7cS_E8",
-          "title": "Dr Adadevoh Said No. A Prepared System Helped Save Lives.",
-          "published": "2026-10-13T17:00:20+00:00"
         }
       ]
     },
