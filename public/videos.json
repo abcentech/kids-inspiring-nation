@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-10-16T04:39:56.746Z",
+  "updatedAt": "2026-10-16T11:33:57.510Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "dhiUt-5hixo",
+          "title": "Why Gani Fawehinmi Kept a Suitcase Packed | October 16 Trailer",
+          "published": "2026-10-16T05:00:06+00:00"
+        },
         {
           "id": "2XRBV6l2IkA",
           "title": "Zannah Mustapha: Education, Mercy and Future Prowess",
@@ -28,11 +33,6 @@
           "id": "bc5rj7cS_E8",
           "title": "Dr Adadevoh Said No. A Prepared System Helped Save Lives.",
           "published": "2026-10-13T17:00:20+00:00"
-        },
-        {
-          "id": "3ufu9PwpdsQ",
-          "title": "Dr Adadevoh Said No. A Prepared System Helped Save Lives.",
-          "published": "2026-10-13T10:48:58+00:00"
         }
       ]
     },
