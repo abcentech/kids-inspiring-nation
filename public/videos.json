@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-10-17T04:37:17.629Z",
+  "updatedAt": "2026-10-17T10:53:36.293Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "RkwHtyXQAOs",
+          "title": "Ogoni: Remembering the Four and the Nine | October 17 Trailer",
+          "published": "2026-10-17T05:00:31+00:00"
+        },
         {
           "id": "p0REbH6mi-M",
           "title": "Why Gani Fawehinmi Kept a Suitcase Packed",
@@ -28,11 +33,6 @@
           "id": "zWYUfZ3zvK8",
           "title": "What Tai Solarin's School Asks of Our Faith",
           "published": "2026-10-14T05:00:35+00:00"
-        },
-        {
-          "id": "uNb9RdAHeVI",
-          "title": "What Tai Solarin's School Asks of Our Faith",
-          "published": "2026-10-14T05:00:03+00:00"
         }
       ]
     },
