@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-10-17T15:41:41.150Z",
+  "updatedAt": "2026-10-17T20:42:10.778Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "uCFB9JT01pQ",
+          "title": "The Ogoni 9: What Really Happened in 1995?",
+          "published": "2026-10-17T17:00:03+00:00"
+        },
         {
           "id": "RkwHtyXQAOs",
           "title": "Ogoni: Remembering the Four and the Nine | October 17 Trailer",
@@ -28,11 +33,6 @@
           "id": "tfkkHM_Bg1Y",
           "title": "Zannah Mustapha Put Their Children in the Same Classroom | October 15 Trailer",
           "published": "2026-10-15T05:00:00+00:00"
-        },
-        {
-          "id": "zWYUfZ3zvK8",
-          "title": "What Tai Solarin's School Asks of Our Faith",
-          "published": "2026-10-14T05:00:35+00:00"
         }
       ]
     },
