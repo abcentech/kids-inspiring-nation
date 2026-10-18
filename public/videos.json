@@ -1,9 +1,19 @@
 {
-  "updatedAt": "2026-10-18T04:42:37.969Z",
+  "updatedAt": "2026-10-18T11:19:06.933Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "U3UpjRFFjJo",
+          "title": "EndSARS: The Questions About Accountability",
+          "published": "2026-10-18T05:00:38+00:00"
+        },
+        {
+          "id": "Y7Ureq18tOI",
+          "title": "EndSARS at Lekki: The Unanswered Questions",
+          "published": "2026-10-18T05:00:15+00:00"
+        },
         {
           "id": "uCFB9JT01pQ",
           "title": "The Ogoni 9: What Really Happened in 1995?",
@@ -23,16 +33,6 @@
           "id": "dhiUt-5hixo",
           "title": "Why Gani Fawehinmi Kept a Suitcase Packed | October 16 Trailer",
           "published": "2026-10-16T05:00:06+00:00"
-        },
-        {
-          "id": "2XRBV6l2IkA",
-          "title": "Zannah Mustapha: Education, Mercy and Future Prowess",
-          "published": "2026-10-15T05:00:34+00:00"
-        },
-        {
-          "id": "tfkkHM_Bg1Y",
-          "title": "Zannah Mustapha Put Their Children in the Same Classroom | October 15 Trailer",
-          "published": "2026-10-15T05:00:00+00:00"
         }
       ]
     },
