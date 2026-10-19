@@ -1,9 +1,19 @@
 {
-  "updatedAt": "2026-10-19T04:50:51.820Z",
+  "updatedAt": "2026-10-19T13:32:06.664Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "PJrmCE65PIM",
+          "title": "After the War, They Rebuilt | Aba and Onitsha",
+          "published": "2026-10-19T05:00:22+00:00"
+        },
+        {
+          "id": "Htj99gjMqUo",
+          "title": "After the War, They Rebuilt | Aba and Onitsha | October 19 Trailer",
+          "published": "2026-10-19T05:00:12+00:00"
+        },
         {
           "id": "U3UpjRFFjJo",
           "title": "EndSARS: The Questions About Accountability",
@@ -23,16 +33,6 @@
           "id": "RkwHtyXQAOs",
           "title": "Ogoni: Remembering the Four and the Nine | October 17 Trailer",
           "published": "2026-10-17T05:00:31+00:00"
-        },
-        {
-          "id": "p0REbH6mi-M",
-          "title": "Why Gani Fawehinmi Kept a Suitcase Packed",
-          "published": "2026-10-16T17:00:05+00:00"
-        },
-        {
-          "id": "dhiUt-5hixo",
-          "title": "Why Gani Fawehinmi Kept a Suitcase Packed | October 16 Trailer",
-          "published": "2026-10-16T05:00:06+00:00"
         }
       ]
     },
