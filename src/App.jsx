@@ -16,7 +16,7 @@
   KIND: 13,350 | KINGs: 1,718 | DF: 1,619 | gDX: 1,107 | P119: 999
   TJC: 49 | CST: 35 | FACE: 3,000+ meals
 
-  NDPR (Nigeria Data Protection Regulation) compliant cookie banner
+  NDPA (Nigeria Data Protection Act 2023) compliant cookie banner
   Dark mode: floating toggle button
 */
 
@@ -89,7 +89,7 @@ const GoDs = ({ style = {}, suffixStyle = {} }) => (
   </span>
 );
 
-// ─── COOKIE BANNER (NDPR) ─────────────────────────────────────────────────────
+// ─── COOKIE BANNER (NDPA) ─────────────────────────────────────────────────────
 function CookieBanner({ dark }) {
   const [show, setShow] = useState(false);
   const [expanded, setExpanded] = useState(false);
@@ -109,7 +109,7 @@ function CookieBanner({ dark }) {
           <div style={{ flex: 1 }}>
             <div style={{ fontSize: 13, fontWeight: 600, color: txt, marginBottom: 4, fontFamily: "'Plus Jakarta Sans',sans-serif" }}>We value your privacy</div>
             <p style={{ fontSize: 11, color: sub, lineHeight: 1.55 }}>
-              KidsInspiring Nation uses cookies to improve your experience on this website, in compliance with the <strong>Nigeria Data Protection Regulation (NDPR) 2019</strong>. We collect anonymised usage data to improve our programmes and website. We do not sell your data.
+              KidsInspiring Nation uses cookies to improve your experience on this website, in compliance with the <strong>Nigeria Data Protection Act (NDPA) 2023</strong>. We collect anonymised usage data to improve our programmes and website. We do not sell your data.
               {expanded && (<span> Your data is processed by KidsInspiring Nation as the Data Controller. You have the right to access, correct or delete your data at any time by contacting KidsinspiringNation@gmail.com.</span>)}
             </p>
             <button onClick={() => setExpanded(!expanded)} style={{ fontSize: 11, color: T.gold, fontWeight: 500, marginTop: 4, cursor: "pointer", background: "none", border: "none", padding: 0 }}>
@@ -1773,7 +1773,7 @@ function Footer() {
         {/* Bottom */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: ".5rem" }}>
           <p style={{ fontSize: ".72rem", color: "rgba(253,247,236,.25)" }}>© 2025 KidsInspiring Nation · All rights reserved</p>
-          <p style={{ fontSize: ".72rem", color: "rgba(253,247,236,.25)" }}>NDPR Compliant · 19,695 entries · 639 geniuses · One mission 🇳🇬</p>
+          <p style={{ fontSize: ".72rem", color: "rgba(253,247,236,.25)" }}>NDPA 2023 · 19,695 entries · 639 geniuses · One mission 🇳🇬</p>
         </div>
       </div>
     </footer>

@@ -6,7 +6,7 @@ import { usePageMeta } from "./usePageMeta.js";
 export default function Privacy({ dark }) {
   usePageMeta({
     title: `Privacy Policy — ${SITE.name}`,
-    description: "KidsInspiring Nation Privacy Policy and NDPR 2019 compliance information.",
+    description: "KidsInspiring Nation Privacy Policy and NDPA 2023 compliance information.",
   });
 
   const bg = dark ? "#050806" : "#FAFAF5";
@@ -28,8 +28,8 @@ export default function Privacy({ dark }) {
     },
     {
       icon: <Shield size={20} />,
-      title: "Legal Basis (NDPR 2019)",
-      content: "In compliance with the Nigeria Data Protection Regulation (NDPR) 2019, we process your data based on your explicit consent (when you submit a form or accept cookies) or for our legitimate interest in providing NGO services."
+      title: "Legal Basis (NDPA 2023)",
+      content: "In compliance with the Nigeria Data Protection Act (NDPA) 2023, we process your data based on your explicit consent (when you submit a form or accept cookies) or for our legitimate interest in providing NGO services."
     },
     {
       icon: <FileText size={20} />,
@@ -63,7 +63,7 @@ export default function Privacy({ dark }) {
               <em style={{ fontStyle: "italic", color: T.goldL }}>Protection.</em>
             </h1>
             <p style={{ fontSize: "clamp(1rem,2.2vw,1.1rem)", lineHeight: 1.75, color: "rgba(253,247,236,.72)", maxWidth: "65ch" }}>
-              We are committed to protecting your privacy in accordance with the Nigeria Data Protection Regulation (NDPR) 2019. This policy explains how we handle your information.
+              We are committed to protecting your privacy in accordance with the Nigeria Data Protection Act (NDPA) 2023. This policy explains how we handle your information.
             </p>
           </motion.div>
         </div>

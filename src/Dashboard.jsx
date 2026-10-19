@@ -219,7 +219,7 @@ function ProgrammesView({ ctx }) {
         <div style={{ padding: "14px 18px", borderBottom: `1px solid ${brd}`, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <div>
             <div style={{ fontSize: 13, fontWeight: 700, color: p1, fontFamily: "'Plus Jakarta Sans',sans-serif" }}>All 8 Programmes · as at 2025</div>
-            <div style={{ fontSize: 11, color: p2, marginTop: 2 }}>KidsInspiring Nation · NDPR Data Controller</div>
+            <div style={{ fontSize: 11, color: p2, marginTop: 2 }}>KidsInspiring Nation · Data Controller (NDPA 2023)</div>
           </div>
         </div>
         <div style={{ overflowX: "auto" }}>

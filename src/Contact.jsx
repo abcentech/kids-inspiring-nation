@@ -391,7 +391,7 @@ export default function Contact({ dark }) {
                 <div style={{ fontFamily: "'Plus Jakarta Sans',sans-serif", fontSize: "1rem", fontWeight: 700, color: T.cream, marginBottom: ".2rem" }}>{SITE.legalName}</div>
                 <div style={{ fontFamily: "'DM Mono',monospace", fontSize: ".85rem", color: T.goldL, marginBottom: ".75rem" }}>{SITE.registrationId}</div>
                 <p style={{ fontSize: ".8rem", color: "rgba(253,247,236,.5)", lineHeight: 1.65 }}>
-                  Registered Nigerian NGO. NDPR compliant. All data processed in accordance with the Nigeria Data Protection Regulation 2019.
+                  Registered Nigerian NGO. All data processed in accordance with the Nigeria Data Protection Act 2023.
                 </p>
               </div>
             </motion.div>
