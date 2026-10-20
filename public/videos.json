@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-10-20T04:58:57.437Z",
+  "updatedAt": "2026-10-20T11:47:55.863Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "zbld2A78O5s",
+          "title": "A VHS Camera Helped Change Nollywood's Business",
+          "published": "2026-10-20T05:00:10+00:00"
+        },
         {
           "id": "PJrmCE65PIM",
           "title": "After the War, They Rebuilt | Aba and Onitsha",
@@ -28,11 +33,6 @@
           "id": "uCFB9JT01pQ",
           "title": "The Ogoni 9: What Really Happened in 1995?",
           "published": "2026-10-17T17:00:03+00:00"
-        },
-        {
-          "id": "RkwHtyXQAOs",
-          "title": "Ogoni: Remembering the Four and the Nine | October 17 Trailer",
-          "published": "2026-10-17T05:00:31+00:00"
         }
       ]
     },
