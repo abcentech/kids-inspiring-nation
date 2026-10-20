@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-10-20T11:47:55.863Z",
+  "updatedAt": "2026-10-20T17:16:55.273Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "JB9AWR64O0A",
+          "title": "A VHS Camera Helped Change Nollywood's Business | October 20 Trailer",
+          "published": "2026-10-20T15:41:09+00:00"
+        },
         {
           "id": "zbld2A78O5s",
           "title": "A VHS Camera Helped Change Nollywood's Business",
@@ -28,11 +33,6 @@
           "id": "Y7Ureq18tOI",
           "title": "EndSARS at Lekki: The Unanswered Questions",
           "published": "2026-10-18T05:00:15+00:00"
-        },
-        {
-          "id": "uCFB9JT01pQ",
-          "title": "The Ogoni 9: What Really Happened in 1995?",
-          "published": "2026-10-17T17:00:03+00:00"
         }
       ]
     },
