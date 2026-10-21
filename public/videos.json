@@ -1,9 +1,19 @@
 {
-  "updatedAt": "2026-10-21T04:58:12.167Z",
+  "updatedAt": "2026-10-21T11:59:43.629Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "TW12AEcHbOI",
+          "title": "Lucy Ejike: Excellence Deserves More Than Applause",
+          "published": "2026-10-21T05:00:05+00:00"
+        },
+        {
+          "id": "Rbvx31YKYjY",
+          "title": "Lucy Ejike: Excellence Deserves More Than Applause",
+          "published": "2026-10-21T05:00:02+00:00"
+        },
         {
           "id": "JB9AWR64O0A",
           "title": "A VHS Camera Helped Change Nollywood's Business | October 20 Trailer",
@@ -23,16 +33,6 @@
           "id": "Htj99gjMqUo",
           "title": "After the War, They Rebuilt | Aba and Onitsha | October 19 Trailer",
           "published": "2026-10-19T05:00:12+00:00"
-        },
-        {
-          "id": "U3UpjRFFjJo",
-          "title": "EndSARS: The Questions About Accountability",
-          "published": "2026-10-18T05:00:38+00:00"
-        },
-        {
-          "id": "Y7Ureq18tOI",
-          "title": "EndSARS at Lekki: The Unanswered Questions",
-          "published": "2026-10-18T05:00:15+00:00"
         }
       ]
     },
