@@ -1,9 +1,19 @@
 {
-  "updatedAt": "2026-10-23T05:00:38.405Z",
+  "updatedAt": "2026-10-23T11:47:43.113Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "vz7g4vXfKw8",
+          "title": "The Ikoyi Collapse: Why Expert Warnings Matter | October 23 Trailer",
+          "published": "2026-10-23T05:00:35+00:00"
+        },
+        {
+          "id": "tUZVbt7yLQg",
+          "title": "The Ikoyi Collapse: Why Expert Warnings Matter",
+          "published": "2026-10-23T05:00:05+00:00"
+        },
         {
           "id": "1eNJJ2fmsnI",
           "title": "Maiduguri's Monday Market: Rebuilding After the Fire",
@@ -23,16 +33,6 @@
           "id": "Rbvx31YKYjY",
           "title": "Lucy Ejike: Excellence Deserves More Than Applause",
           "published": "2026-10-21T05:00:02+00:00"
-        },
-        {
-          "id": "JB9AWR64O0A",
-          "title": "A VHS Camera Helped Change Nollywood's Business | October 20 Trailer",
-          "published": "2026-10-20T15:41:09+00:00"
-        },
-        {
-          "id": "zbld2A78O5s",
-          "title": "A VHS Camera Helped Change Nollywood's Business",
-          "published": "2026-10-20T05:00:10+00:00"
         }
       ]
     },
