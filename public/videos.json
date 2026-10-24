@@ -1,9 +1,19 @@
 {
-  "updatedAt": "2026-10-24T04:45:31.914Z",
+  "updatedAt": "2026-10-24T11:13:18.449Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "rohGLmAPPvw",
+          "title": "Gowon Went From Head of State to University Student | October 24 Trailer",
+          "published": "2026-10-24T05:00:21+00:00"
+        },
+        {
+          "id": "IU3t9iyEXJo",
+          "title": "Gowon Went From Head of State to University Student",
+          "published": "2026-10-24T05:00:04+00:00"
+        },
         {
           "id": "vz7g4vXfKw8",
           "title": "The Ikoyi Collapse: Why Expert Warnings Matter | October 23 Trailer",
@@ -23,16 +33,6 @@
           "id": "4b-MwGqh_cw",
           "title": "Maiduguri's Monday Market: Rebuilding After the Fire",
           "published": "2026-10-22T05:00:23+00:00"
-        },
-        {
-          "id": "TW12AEcHbOI",
-          "title": "Lucy Ejike: Excellence Deserves More Than Applause",
-          "published": "2026-10-21T05:00:05+00:00"
-        },
-        {
-          "id": "Rbvx31YKYjY",
-          "title": "Lucy Ejike: Excellence Deserves More Than Applause",
-          "published": "2026-10-21T05:00:02+00:00"
         }
       ]
     },
