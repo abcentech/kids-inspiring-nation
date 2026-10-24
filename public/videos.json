@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-10-24T11:13:18.449Z",
+  "updatedAt": "2026-10-24T16:02:56.848Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "VuP2ryK6jmU",
+          "title": "This is the KidsInspiring Nation 🔥",
+          "published": "2026-10-24T15:34:59+00:00"
+        },
         {
           "id": "rohGLmAPPvw",
           "title": "Gowon Went From Head of State to University Student | October 24 Trailer",
@@ -28,11 +33,6 @@
           "id": "1eNJJ2fmsnI",
           "title": "Maiduguri's Monday Market: Rebuilding After the Fire",
           "published": "2026-10-22T05:00:28+00:00"
-        },
-        {
-          "id": "4b-MwGqh_cw",
-          "title": "Maiduguri's Monday Market: Rebuilding After the Fire",
-          "published": "2026-10-22T05:00:23+00:00"
         }
       ]
     },
