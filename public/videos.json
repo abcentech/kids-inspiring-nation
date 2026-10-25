@@ -1,9 +1,19 @@
 {
-  "updatedAt": "2026-10-25T04:52:42.304Z",
+  "updatedAt": "2026-10-25T11:42:53.860Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "nkJSq0pGW6I",
+          "title": "Nigeria Acted Fast. Did It Diagnose the Right Problem?",
+          "published": "2026-10-25T05:00:22+00:00"
+        },
+        {
+          "id": "RLO-OMTE5XY",
+          "title": "Nigeria Acted Fast. Did It Diagnose the Right Problem? | October 25 Trailer",
+          "published": "2026-10-25T05:00:18+00:00"
+        },
         {
           "id": "VuP2ryK6jmU",
           "title": "This is the KidsInspiring Nation 🔥",
@@ -23,16 +33,6 @@
           "id": "vz7g4vXfKw8",
           "title": "The Ikoyi Collapse: Why Expert Warnings Matter | October 23 Trailer",
           "published": "2026-10-23T05:00:35+00:00"
-        },
-        {
-          "id": "tUZVbt7yLQg",
-          "title": "The Ikoyi Collapse: Why Expert Warnings Matter",
-          "published": "2026-10-23T05:00:05+00:00"
-        },
-        {
-          "id": "1eNJJ2fmsnI",
-          "title": "Maiduguri's Monday Market: Rebuilding After the Fire",
-          "published": "2026-10-22T05:00:28+00:00"
         }
       ]
     },
