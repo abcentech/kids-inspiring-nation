@@ -1,9 +1,19 @@
 {
-  "updatedAt": "2026-10-26T04:56:40.295Z",
+  "updatedAt": "2026-10-26T13:16:30.040Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "9fBrKchaXQ0",
+          "title": "Francisca Okeke: World-Class Science From Nsukka",
+          "published": "2026-10-26T05:00:13+00:00"
+        },
+        {
+          "id": "_NLZc9m7Tgo",
+          "title": "Francisca Okeke: World-Class Science From Nsukka | October 26 Trailer",
+          "published": "2026-10-26T05:00:09+00:00"
+        },
         {
           "id": "nkJSq0pGW6I",
           "title": "Nigeria Acted Fast. Did It Diagnose the Right Problem?",
@@ -23,16 +33,6 @@
           "id": "rohGLmAPPvw",
           "title": "Gowon Went From Head of State to University Student | October 24 Trailer",
           "published": "2026-10-24T05:00:21+00:00"
-        },
-        {
-          "id": "IU3t9iyEXJo",
-          "title": "Gowon Went From Head of State to University Student",
-          "published": "2026-10-24T05:00:04+00:00"
-        },
-        {
-          "id": "vz7g4vXfKw8",
-          "title": "The Ikoyi Collapse: Why Expert Warnings Matter | October 23 Trailer",
-          "published": "2026-10-23T05:00:35+00:00"
         }
       ]
     },
