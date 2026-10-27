@@ -1,9 +1,19 @@
 {
-  "updatedAt": "2026-10-27T05:14:15.328Z",
+  "updatedAt": "2026-10-27T12:23:06.184Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "jLCDid3ywe0",
+          "title": "Ben Enwonwu Refused an Inferior Place in Art | October 27 Trailer",
+          "published": "2026-10-27T05:00:30+00:00"
+        },
+        {
+          "id": "bB0cDCYTU1c",
+          "title": "Ben Enwonwu Refused an Inferior Place in Art",
+          "published": "2026-10-27T05:00:06+00:00"
+        },
         {
           "id": "9fBrKchaXQ0",
           "title": "Francisca Okeke: World-Class Science From Nsukka",
@@ -23,16 +33,6 @@
           "id": "RLO-OMTE5XY",
           "title": "Nigeria Acted Fast. Did It Diagnose the Right Problem? | October 25 Trailer",
           "published": "2026-10-25T05:00:18+00:00"
-        },
-        {
-          "id": "VuP2ryK6jmU",
-          "title": "This is the KidsInspiring Nation 🔥",
-          "published": "2026-10-24T15:34:59+00:00"
-        },
-        {
-          "id": "rohGLmAPPvw",
-          "title": "Gowon Went From Head of State to University Student | October 24 Trailer",
-          "published": "2026-10-24T05:00:21+00:00"
         }
       ]
     },
