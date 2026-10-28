@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-10-28T05:52:59.363Z",
+  "updatedAt": "2026-10-28T13:08:45.352Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "IRo97_Gseq4",
+          "title": "Nike Davies-Okundaye: Local Craft, Lasting Opportunity",
+          "published": "2026-10-28T05:00:33+00:00"
+        },
         {
           "id": "jLCDid3ywe0",
           "title": "Ben Enwonwu Refused an Inferior Place in Art | October 27 Trailer",
@@ -28,11 +33,6 @@
           "id": "nkJSq0pGW6I",
           "title": "Nigeria Acted Fast. Did It Diagnose the Right Problem?",
           "published": "2026-10-25T05:00:22+00:00"
-        },
-        {
-          "id": "RLO-OMTE5XY",
-          "title": "Nigeria Acted Fast. Did It Diagnose the Right Problem? | October 25 Trailer",
-          "published": "2026-10-25T05:00:18+00:00"
         }
       ]
     },
