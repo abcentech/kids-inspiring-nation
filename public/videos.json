@@ -1,13 +1,28 @@
 {
-  "updatedAt": "2026-10-29T05:57:04.065Z",
+  "updatedAt": "2026-10-29T13:15:31.273Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
         {
+          "id": "kWAkCYPDVeM",
+          "title": "Nigerian Excellence Is Global. What Is It Building?",
+          "published": "2026-10-29T05:00:37+00:00"
+        },
+        {
+          "id": "DAzZUl74nug",
+          "title": "Nigerian Excellence Is Global. What Is It Building? | October 29 Trailer",
+          "published": "2026-10-29T05:00:12+00:00"
+        },
+        {
           "id": "IRo97_Gseq4",
           "title": "Nike Davies-Okundaye: Local Craft, Lasting Opportunity",
           "published": "2026-10-28T05:00:33+00:00"
+        },
+        {
+          "id": "cwu5Wa9XoKE",
+          "title": "Nike Davies-Okundaye: Local Craft, Lasting Opportunity | October 28 Trailer",
+          "published": "2026-10-27T15:51:28+00:00"
         },
         {
           "id": "jLCDid3ywe0",
@@ -18,21 +33,6 @@
           "id": "bB0cDCYTU1c",
           "title": "Ben Enwonwu Refused an Inferior Place in Art",
           "published": "2026-10-27T05:00:06+00:00"
-        },
-        {
-          "id": "9fBrKchaXQ0",
-          "title": "Francisca Okeke: World-Class Science From Nsukka",
-          "published": "2026-10-26T05:00:13+00:00"
-        },
-        {
-          "id": "_NLZc9m7Tgo",
-          "title": "Francisca Okeke: World-Class Science From Nsukka | October 26 Trailer",
-          "published": "2026-10-26T05:00:09+00:00"
-        },
-        {
-          "id": "nkJSq0pGW6I",
-          "title": "Nigeria Acted Fast. Did It Diagnose the Right Problem?",
-          "published": "2026-10-25T05:00:22+00:00"
         }
       ]
     },
