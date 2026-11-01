@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-11-01T06:20:15.411Z",
+  "updatedAt": "2026-11-01T17:57:22.018Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "1P71aUQAkg8",
+          "title": "November Trailer Alert !!!",
+          "published": "2026-11-01T15:58:12+00:00"
+        },
         {
           "id": "9-zlGSkw20o",
           "title": "After 30 Days, What Will You Build? | October 30 Trailer",
@@ -28,11 +33,6 @@
           "id": "IRo97_Gseq4",
           "title": "Nike Davies-Okundaye: Local Craft, Lasting Opportunity",
           "published": "2026-10-28T05:00:33+00:00"
-        },
-        {
-          "id": "cwu5Wa9XoKE",
-          "title": "Nike Davies-Okundaye: Local Craft, Lasting Opportunity | October 28 Trailer",
-          "published": "2026-10-27T15:51:28+00:00"
         }
       ]
     },
