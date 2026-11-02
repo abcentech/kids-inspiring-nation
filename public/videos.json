@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-11-02T06:21:21.733Z",
+  "updatedAt": "2026-11-02T21:45:42.979Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "5FxI10k6KIk",
+          "title": "Are You Living or Just Existing?",
+          "published": "2026-11-02T17:00:29+00:00"
+        },
         {
           "id": "1P71aUQAkg8",
           "title": "November Trailer Alert !!!",
@@ -28,11 +33,6 @@
           "id": "DAzZUl74nug",
           "title": "Nigerian Excellence Is Global. What Is It Building? | October 29 Trailer",
           "published": "2026-10-29T05:00:12+00:00"
-        },
-        {
-          "id": "IRo97_Gseq4",
-          "title": "Nike Davies-Okundaye: Local Craft, Lasting Opportunity",
-          "published": "2026-10-28T05:00:33+00:00"
         }
       ]
     },
