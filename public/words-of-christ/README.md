@@ -8,8 +8,10 @@ A standalone, mobile-friendly Scripture reader from KidsInspiring Nation.
 
 - John, Matthew, Mark and Luke; 1,943 marked speech segments in 1,937 verses across 85 chapters containing red-letter passages.
 - Words attributed to Jesus appear **in red**, grouped by Gospel, chapter and verse.
-- Play, pause, skip sayings, move between chapters, and choose an English device voice and reading speed.
-- The current spoken word is highlighted **when the browser speech engine supplies word boundary events**; otherwise an approximate timed highlight is used.
+- Two narration modes: **Studio voice**, a single generated British English recording with measured per-word timings, and **Device voice**, an optional browser text-to-speech fallback.
+- Studio narration is built automatically at deployment: 85 chapter MP3s with a compact per-word alignment index. Highlighting follows `HTMLAudioElement.currentTime`, not a rough timer.
+- Play, pause, resume without losing your place, skip sayings, move between chapters, and adjust reading speed.
+- In Device mode, highlighting uses browser word-boundary events when available, or an approximate timer when those events are unavailable.
 - Search all sayings, link to a chapter, adjust text size, switch to night mode.
 - Chapter completion and reading preferences saved locally in the browser (not synced across devices).
 - No API keys, accounts, or paid audio services required.
@@ -24,6 +26,8 @@ Files:
 - `styles.css` — responsive reading layout
 - `app.js` — navigation, search, progress, and Web Speech API narration
 - `data.json` — bundled red-letter KJV sayings
+- `scripts/build-red-letters-audio.py` (repository root) — deterministic audio synthesis with libespeak word events
+- `audio/` (built at deployment only) — 85 generated MP3 files plus `index.json` word timestamps
 
 ## Text and counting policy
 
@@ -39,8 +43,12 @@ Alternatively, serve the folder using a local static HTTP server. Browsers block
 
 ## Narration caveats
 
-Text-to-speech uses the browser's `speechSynthesis` and the device's installed voices, so pronunciation, supported languages, automatic starting, background playback and word-level timestamp support vary by browser/platform. Without word-boundary events, the app highlights an estimated word rather than claiming guaranteed precise sync. It is **not** a prerecorded human narration.
+**Studio narration** uses a consistent computer-generated English voice, recorded at build time by GPL-licensed eSpeak. Precise word times originate from engine word-boundary events, with interpolation for words where the engine emits no event. Files are encoded to MP3 and hosted on the same site. Studio playback works independently of the user's speech-synthesis engine and uses the recorded media playback clock to keep text synchronized. This is machine narration, **not** a human studio recording or premium neural TTS.
+
+**Device narration** uses the browser's `speechSynthesis` and its installed voices. Pronunciation, support for speech events, and background playback vary by device. Missing word events use an estimated timer. Use the mode selector to switch between Studio and Device voice.
 
 ## Deployment
 
-Existing GitHub Pages deployment workflow on the repository's `master` branch builds and deploys the public folder.
+The GitHub Pages workflow installs `espeak`, `libespeak1`, and `ffmpeg`, builds all 85 chapter audio recordings, writes the precise word-event index into `dist/words-of-christ/audio/`, and deploys the complete public site. Generated MP3 files are intentionally **not committed** to the Git repository.
+
+To test locally, generate audio using `python3 scripts/build-red-letters-audio.py --out public/words-of-christ/audio` after installing eSpeak and FFmpeg. To run a small fixture, use `--limit 2`.
