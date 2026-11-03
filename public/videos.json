@@ -1,9 +1,19 @@
 {
-  "updatedAt": "2026-11-03T06:56:54.282Z",
+  "updatedAt": "2026-11-03T19:33:59.181Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "4SNAavwtSTE",
+          "title": "Zoe: The Life That Preceded All Creation",
+          "published": "2026-11-03T17:00:04+00:00"
+        },
+        {
+          "id": "5RtSuc92ZWg",
+          "title": "Where True Life Actually Begins 🤔",
+          "published": "2026-11-03T16:00:29+00:00"
+        },
         {
           "id": "5FxI10k6KIk",
           "title": "Are You Living or Just Existing?",
@@ -23,16 +33,6 @@
           "id": "DNrLhhaD8RA",
           "title": "After 30 Days, What Will You Build? | The Nigeria God Intends",
           "published": "2026-10-30T05:00:13+00:00"
-        },
-        {
-          "id": "kWAkCYPDVeM",
-          "title": "Nigerian Excellence Is Global. What Is It Building?",
-          "published": "2026-10-29T05:00:37+00:00"
-        },
-        {
-          "id": "DAzZUl74nug",
-          "title": "Nigerian Excellence Is Global. What Is It Building? | October 29 Trailer",
-          "published": "2026-10-29T05:00:12+00:00"
         }
       ]
     },
