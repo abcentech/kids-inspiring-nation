@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#10281c">
+  <meta name="description" content="Read and listen to every red-letter word of Jesus Christ from John, Matthew, Mark, and Luke in the King James Version. Follow along with word-by-word highlighting.">
+  <title>The Red Letters | Words of Jesus Christ — KIN</title>
+  <link rel="icon" href="../logo.png">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#reader">Skip to words of Christ</a>
+  <div class="app-shell">
+    <header class="site-header">
+      <a href="/" class="brand" aria-label="KidsInspiring Nation website">
+        <img src="../logo.svg" alt="" class="brand-logo">
+        <span class="brand-name">KIDS<span>INSPIRING</span>NATION</span>
+      </a>
+      <div class="header-end">
+        <span class="edition-chip">KING JAMES VERSION</span>
+        <button id="themeToggle" type="button" class="icon-btn" aria-label="Toggle night reading mode" title="Night mode">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M20.2 15.5A8.5 8.5 0 0 1 8.5 3.8 8.5 8.5 0 1 0 20.2 15.5Z"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <div>
+          <p class="eyebrow"><span class="eyebrow-line"></span> A PERSONAL ENCOUNTER WITH HIS WORDS</p>
+          <h1>The <em>Red Letters.</em></h1>
+          <p class="hero-copy">Only the words of Jesus. Every chapter. Every verse. Read, listen, and let His words dwell in you.</p>
+          <div class="hero-tags">
+            <span><b id="totalWords">39,350</b> spoken words</span>
+            <span class="dot" aria-hidden="true"></span>
+            <span>4 Gospels</span>
+            <span class="dot" aria-hidden="true"></span>
+            <span id="heroChapters">85 reading chapters</span>
+          </div>
+        </div>
+        <div class="hero-mark" aria-hidden="true"><span>“</span><div>My words shall<br>not pass away.</div><small>MATTHEW 24:35</small></div>
+      </div>
+    </section>
+
+    <main class="main-grid" id="reader">
+      <aside class="navigator" aria-label="Gospel and chapter navigation">
+        <div class="aside-topline"><span>YOUR READING JOURNEY</span><span id="progressPercent" class="progress-pct">0%</span></div>
+        <div class="track" aria-hidden="true"><div id="progressFill" class="track-fill"></div></div>
+        <div class="journey-count" id="journeyCount">0 of 85 chapters completed</div>
+        <div class="side-heading">CHOOSE A GOSPEL</div>
+        <div id="bookNav" class="book-nav" role="group" aria-label="Select Gospel"></div>
+        <div class="side-heading chapter-heading">CHAPTERS <span id="chapterCount"></span></div>
+        <div id="chapterNav" class="chapter-nav" role="group" aria-label="Select chapter"></div>
+        <div class="aside-quote">
+          <span class="quote-mark">“</span>
+          <p>Heaven and earth shall pass away, but my words shall not pass away.</p>
+          <small>MATTHEW 24:35</small>
+        </div>
+      </aside>
+
+      <section class="reading-column" aria-label="The words of Christ">
+        <div class="reader-toolbar">
+          <div class="search-box" role="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg>
+            <input id="searchInput" type="search" placeholder="Search His words..." autocomplete="off" aria-label="Search the words of Christ">
+            <kbd class="search-shortcut">/</kbd>
+          </div>
+          <button id="decreaseFont" class="text-size-btn" aria-label="Decrease text size" title="Smaller text">A−</button>
+          <button id="increaseFont" class="text-size-btn" aria-label="Increase text size" title="Larger text">A+</button>
+          <button id="shareBtn" class="toolbar-share" title="Share this chapter" aria-label="Share chapter">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="18" cy="5" r="2"/><circle cx="6" cy="12" r="2"/><circle cx="18" cy="19" r="2"/><path d="m8 11 8-5M8 13l8 5"/></svg><span>Share</span>
+          </button>
+        </div>
+
+        <div id="resultsPane" class="search-results" hidden>
+          <div class="results-top"><div><span class="section-kicker">SEARCH HIS WORDS</span><h2>Search results</h2></div><button id="clearSearch" type="button" class="small-link">Clear search</button></div>
+          <p class="search-count" id="searchCount"></p>
+          <div id="resultsList" class="results-list"></div>
+        </div>
+
+        <div id="readingPane" class="reading-pane">
+          <div class="chapter-head">
+            <div><span class="section-kicker">THE WORDS OF CHRIST <span class="small-divider">/</span> KJV</span><h2 id="chapterTitle">John <em>1</em></h2><p id="chapterSubheading" class="chapter-subheading">The red letters • King James Version</p></div>
+            <button id="completeBtn" type="button" class="complete-btn" aria-pressed="false"><span class="check-ring">✓</span><span id="completeBtnText">Mark complete</span></button>
+          </div>
+          <div class="gold-separator"><span></span><b>✦</b><span></span></div>
+          <div id="verseList" class="verse-list" aria-live="off"></div>
+          <div class="chapter-foot">
+            <div class="quiet-prompt"><span class="small-cross">✦</span><p>Read slowly. Pause often. Let every word find a home in your heart.</p></div>
+            <div class="chapter-footer-actions">
+              <button id="prevChapter" class="outline-btn" type="button">← Previous chapter</button>
+              <button id="nextChapter" class="primary-btn" type="button">Next chapter →</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="listen-panel" aria-label="Listen and follow along">
+        <div class="listen-card">
+          <div class="listen-top"><span class="section-kicker">LISTEN &amp; FOLLOW</span><span class="wave-icon" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span></div>
+          <div class="listen-disc" aria-hidden="true">
+            <div class="disc-ring"><span>✝</span></div>
+          </div>
+          <div class="now-title" id="nowTitle">John 1</div>
+          <div id="nowVerse" class="now-verse">Press play to hear His words</div>
+          <div class="listen-progress"><span id="verseProgress">SAYING 1 OF 1</span><span id="timeHint">READY TO READ</span></div>
+          <div class="track listen-track"><div id="listenProgressFill" class="track-fill"></div></div>
+          <div class="transport">
+            <button id="previousVerse" type="button" class="transport-skip" title="Previous saying" aria-label="Previous saying">|◀</button>
+            <button id="playButton" type="button" class="play-btn" aria-label="Play reading"><span id="playIcon">▶</span></button>
+            <button id="nextVerse" type="button" class="transport-skip" title="Next saying" aria-label="Next saying">▶|</button>
+          </div>
+          <p id="audioStatus" class="audio-status" role="status" aria-live="polite">Ready to read aloud</p>
+          <div class="listen-options">
+            <label class="option-label" for="voiceSelect">READING VOICE</label>
+            <select id="voiceSelect" class="control-select" aria-label="Select reading voice"><option value="">Device default voice</option></select>
+            <div class="speed-header"><label class="option-label" for="speedInput">READING PACE</label><span id="speedValue">1.0×</span></div>
+            <input id="speedInput" type="range" min="0.65" max="1.35" step="0.05" value="1" aria-label="Reading pace">
+            <label class="toggle-row" for="autoNext"><span>Continue to next chapter</span><input id="autoNext" type="checkbox" checked><span class="toggle-ui"></span></label>
+          </div>
+        </div>
+        <div class="tip-card"><span>✦</span><div><strong>A QUIET MOMENT</strong><p>Tap any verse number to begin reading from that saying. The current words light up as they are spoken.</p></div></div>
+        <div class="source-note">Source: King James Version. Red-letter divisions are editorial and may differ between Bible editions. Read-aloud uses your device's speech engine.</div>
+      </aside>
+    </main>
+
+    <footer class="site-footer">
+      <div><strong>THE RED LETTERS</strong><span> An offering from KidsInspiring Nation</span></div>
+      <a href="/">Raising goDs. Building Nations. ↗</a>
+    </footer>
+  </div>
+
+  <div class="mobile-player" id="mobilePlayer" aria-label="Reading playback">
+    <div class="mini-info"><span id="mobileRef">John 1</span><small id="mobileState">Ready to listen</small></div>
+    <button id="mobilePrevious" type="button" aria-label="Previous saying">|◀</button>
+    <button id="mobilePlay" class="mobile-play" type="button" aria-label="Play reading">▶</button>
+    <button id="mobileNext" type="button" aria-label="Next saying">▶|</button>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
