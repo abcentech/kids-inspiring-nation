@@ -186,7 +186,7 @@
     }
     studio.audio.playbackRate = Number(state.speed) || 1;
     if (!isResume) {
-      try { studio.audio.currentTime = (metadata.words[currentIndex]?.[0] ?? [0])[0] / 1000; }
+      try { studio.audio.currentTime = (metadata.words[currentIndex]?.[0] ?? 0) / 1000; }
       catch { /* The media element will complete the initial seek as metadata loads. */ }
     }
     playing = true;
