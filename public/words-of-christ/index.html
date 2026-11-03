@@ -114,15 +114,23 @@
           </div>
           <p id="audioStatus" class="audio-status" role="status" aria-live="polite">Ready to read aloud</p>
           <div class="listen-options">
-            <label class="option-label" for="voiceSelect">READING VOICE</label>
+            <label class="option-label" for="narrationMode">NARRATION MODE</label>
+            <select id="narrationMode" class="control-select" aria-label="Select narration mode">
+              <option value="studio">Studio voice · precisely synced</option>
+              <option value="device">Device voice · live narration</option>
+            </select>
+            <p class="narration-note" id="modeNote">Studio recordings use one consistent voice with word-level timing. Device narration is available as a fallback.</p>
+            <div id="deviceVoiceBlock">
+            <label class="option-label" for="voiceSelect">DEVICE READING VOICE</label>
             <select id="voiceSelect" class="control-select" aria-label="Select reading voice"><option value="">Device default voice</option></select>
+            </div>
             <div class="speed-header"><label class="option-label" for="speedInput">READING PACE</label><span id="speedValue">1.0×</span></div>
             <input id="speedInput" type="range" min="0.65" max="1.35" step="0.05" value="1" aria-label="Reading pace">
             <label class="toggle-row" for="autoNext"><span>Continue to next chapter</span><input id="autoNext" type="checkbox" checked><span class="toggle-ui"></span></label>
           </div>
         </div>
         <div class="tip-card"><span>✦</span><div><strong>A QUIET MOMENT</strong><p>Tap any verse number to begin reading from that saying. The current words light up as they are spoken.</p></div></div>
-        <div class="source-note">Source: King James Version. Red-letter divisions are editorial and may differ between Bible editions. Read-aloud uses your device's speech engine.</div>
+        <div class="source-note">Source: King James Version. Red-letter divisions are editorial and may differ between Bible editions. Studio playback uses fixed pre-generated voice recordings and measured word times; device mode uses your browser's speech engine.</div>
       </aside>
     </main>
 
