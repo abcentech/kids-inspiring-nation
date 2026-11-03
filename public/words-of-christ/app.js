@@ -7,7 +7,7 @@
   'use strict';
   const $ = id => document.getElementById(id);
   const store = 'kin-red-letters-v1';
-  const defaults = { book: 'John', chapter: 1, done: [], font: 22, speed: 1, voice: '', night: false, autoNext: true };
+  const defaults = { book: 'John', chapter: 1, done: [], font: 22, speed: 1, voice: '', night: false, autoNext: true, audioMode: 'studio' };
   let saved = {};
   try { saved = JSON.parse(localStorage.getItem(store) || '{}') || {}; } catch {}
   const state = { ...defaults, ...saved };
@@ -15,6 +15,37 @@
   let data = null, book = null, chapter = null, sayings = [], speech = null, playing = false, run = 0;
   let currentIndex = 0, wordIndex = -1, fallback = null, utteranceStarted = 0;
   let voices = [], searchDebounce = null;
+  const studio = { index: null, audio: new Audio(), loadedKey: null, tick: 0, request: 0 };
+  studio.audio.preload = 'auto';
+  const studioMode = () => state.audioMode === 'studio' && !!studio.index?.chapters?.[key(book?.name,chapter?.c)];
+  const upperBound = (array, target) => {
+    let low = 0, high = array.length;
+    while (low < high) { const middle=(low+high)>>1; if(array[middle] <= target) low=middle+1; else high=middle; }
+    return low;
+  };
+  function refreshNarrationUI() {
+    $('narrationMode').value = state.audioMode === 'device' ? 'device' : 'studio';
+    $('deviceVoiceBlock').hidden = state.audioMode !== 'device';
+    const available = !!studio.index;
+    $('modeNote').textContent = state.audioMode === 'device'
+      ? 'Live device narration follows your installed voices. Word highlighting depends on browser support.'
+      : (available
+        ? 'Same British English studio voice on every device. Word highlight follows timing measured during audio generation.'
+        : 'Studio audio is unavailable here. Device narration is used as a fallback until recordings are available.');
+  }
+  async function fetchStudioIndex() {
+    try {
+      const response = await fetch('./audio/index.json');
+      if (!response.ok) throw new Error('No audio index deployed');
+      const manifest = await response.json();
+      if (!manifest.chapters || Object.keys(manifest.chapters).length < 1) throw new Error('Empty audio index');
+      studio.index = manifest;
+    } catch (error) {
+      studio.index = null;
+      console.warn('Studio narration unavailable; using device voice:', error.message);
+    }
+    refreshNarrationUI();
+  }
   const supportsSpeech = 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
   const escapeHTML = s => String(s).replace(/[&<>"']/g, ch => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[ch]));
   const save = () => { try { localStorage.setItem(store, JSON.stringify(state)); } catch {} };
@@ -69,7 +100,7 @@
     $('verseProgress').textContent = s ? 'SAYING ' + (currentIndex + 1) + ' OF ' + sayings.length : 'READY';
     $('listenProgressFill').style.width = (sayings.length ? Math.round((currentIndex + (playing ? .5 : 0)) / sayings.length * 100) : 0) + '%';
     $('timeHint').textContent = playing ? 'READING NOW' : 'READY';
-    $('audioStatus').textContent = playing ? 'Reading aloud' : 'Ready to read aloud';
+    $('audioStatus').textContent = playing ? (studioMode() ? 'Studio recording · word synced' : 'Live device reading') : 'Ready to read aloud';
     $('mobileState').textContent = playing ? 'Reading aloud...' : 'Ready to listen';
     $('playIcon').textContent = playing ? 'Ⅱ' : '▶';
     $('mobilePlay').textContent = playing ? 'Ⅱ' : '▶';
@@ -99,6 +130,10 @@
   }
   function stopSpeech(reset = false) {
     run++;
+    studio.request++;
+    cancelAnimationFrame(studio.tick);
+    studio.tick = 0;
+    studio.audio.pause();
     clearInterval(fallback); fallback = null;
     playing = false;
     if (supportsSpeech) {
@@ -108,11 +143,86 @@
     if (reset) { currentIndex = 0; clearHighlight(); }
     updateProgress();
   }
+
+  function getStudioMetadata() {
+    return studio.index?.chapters?.[key(book?.name, chapter?.c)] || null;
+  }
+  function updateStudioHighlight() {
+    if (!playing || !studioMode()) return;
+    const metadata = getStudioMetadata();
+    if (!metadata) return;
+    const milliseconds = studio.audio.currentTime * 1000;
+    const starts = metadata.words.map(times => times[0] ?? 0);
+    const saying = Math.max(0, Math.min(sayings.length - 1, upperBound(starts, milliseconds) - 1));
+    const wordTimes = metadata.words[saying] || [];
+    const word = Math.max(0, Math.min(wordTimes.length - 1, upperBound(wordTimes, milliseconds) - 1));
+    const movedSaying = saying !== currentIndex;
+    const movedWord = word !== wordIndex;
+    currentIndex = saying;
+    if (movedSaying || movedWord) highlight(saying, word, movedSaying || word === 0 || word % 8 === 0);
+    if (movedSaying) updateProgress();
+    const duration = Math.max(1, metadata.duration_ms);
+    $('listenProgressFill').style.width = Math.min(100, milliseconds / duration * 100).toFixed(2) + '%';
+    studio.tick = requestAnimationFrame(updateStudioHighlight);
+  }
+  function startStudio(index = currentIndex, resume = false) {
+    if (!studioMode()) { startSpeech(index); return; }
+    const metadata = getStudioMetadata();
+    if (!sayings.length || !metadata || metadata.words.length !== sayings.length) {
+      toast('Studio timings do not match this chapter. Switching to device mode.');
+      state.audioMode = 'device';save();refreshNarrationUI();startSpeech(index);return;
+    }
+    const targetKey = key(book.name, chapter.c);
+    const wasLoaded = studio.loadedKey === targetKey && studio.audio.src;
+    // Do not reset audio time when resuming from a user-initiated pause.
+    const isResume = resume && wasLoaded;
+    stopSpeech();
+    currentIndex = Math.max(0,Math.min(index,sayings.length-1));
+    const request = studio.request;
+    if (!wasLoaded) {
+      studio.audio.src = './audio/' + encodeURIComponent(metadata.file);
+      studio.loadedKey = targetKey;
+      studio.audio.load();
+    }
+    studio.audio.playbackRate = Number(state.speed) || 1;
+    if (!isResume) {
+      try { studio.audio.currentTime = (metadata.words[currentIndex]?.[0] ?? [0])[0] / 1000; }
+      catch { /* The media element will complete the initial seek as metadata loads. */ }
+    }
+    playing = true;
+    highlight(currentIndex, 0, true);
+    updateProgress();
+    studio.tick = requestAnimationFrame(updateStudioHighlight);
+    // Calling play synchronously retains the mobile user gesture.
+    studio.audio.play().catch(error => {
+      if (request !== studio.request) return;
+      playing = false;cancelAnimationFrame(studio.tick);updateProgress();
+      toast('Studio playback unavailable. Choose Device Voice or retry Play.');
+      console.warn('Studio audio playback:',error);
+    });
+  }
+  studio.audio.addEventListener('ended', () => {
+    if (!studioMode()) return;
+    const finishedBook = book.name, finishedChapter = chapter.c;
+    stopSpeech();
+    if (state.autoNext) jumpChapter(1, true);
+    else {
+      currentIndex = sayings.length - 1;
+      highlight(currentIndex, sayings[currentIndex]?.words.length-1 || 0, false);
+      toast(finishedBook + ' ' + finishedChapter + ' completed');
+    }
+  });
+  studio.audio.addEventListener('error', () => {
+    if (!studioMode() || !playing) return;
+    playing = false; cancelAnimationFrame(studio.tick); updateProgress();
+    toast('Studio audio file could not be loaded. Select Device Voice in settings.');
+  });
   function selectVoice() {
     const chosen = voices.find(v => v.voiceURI === state.voice);
     return chosen || voices.find(v => /^en(-|_)/i.test(v.lang) && v.localService) || voices.find(v => /^en(-|_)/i.test(v.lang)) || null;
   }
   function startSpeech(index = currentIndex) {
+    if (studioMode()) { startStudio(index); return; }
     if (!supportsSpeech) { toast('This browser has no text-to-speech. Try Chrome, Edge, or Safari.'); return; }
     if (!sayings.length) return;
     stopSpeech();
@@ -177,8 +287,18 @@
     catch { playing = false; updateProgress(); toast('Could not start narration on this device.'); }
   }
   function toggleSpeech() {
-    if (playing) { stopSpeech(); $('audioStatus').textContent = 'Paused · press play to resume this saying'; }
-    else startSpeech(currentIndex);
+    if (playing && studioMode()) {
+      studio.audio.pause();
+      playing = false;
+      cancelAnimationFrame(studio.tick);
+      updateProgress();
+      $('audioStatus').textContent = 'Paused · press Play to resume';
+    } else if (playing) {
+      stopSpeech();
+      $('audioStatus').textContent = 'Paused · press Play to repeat this saying';
+    } else if (studioMode() && studio.loadedKey === key(book.name,chapter.c) && studio.audio.currentTime > 0 && studio.audio.currentTime < studio.audio.duration) {
+      startStudio(currentIndex, true);
+    } else startSpeech(currentIndex);
   }
   function changeSaying(delta) {
     const next = currentIndex + delta;
@@ -258,9 +378,22 @@
     $('decreaseFont').addEventListener('click',()=>{state.font-=2;updateFont();});
     $('increaseFont').addEventListener('click',()=>{state.font+=2;updateFont();});
     $('shareBtn').addEventListener('click',share);
+    $('narrationMode').addEventListener('change', e => {
+      stopSpeech();
+      state.audioMode = e.target.value === 'device' ? 'device' : 'studio';
+      studio.loadedKey = null;
+      state.voice = state.voice || '';
+      save();refreshNarrationUI();
+      toast(state.audioMode === 'studio' ? 'Studio sync selected' : 'Device voice selected');
+    });
     $('voiceSelect').addEventListener('change',e=>{state.voice=e.target.value;save();if(playing)startSpeech(currentIndex);});
-    $('speedInput').addEventListener('input',e=>{state.speed=Number(e.target.value);$('speedValue').textContent=state.speed.toFixed(2).replace(/0$/,'')+'×';save();});
-    $('speedInput').addEventListener('change',()=>{if(playing)startSpeech(currentIndex);});
+    $('speedInput').addEventListener('input',e=>{
+      state.speed=Number(e.target.value);
+      $('speedValue').textContent=state.speed.toFixed(2).replace(/0$/,'')+'×';
+      if(studioMode()) studio.audio.playbackRate=state.speed;
+      save();
+    });
+    $('speedInput').addEventListener('change',()=>{if(playing && !studioMode())startSpeech(currentIndex);});
     $('autoNext').addEventListener('change',e=>{state.autoNext=e.target.checked;save();});
     $('themeToggle').addEventListener('click',()=>{state.night=!state.night;document.body.classList.toggle('night',state.night);save();});
     $('searchInput').addEventListener('input',e=>{clearTimeout(searchDebounce);searchDebounce=setTimeout(()=>performSearch(e.target.value),200);});
@@ -278,6 +411,7 @@
     $('speedInput').value=state.speed;
     $('speedValue').textContent=Number(state.speed).toFixed(2).replace(/0$/,'')+'×';
     $('autoNext').checked=state.autoNext;
+    refreshNarrationUI();
     if(supportsSpeech){renderVoices();window.speechSynthesis.onvoiceschanged=renderVoices;}
     else $('audioStatus').textContent='Audio unavailable on this browser';
     $('verseList').innerHTML='<p class="results-empty">Loading the words of Jesus…</p>';
@@ -285,6 +419,7 @@
       const response=await fetch('./data.json');if(!response.ok)throw new Error('Scripture file unavailable');
       data=await response.json();
       if(!data?.books?.length) throw new Error('Scripture file is empty');
+      await fetchStudioIndex();
       $('totalWords').textContent=Number(data.counts.words).toLocaleString('en-US');
       const params=new URLSearchParams(location.search);
       const requested=params.get('book')||state.book;
