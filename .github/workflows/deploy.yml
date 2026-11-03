@@ -31,6 +31,18 @@ jobs:
         run: npm install
       - name: Build
         run: npm run build
+      - name: Install deterministic speech engine
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq espeak libespeak1 ffmpeg
+      - name: Generate chapter recordings with word-level timing
+        run: |
+          python3 scripts/build-red-letters-audio.py \
+            --data public/words-of-christ/data.json \
+            --out dist/words-of-christ/audio \
+            --voice english_rp --rate 154
+          test -s dist/words-of-christ/audio/index.json
+          test -s dist/words-of-christ/audio/john-01.mp3
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
