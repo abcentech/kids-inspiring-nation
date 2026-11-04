@@ -1,9 +1,19 @@
 {
-  "updatedAt": "2026-11-04T06:38:08.901Z",
+  "updatedAt": "2026-11-04T19:51:41.604Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "oSJXnnY8MiQ",
+          "title": "Life in Himself : Plugged into the Unending Source",
+          "published": "2026-11-04T17:00:24+00:00"
+        },
+        {
+          "id": "18BQHU8Xlog",
+          "title": "Breath Is Borrowed, Life Is Eternal",
+          "published": "2026-11-04T05:00:23+00:00"
+        },
         {
           "id": "4SNAavwtSTE",
           "title": "Zoe: The Life That Preceded All Creation",
@@ -23,16 +33,6 @@
           "id": "1P71aUQAkg8",
           "title": "November Trailer Alert !!!",
           "published": "2026-11-01T15:58:12+00:00"
-        },
-        {
-          "id": "9-zlGSkw20o",
-          "title": "After 30 Days, What Will You Build? | October 30 Trailer",
-          "published": "2026-10-30T12:44:34+00:00"
-        },
-        {
-          "id": "DNrLhhaD8RA",
-          "title": "After 30 Days, What Will You Build? | The Nigeria God Intends",
-          "published": "2026-10-30T05:00:13+00:00"
         }
       ]
     },
