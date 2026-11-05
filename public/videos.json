@@ -1,9 +1,19 @@
 {
-  "updatedAt": "2026-11-05T06:57:57.521Z",
+  "updatedAt": "2026-11-05T20:03:28.786Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "hCCM0tnnOHo",
+          "title": "If You Carry Life, Why Is There Still Darkness?",
+          "published": "2026-11-05T17:00:15+00:00"
+        },
+        {
+          "id": "ngi71TXTe08",
+          "title": "Why Are You Still Struggling in the Dark?",
+          "published": "2026-11-05T05:00:25+00:00"
+        },
         {
           "id": "oSJXnnY8MiQ",
           "title": "Life in Himself : Plugged into the Unending Source",
@@ -23,16 +33,6 @@
           "id": "5RtSuc92ZWg",
           "title": "Where True Life Actually Begins 🤔",
           "published": "2026-11-03T16:00:29+00:00"
-        },
-        {
-          "id": "5FxI10k6KIk",
-          "title": "Are You Living or Just Existing?",
-          "published": "2026-11-02T17:00:29+00:00"
-        },
-        {
-          "id": "1P71aUQAkg8",
-          "title": "November Trailer Alert !!!",
-          "published": "2026-11-01T15:58:12+00:00"
         }
       ]
     },
