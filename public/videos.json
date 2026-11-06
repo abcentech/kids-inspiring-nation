@@ -1,9 +1,19 @@
 {
-  "updatedAt": "2026-11-06T06:57:36.066Z",
+  "updatedAt": "2026-11-06T19:29:41.215Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "ZOJp0mU7V2c",
+          "title": "The Life Close and Reachable",
+          "published": "2026-11-06T17:00:27+00:00"
+        },
+        {
+          "id": "DCk2Xb2-eRY",
+          "title": "The Difference Between Reading and Experiencing",
+          "published": "2026-11-06T05:00:33+00:00"
+        },
         {
           "id": "hCCM0tnnOHo",
           "title": "If You Carry Life, Why Is There Still Darkness?",
@@ -23,16 +33,6 @@
           "id": "18BQHU8Xlog",
           "title": "Breath Is Borrowed, Life Is Eternal",
           "published": "2026-11-04T05:00:23+00:00"
-        },
-        {
-          "id": "4SNAavwtSTE",
-          "title": "Zoe: The Life That Preceded All Creation",
-          "published": "2026-11-03T17:00:04+00:00"
-        },
-        {
-          "id": "5RtSuc92ZWg",
-          "title": "Where True Life Actually Begins 🤔",
-          "published": "2026-11-03T16:00:29+00:00"
         }
       ]
     },
