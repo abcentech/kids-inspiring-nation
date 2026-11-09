@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-11-09T06:48:01.774Z",
+  "updatedAt": "2026-11-09T22:28:53.430Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "1-l7AGMOd5o",
+          "title": "Both are green. Only one is alive. 🌿 Breath keeps you existing. Jesus makes you living. #faith",
+          "published": "2026-11-09T17:00:00+00:00"
+        },
         {
           "id": "ZOJp0mU7V2c",
           "title": "The Life Close and Reachable",
@@ -28,11 +33,6 @@
           "id": "oSJXnnY8MiQ",
           "title": "Life in Himself : Plugged into the Unending Source",
           "published": "2026-11-04T17:00:24+00:00"
-        },
-        {
-          "id": "18BQHU8Xlog",
-          "title": "Breath Is Borrowed, Life Is Eternal",
-          "published": "2026-11-04T05:00:23+00:00"
         }
       ]
     },
