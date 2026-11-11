@@ -1,9 +1,19 @@
 {
-  "updatedAt": "2026-11-11T06:40:23.838Z",
+  "updatedAt": "2026-11-11T19:41:43.795Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "j5LEJ6z8XCw",
+          "title": "What you hear every day decides what grows in you",
+          "published": "2026-11-11T17:00:36+00:00"
+        },
+        {
+          "id": "W1LD2O8A2-E",
+          "title": "Your phone can't charge itself. Neither can you. 🔌 We borrow life. Jesus is the source.  #source",
+          "published": "2026-11-11T05:00:23+00:00"
+        },
         {
           "id": "4Tew452R4aw",
           "title": "This is the reason why people are quitting Christianity! ",
@@ -23,16 +33,6 @@
           "id": "1-l7AGMOd5o",
           "title": "Both are green. Only one is alive. 🌿 Breath keeps you existing. Jesus makes you living. #faith",
           "published": "2026-11-09T17:00:00+00:00"
-        },
-        {
-          "id": "ZOJp0mU7V2c",
-          "title": "The Life Close and Reachable",
-          "published": "2026-11-06T17:00:27+00:00"
-        },
-        {
-          "id": "DCk2Xb2-eRY",
-          "title": "The Difference Between Reading and Experiencing",
-          "published": "2026-11-06T05:00:33+00:00"
         }
       ]
     },
