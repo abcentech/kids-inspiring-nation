@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-11-17T08:03:36.342Z",
+  "updatedAt": "2026-11-17T21:01:38.201Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "D0hzuL6WepQ",
+          "title": "Why the Hardest Choice Leads to True Life",
+          "published": "2026-11-17T17:00:39+00:00"
+        },
         {
           "id": "dfL2PVXNkA4",
           "title": "Someone called his name",
@@ -28,11 +33,6 @@
           "id": "Si97f82LCYA",
           "title": "The notes were good. But the hug is better.God didn't send a message about life. He sent Life.#life",
           "published": "2026-11-13T05:00:27+00:00"
-        },
-        {
-          "id": "tHwb_YSEZsM",
-          "title": "His Word Transcends Distance, Space & Time",
-          "published": "2026-11-12T17:00:28+00:00"
         }
       ]
     },
