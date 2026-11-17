@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-11-16T22:16:05.801Z",
+  "updatedAt": "2026-11-17T08:03:36.342Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "dfL2PVXNkA4",
+          "title": "Someone called his name",
+          "published": "2026-11-17T05:00:16+00:00"
+        },
         {
           "id": "8vQAJwOEQT4",
           "title": "The source of life",
@@ -28,11 +33,6 @@
           "id": "tHwb_YSEZsM",
           "title": "His Word Transcends Distance, Space & Time",
           "published": "2026-11-12T17:00:28+00:00"
-        },
-        {
-          "id": "LU7Rj-QbnVY",
-          "title": "He didn't fight the darkness. He switched on the light.When Light comes in, darkness goes out.#light",
-          "published": "2026-11-12T05:00:15+00:00"
         }
       ]
     },
