@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-11-17T21:01:38.201Z",
+  "updatedAt": "2026-11-18T07:40:16.310Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "sh_6OqHztuo",
+          "title": "The Difference Between Having Things and Having Life",
+          "published": "2026-11-17T23:00:19+00:00"
+        },
         {
           "id": "D0hzuL6WepQ",
           "title": "Why the Hardest Choice Leads to True Life",
@@ -28,11 +33,6 @@
           "id": "4Hx6lP6EXZg",
           "title": "The Tap and the Tank: What's Flowing from You?",
           "published": "2026-11-14T16:25:39+00:00"
-        },
-        {
-          "id": "Si97f82LCYA",
-          "title": "The notes were good. But the hug is better.God didn't send a message about life. He sent Life.#life",
-          "published": "2026-11-13T05:00:27+00:00"
         }
       ]
     },
