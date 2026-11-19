@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-11-18T20:39:38.434Z",
+  "updatedAt": "2026-11-19T07:36:06.514Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "6n6Hje9RIcs",
+          "title": "What Does It Mean To Walk In The Newness Of Life",
+          "published": "2026-11-18T23:00:27+00:00"
+        },
         {
           "id": "sh_6OqHztuo",
           "title": "What did Jesus Christ say about Masturbation.",
@@ -28,11 +33,6 @@
           "id": "rMNbSvKCidg",
           "title": "Why Directions Won't Save You (You Need the Guide)",
           "published": "2026-11-16T17:00:02+00:00"
-        },
-        {
-          "id": "4Hx6lP6EXZg",
-          "title": "The Tap and the Tank: What's Flowing from You?",
-          "published": "2026-11-14T16:25:39+00:00"
         }
       ]
     },
