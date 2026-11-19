@@ -1,13 +1,18 @@
 {
-  "updatedAt": "2026-11-19T07:36:06.514Z",
+  "updatedAt": "2026-11-19T20:45:47.975Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
         {
-          "id": "6n6Hje9RIcs",
-          "title": "What Does It Mean To Walk In The Newness Of Life",
-          "published": "2026-11-18T23:00:27+00:00"
+          "id": "7Oy88ii8TSY",
+          "title": "You're Alive, But Are You Actually Living?",
+          "published": "2026-11-19T17:00:16+00:00"
+        },
+        {
+          "id": "SsABxyyVuag",
+          "title": "What Travels Faster Than The Speed of Light ?",
+          "published": "2026-11-19T15:37:19+00:00"
         },
         {
           "id": "sh_6OqHztuo",
@@ -28,11 +33,6 @@
           "id": "8vQAJwOEQT4",
           "title": "The source of life",
           "published": "2026-11-16T17:30:28+00:00"
-        },
-        {
-          "id": "rMNbSvKCidg",
-          "title": "Why Directions Won't Save You (You Need the Guide)",
-          "published": "2026-11-16T17:00:02+00:00"
         }
       ]
     },
