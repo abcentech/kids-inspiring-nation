@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-11-20T07:27:15.418Z",
+  "updatedAt": "2026-11-20T20:29:27.548Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "T-VklLldXhc",
+          "title": "Ever Heard Of The Lamp Principle ?",
+          "published": "2026-11-20T17:00:34+00:00"
+        },
         {
           "id": "13FvJWv5Y7g",
           "title": "You can't unpour water 💧",
@@ -28,11 +33,6 @@
           "id": "D0hzuL6WepQ",
           "title": "Why the Hardest Choice Leads to True Life",
           "published": "2026-11-17T17:00:39+00:00"
-        },
-        {
-          "id": "dfL2PVXNkA4",
-          "title": "Someone called his name",
-          "published": "2026-11-17T05:00:16+00:00"
         }
       ]
     },
