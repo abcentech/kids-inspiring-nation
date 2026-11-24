@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-11-23T07:50:51.436Z",
+  "updatedAt": "2026-11-24T00:00:03.468Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "ESDUf-BbX5Q",
+          "title": "When God Seems Late, Don't Make This Mistake",
+          "published": "2026-11-23T17:00:27+00:00"
+        },
         {
           "id": "7knEYmmEvO4",
           "title": "He couldn't see !",
@@ -28,11 +33,6 @@
           "id": "SsABxyyVuag",
           "title": "What Travels Faster Than The Speed of Light ?",
           "published": "2026-11-19T15:37:19+00:00"
-        },
-        {
-          "id": "sh_6OqHztuo",
-          "title": "What did Jesus Christ say about Masturbation.",
-          "published": "2026-11-17T23:00:19+00:00"
         }
       ]
     },
