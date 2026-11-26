@@ -1,9 +1,14 @@
 {
-  "updatedAt": "2026-11-25T21:48:26.514Z",
+  "updatedAt": "2026-11-26T08:33:29.004Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "FDVV8sEdhCw",
+          "title": "🧥 We all cover something up",
+          "published": "2026-11-26T05:00:20+00:00"
+        },
         {
           "id": "QuCNcWb0Gp4",
           "title": "You ever given?",
@@ -28,11 +33,6 @@
           "id": "ESDUf-BbX5Q",
           "title": "When God Seems Late, Don't Make This Mistake",
           "published": "2026-11-23T17:00:27+00:00"
-        },
-        {
-          "id": "7knEYmmEvO4",
-          "title": "He couldn't see !",
-          "published": "2026-11-23T05:00:36+00:00"
         }
       ]
     },
