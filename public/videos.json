@@ -1,12 +1,17 @@
 {
-  "updatedAt": "2026-11-26T08:33:29.004Z",
+  "updatedAt": "2026-11-26T21:41:06.524Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
         {
+          "id": "s8wjGcjLNB8",
+          "title": "Something Has to Move for Your Next Move ⭐",
+          "published": "2026-11-26T17:00:33+00:00"
+        },
+        {
           "id": "FDVV8sEdhCw",
-          "title": "🧥 We all cover something up",
+          "title": "Exsisting or Living?",
           "published": "2026-11-26T05:00:20+00:00"
         },
         {
@@ -28,11 +33,6 @@
           "id": "91Xafb6rgvA",
           "title": "Everyone Left.",
           "published": "2026-11-24T05:00:19+00:00"
-        },
-        {
-          "id": "ESDUf-BbX5Q",
-          "title": "When God Seems Late, Don't Make This Mistake",
-          "published": "2026-11-23T17:00:27+00:00"
         }
       ]
     },
