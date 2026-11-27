@@ -1,9 +1,19 @@
 {
-  "updatedAt": "2026-11-27T08:45:31.719Z",
+  "updatedAt": "2026-11-27T21:26:04.631Z",
   "channels": {
     "kin": {
       "handle": "@KidsInspiringNation",
       "videos": [
+        {
+          "id": "xLQGYitnWr0",
+          "title": "Why Complaining and Pity Parties Keep You Stuck",
+          "published": "2026-11-27T17:00:00+00:00"
+        },
+        {
+          "id": "lDEwbkXf0AA",
+          "title": "The Father Showed Up | December Series Trailer",
+          "published": "2026-11-27T16:00:14+00:00"
+        },
         {
           "id": "s8wjGcjLNB8",
           "title": "Something Has to Move for Your Next Move ⭐",
@@ -23,16 +33,6 @@
           "id": "rJQ8ZYdhF3M",
           "title": "Ever Heard Of Resurrection? (It's Not What You Think)",
           "published": "2026-11-24T17:00:39+00:00"
-        },
-        {
-          "id": "NID79KeTtIo",
-          "title": "Ever Wondered If God Actually Feels Your Pain?",
-          "published": "2026-11-24T10:05:31+00:00"
-        },
-        {
-          "id": "91Xafb6rgvA",
-          "title": "Everyone Left.",
-          "published": "2026-11-24T05:00:19+00:00"
         }
       ]
     },
